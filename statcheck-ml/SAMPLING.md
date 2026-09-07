@@ -73,7 +73,31 @@ no training set. They measure whether the model reads a venue it has never seen.
 
 ## Cost estimate
 
-The language model annotates about 8000 windows in three independent passes. This is
-roughly 24000 calls and about 17 million tokens. Use a small model.
+Annotation runs through agents inside Claude Code, not through a script with an API
+key. Each call therefore costs much more than an API call, so the totals are smaller.
 
-A person annotates about 1500 windows, which is roughly 10 to 12 hours.
+Batch about 20 windows into one agent call. Annotate about 1000 windows in a round.
+One round is therefore about 50 agent calls for each pass.
+
+Run two passes for each round, and a third pass only where the two disagree. This
+costs far less than three full passes and finds the same disagreements.
+
+There is no human annotator. Every label comes from a language model. Section
+"The limit of a model annotator" states what this costs.
+
+## The limit of a model annotator
+
+No measurement in this project can find a mistake that the annotator makes every
+time. If the annotator always misses one way of reporting a result, the small model
+learns to miss it too, and every score stays high.
+
+More annotation does not remove this limit. More agreement does not remove it,
+because the annotators share their training.
+
+One independent check remains. The arithmetic does not come from the annotator. A
+wrong degrees of freedom or a misread statistic usually gives a p-value far from the
+reported one. Published work puts the true rate of inconsistency near 10%. A batch
+that is far from that rate has an extraction fault, and no annotator was asked.
+
+The arithmetic checks the results that were found. It says nothing about the results
+that were missed.
