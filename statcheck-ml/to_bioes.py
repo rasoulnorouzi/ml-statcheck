@@ -1,130 +1,114 @@
-"""Align annotation values onto window text and emit character-level tags.
+"""Expand the dataset spans into character-level tags for training.
 
-The annotator reports values and an exact quote. It does not report offsets,
-because a language model counts characters unreliably. This script finds the
-quote in the text, finds each value inside the quote, and produces two tag
-layers plus a window flag.
+The dataset stores spans, because a per-character tag array is about ten times
+the size of the text and it produces an unreadable difference in version
+control. This module builds the tag arrays in memory when a model trains.
 
-The search ignores differences in spaces and line breaks. A result is often
-split by a line break, and a strict search fails on exactly those cases.
+Four outputs are produced for each window, which match `SCHEMA.md`:
 
-Usage: python to_bioes.py <sample_dir>
+  part_tags  BIOES over TEST, STAT, DF1, DF2, N, POP, PVAL
+  block_tags BIOES over RESULT, so the parts of one result stay grouped
+  has_result one label for the whole window
+  operators  the named operator for each POP span, so the model can recover an
+             operator whose character was destroyed by the conversion
+
+Usage:
+    python to_bioes.py statcheck-ml/dataset/round1.jsonl      # report only
+
+    from to_bioes import load_dataset
+    rows = load_dataset('statcheck-ml/dataset/round1.jsonl')
 """
-import sys, json, os, collections
+import sys, json, glob, collections
 
-D = sys.argv[1]
-win = {w['window_id']: w['text'] for w in json.load(open(os.path.join(D, 'windows.json'), encoding='utf-8'))}
-ann = json.load(open(os.path.join(D, 'annotations_pass1.json'), encoding='utf-8'))
-key = {k['window_id']: k for k in json.load(open(os.path.join(D, 'key.json'), encoding='utf-8'))}
-
-PARTS = [('test_type', 'TEST'), ('statistic', 'STAT'), ('df1', 'DF1'),
-         ('df2', 'DF2'), ('n', 'N'), ('p_operator', 'POP'), ('p_value', 'PVAL')]
+PART_LABELS = ['TEST', 'STAT', 'DF1', 'DF2', 'N', 'POP', 'PVAL']
+OPERATORS = ['=', '<', '>']
 
 
-def squeeze(text):
-    """Collapse every run of whitespace to one space.
-
-    Returns the collapsed string and a list mapping each collapsed index back
-    to its index in the original string.
-    """
-    out, idx, prev_ws = [], [], False
-    for i, ch in enumerate(text):
-        if ch.isspace():
-            if not prev_ws:
-                out.append(' ')
-                idx.append(i)
-            prev_ws = True
-        else:
-            out.append(ch)
-            idx.append(i)
-            prev_ws = False
-    return ''.join(out), idx
-
-
-def find_span(text, flat, imap, needle, lo=0, hi=None):
-    """Locate `needle` in `text`, tolerating whitespace differences.
-
-    `lo` and `hi` are bounds in the collapsed coordinate system.
-    Returns (start, end) in original coordinates, or None.
-    """
-    if not needle:
-        return None
-    nflat = ' '.join(str(needle).split())
-    hi = len(flat) if hi is None else hi
-    j = flat.find(nflat, lo, hi)
-    if j < 0:
-        return None
-    start = imap[j]
-    end = imap[j + len(nflat) - 1] + 1
-    return start, end, j, j + len(nflat)
-
-
-def bioes(n, spans):
-    tags = ['O'] * n
-    for s, e, lab in spans:
-        if e - s <= 0:
+def bioes(length, spans):
+    """Build a BIOES tag sequence from (start, end, label) spans."""
+    tags = ['O'] * length
+    for start, end, label in spans:
+        if end - start <= 0:
             continue
-        if e - s == 1:
-            tags[s] = 'S-' + lab
+        if end - start == 1:
+            tags[start] = 'S-' + label
         else:
-            tags[s] = 'B-' + lab
-            for i in range(s + 1, e - 1):
-                tags[i] = 'I-' + lab
-            tags[e - 1] = 'E-' + lab
+            tags[start] = 'B-' + label
+            for i in range(start + 1, end - 1):
+                tags[i] = 'I-' + label
+            tags[end - 1] = 'E-' + label
     return tags
 
 
-st = collections.Counter()
-missing = []
-out = []
+def expand(row):
+    """Turn one dataset row into training tensors, as plain Python lists."""
+    text = row['text']
+    block_spans, part_spans, operators = [], [], []
 
-for a in ann:
-    wid = a['window_id']
-    text = win.get(wid, '')
-    flat, imap = squeeze(text)
-    st['windows'] += 1
-    block_spans, part_spans = [], []
+    for res in row.get('results') or []:
+        bs = res.get('block_span')
+        if bs:
+            block_spans.append((bs[0], bs[1], 'RESULT'))
+        for label, span in (res.get('part_spans') or {}).items():
+            part_spans.append((span[0], span[1], label))
+            if label == 'POP':
+                # The character at this span may be damaged, so the target is
+                # the operator the annotator named, not the character present.
+                op = res.get('p_operator')
+                operators.append({'span': span, 'operator': op if op in OPERATORS else None})
 
-    for r in a.get('results') or []:
-        st['results'] += 1
-        hit = find_span(text, flat, imap, r.get('quote'))
-        if not hit:
-            st['quote_missing'] += 1
-            if len(missing) < 5:
-                missing.append((wid, str(r.get('quote'))[:70]))
-            continue
-        st['quote_found'] += 1
-        qs, qe, fs, fe = hit
-        block_spans.append((qs, qe, 'RESULT'))
-        cur = fs
-        for field, lab in PARTS:
-            val = r.get(field)
-            if val in (None, ''):
-                continue
-            st['parts_total'] += 1
-            p = find_span(text, flat, imap, val, cur, fe) or find_span(text, flat, imap, val, fs, fe)
-            if not p:
-                st['parts_missing'] += 1
-                continue
-            st['parts_aligned'] += 1
-            part_spans.append((p[0], p[1], lab))
-            cur = p[3]
+    return {
+        'window_id': row['window_id'],
+        'text': text,
+        'chars': list(text),
+        'part_tags': bioes(len(text), part_spans),
+        'block_tags': bioes(len(text), block_spans),
+        'has_result': bool(block_spans),
+        'operators': operators,
+        'pool': row.get('pool'),
+        'journal': row.get('journal'),
+        'source_doc': row.get('source_doc'),
+    }
 
-    out.append({'window_id': wid, 'pool': key.get(wid, {}).get('pool'),
-                'journal': key.get(wid, {}).get('journal'),
-                'text': text,
-                'block_tags': bioes(len(text), block_spans),
-                'part_tags': bioes(len(text), part_spans),
-                'contains_result': bool(block_spans)})
 
-json.dump(out, open(os.path.join(D, 'tagged.json'), 'w', encoding='utf-8'), ensure_ascii=False)
+def load_dataset(*patterns):
+    """Load one or more dataset files. Accepts glob patterns."""
+    rows = []
+    for pattern in patterns:
+        for path in sorted(glob.glob(pattern)):
+            with open(path, encoding='utf-8') as fh:
+                for line in fh:
+                    line = line.strip()
+                    if line:
+                        rows.append(expand(json.loads(line)))
+    return rows
 
-qf, qm = st['quote_found'], st['quote_missing']
-pa, pt = st['parts_aligned'], st['parts_total']
-print('ALIGNMENT REPORT')
-print(f"  windows            : {st['windows']}")
-print(f"  results annotated  : {st['results']}")
-print(f"  quote aligned      : {qf} / {qf + qm}  ({100*qf/max(qf+qm,1):.1f}%)")
-print(f"  parts aligned      : {pa} / {pt}  ({100*pa/max(pt,1):.1f}%)")
-for wid, q in missing:
-    print(f'    unaligned: {wid}  {q!r}')
+
+def main():
+    rows = load_dataset(*sys.argv[1:])
+    if not rows:
+        print('no rows loaded')
+        return
+
+    n_chars = sum(len(r['text']) for r in rows)
+    tag_counts = collections.Counter()
+    for r in rows:
+        for t in r['part_tags']:
+            if t != 'O':
+                tag_counts[t.split('-', 1)[1]] += 1
+
+    ops = collections.Counter(o['operator'] for r in rows for o in r['operators'])
+    pools = collections.Counter(r['pool'] for r in rows)
+
+    print(f'windows        : {len(rows)}')
+    print(f'characters     : {n_chars}')
+    print(f'with a result  : {sum(1 for r in rows if r["has_result"])}')
+    print(f'pools          : ' + ', '.join(f'{k}={v}' for k, v in sorted(pools.items(), key=lambda x: str(x[0]))))
+    print(f'tagged chars   : {sum(tag_counts.values())} '
+          f'({100*sum(tag_counts.values())/max(n_chars,1):.1f}% of characters)')
+    print('per label      : ' + ', '.join(f'{k}={tag_counts[k]}' for k in PART_LABELS))
+    print('operators      : ' + ', '.join(f'{k!r}={v}' for k, v in ops.most_common()))
+
+
+if __name__ == '__main__':
+    main()

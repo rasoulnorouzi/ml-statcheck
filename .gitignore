@@ -1,10 +1,16 @@
-# Corpus and derived data. Never commit these; they are large and often
-# licensed in ways that forbid redistribution.
+# --- Raw material. Never commit. ---
+# These are copyrighted papers and their full text. They are large, and they
+# cannot be redistributed. Every dataset row records the document and line it
+# came from, so anyone holding the same corpus can rebuild a passage.
 *.zip
-data/
-corpus/
-statcheck-ml/data/
 *.pdf
+statcheck-ml/data/
+
+# --- Derived dataset. This IS committed. ---
+# Short annotated excerpts and their labels. The rule above ignores the whole
+# data directory, so the dataset lives outside it, in statcheck-ml/dataset/.
+!statcheck-ml/dataset/
+!statcheck-ml/dataset/**
 
 # Models and checkpoints
 *.onnx
