@@ -26,7 +26,7 @@ class CharTagger(nn.Module):
     def __init__(self, vocab_size: int, n_tags: int,
                  embed_dim: int = 64, hidden: int = 128,
                  layers: int = 2, dropout: float = 0.25,
-                 tags: list | None = None):
+                 tags: list | None = None, unit: str = "lstm"):
         super().__init__()
         self.vocab_size = vocab_size
         self.n_tags = n_tags
@@ -39,7 +39,12 @@ class CharTagger(nn.Module):
             self.crf = CRF(tags)
         # Index 0 is PAD. Its embedding stays at zero and never trains.
         self.embed = nn.Embedding(vocab_size, embed_dim, padding_idx=0)
-        self.lstm = nn.LSTM(
+        # A GRU has three gates where an LSTM has four, so it carries about a
+        # quarter fewer recurrent parameters. Whether that costs accuracy on
+        # this task is a question for the measurement, not for an assumption.
+        rnn = {"lstm": nn.LSTM, "gru": nn.GRU}[unit.lower()]
+        self.unit = unit.lower()
+        self.lstm = rnn(
             embed_dim, hidden, num_layers=layers, batch_first=True,
             bidirectional=True, dropout=dropout if layers > 1 else 0.0,
         )
@@ -65,7 +70,7 @@ class CharTagger(nn.Module):
 
     def size_report(self) -> str:
         n = self.n_parameters()
-        return (f"{n:,} parameters, "
+        return (f"{self.unit} model, {n:,} parameters, "
                 f"{n * 4 / 1e6:.1f} MB as float32, "
                 f"about {n / 1e6:.1f} MB as int8")
 

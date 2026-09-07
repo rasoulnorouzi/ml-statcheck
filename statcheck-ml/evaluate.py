@@ -140,6 +140,8 @@ def main():
 
         m_tp = m_fp = m_fn = 0
         s_tp = s_fp = s_fn = 0
+        h_tp = h_fp = h_fn = 0
+        h_from_sc = h_from_model = 0
         gold_total = 0
         model_results, statcheck_results, gold_results = {}, {}, {}
 
@@ -169,8 +171,20 @@ def main():
             s_fp += len(svals - gold)
             s_fn += len(gold - svals)
 
+            # The cascade: statcheck is trusted first, because its precision
+            # is 1.000 here, and the model adds only what it did not find.
+            hvals = set(svals)
+            added = mvals - svals
+            hvals |= added
+            h_from_sc += len(svals)
+            h_from_model += len(added)
+            h_tp += len(hvals & gold)
+            h_fp += len(hvals - gold)
+            h_fn += len(gold - hvals)
+
         mp, mr, mf = prf(m_tp, m_fp, m_fn)
         sp, sr, sf = prf(s_tp, s_fp, s_fn)
+        hp, hr, hf = prf(h_tp, h_fp, h_fn)
 
         # ---- CHECKING: only where both found the same result ----
         agree = disagree = undecidable = 0
@@ -198,6 +212,9 @@ def main():
                       "tp": m_tp, "fp": m_fp, "fn": m_fn},
             "statcheck": {"precision": sp, "recall": sr, "f1": sf,
                           "tp": s_tp, "fp": s_fp, "fn": s_fn},
+            "hybrid": {"precision": hp, "recall": hr, "f1": hf,
+                       "tp": h_tp, "fp": h_fp, "fn": h_fn,
+                       "from_statcheck": h_from_sc, "from_model": h_from_model},
             "verdict_agreement": {"agree": agree, "disagree": disagree,
                                   "undecidable": undecidable},
         }
@@ -209,10 +226,13 @@ def main():
         print(f"\n=== {name.upper()} ({r['windows']} windows, {r['gold_results']} annotated results) "
               f"[{note}] ===")
         print(f"{'FINDING':12s} {'P':>7s} {'R':>7s} {'F1':>7s} {'TP':>6s} {'FP':>6s} {'FN':>6s}")
-        for who in ("model", "statcheck"):
+        for who in ("statcheck", "model", "hybrid"):
             m = r[who]
             print(f"{who:12s} {m['precision']:7.3f} {m['recall']:7.3f} {m['f1']:7.3f} "
                   f"{m['tp']:6d} {m['fp']:6d} {m['fn']:6d}")
+        h = r["hybrid"]
+        print(f"  hybrid sources: {h['from_statcheck']} from statcheck, "
+              f"{h['from_model']} added by the model")
         v = r["verdict_agreement"]
         total = v["agree"] + v["disagree"]
         rate = 100 * v["agree"] / total if total else 0.0

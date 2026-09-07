@@ -110,7 +110,8 @@ def score(examples: Sequence[dict], predicted: Dict[str, list]) -> dict:
 def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
           batch_size: int = 16, lr: float = 2e-3, seed: int = 0,
           test_journals: Sequence[str] = (), patience: int = 6,
-          use_crf: bool = False) -> dict:
+          use_crf: bool = False, augment: int = 0,
+          hard_negatives: int = 0, unit: str = "lstm") -> dict:
     random.seed(seed)
     torch.manual_seed(seed)
 
@@ -125,13 +126,26 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
     if not dev_set:
         raise SystemExit("the development split is empty; add more documents")
 
+    # Augmentation is applied to the training part only. Perturbing the
+    # development or test parts would measure the generator, not the model.
+    if augment or hard_negatives:
+        from .augment import Augmenter, check_alignment
+        aug = Augmenter(seed=seed)
+        extra = aug.expand(train_set, per_example=augment, negatives=hard_negatives)
+        broken = check_alignment(extra)
+        if broken:
+            raise SystemExit(f"augmentation broke {len(broken)} labels; first: {broken[0]}")
+        print(f"augmentation: {len(extra)} extra windows "
+              f"({hard_negatives} of them hard negatives)")
+        train_set = list(train_set) + extra
+
     vocab = build_vocab(train_set)
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     save_vocab(vocab, Path(__file__).parent / "spec" / "charmap.json")
 
     tag_list = list(TAG_TO_ID) if use_crf else None
-    model = CharTagger(len(vocab), len(TAG_TO_ID), tags=tag_list)
+    model = CharTagger(len(vocab), len(TAG_TO_ID), tags=tag_list, unit=unit)
     weights = torch.tensor(class_weights(train_set), dtype=torch.float)
     loss_fn = nn.CrossEntropyLoss(weight=weights, ignore_index=-100)
     opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
@@ -184,7 +198,8 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
     model.load_state_dict(best["state_dict"])
     final = score(dev_set, predict_spans(model, dev_set, vocab))
 
-    report = {"best_epoch": best_epoch, "crf": bool(model.crf), "dev": final, "history": history,
+    report = {"best_epoch": best_epoch, "crf": bool(model.crf),
+              "augment": augment, "hard_negatives": hard_negatives, "unit": unit, "dev": final, "history": history,
               "vocab_size": len(vocab), "parameters": model.n_parameters(),
               "train_windows": len(train_set), "dev_windows": len(dev_set)}
     if parts["test_unseen_journals"]:
@@ -209,10 +224,16 @@ def main():
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--hold-out-journals", nargs="*", default=[])
     ap.add_argument("--crf", action="store_true", help="add a CRF above the emissions")
+    ap.add_argument("--augment", type=int, default=0,
+                    help="perturbed copies to make of each training window")
+    ap.add_argument("--hard-negatives", type=int, default=0,
+                    help="generated passages that look like results and are not")
+    ap.add_argument("--unit", choices=["lstm", "gru"], default="lstm")
     args = ap.parse_args()
     train(args.data, args.out, epochs=args.epochs, batch_size=args.batch_size,
           lr=args.lr, seed=args.seed, test_journals=args.hold_out_journals,
-          use_crf=args.crf)
+          use_crf=args.crf, augment=args.augment,
+          hard_negatives=args.hard_negatives, unit=args.unit)
 
 
 if __name__ == "__main__":

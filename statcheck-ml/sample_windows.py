@@ -31,9 +31,8 @@ Usage: python sample_windows.py <clean_dir> <out_dir> [total_windows]
 """
 import sys, os, re, json, random, hashlib
 
-CLEAN = sys.argv[1]
-OUT = sys.argv[2]
-TOTAL = int(sys.argv[3]) if len(sys.argv) > 3 else 2000
+# Parsed inside main(), so that another module can import the rules here
+# without this file trying to read a command line of its own.
 
 # Share of the sample given to each pool. Pool A is small on purpose.
 WEIGHTS = {'A': 0.06, 'AN': 0.04, 'B1': 0.30, 'B2': 0.45, 'C': 0.15}
@@ -109,6 +108,9 @@ def windows_of(path):
 
 
 def main():
+    CLEAN = sys.argv[1]
+    OUT = sys.argv[2]
+    TOTAL = int(sys.argv[3]) if len(sys.argv) > 3 else 2000
     files = []
     for dp, _, fns in os.walk(CLEAN):
         for fn in fns:
