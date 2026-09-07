@@ -117,3 +117,59 @@ sample can show that.
 2. Done. Findings 5 and 6 now report the new conversion.
 3. Next: sample the annotation. See SAMPLING.md.
 4. Add the backslash operator to the list of known variants.
+
+## Finding 7 — a third of results hide behind control characters
+
+The conversion of some PDF files writes a control character where the operator
+belongs. The equals sign and the comparison signs are the characters affected.
+
+```
+F(1,184) \x02 7.64, p \x03 .01
+r(130)   \x01 1.0,  p < 0.001
+t(303)   \x01 \x06 4.82, p \x05 .001
+```
+
+This is not rare.
+
+| Measurement | Count |
+|---|---|
+| Documents with a control-character operator | 198 of 3100 (6.4%) |
+| Results of this shape with a normal operator | 6996 |
+| Results of this shape with a control-character operator | 3848 |
+| Share of this shape that is hidden | 35.5% |
+| p-values with a control-character operator | 11324 |
+
+No regular expression can read these results, because the character it needs is not
+there. This is the clearest evidence that a learned extractor can do work that a
+pattern cannot.
+
+### The mapping is not fixed
+
+A simple substitution table cannot repair this. The same control character means
+different things in different documents, because the meaning comes from the font of
+each document.
+
+```
+document A :  F(1,184) \x02 7.64      \x02 is an equals sign
+document B :  F(2,272) \x03 4.09      \x03 is an equals sign
+document A :  p \x03 .01              \x03 is a less-than sign
+```
+
+### Position carries the meaning
+
+The place of the character tells you its role. A character directly after the
+degrees of freedom is almost always an equals sign. A character directly after `p`
+is one of three signs.
+
+A model that reads the surrounding characters can therefore recover the operator. A
+pattern cannot, because the pattern must know the character in advance.
+
+The operator matters for the arithmetic. `p < .05` and `p = .05` lead to different
+verdicts. So the model must name the operator, not merely mark its position.
+
+Two further signals help:
+
+1. Inside one document the mapping is consistent. A document is therefore decodable
+   as a whole, even when one occurrence is ambiguous.
+2. A reported p-value near zero follows a less-than sign far more often than an
+   equals sign.

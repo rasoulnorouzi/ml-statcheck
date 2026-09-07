@@ -2,19 +2,15 @@
 
 The annotator reports values and an exact quote. It does not report offsets,
 because a language model counts characters unreliably. This script finds the
-quote in the text, then finds each part inside the quote, and produces two
-tag layers:
+quote in the text, finds each value inside the quote, and produces two tag
+layers plus a window flag.
 
-  layer 1 (block) : one span per whole result, so the parts of one result stay
-                    grouped without a separate linking model
-  layer 2 (part)  : TEST, STAT, DF1, DF2, N, POP, PVAL
-
-Both layers use BIOES tags over characters. Short spans such as "23" benefit
-from the explicit S and E tags.
+The search ignores differences in spaces and line breaks. A result is often
+split by a line break, and a strict search fails on exactly those cases.
 
 Usage: python to_bioes.py <sample_dir>
 """
-import sys, json, os
+import sys, json, os, collections
 
 D = sys.argv[1]
 win = {w['window_id']: w['text'] for w in json.load(open(os.path.join(D, 'windows.json'), encoding='utf-8'))}
@@ -25,10 +21,49 @@ PARTS = [('test_type', 'TEST'), ('statistic', 'STAT'), ('df1', 'DF1'),
          ('df2', 'DF2'), ('n', 'N'), ('p_operator', 'POP'), ('p_value', 'PVAL')]
 
 
+def squeeze(text):
+    """Collapse every run of whitespace to one space.
+
+    Returns the collapsed string and a list mapping each collapsed index back
+    to its index in the original string.
+    """
+    out, idx, prev_ws = [], [], False
+    for i, ch in enumerate(text):
+        if ch.isspace():
+            if not prev_ws:
+                out.append(' ')
+                idx.append(i)
+            prev_ws = True
+        else:
+            out.append(ch)
+            idx.append(i)
+            prev_ws = False
+    return ''.join(out), idx
+
+
+def find_span(text, flat, imap, needle, lo=0, hi=None):
+    """Locate `needle` in `text`, tolerating whitespace differences.
+
+    `lo` and `hi` are bounds in the collapsed coordinate system.
+    Returns (start, end) in original coordinates, or None.
+    """
+    if not needle:
+        return None
+    nflat = ' '.join(str(needle).split())
+    hi = len(flat) if hi is None else hi
+    j = flat.find(nflat, lo, hi)
+    if j < 0:
+        return None
+    start = imap[j]
+    end = imap[j + len(nflat) - 1] + 1
+    return start, end, j, j + len(nflat)
+
+
 def bioes(n, spans):
-    """Build a BIOES tag sequence of length n from (start, end, label) spans."""
     tags = ['O'] * n
     for s, e, lab in spans:
+        if e - s <= 0:
+            continue
         if e - s == 1:
             tags[s] = 'S-' + lab
         else:
@@ -39,62 +74,57 @@ def bioes(n, spans):
     return tags
 
 
-stats = {'windows': 0, 'results': 0, 'quote_found': 0, 'quote_missing': 0,
-         'parts_total': 0, 'parts_aligned': 0}
-missing_examples = []
+st = collections.Counter()
+missing = []
 out = []
 
 for a in ann:
     wid = a['window_id']
     text = win.get(wid, '')
-    stats['windows'] += 1
+    flat, imap = squeeze(text)
+    st['windows'] += 1
     block_spans, part_spans = [], []
 
     for r in a.get('results') or []:
-        stats['results'] += 1
-        quote = r.get('quote') or ''
-        qi = text.find(quote) if quote else -1
-        if qi < 0:
-            # try a whitespace-tolerant match before giving up
-            norm = ' '.join(quote.split())
-            flat = ' '.join(text.split())
-            if norm and norm in flat:
-                qi = -2
-            stats['quote_missing'] += 1
-            if len(missing_examples) < 4:
-                missing_examples.append((wid, quote[:70]))
+        st['results'] += 1
+        hit = find_span(text, flat, imap, r.get('quote'))
+        if not hit:
+            st['quote_missing'] += 1
+            if len(missing) < 5:
+                missing.append((wid, str(r.get('quote'))[:70]))
             continue
-        stats['quote_found'] += 1
-        block_spans.append((qi, qi + len(quote), 'RESULT'))
-        cursor = qi
+        st['quote_found'] += 1
+        qs, qe, fs, fe = hit
+        block_spans.append((qs, qe, 'RESULT'))
+        cur = fs
         for field, lab in PARTS:
             val = r.get(field)
             if val in (None, ''):
                 continue
-            stats['parts_total'] += 1
-            pi = text.find(str(val), cursor, qi + len(quote))
-            if pi < 0:
-                pi = text.find(str(val), qi, qi + len(quote))
-            if pi < 0:
+            st['parts_total'] += 1
+            p = find_span(text, flat, imap, val, cur, fe) or find_span(text, flat, imap, val, fs, fe)
+            if not p:
+                st['parts_missing'] += 1
                 continue
-            stats['parts_aligned'] += 1
-            part_spans.append((pi, pi + len(str(val)), lab))
-            cursor = pi + len(str(val))
+            st['parts_aligned'] += 1
+            part_spans.append((p[0], p[1], lab))
+            cur = p[3]
 
     out.append({'window_id': wid, 'pool': key.get(wid, {}).get('pool'),
+                'journal': key.get(wid, {}).get('journal'),
                 'text': text,
                 'block_tags': bioes(len(text), block_spans),
                 'part_tags': bioes(len(text), part_spans),
                 'contains_result': bool(block_spans)})
 
-with open(os.path.join(D, 'tagged.json'), 'w', encoding='utf-8') as fh:
-    json.dump(out, fh, ensure_ascii=False)
+json.dump(out, open(os.path.join(D, 'tagged.json'), 'w', encoding='utf-8'), ensure_ascii=False)
 
+qf, qm = st['quote_found'], st['quote_missing']
+pa, pt = st['parts_aligned'], st['parts_total']
 print('ALIGNMENT REPORT')
-print(f"  windows              : {stats['windows']}")
-print(f"  results annotated    : {stats['results']}")
-print(f"  quote located in text: {stats['quote_found']}")
-print(f"  quote NOT located    : {stats['quote_missing']}")
-print(f"  parts aligned        : {stats['parts_aligned']} / {stats['parts_total']}")
-for wid, q in missing_examples:
-    print(f'    missing: {wid}  {q!r}')
+print(f"  windows            : {st['windows']}")
+print(f"  results annotated  : {st['results']}")
+print(f"  quote aligned      : {qf} / {qf + qm}  ({100*qf/max(qf+qm,1):.1f}%)")
+print(f"  parts aligned      : {pa} / {pt}  ({100*pa/max(pt,1):.1f}%)")
+for wid, q in missing:
+    print(f'    unaligned: {wid}  {q!r}')

@@ -42,6 +42,21 @@ Three outputs are produced for each window.
 | part tags | BIOES over 7 labels | find each value |
 | block tags | BIOES over 1 label | group the values of one result |
 | window flag | one label for the window | say whether any result is present |
+| operator class | 3 classes for each `POP` span | name the operator, even when the character is damaged |
+
+### Why the operator needs its own output
+
+In 6.4% of the documents the conversion writes a control character where the
+operator belongs. A third of the results of that shape are affected. Marking the
+position of the operator is therefore not enough, because the character itself
+carries no meaning.
+
+The model must choose between `=`, `<` and `>` from the surrounding characters. The
+arithmetic depends on this choice, because `p < .05` and `p = .05` give different
+verdicts.
+
+Train this output on the results where the operator is undamaged. These give a large
+supervised set at no extra cost. Then apply it to the damaged results.
 
 The seven part labels are `TEST`, `STAT`, `DF1`, `DF2`, `N`, `POP`, and `PVAL`.
 

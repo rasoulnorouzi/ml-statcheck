@@ -23,12 +23,19 @@ from the filtered set.
 
 Each pool answers a different question. Do not merge them.
 
-| Pool | Source | Size | Purpose |
+| Pool | Source | Purpose | Measured yield |
 |---|---|---|---|
-| A | windows where the regex found a result | 1500 | check the quality of the silver labels |
-| B | windows that pass the filter, where the regex found nothing | 6000 | find the results the regex misses |
-| C | windows that the filter rejected | 500 | measure what the filter drops |
-| D | a frozen test set, stratified | 1000 | the only measure of success |
+| A | the pattern matched a complete result | check the silver labels | 100% |
+| B1 | a p-value is present, no complete match | find prose and bare-statistic reports | 33% |
+| B2 | a test letter and digits, no p-value | find damaged operators | 60% |
+| C | the density filter rejected the line | measure what the filter drops | 0% |
+| D | a frozen test set, stratified | the only measure of success | not yet drawn |
+
+The yields come from round 1, which annotated 55 windows.
+
+Pool B2 gives a better yield than pool B1, which was not expected. Pool B2 catches
+the results whose operator became a control character, and those are the results a
+pattern can never read. Weight pool B2 above pool B1 in the next round.
 
 Pool B holds the value of the project. These windows are where a result hides in a
 form the regex cannot match.
