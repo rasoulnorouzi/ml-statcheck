@@ -30,3 +30,7 @@ node_modules/
 # R
 .Rhistory
 .RData
+
+# Virtual environment
+.venv/
+*.egg-info/
