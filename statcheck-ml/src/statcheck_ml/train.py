@@ -60,11 +60,20 @@ def predict_spans(model: CharTagger, examples: Sequence[dict],
     with torch.no_grad():
         for ids, _, rows in make_batches(examples, vocab, batch_size, shuffle=False):
             logits = model(ids)
-            best = logits.argmax(-1)
-            for j, r in enumerate(rows):
-                n = len(r["text"])
-                tags = [ID_TO_TAG[int(t)] for t in best[j, :n]]
-                out[r["window_id"]] = tags_to_spans(tags)
+            if model.crf is not None:
+                mask = (ids != 0).float()
+                mask[:, 0] = 1.0                      # the first step always counts
+                paths = model.crf.decode(logits, mask)
+                for j, r in enumerate(rows):
+                    n = len(r["text"])
+                    tags = [ID_TO_TAG[int(t)] for t in paths[j][:n]]
+                    out[r["window_id"]] = tags_to_spans(tags)
+            else:
+                best = logits.argmax(-1)
+                for j, r in enumerate(rows):
+                    n = len(r["text"])
+                    tags = [ID_TO_TAG[int(t)] for t in best[j, :n]]
+                    out[r["window_id"]] = tags_to_spans(tags)
     return out
 
 
@@ -100,7 +109,8 @@ def score(examples: Sequence[dict], predicted: Dict[str, list]) -> dict:
 
 def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
           batch_size: int = 16, lr: float = 2e-3, seed: int = 0,
-          test_journals: Sequence[str] = (), patience: int = 6) -> dict:
+          test_journals: Sequence[str] = (), patience: int = 6,
+          use_crf: bool = False) -> dict:
     random.seed(seed)
     torch.manual_seed(seed)
 
@@ -120,7 +130,8 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
     out.mkdir(parents=True, exist_ok=True)
     save_vocab(vocab, Path(__file__).parent / "spec" / "charmap.json")
 
-    model = CharTagger(len(vocab), len(TAG_TO_ID))
+    tag_list = list(TAG_TO_ID) if use_crf else None
+    model = CharTagger(len(vocab), len(TAG_TO_ID), tags=tag_list)
     weights = torch.tensor(class_weights(train_set), dtype=torch.float)
     loss_fn = nn.CrossEntropyLoss(weight=weights, ignore_index=-100)
     opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
@@ -138,11 +149,16 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
         for ids, tags, _ in make_batches(train_set, vocab, batch_size):
             opt.zero_grad()
             logits = model(ids)
-            loss = loss_fn(logits.reshape(-1, logits.size(-1)), tags.reshape(-1))
+            if model.crf is not None:
+                mask = (tags != -100).float()
+                mask[:, 0] = 1.0
+                loss = model.crf(logits, tags, mask)
+            else:
+                loss = loss_fn(logits.reshape(-1, logits.size(-1)), tags.reshape(-1))
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 5.0)
             opt.step()
-            total += float(loss) * ids.size(0)
+            total += loss.detach().item() * ids.size(0)
             seen += ids.size(0)
 
         metrics = score(dev_set, predict_spans(model, dev_set, vocab))
@@ -168,7 +184,7 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
     model.load_state_dict(best["state_dict"])
     final = score(dev_set, predict_spans(model, dev_set, vocab))
 
-    report = {"best_epoch": best_epoch, "dev": final, "history": history,
+    report = {"best_epoch": best_epoch, "crf": bool(model.crf), "dev": final, "history": history,
               "vocab_size": len(vocab), "parameters": model.n_parameters(),
               "train_windows": len(train_set), "dev_windows": len(dev_set)}
     if parts["test_unseen_journals"]:
@@ -192,9 +208,11 @@ def main():
     ap.add_argument("--lr", type=float, default=2e-3)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--hold-out-journals", nargs="*", default=[])
+    ap.add_argument("--crf", action="store_true", help="add a CRF above the emissions")
     args = ap.parse_args()
     train(args.data, args.out, epochs=args.epochs, batch_size=args.batch_size,
-          lr=args.lr, seed=args.seed, test_journals=args.hold_out_journals)
+          lr=args.lr, seed=args.seed, test_journals=args.hold_out_journals,
+          use_crf=args.crf)
 
 
 if __name__ == "__main__":

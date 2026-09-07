@@ -25,10 +25,18 @@ class CharTagger(nn.Module):
 
     def __init__(self, vocab_size: int, n_tags: int,
                  embed_dim: int = 64, hidden: int = 128,
-                 layers: int = 2, dropout: float = 0.25):
+                 layers: int = 2, dropout: float = 0.25,
+                 tags: list | None = None):
         super().__init__()
         self.vocab_size = vocab_size
         self.n_tags = n_tags
+        # When `tags` is given, a CRF sits above the emissions. It is trained
+        # and decoded in Python and never exported, so the ONNX graph still
+        # returns plain emission scores.
+        self.crf = None
+        if tags is not None:
+            from .crf import CRF
+            self.crf = CRF(tags)
         # Index 0 is PAD. Its embedding stays at zero and never trains.
         self.embed = nn.Embedding(vocab_size, embed_dim, padding_idx=0)
         self.lstm = nn.LSTM(

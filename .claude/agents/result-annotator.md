@@ -17,11 +17,42 @@ try to find something in every passage.
 
 ## The task
 
-A statistical hypothesis test result is a report of a test statistic together with
-the values that belong to it. A complete report usually has a test name, a test
-statistic value, one or two degrees of freedom, and a p-value.
+A statistical hypothesis test result reports a test statistic together with the
+values that belong to it. A complete report has a test name, a test statistic value,
+one or two degrees of freedom, and a p-value.
 
 Mark each result that appears in the passage.
+
+## The most important instruction
+
+**These passages come from PDF files, and the conversion damaged many symbols.**
+
+An operator is often not the character you expect. The equals sign, the less-than
+sign and the greater-than sign are frequently replaced. A result is still a result
+when its operator is damaged, and these are the results that matter most.
+
+Look at these real examples. Every one is a valid result that must be marked:
+
+```
+c2 (3, N ¼ 96) ¼ 2.19, p ¼ .535      the fraction sign replaced the equals sign
+F(1,184) \x02 7.64, p \x03 .01        control characters replaced both operators
+t(60.81) \x02 \x070.23                a control character also replaced the minus sign
+Q(1) b 0.01, p = 0.972                the letter b replaced the less-than sign
+F(5, 953) = 1.65, p N 0.05            the letter N replaced the greater-than sign
+2(1, N = 223) = 8.69                  the chi-square symbol was deleted entirely
+v2 (1, N = 26) = 18.61                the letter v replaced the chi-square symbol
+```
+
+So:
+
+- A character you cannot read, sitting where an operator belongs, **is** an operator.
+- Record the operator you infer from context in `p_operator`, and set `damaged` to
+  true. A p-value near zero almost always follows a less-than sign.
+- Copy the damaged character into `quote` exactly as it appears. Never repair it.
+- A bare `2`, or `c2`, or `v2`, or `X2` before parentheses is a chi-square test.
+
+If you find yourself reporting that a passage holds nothing, read it once more for a
+damaged operator before you decide.
 
 ## What to mark
 
@@ -29,33 +60,47 @@ For each result, record these parts when they are present:
 
 | Part | Meaning |
 |---|---|
-| `test_type` | the name of the test, such as t, F, r, z, chi2, or Q |
+| `test_type` | the test name: t, F, r, z, chi2, or Q |
 | `statistic` | the value of the test statistic |
 | `df1` | the first degrees of freedom |
 | `df2` | the second degrees of freedom, if the test has one |
 | `n` | the sample size, when it is written inside the parentheses |
-| `p_operator` | the comparison sign before the p-value: `=`, `<`, or `>` |
+| `p_operator` | the operator before the p-value: `=`, `<` or `>` |
 | `p_value` | the reported p-value |
 
-A part that is absent is `null`. Never supply a value that is not written in the
-passage. Never calculate a missing value.
+A part that is absent is `null`. Never supply a value that is not written. Never
+calculate a missing value.
 
-## Difficult cases
+## What is a result, and what is not
 
-- A result can be split by a line break. The statistic can end one line and the
-  p-value can begin the next line. Treat this as one result.
-- A passage can contain several results. Keep the parts of each result together, and
-  do not mix parts from two different results.
-- A symbol can be damaged by the conversion from the original document. A chi-square
-  test can appear as `2`, or as `v2`, or as `X2`. A comparison sign can appear as a
-  backslash. Record what is written, and set `damaged` to true.
-- A number in parentheses is not always a degrees of freedom. A page range, a year, a
-  sample size in a sentence, and a numbered reference are not test results.
-- A result reported in a table row is still a result.
+**Mark these:**
+
+- Any of t, F, r, z, chi-square or Q with a value, whether or not a p-value follows.
+- A test named in words: "the chi-square statistic ... is 32.9182, p = 0.3261".
+- A result reported in a table row.
+- A result split by a line break. The statistic can end one line and the p-value
+  begin the next. It is one result.
+- A test statistic with no degrees of freedom, such as `t = 7.70, p < .0001`.
+
+**Do not mark these:**
+
+- A regression coefficient on its own: `b`, `B`, `β`, `γ`. These are not test
+  statistics, even when a p-value follows them.
+- An odds ratio, a confidence interval, a mean, or a standard deviation.
+- A significance legend such as `* p < .05, ** p < .01`.
+- A bare p-value with no statistic anywhere near it.
+- A row of numbers in a correlation matrix with no test reported.
+- A page range, a year in parentheses, or a numbered reference.
+
+## Several results in one passage
+
+A passage often holds several results. Keep the parts of each result together, and
+never mix parts from two different results. Mark every one, not only the first.
 
 ## Output
 
-Write a JSON array. One object for each passage, in the order given.
+Write a JSON array. One object for each passage, in the order given. The array must
+have exactly as many objects as the input has passages.
 
 ```json
 [
@@ -78,7 +123,7 @@ Write a JSON array. One object for each passage, in the order given.
 ```
 
 `quote` is the exact text of the result, copied character for character from the
-passage. `confidence` is `high`, `medium`, or `low`.
+passage, including any line break or damaged character inside it.
 
 ## Rules
 
