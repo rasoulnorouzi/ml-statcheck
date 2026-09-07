@@ -9,13 +9,17 @@ this repository.
 package `statcheck`, shipped as ONNX and run from three ports: a browser web app, R,
 and Python.
 
-Read `PLAN.md` before starting work. It holds the phase table, the current status of
-each phase, and the design decisions. It is the only place progress is tracked.
+Read `PLAN.md` before starting work. It holds the phase table and the current status
+of each phase. It is the only place progress is tracked.
+
+Then read `CONTEXT.md`. It records why each decision was made and what the corpus
+measurements showed. A new session needs it to avoid repeating a settled argument.
 
 ## Layout
 
 ```
-PLAN.md              phase table and design decisions; the single source of truth
+PLAN.md              phase table and status; the single source of truth
+CONTEXT.md           why the decisions were made, and what the corpus showed
 statcheck-ml/        the project itself
 .claude/agents/      one agent per phase, with its model fixed in frontmatter
 .claude/hooks/       session inventory, write guard, frontmatter validator
