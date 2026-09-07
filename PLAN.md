@@ -115,7 +115,7 @@ Status values: `blocked`, `ready`, `active`, `done`.
 | M | # | Phase | Agent | Model | Status |
 |---|---|---|---|---|---|
 | M1 | 0 | Repository layout, environment, size and latency gate | data-engineer | haiku | ready |
-| M1 | 1 | Ingest the owner corpus, open access, and the statcheck dataset | data-engineer | haiku | blocked |
+| M1 | 1 | Ingest corpus, RE-CONVERT the PDFs with PyMuPDF, keep both versions | data-engineer | haiku | ready |
 | M1 | 2a | Port the statcheck regex to Python, prove parity against R | regex-porter | sonnet | ready |
 | M1 | 2b | Build the prefilter spec, three ports, measure its recall | regex-porter | sonnet | ready |
 | M2 | 3 | Label schema, window unit, result-block grouping, silver labels | label-architect | opus | ready |
@@ -136,5 +136,5 @@ Phases 0, 2a, 2b, 3, 4, 5 and 8 need no data. They can start now.
 
 ## Waiting on the owner
 
-- The corpus folder: raw PDF files and their converted text. The owner is preparing it.
+- Corpus received. See statcheck-ml/CORPUS.md. The supplied text lost all Greek letters, so phase 1 must convert the PDF files again.
 - The human-labeled gold set, whenever it is ready.

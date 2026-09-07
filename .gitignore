@@ -1,0 +1,26 @@
+# Corpus and derived data. Never commit these; they are large and often
+# licensed in ways that forbid redistribution.
+*.zip
+data/
+corpus/
+statcheck-ml/data/
+*.pdf
+
+# Models and checkpoints
+*.onnx
+*.pt
+*.ckpt
+checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# R
+.Rhistory
+.RData
