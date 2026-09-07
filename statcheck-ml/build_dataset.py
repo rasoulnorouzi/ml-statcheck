@@ -60,8 +60,11 @@ def find_span(flat, imap, needle, lo=0, hi=None):
 
 def build(sample_dir, out_dir, name):
     def load(fn):
+        # strict=False allows raw control characters inside strings. A damaged
+        # operator in this corpus IS a control character, so rejecting them
+        # would discard the results the project exists to find.
         with open(os.path.join(sample_dir, fn), encoding='utf-8') as fh:
-            return json.load(fh)
+            return json.loads(fh.read(), strict=False)
 
     windows = {w['window_id']: w['text'] for w in load('windows.json')}
     key = {k['window_id']: k for k in load('key.json')}

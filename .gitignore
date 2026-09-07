@@ -34,3 +34,6 @@ node_modules/
 # Virtual environment
 .venv/
 *.egg-info/
+
+# Trained models are rebuilt from the dataset
+statcheck-ml/models/
