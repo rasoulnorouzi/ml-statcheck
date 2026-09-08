@@ -31,7 +31,13 @@ from .data import load_jsonl, row_to_example, split_by_document
 from .labels import TAG_TO_ID, ID_TO_TAG, tags_to_spans
 from .train import score
 
-MODEL_NAME = "distilbert-base-uncased"
+# Two transformers are compared. MobileBERT is the only one small enough to
+# consider shipping; DistilBERT is the accuracy ceiling and nothing more.
+MODELS = {
+    "distilbert": "distilbert-base-uncased",
+    "mobilebert": "google/mobilebert-uncased",
+}
+MODEL_NAME = MODELS["distilbert"]
 
 
 def encode_example(ex: dict, tokenizer, max_length: int = 512):
@@ -85,7 +91,9 @@ def collate(batch, pad_id):
 
 
 def run(data_globs: Sequence[str], out_dir: str, epochs: int = 6,
-        batch_size: int = 8, lr: float = 3e-5, seed: int = 0) -> dict:
+        batch_size: int = 8, lr: float = 3e-5, seed: int = 0,
+        model_name: str = MODEL_NAME, augment: int = 0,
+        hard_negatives: int = 0) -> dict:
     from transformers import AutoModelForTokenClassification, AutoTokenizer
 
     random.seed(seed)
@@ -98,13 +106,25 @@ def run(data_globs: Sequence[str], out_dir: str, epochs: int = 6,
     parts = split_by_document(examples)
     train_set, dev_set = parts["train"], parts["dev"]
 
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+    # The same augmentation the character model uses, so the comparison is
+    # between architectures and not between training sets.
+    if augment or hard_negatives:
+        from .augment import Augmenter, check_alignment
+        aug = Augmenter(seed=seed)
+        extra = aug.expand(train_set, per_example=augment, negatives=hard_negatives)
+        broken = check_alignment(extra)
+        if broken:
+            raise SystemExit(f"augmentation broke {len(broken)} labels")
+        print(f"augmentation: {len(extra)} extra windows")
+        train_set = list(train_set) + extra
+
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForTokenClassification.from_pretrained(
-        MODEL_NAME, num_labels=len(TAG_TO_ID))
+        model_name, num_labels=len(TAG_TO_ID))
 
     n_params = sum(p.numel() for p in model.parameters())
     print(f"windows: train {len(train_set)}, dev {len(dev_set)}")
-    print(f"model: {n_params:,} parameters, {n_params*4/1e6:.0f} MB as float32")
+    print(f"{model_name}: {n_params:,} parameters, {n_params*4/1e6:.0f} MB as float32")
 
     train_enc = [encode_example(e, tokenizer) for e in train_set]
     dev_enc = [encode_example(e, tokenizer) for e in dev_set]
@@ -152,7 +172,7 @@ def run(data_globs: Sequence[str], out_dir: str, epochs: int = 6,
         if f1 > best_f1:
             best_f1, best_epoch, best_metrics = f1, epoch, metrics
 
-    report = {"model": MODEL_NAME, "parameters": n_params,
+    report = {"model": model_name, "parameters": n_params,
               "size_mb_float32": n_params * 4 / 1e6,
               "best_epoch": best_epoch, "dev": best_metrics, "history": history}
     (out / "report.json").write_text(json.dumps(report, indent=1), encoding="utf-8")
@@ -166,8 +186,13 @@ def main():
     ap.add_argument("--out", default="statcheck-ml/models/distilbert")
     ap.add_argument("--epochs", type=int, default=6)
     ap.add_argument("--batch-size", type=int, default=8)
+    ap.add_argument("--arch", choices=list(MODELS), default="distilbert")
+    ap.add_argument("--augment", type=int, default=0)
+    ap.add_argument("--hard-negatives", type=int, default=0)
     args = ap.parse_args()
-    run(args.data, args.out, epochs=args.epochs, batch_size=args.batch_size)
+    run(args.data, args.out, epochs=args.epochs, batch_size=args.batch_size,
+        model_name=MODELS[args.arch], augment=args.augment,
+        hard_negatives=args.hard_negatives)
 
 
 if __name__ == "__main__":
