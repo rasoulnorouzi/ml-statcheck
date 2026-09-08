@@ -21,6 +21,10 @@ measurements showed. A new session needs it to avoid repeating a settled argumen
 PLAN.md              phase table and status; the single source of truth
 CONTEXT.md           why the decisions were made, and what the corpus showed
 statcheck-ml/        the project itself
+  src/.../spec/      shared rules; every port reads these, none restates them
+  js/                the browser port
+  r/                 the R port
+  tests/             parity of the three ports, from committed cases
 .claude/agents/      one agent per phase, with its model fixed in frontmatter
 .claude/hooks/       session inventory, write guard, frontmatter validator
 scripts/             repository tooling, not project code
@@ -68,3 +72,21 @@ node scripts/list-extensions.js    # validate every agent, skill, and command lo
 ```
 
 Exits non-zero when an extension has broken frontmatter, so it can gate a commit.
+
+```
+cd statcheck-ml
+node tests/parity.mjs              # the JavaScript port matches Python
+Rscript tests/parity.R             # the R port matches Python
+```
+
+Both read `tests/parity_cases.json`, which is committed, so neither needs the
+corpus. Each exits non-zero when a port drifts. Run both after any change to
+`spec/normalize.json` or to a port of it, and rebuild the cases with
+`python tests/make_parity_cases.py` only when the rules themselves change.
+
+```
+python bench_engines.py <pdf_dir> <key.json> <labels.json> --text-dir <dir>
+```
+
+Measures every PDF engine and reports the spread between the best and the worst.
+Phases 9 and 10 must not ship while the spread is above 0.06.

@@ -5,6 +5,10 @@
 *.zip
 *.pdf
 statcheck-ml/data/
+# The archive extracts to this name at the repository root. The files inside are
+# full text, not PDF, so the rules above do not catch them. Without this line
+# `git add -A` stages 3000 copyrighted articles.
+02_pdfs/
 
 # --- Derived dataset. This IS committed. ---
 # Short annotated excerpts and their labels. The rule above ignores the whole

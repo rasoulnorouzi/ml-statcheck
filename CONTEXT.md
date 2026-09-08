@@ -144,6 +144,143 @@ operator became a control character. Weight it above B1 in the next round.
 Alignment reached 100% of quotes once the matcher ignored differences in whitespace.
 The strict matcher failed on exactly the results split by a line break.
 
+### The PDF engine is part of the system, not a detail below it
+
+Each port gets a different PDF engine, and they do not read the same text. No
+engine serves all three ports.
+
+| Engine | Python | R | Browser |
+|---|---|---|---|
+| PyMuPDF | yes | no | through a WASM build |
+| PDFium | yes, `pypdfium2` | no | through a WASM build |
+| poppler | yes | yes, `pdftools` bundles it | no |
+| PDF.js | no | no | yes, and it costs nothing |
+
+R is the constraint. `pdftools` is built on poppler, measured as version 26.01.0.
+It does not read exactly what the poppler command line reads. On the 131 holdout
+documents both could read, `pdf_text()` held 0.916 of the results against 0.902
+for `pdftotext`, and kept 0.912 against 0.898 after the prefilter. The R port is
+therefore a little better than the command line, not equal to it. Measure the R
+port with `pdf_text()`, never by borrowing a `pdftotext` number.
+
+The models were trained on PyMuPDF text. Reading the same 198 holdout documents
+with each engine showed the size of the problem, on 323 gold results:
+
+| Engine | Holds the result | Prefilter recall, before | after |
+|---|---|---|---|
+| PyMuPDF | 0.929 | 0.929 | 0.929 |
+| PDF.js | 0.926 | 0.907 | 0.907 |
+| PDFium | 0.920 | 0.907 | 0.910 |
+| poppler | 0.889 | 0.793 | 0.879 |
+
+The spread between the best and the worst engine was 0.136. It is now 0.050.
+
+The cause was not the character encoding. The first guess was that poppler
+writes a destroyed operator as a letter in the Greek and Coptic block, where
+PyMuPDF writes a control character, and that the density rule counts letters.
+A canonicalisation test recovered nothing, so that guess was wrong.
+
+The cause is the line. Poppler returns a whole column as one line, at a mean
+length of 195.8 characters against 47.2 for PyMuPDF. Every prefilter rule
+measures one line. A joined line holds a statistic AND a citation, so the
+reference rule discarded both. That was 26 of the 37 results poppler lost.
+
+`spec/normalize.json` and `normalize.py` hold the fix. The stage runs directly
+after the engine. It restores the line width, and it renames damaged operator
+characters to the alphabet the model was trained on.
+
+At the prefilter the stage left PyMuPDF at 0.929 and looked free. At the model
+it did not: what the model found on PyMuPDF fell from 0.879 to 0.868, while
+poppler rose from 0.791 to 0.846.
+
+### Rename only what the model cannot read
+
+The cause took three attempts to find, and the first two answers were wrong.
+
+The first guess was the character encoding. A canonicalisation test recovered
+nothing, so that was wrong. The second guess was the reflow cutting the long
+lines of a document that already had normal lines. Gating the reflow per
+document did not move the number either, so that was wrong as well.
+
+The answer came from listing every character the stage changed, rather than
+reasoning about it. The renaming rule used the position alone: any character
+between a letter and a digit that was not in a hand written keep list. In
+PyMuPDF text that caught the copyright sign, the multiplication sign, the curly
+quotes, and the significance star of `* p < .05`. All of them are ordinary
+characters the model reads well. 91% of the renames on PyMuPDF were of
+characters the model already knew.
+
+`spec/charmap.json` holds the 175 characters the model can read, and it matches
+the checkpoint vocabulary exactly. The rule is now simply this:
+
+> Rename a character only when the model cannot read it. Never rename by
+> position.
+
+Unnecessary renames fell to zero on every engine, and PyMuPDF now renames 7
+characters instead of 80.
+
+Two lessons are worth keeping:
+
+- A stage measured at one point in the pipeline can still cost recall at the
+  next one. Measure the model, not only the filter.
+- When two guesses in a row are wrong, stop guessing. List what the code
+  actually changed.
+
+The reflow is still decided per document, with `reflow_min_mean_line` at 120.
+That gate was added while chasing the wrong cause, and it did not fix the
+regression, but it stands on its own evidence: PyMuPDF averages 48 characters
+per line, PDF.js 55 and PDFium 69, no PDFium document reaches 119, and poppler
+averages 222. A document that is already broken into normal lines has no joined
+column to undo.
+
+The renaming is safe because the correspondence between the engines is one to
+one inside a document, measured on 50 of 50 documents where both engines damaged
+the same place. No information is lost by the engine swap. Only the name of the
+character changes.
+
+`bench_engines.py` is the gate. Phases 9 and 10 must not ship while the spread
+is above 0.06.
+
+### Each port names its own engine
+
+| Port | Engine | Recall | Licence | Why |
+|---|---|---|---|---|
+| Python | PyMuPDF | 0.929 | AGPL-3.0 or commercial | Reads the most, and the models were trained on it, so it carries no distribution shift. |
+| R | pdftools | 0.912 | MIT over poppler, GPL-2 | R has no other maintained reader. |
+| Browser | PDF.js | 0.923 | Apache-2.0 | Needs no second binary to download. |
+
+PDFium is the permissive alternative, at 0.916. Use it in place of PyMuPDF if
+the AGPL licence does not suit distribution. It has a Python build and a
+JavaScript build, so one engine can serve two ports.
+
+### A window must hold text, not lines
+
+A fixed count of lines is not a fixed amount of context, and this cost more
+recall than the density rule did.
+
+The count was tuned on PyMuPDF, whose lines run about 57 characters, so two
+lines each side hold about 298 characters. PDF.js breaks the same page into
+shorter lines, so the same window holds 175 characters and cuts the result in
+half.
+
+The density rule was not the cause. Removing it entirely recovers one result and
+costs about 8000 extra windows for it. Matching the amount of text recovers most
+of the gap at no extra windows at all, because a window only becomes longer.
+
+`target_window_characters` is 250 in `spec/prefilter.json`. A window grows until
+it holds that much and never shrinks, so text that already has long lines is
+untouched.
+
+| Engine | Fixed lines | 250 characters | Characters read |
+|---|---|---|---|
+| PyMuPDF | 0.929 | 0.929 | 1.08x |
+| PDF.js | 0.907 | 0.923 | 1.72x |
+| PDFium | 0.910 | 0.916 | 1.55x |
+| R pdftools | 0.912 | 0.912 | 1.02x |
+| poppler | 0.879 | 0.885 | 1.10x |
+
+PyMuPDF recall does not move, so no published number regresses.
+
 ## Known problems
 
 1. A window can cut a result in half. One pool A window began in the middle of a
@@ -152,6 +289,16 @@ The strict matcher failed on exactly the results split by a line break.
 2. Detection is not the same as checking. A result with no degrees of freedom and no
    p-value is real but cannot be recomputed. Report the two counts apart.
 3. Project agents need a session restart before Claude Code can dispatch them.
+4. poppler reads 4 points less of the corpus than PyMuPDF, and the normalisation
+   stage cannot recover text the engine never returned. The R port therefore has
+   a lower ceiling than the Python port. State the number in the R
+   documentation rather than hide it.
+5. `pdftools` hangs on some documents, and it hung twice in 198. The poppler
+   command line reads the same files without trouble. The R port must give each
+   document a time limit and continue after one fails.
+6. The models are trained on PyMuPDF text alone. `ENGINE_ALPHABETS` in
+   `augment.py` now holds the characters other engines use, but no model has
+   been retrained with them yet.
 
 ## Working agreements
 

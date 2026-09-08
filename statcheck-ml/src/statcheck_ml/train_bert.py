@@ -34,10 +34,37 @@ from .train import score
 # Two transformers are compared. MobileBERT is the only one small enough to
 # consider shipping; DistilBERT is the accuracy ceiling and nothing more.
 MODELS = {
-    "distilbert": "distilbert-base-uncased",
+    # Cased, because the letter of the test carries the meaning. An uncased
+    # model reads `F` and `f` as the same character.
+    "distilbert": "distilbert-base-cased",
+    # Google publishes MobileBERT uncased only, so this one keeps that fault.
+    # Report it beside the number rather than hide it.
     "mobilebert": "google/mobilebert-uncased",
 }
 MODEL_NAME = MODELS["distilbert"]
+
+# A word-piece tokenizer deletes control characters before it splits anything.
+# In this corpus a control character is a destroyed operator, so the transformer
+# read `F(1, 17) < 35.72` and `F(1, 17) = 35.72` as the same string, and half
+# the holdout is damaged that way. The character model has no such problem,
+# which is the reason it is the model that ships.
+#
+# Deleting the operator makes the comparison meaningless rather than merely
+# unflattering, so each canonical slot is swapped for a visible character that
+# both tokenizers keep as one token. The swap is one character for one
+# character, so every offset and every tag stays where it was.
+#
+# The characters were chosen by tokenizing every candidate and keeping only
+# those that survive as a single token in both models.
+VISIBLE_OPERATOR = {chr(i + 1): chr(cp) for i, cp in enumerate(
+    [0xB5, 0xB6, 0xC6, 0xD8, 0xDE, 0xDF, 0xA1, 0xA2])}
+
+_VISIBLE_TABLE = {ord(k): v for k, v in VISIBLE_OPERATOR.items()}
+
+
+def make_visible(text: str) -> str:
+    """Swap destroyed operators for characters a word-piece tokenizer keeps."""
+    return text.translate(_VISIBLE_TABLE)
 
 
 def encode_example(ex: dict, tokenizer, max_length: int = 512):
@@ -48,8 +75,10 @@ def encode_example(ex: dict, tokenizer, max_length: int = 512):
     A token that covers several tags takes the tag of its first character,
     which is what the BIOES prefix already encodes.
     """
-    enc = tokenizer(ex["text"], return_offsets_mapping=True, truncation=True,
-                    max_length=max_length, return_tensors=None)
+    # The swap is one character for one character, so `offset_mapping` still
+    # points into `ex["text"]` and the tags need no adjustment.
+    enc = tokenizer(make_visible(ex["text"]), return_offsets_mapping=True,
+                    truncation=True, max_length=max_length, return_tensors=None)
     labels = []
     for start, end in enc["offset_mapping"]:
         if start == end:                      # a special token

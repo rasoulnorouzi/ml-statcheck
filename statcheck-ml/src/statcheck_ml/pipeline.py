@@ -1,19 +1,26 @@
 """The whole pipeline: a PDF goes in, checked results come out.
 
-Five stages, in this order, and the order is the design:
+Six stages, in this order, and the order is the design:
 
-  1. extract   PyMuPDF turns the PDF into text. Character offsets from this
-               step are the coordinate system every later stage uses.
-  2. repair    Damaged operators are restored. Publishers set symbols in fonts
+  1. extract   A PDF engine turns the PDF into text. Character offsets from
+               this step are the coordinate system every later stage uses.
+               The engine is named, not assumed, because each port gets a
+               different one and they do not read the same text.
+  2. normalize The line width and the damaged operator characters are made
+               engine independent. Without this step the same PDF gives a
+               different answer in Python, in R and in a browser. Measured on
+               the holdout, it lifts poppler prefilter recall from 0.793 to
+               0.879 and leaves PyMuPDF unchanged.
+  3. repair    Damaged operators are restored. Publishers set symbols in fonts
                with no ToUnicode map, so the operator can be absent from the
                text. On the holdout this stage alone lifts the pattern
                extractor from 59 results to 158.
-  3. prefilter Only about 1 line in 700 holds a result. Everything else is
+  4. prefilter Only about 1 line in 700 holds a result. Everything else is
                dropped, which is what makes the rest affordable in a browser.
-  4. find      The pattern reads what it can, and the model reads the rest.
+  5. find      The pattern reads what it can, and the model reads the rest.
                The pattern goes first because its precision is near 1.000, so
                an existing statcheck user sees no regression.
-  5. check     The p-value is recomputed and compared. This step is closed-form
+  6. check     The p-value is recomputed and compared. This step is closed-form
                mathematics and no model output reaches the verdict.
 
 Every stage records what it did, so a result can be traced back to the page
@@ -74,10 +81,13 @@ class Pipeline:
 
     def __init__(self, model_path: Optional[str] = None, use_crf: bool = False,
                  repair_text: bool = True, use_pattern: bool = True,
-                 alpha: float = 0.05):
+                 alpha: float = 0.05, engine: str = "pymupdf",
+                 normalize_text: bool = True):
         self.repair_text = repair_text
         self.use_pattern = use_pattern
         self.alpha = alpha
+        self.engine = engine
+        self.normalize_text = normalize_text
         self.prefilter = Prefilter()
         self.model = None
         self.vocab = None
@@ -98,17 +108,50 @@ class Pipeline:
 
     # ---------------- stage 1 ----------------
 
+    #: The engines the ports can use. No engine covers all three ports, so the
+    #: engine is named here rather than assumed. Measured recall for each is in
+    #: `spec/normalize.json`.
+    ENGINES = ("pymupdf", "pdfium", "poppler")
+
     @staticmethod
-    def extract_text(pdf_path: str) -> str:
-        """Convert a PDF to text. This defines every later offset."""
-        import pymupdf
+    def extract_text(pdf_path: str, engine: str = "pymupdf") -> str:
+        """Convert a PDF to text. This defines every later offset.
 
-        doc = pymupdf.open(pdf_path)
-        text = "".join(page.get_text() for page in doc)
-        doc.close()
-        return text
+        PyMuPDF is the default because the models were trained on its output.
+        PDFium reads almost as much and has a Python and a JavaScript build,
+        which makes it the engine to use when one engine must serve two ports.
+        Poppler is what R gets through pdftools, and it reads the least.
+        """
+        if engine == "pymupdf":
+            import pymupdf
 
-    # ---------------- stage 2 ----------------
+            doc = pymupdf.open(pdf_path)
+            text = "".join(page.get_text() for page in doc)
+            doc.close()
+            return text
+        if engine == "pdfium":
+            import pypdfium2
+
+            doc = pypdfium2.PdfDocument(pdf_path)
+            parts = []
+            for page in doc:
+                page_text = page.get_textpage()
+                parts.append(page_text.get_text_range())
+                page_text.close()
+                page.close()
+            doc.close()
+            return "".join(parts)
+        if engine == "poppler":
+            import subprocess
+
+            done = subprocess.run(
+                ["pdftotext", "-enc", "UTF-8", str(pdf_path), "-"],
+                capture_output=True, timeout=180)
+            return done.stdout.decode("utf-8", "replace")
+        raise ValueError(f"unknown engine {engine!r}, expected one of "
+                         f"{Pipeline.ENGINES}")
+
+    # ---------------- stage 3 ----------------
 
     def repair(self, text: str) -> tuple:
         """Restore operators the conversion destroyed."""
@@ -119,7 +162,7 @@ class Pipeline:
         fixed, info = repair_validated(text)
         return fixed, info
 
-    # ---------------- stage 4a ----------------
+    # ---------------- stage 5a ----------------
 
     @staticmethod
     def find_with_pattern(window_text: str, line: int) -> List[Found]:
@@ -134,7 +177,7 @@ class Pipeline:
                 quote=e.raw, source="pattern", line=line))
         return out
 
-    # ---------------- stage 4b ----------------
+    # ---------------- stage 5b ----------------
 
     def find_with_model(self, window_text: str, line: int) -> List[Found]:
         if self.model is None:
@@ -184,7 +227,7 @@ class Pipeline:
                 source="model", line=line))
         return out
 
-    # ---------------- stage 5 ----------------
+    # ---------------- stage 6 ----------------
 
     def check_one(self, found: Found) -> Found:
         result = Result(test_type=found.test_type, statistic=found.statistic,
@@ -202,6 +245,12 @@ class Pipeline:
     def run_text(self, text: str) -> dict:
         started = time.time()
         stages = {}
+
+        if self.normalize_text:
+            from .normalize import normalize
+
+            text, normalize_info = normalize(text)
+            stages["normalize"] = normalize_info
 
         fixed, repair_info = self.repair(text)
         stages["repair"] = repair_info
@@ -247,9 +296,10 @@ class Pipeline:
         }
 
     def run_pdf(self, pdf_path: str) -> dict:
-        text = self.extract_text(pdf_path)
+        text = self.extract_text(pdf_path, self.engine)
         report = self.run_text(text)
         report["source"] = str(pdf_path)
+        report["engine"] = self.engine
         report["characters"] = len(text)
         return report
 

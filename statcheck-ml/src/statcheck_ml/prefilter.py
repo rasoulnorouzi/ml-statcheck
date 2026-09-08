@@ -49,6 +49,17 @@ class Prefilter:
         self._digit = re.compile(spec["require_digit_pattern"])
         self._ref_head = re.compile(spec["reference_heading_pattern"], re.I)
         self._ref_line = [re.compile(p) for p in spec["reference_line_patterns"]]
+        # The cap belongs to the normalisation spec, because it exists only to
+        # survive the line breaks a PDF engine chooses.
+        from .normalize import MAX_REFERENCE_LINE
+
+        self.max_reference_line = spec.get("max_reference_line",
+                                           MAX_REFERENCE_LINE)
+        # A window grows until it holds this much text, so that a window means
+        # the same amount of context whichever engine read the PDF. Zero turns
+        # the rule off and restores a fixed count of lines.
+        self.target_characters = spec.get("target_window_characters", 0)
+        self.max_context_lines = spec.get("max_context_lines", 8)
 
     @staticmethod
     def density(line: str) -> float:
@@ -58,7 +69,16 @@ class Prefilter:
         return 1 - sum(c.isalpha() for c in line) / len(line)
 
     def is_reference(self, line: str) -> bool:
-        """Say whether a line looks like an entry in a reference list."""
+        """Say whether a line looks like an entry in a reference list.
+
+        A reference entry is short. A line longer than the cap is a column that
+        the PDF engine joined, and such a line can hold a result AND a citation.
+        Judging it as one entry discards the result with the citation, which
+        measured 26 of the 37 results poppler lost on the holdout. The cap keeps
+        the rule away from joined lines and changes nothing for PyMuPDF text.
+        """
+        if len(line) > self.max_reference_line:
+            return False
         return any(p.search(line) for p in self._ref_line)
 
     def strip_references(self, lines: List[str]) -> List[str]:
@@ -95,10 +115,39 @@ class Prefilter:
         lines = text.split("\n")
         if drop_references:
             lines = self.strip_references(lines)
-        n = self.context_lines
         for i, line in enumerate(lines):
             if not self.keeps_line(line):
                 continue
-            lo = max(0, i - n)
-            hi = min(len(lines), i + n + 1)
+            lo, hi = self._span(lines, i)
             yield Window("\n".join(lines[lo:hi]), i, lo, hi - 1)
+
+    def _span(self, lines: List[str], i: int) -> tuple:
+        """Choose how many lines of context this window needs.
+
+        A fixed line count is not a fixed amount of context. The count was tuned
+        on PyMuPDF text, whose lines run about 57 characters, and a window of
+        two lines each side holds about 298 characters. PDF.js breaks the same
+        page into shorter lines, so the same two lines hold only 175 characters
+        and the result is cut off. That, and not the density rule, is what the
+        other engines lose: removing the density rule recovers one result, and
+        matching the amount of text recovers most of the gap.
+
+        The window therefore grows until it holds about as much text as the
+        window the model was trained on. It never shrinks below the line count,
+        so text that already has long lines is untouched.
+        """
+        n = self.context_lines
+        lo = max(0, i - n)
+        hi = min(len(lines), i + n + 1)
+        if not self.target_characters:
+            return lo, hi
+        while n < self.max_context_lines:
+            if sum(len(x) + 1 for x in lines[lo:hi]) >= self.target_characters:
+                break
+            n += 1
+            new_lo = max(0, i - n)
+            new_hi = min(len(lines), i + n + 1)
+            if (new_lo, new_hi) == (lo, hi):     # the document has no more text
+                break
+            lo, hi = new_lo, new_hi
+        return lo, hi

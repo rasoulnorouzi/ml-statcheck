@@ -153,6 +153,7 @@ Status values: `blocked`, `ready`, `active`, `done`.
 | M3 | 6 | Train the character model and the transformer baselines | ml-trainer | sonnet | active |
 | M3 | 7 | ONNX export, quantization, the three-tier zoo | onnx-engineer | sonnet | blocked |
 | M4 | 8 | p-value core in Python, JavaScript, and R, with a parity suite | stats-core | opus | ready |
+| M4 | 8b | Text normalisation spec, so the PDF engine cannot change the answer | regex-porter | sonnet | done |
 | M4 | 9 | Python reference port and the browser web app | runtime-engineer | sonnet | blocked |
 | M4 | 10 | R package, native `lite` path | runtime-engineer | sonnet | blocked |
 | M4 | 11 | Evaluation on an unseen test part: statcheck, model, cascade | eval-engineer | sonnet | active |
@@ -161,6 +162,12 @@ Status values: `blocked`, `ready`, `active`, `done`.
 
 Phase 1 is blocked until the owner supplies the corpus folder. Phases 6, 7, 9, 10, 11
 and 12 are blocked on their predecessors.
+
+Phases 9 and 10 have a second gate. Each port gets a different PDF engine, and the
+engines do not read the same text. `bench_engines.py` measures every engine and
+reports the spread between the best and the worst. A port must not ship while the
+spread is above 0.06. The spread was 0.136 before phase 8b and is 0.050 now.
+`CONTEXT.md` holds the measurements and the reason.
 
 Phases 0, 2a, 2b, 3, 4, 5 and 8 need no data. They can start now.
 

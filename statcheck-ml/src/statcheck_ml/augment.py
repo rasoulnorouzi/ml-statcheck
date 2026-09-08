@@ -45,11 +45,30 @@ UNICODE_VARIANTS = {
 }
 
 # --- family 3: what the PDF pipeline does to an operator ---------------------
-# Every replacement below appears in the corpus.
+# Every replacement below appears in the corpus, as PyMuPDF reads it.
 OPERATOR_DAMAGE = {
     "=": ["¼", "\x01", "\x02", "\x03", "\x04", "е", " "],
     "<": ["b", "\x03", "\x05", "\x07", "\\"],
     ">": ["N", "\x06", "\x08"],
+}
+
+# --- family 4: the same damage, as another PDF engine writes it --------------
+# A destroyed operator has no Unicode value, so each engine invents one. PyMuPDF
+# writes a control character and poppler writes a letter in the Greek and Coptic
+# block. The characters below were measured by reading the same 198 documents
+# with both engines and comparing the operator position.
+#
+# The model reads characters, so an engine it never saw produces unknown input.
+# The normalisation stage renames these before the model, and training on them
+# as well means the model degrades gently when a new engine invents a character
+# that the stage does not yet know.
+ENGINE_ALPHABETS = {
+    "poppler": ["ϭ", "Ͻ", "Ϫ", "␤", "␩",
+                "À", "Â"],
+    # Private use is what an engine falls back to when it maps a glyph number
+    # straight through. No engine in the corpus does this, and a port may meet
+    # one that does.
+    "private_use": ["", "", "", ""],
 }
 
 

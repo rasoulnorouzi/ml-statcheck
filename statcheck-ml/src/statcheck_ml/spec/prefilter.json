@@ -1,7 +1,7 @@
 {
   "_comment": "Shared prefilter rules. Python, JavaScript and R read this file. Never restate these rules in a port.",
   "version": 1,
-  "min_non_letter_density": 0.20,
+  "min_non_letter_density": 0.2,
   "min_line_length": 20,
   "context_lines": 2,
   "require_digit_pattern": "[0-9]",
@@ -28,5 +28,35 @@
       "0.25": 0.211,
       "0.30": 0.131
     }
+  },
+  "_why_target_window": "A fixed count of lines is not a fixed amount of context. The count was tuned on PyMuPDF text, whose lines run about 57 characters, so a window of two lines each side holds about 298 characters. PDF.js breaks the same page into shorter lines, so the same window holds 175 characters and cuts the result in half. A window therefore grows until it holds about as much text as the window the model was trained on. It never shrinks, so text that already has long lines is untouched.",
+  "target_window_characters": 250,
+  "max_context_lines": 8,
+  "_measured_window_target": {
+    "corpus": "198 holdout documents, 323 gold results, after normalisation",
+    "note": "The density rule is not the cause of the loss. Removing it entirely recovers one result and costs about 8000 extra windows for it. Matching the amount of text recovers most of the gap at no extra windows at all, because a window only becomes longer.",
+    "recall_fixed_lines": {
+      "pymupdf": 0.929,
+      "pdfjs": 0.907,
+      "pdfium": 0.91,
+      "rpdftools": 0.912,
+      "poppler": 0.879
+    },
+    "recall_at_250_characters": {
+      "pymupdf": 0.929,
+      "pdfjs": 0.923,
+      "pdfium": 0.916,
+      "rpdftools": 0.912,
+      "poppler": 0.885
+    },
+    "characters_read_against_fixed_lines": {
+      "pymupdf": 1.08,
+      "pdfjs": 1.72,
+      "pdfium": 1.55,
+      "rpdftools": 1.02,
+      "poppler": 1.1
+    },
+    "spread_before": 0.05,
+    "spread_after": 0.043
   }
 }
