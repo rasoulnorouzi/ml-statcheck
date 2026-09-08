@@ -169,7 +169,9 @@ def score_system(found_by_window, gold_by_window, gold_meta, window_ids):
 
 def main():
     windows_path, labels_path, csv_path, out_path = sys.argv[1:5]
-    specs = sys.argv[5:]
+    specs = [a for a in sys.argv[5:] if not a.startswith("--repaired=")]
+    repaired_csv = next((a.split("=", 1)[1] for a in sys.argv[5:]
+                         if a.startswith("--repaired=")), None)
 
     windows = read_json(windows_path)
     window_ids = [w["window_id"] for w in windows]
@@ -207,8 +209,19 @@ def main():
     report = {"windows": len(window_ids), "gold_results": n_gold,
               "gold_damaged": n_damaged, "gold_checkable": n_checkable,
               "systems": {}}
-    report["systems"]["statcheck"] = score_system(sc_by_window, gold_by_window,
-                                                  gold_meta, window_ids)
+    report["systems"]["statcheck (raw text)"] = score_system(
+        sc_by_window, gold_by_window, gold_meta, window_ids)
+
+    # The same package, reading text whose damaged operators were repaired.
+    sc_fixed = defaultdict(set)
+    if repaired_csv:
+        with open(repaired_csv, encoding="utf-8") as fh:
+            for row in csv.DictReader(fh):
+                v = as_number(row["test_value"])
+                if v is not None:
+                    sc_fixed[row["window_id"]].add(v)
+        report["systems"]["statcheck (repaired)"] = score_system(
+            sc_fixed, gold_by_window, gold_meta, window_ids)
 
     # --- each model, alone and in the cascade ---
     for spec in specs:
@@ -220,10 +233,13 @@ def main():
         report["systems"][name] = score_system(alone, gold_by_window, gold_meta, window_ids)
 
         # The cascade: statcheck first, the model adds only what it missed.
+        # The repaired reading is used when it is available, because that is
+        # the cascade a user would actually run.
+        base = sc_fixed if sc_fixed else sc_by_window
         hybrid = {}
         from_sc = from_model = 0
         for wid in window_ids:
-            s = sc_by_window.get(wid, set())
+            s = base.get(wid, set())
             m = alone.get(wid, set())
             hybrid[wid] = s | m
             from_sc += len(s)
