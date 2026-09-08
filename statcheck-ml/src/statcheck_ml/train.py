@@ -187,7 +187,8 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
         if f1 > best_f1:
             best_f1, best_epoch, bad = f1, epoch, 0
             torch.save({"state_dict": model.state_dict(), "vocab": vocab,
-                        "tags": list(TAG_TO_ID)}, out / "model.pt")
+                        "tags": list(TAG_TO_ID), "unit": unit,
+                        "crf": bool(model.crf)}, out / "model.pt")
         else:
             bad += 1
             if bad >= patience:

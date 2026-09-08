@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import csv
 import json
+import re
 import sys
 from collections import Counter, defaultdict
 
@@ -51,6 +52,36 @@ def as_number(text):
         return round(float(s), 4)
     except ValueError:
         return None
+
+
+CONTROL_CLASS = "[" + "".join(
+    chr(c) for c in list(range(1, 9)) + [11, 12] + list(range(14, 32))) + "]"
+
+# Ordered: the first pattern that matches names the family. Order matters,
+# because one result can carry two kinds of damage, and the first entry names
+# the one that does the most harm.
+DAMAGE_FAMILIES = [
+    # The decimal point is gone, so the value itself is wrong. Repairing the
+    # operator does not help, which makes this the worst kind.
+    ("decimal point lost", re.compile(r"=\s*\d{3,}\s*,\s*p\s*[<>=]\s*\d{3,}")),
+    ("control character", re.compile(CONTROL_CLASS)),
+    ("fraction sign for =", re.compile("\u00bc")),
+    ("backslash for <", re.compile(r"\\")),
+    ("letter b for <", re.compile(r"\)\s*b\s*[-.0-9]|\bp\s*b\s*\.?[0-9]")),
+    ("letter N for >", re.compile(r"\bp\s*N\s*\.?[0-9]")),
+    ("chi-square symbol lost",
+     re.compile(r"\b(v2|c2|x2)\s*\(|(?<![0-9A-Za-z])2\s*\(\s*\d")),
+    ("letter p or ! for operator",
+     re.compile(r"\)\s*p\s*[-.0-9]|\bp\s*!\s*\.?[0-9]")),
+]
+
+
+def damage_family(quote: str) -> str:
+    """Name the kind of damage in a quote, for the per-family report."""
+    for name, pattern in DAMAGE_FAMILIES:
+        if pattern.search(quote or ""):
+            return name
+    return "other damage"
 
 
 def read_json(path):
@@ -89,13 +120,28 @@ def build_result(parts):
     ), parts.get("PVAL")
 
 
+def infer_unit(state_dict) -> str:
+    """Recover the recurrent unit from the weight shape.
+
+    A GRU has three gates and an LSTM four, so the input weight of the first
+    layer has 3*hidden rows against 4*hidden. Older checkpoints do not record
+    the unit, and this makes them loadable anyway.
+    """
+    w = state_dict.get("lstm.weight_hh_l0")
+    if w is None:
+        return "lstm"
+    rows, hidden = w.shape
+    return "gru" if rows == 3 * hidden else "lstm"
+
+
 def load_model(spec):
     path, _, flag = spec.partition(":")
     use_crf = flag == "crf"
     ck = torch.load(path, weights_only=False)
     vocab = ck["vocab"]
+    unit = ck.get("unit") or infer_unit(ck["state_dict"])
     model = CharTagger(len(vocab), len(TAG_TO_ID),
-                       tags=list(TAG_TO_ID) if use_crf else None)
+                       tags=list(TAG_TO_ID) if use_crf else None, unit=unit)
     model.load_state_dict(ck["state_dict"])
     model.eval()
     return model, vocab, use_crf
@@ -150,6 +196,8 @@ def score_system(found_by_window, gold_by_window, gold_meta, window_ids):
             buckets["overall"][0] += 1
             buckets["damaged" if meta.get("damaged") else "undamaged"][0] += 1
             buckets[f"test:{meta.get('test_type') or 'unknown'}"][0] += 1
+            if meta.get("family"):
+                buckets[f"damage:{meta['family']}"][0] += 1
             if meta.get("checkable"):
                 buckets["checkable"][0] += 1
         for value in got - gold:
@@ -159,6 +207,8 @@ def score_system(found_by_window, gold_by_window, gold_meta, window_ids):
             buckets["overall"][2] += 1
             buckets["damaged" if meta.get("damaged") else "undamaged"][2] += 1
             buckets[f"test:{meta.get('test_type') or 'unknown'}"][2] += 1
+            if meta.get("family"):
+                buckets[f"damage:{meta['family']}"][2] += 1
             if meta.get("checkable"):
                 buckets["checkable"][2] += 1
 
@@ -188,9 +238,13 @@ def main():
                 continue
             values.add(v)
             checkable = bool(res.get("statistic")) and bool(res.get("df1")) and bool(res.get("p_value"))
-            gold_meta[(wid, v)] = {"damaged": bool(res.get("damaged")),
-                                   "test_type": (res.get("test_type") or "").lower(),
-                                   "checkable": checkable}
+            gold_meta[(wid, v)] = {
+                "damaged": bool(res.get("damaged")),
+                "test_type": (res.get("test_type") or "").lower(),
+                "checkable": checkable,
+                "family": (damage_family(res.get("quote") or "")
+                           if res.get("damaged") else None),
+            }
             n_damaged += bool(res.get("damaged"))
             n_checkable += checkable
         gold_by_window[wid] = values
