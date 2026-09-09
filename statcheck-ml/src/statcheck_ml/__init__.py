@@ -12,6 +12,8 @@ The package has two halves that must not be confused.
 be measured, and it is never used as a fallback for the model.
 """
 
+from .normalize import canonicalise, normalize, reflow
+from .pipeline import Found, Pipeline, summarise
 from .prefilter import Prefilter, Window
 from .pvalue import (Result, Check, compute_p, check,
                      CONSISTENT, INCONSISTENT, DECISION_ERROR, UNDECIDABLE)
@@ -19,7 +21,12 @@ from .pvalue import (Result, Check, compute_p, check,
 __version__ = "0.1.0"
 
 __all__ = [
+    # The whole pipeline: a PDF goes in, checked results come out.
+    "Pipeline", "Found", "summarise",
+    # The stages, for a caller that wants one of them alone.
+    "normalize", "reflow", "canonicalise",
     "Prefilter", "Window",
+    # The mathematics. No model output reaches a verdict here.
     "Result", "Check", "compute_p", "check",
     "CONSISTENT", "INCONSISTENT", "DECISION_ERROR", "UNDECIDABLE",
 ]

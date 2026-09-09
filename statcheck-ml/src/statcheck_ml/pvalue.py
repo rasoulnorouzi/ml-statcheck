@@ -38,6 +38,69 @@ class Result:
     one_tailed: bool = False
 
 
+#: What each kind of test needs before a p-value can be recomputed.
+#: A z test needs no degrees of freedom, and an F test needs two.
+REQUIRED_PARTS = {
+    "t": ("df1",), "r": ("df1",), "chi2": ("df1",), "q": ("df1",),
+    "f": ("df1", "df2"), "z": (),
+}
+
+#: How to name each missing part to a reader.
+#:
+#: The wording says what the tool observed, and never why. The tool read the
+#: text and did not find the part. It cannot know whether the author omitted it,
+#: whether the PDF conversion destroyed it, or whether the extraction failed.
+#: Saying "the paper does not report a p-value" claims the first, and a reader
+#: would act on that claim.
+PART_NAMES = {
+    "statistic": "no test statistic",
+    "df1": "no degrees of freedom",
+    "df2": "no second degrees of freedom",
+    "p_value": "no p-value",
+    "p_operator": "no operator before the p-value",
+}
+
+
+def missing_parts(result: "Result") -> tuple:
+    """Name every part the check needs and the result does not carry.
+
+    More than one published result in five carries no p-value at all, measured
+    over 323 results of this corpus. Nothing can recover a number the author
+    did not print, so the tool says which part is absent instead of returning a
+    bare "undecidable". A reader can then see whether the paper is incomplete
+    or the tool failed.
+    """
+    absent = []
+    if result.statistic is None:
+        absent.append("statistic")
+    for part in REQUIRED_PARTS.get((result.test_type or "").strip().lower(),
+                                   ("df1",)):
+        if getattr(result, part) is None:
+            absent.append(part)
+    if result.p_value is None:
+        absent.append("p_value")
+    elif result.p_operator not in ("=", "<", ">"):
+        absent.append("p_operator")
+    return tuple(absent)
+
+
+def describe_missing(parts) -> str:
+    """Write the missing parts as a sentence a reader can act on.
+
+    The sentence reports an observation, not a cause. "no p-value found beside
+    this result" is what happened. Whether the author omitted it, the font
+    destroyed it, or the extraction missed it is a separate question, and the
+    quote beside the result is what answers it.
+    """
+    if not parts:
+        return ""
+    names = [PART_NAMES.get(p, p) for p in parts]
+    if len(names) == 1:
+        return f"{names[0]} found beside this result"
+    return (", ".join(names[:-1]) + f" and {names[-1]} found beside this "
+            f"result")
+
+
 @dataclass
 class Check:
     """The verdict for one result."""
@@ -46,6 +109,9 @@ class Check:
     computed_p: Optional[float]
     reported_p: Optional[float]
     reason: str = ""
+    #: The parts the check needed and the result did not carry. Empty when the
+    #: result was complete, whatever the verdict.
+    missing: tuple = ()
 
 
 def compute_p(test_type: str, statistic: float,
@@ -119,12 +185,19 @@ def check(result: Result, alpha: float = 0.05,
     computed = compute_p(result.test_type, result.statistic,
                          result.df1, result.df2, result.one_tailed)
 
+    absent = missing_parts(result)
+
     if computed is None:
-        return Check(UNDECIDABLE, None, result.p_value,
-                     "the statistic and degrees of freedom do not give a p-value")
+        # Name the part that is absent. When every part is present the fault is
+        # the value itself, such as a correlation at or beyond 1.
+        reason = (describe_missing(absent) if absent else
+                  "the statistic and its degrees of freedom give no p-value")
+        return Check(UNDECIDABLE, None, result.p_value, reason, absent)
     if result.p_value is None or result.p_operator not in ("=", "<", ">"):
         return Check(UNDECIDABLE, computed, result.p_value,
-                     "no reported p-value to compare against")
+                     describe_missing(absent) or
+                     "there is no reported p-value to compare against",
+                     absent)
 
     reported = float(result.p_value)
     op = result.p_operator

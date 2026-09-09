@@ -22,23 +22,44 @@ from __future__ import annotations
 import itertools
 import re
 from collections import defaultdict
+import json
+from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 from .pvalue import compute_p
 
-CONTROL = r"\x00-\x08\x0b\x0c\x0e-\x1f"
-SUSPECT_CLASS = f"[{CONTROL}¼\\\\!bNp]"
+#: The rules live in `spec/repair.json`, so that the Python, JavaScript and R
+#: ports read one definition instead of three copies.
+SPEC_PATH = Path(__file__).parent / "spec" / "repair.json"
+_SPEC = json.loads(SPEC_PATH.read_text(encoding="utf-8"))
+
+
+def _suspect_class(spec: dict) -> str:
+    """Build the character class of a possible damaged operator.
+
+    The control characters are what the normalisation stage produces, whatever
+    engine read the PDF. Without that stage this class would only match text
+    from PyMuPDF, and the R port would repair nothing.
+    """
+    parts = []
+    for low, high in spec["suspect_characters"]["control_range"]:
+        parts.append(f"\\x{low:02x}-\\x{high:02x}")
+    for ch in spec["suspect_characters"]["literal"]:
+        parts.append("\\\\" if ch == "\\" else re.escape(ch))
+    return "[" + "".join(parts) + "]"
+
+
+SUSPECT_CLASS = _suspect_class(_SPEC)
 
 # A complete result whose two operators may both be damaged.
 RESULT = re.compile(
-    r"\b(t|F|r|z|Z|chi2|c2|v2|x2|X2|χ2|Q)\s*\(\s*(\d+(?:\.\d+)?)\s*"
-    r"(?:,\s*(\d+(?:\.\d+)?)\s*)?(?:,\s*[Nn]\s*[=<>]\s*[\d, ]+)?\)\s*"
-    r"(" + SUSPECT_CLASS + r"|=|<|>)\s*(-?\d*\.?\d+)"
-    r"[^\n]{0,40}?\bp\s*(" + SUSPECT_CLASS + r"|=|<|>)\s*(-?\d*\.?\d+)",
+    _SPEC["result_pattern"].replace("SUSPECT", SUSPECT_CLASS),
     re.IGNORECASE,
 )
 
-OPERATORS = ("=", "<", ">")
+OPERATORS = tuple(_SPEC["operators"])
+MAX_SUSPECTS = _SPEC["max_suspects"]
+MIN_TESTABLE = _SPEC["min_testable_results"]
 
 
 def _num(text: str) -> Optional[float]:
@@ -104,7 +125,7 @@ def score_mapping(rows: List[dict], mapping: Dict[str, str]) -> Tuple[int, int]:
     return agree, testable
 
 
-def infer_validated(text: str, min_testable: int = 3) -> Tuple[Dict[str, str], dict]:
+def infer_validated(text: str, min_testable: int = MIN_TESTABLE) -> Tuple[Dict[str, str], dict]:
     """Choose the mapping the arithmetic supports best.
 
     Returns the mapping and a small report. When too few results can be tested,
@@ -114,7 +135,7 @@ def infer_validated(text: str, min_testable: int = 3) -> Tuple[Dict[str, str], d
     suspects = sorted({r["stat_op"] for r in rows} | {r["p_op"] for r in rows}
                       - set(OPERATORS))
     suspects = [c for c in suspects if c not in OPERATORS]
-    if not rows or not suspects or len(suspects) > 4:
+    if not rows or not suspects or len(suspects) > MAX_SUSPECTS:
         return {}, {"reason": "nothing to infer", "results": len(rows)}
 
     best, best_score = None, (-1.0, 0)

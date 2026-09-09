@@ -365,6 +365,53 @@ plausible result where none exists, and the model then tags it with confidence.
 **The final design gives each part the input it reads best: the model reads raw
 text, and the repair serves the pattern branch alone.**
 
+### 7.4 The repair is the only reason the pattern branch exists
+
+If the model reads raw text, and the repair only feeds the pattern, then it is
+fair to ask what the pattern branch adds. The answer is measured.
+
+| Cascade | Results found | Recall | F2 |
+|---|---|---|---|
+| crf-aug alone | 287 | 0.911 | 0.911 |
+| crf-aug + statcheck on **raw** text | 287 | 0.911 | 0.911 |
+| crf-aug + statcheck on **repaired** text | **295** | **0.937** | **0.931** |
+
+**Statcheck reading raw text adds nothing.** It finds 287 results against 287,
+and one extra false positive. The model already finds everything the raw
+regular expression finds.
+
+Reading repaired text it adds 8 results, for 1 false positive.
+
+The choice is therefore not "repair or no repair". It is "repair and a second
+branch, or the model alone":
+
+- **with the repair**: recall 0.937, damaged recall 0.926
+- **without it**: recall 0.911, damaged recall 0.877, and the pattern branch
+  should be removed as well
+
+### 7.5 The repair works on every engine
+
+The repair looks for a suspect character, and its list of suspects was written
+from PyMuPDF text. Poppler writes a destroyed operator as a letter in the Greek
+and Coptic block, which is not in that list.
+
+**The normalisation stage saves it.** Stage 2 renames those characters to the
+canonical alphabet before stage 3 looks for them. That was an assumption until
+it was measured:
+
+| Engine | Operator readable, raw | after normalising | after repair |
+|---|---|---|---|
+| poppler | 0.134 | 0.134 | **0.899** |
+| PyMuPDF | 0.167 | 0.167 | 0.849 |
+| PDF.js | 0.160 | 0.160 | 0.840 |
+| R pdftools | 0.146 | 0.146 | 0.764 |
+| PDFium | 0.163 | 0.163 | **0.602** |
+
+**The repair helps poppler most, which is the engine the R port uses.** It helps
+PDFium least, and that is not yet explained.
+
+**Every port therefore carries the repair.** The rules are in `spec/repair.json`.
+
 ---
 
 ## 8. Metrics
@@ -500,6 +547,74 @@ word-piece tokenization on damaged text, not as the ceiling of a transformer.
 
 This result supports the choice of a character model with evidence rather than
 assertion.
+
+---
+
+## 9.6 Where a result is lost, on real PDF files
+
+Section 9 scores the model on windows prepared in advance. That measurement
+cannot see a result the prefilter never turned into a window, because such a
+result is not in the file the scorer reads.
+
+This ran the whole pipeline on 60 real PDF files holding 97 labelled results.
+No document failed.
+
+| Stage | Results | Share |
+|---|---|---|
+| lost by the engine | 7 | 0.072 |
+| **lost by the prefilter** | **0** | **0.000** |
+| lost by the finder | 3 | 0.031 |
+| **found, but not checkable** | **49** | **0.505** |
+| found and checked | 38 | 0.392 |
+
+**The pipeline reports 89.7% of the labelled results and can check 39.2%.**
+
+Two things follow, and both changed what the project worked on next.
+
+**The prefilter loses nothing.** A window that cuts a result in half is a real
+failure mode, and it appears in the tutorial, but it did not occur once in 60
+real papers. Work planned on it was stopped.
+
+**Finding is close to solved. Checking is not.** The gap is not a defect in the
+extractor. It is that the result as printed does not carry enough information
+to recompute the p-value.
+
+### The literature, not the tool
+
+Over all 323 labelled results:
+
+| | Results | Share |
+|---|---|---|
+| can be checked | 210 | 0.650 |
+| **no p-value is reported** | **73** | **0.226** |
+| no degrees of freedom are reported | 40 | 0.124 |
+
+**More than one labelled result in five carries no p-value beside it.** The
+annotators read the passage and recorded no p-value, so this is a statement
+about the text as the passage presents it.
+
+Two cautions belong with that number. The labels are machine labels, so the
+count carries the annotation ceiling of section 4.3. And the passage is what
+the annotator saw: a p-value printed in a table elsewhere in the paper is not
+in the passage, and is not counted here.
+
+**The tool never claims the author omitted anything.** At run time it reports
+what it observed: `no p-value found beside this result`. Whether the author
+omitted the number, the font destroyed it, or the extraction missed it is a
+separate question, and the quote beside each result is what answers it.
+
+A correlation is the tempting case. statcheck recomputes one with df = N - 2,
+and 26 of the 40 documents state a sample size somewhere. They usually state
+several:
+
+```
+Cohen_OrgSci_2016      chi2  307        N candidates [18, 31293]
+Bogaert_JournManage    Q     1422.527   N candidates [53, 68]
+```
+
+**The project does not guess.** Choosing the wrong sample size produces a
+confident wrong verdict, and that is worse than reporting nothing. The result
+is reported as found and marked `undecidable`.
 
 ---
 
@@ -715,11 +830,37 @@ The models are trained, frozen and measured. **The packages are not.**
 
 | Item | Status |
 |---|---|
-| Python | Usable. `Pipeline.run_pdf()` runs end to end on torch. |
-| ONNX export | `export.py` exists and **has never been run**. |
+| Python | Usable. `Pipeline.run_pdf()` runs end to end. |
+| ONNX export | **Done and verified.** |
 | p-value core in JavaScript and R | **Not started.** A parity suite is required. |
-| Browser port | Text layer only: `normalize.js`, `extract.js`. |
-| R port | Text layer only: `normalize.R`, `extract.R`. |
+| Browser port | Text and model files only. |
+| R port | Text and model files only. |
+
+### 14.1 The ONNX export
+
+| Model | File | Opset | Agreement with PyTorch |
+|---|---|---|---|
+| crf-aug | 2.47 MB | 17 | every tag, at every length |
+| gru-crf | **1.87 MB** | 17 | every tag, at every length |
+| lstm-crf | 2.47 MB | 17 | every tag, at every length |
+
+The export is checked at lengths 16, 64, 283, 512 and 1024, and at batch 1 and
+batch 3. The largest difference in the scores is 3.2e-05, and no tag changes.
+
+Two faults were found and fixed while exporting:
+
+1. **PyTorch wrote the weights in a separate file**, as `tagger.onnx` beside
+   `tagger.onnx.data`. Python loads that pair without trouble. The browser
+   runtime must be told about the second file, and a port that copies only the
+   `.onnx` loads a model with no weights. The exporter now writes one file, and
+   `export_port_kit.py` refuses to copy a split pair.
+2. **The CRF is not in the graph**, so a port with only the `.onnx` cannot
+   decode at all. The exporter now writes `decoder.json` beside it, holding the
+   masked transitions, the start and end scores, and the tag list. A port runs
+   a Viterbi pass over those numbers and adds no rule of its own.
+
+Quantisation is off by default. The model is under 3 MB, and one graph that
+behaves identically in three runtimes is worth more than a smaller one.
 
 The text layer is the part this work completed. Everything below it, in both
 ports, remains.
@@ -727,6 +868,35 @@ ports, remains.
 The p-value core is the right next piece. It unblocks both ports, and it is the
 place where a silent mistake would do the most harm, because it decides the
 verdict.
+
+---
+
+## 14.2 Two ideas from error analysis, measured and rejected
+
+Reading all 28 false positives and all 28 false negatives suggested two changes.
+Both were built, trained and measured. **Neither ships.**
+
+| Run | What changed | R | F2 | FP |
+|---|---|---|---|---|
+| **`final-crf-aug`** | the baseline | **0.937** | **0.931** | 29 |
+| `v2-crf-aug` | both ideas, 400 negatives | 0.873 | 0.892 | 7 |
+| `v3-crf-hn150` | both ideas, 150 negatives | 0.879 | 0.894 | 12 |
+| `v4-crf-nohn` | the number damage alone | 0.876 | 0.894 | 8 |
+
+The first reading blamed the hard negatives, because suppression is what they
+do. `v4-crf-nohn` carries none of them and still loses recall, so the cause is
+`damage_number`. It failed at its own purpose: damaged recall fell from 0.877 to
+0.816, which is the number it was written to raise.
+
+Both are switched off by default, so a retrain from this repository reproduces
+the model that ships. Neither is deleted.
+
+**The hard negatives did work at what they were built for.** False positives
+fell from 28 to 6, and `v2-gru-crf-aug` reaches precision 0.986 with 4 false
+positives against 16. That is a documented high-precision option, not the
+default.
+
+`EXPERIMENTS.md` holds every run, its configuration, and its log.
 
 ---
 
@@ -746,3 +916,23 @@ tool. Use **gru-crf** in the browser: it is 24% smaller and 0.013 F2 behind.
 
 **Both find about five times as many results as the R package, and 76 times as
 many in damaged text.**
+
+### The decision
+
+| Role | Model | Why |
+|---|---|---|
+| **default** | `final-crf-aug` + statcheck | the highest F2 of every run, 0.931 |
+| **browser** | `final-crf-aug` + statcheck | the same model as Python. Measured at 20.4 ms for one window against 17.4 ms for the GRU, which is 0.6 s over a whole document. 600 kB and 0.6 s do not buy back 0.013 of F2. |
+| optional | `v2-gru-crf-aug` + statcheck | precision 0.986 and 4 false positives, for a first pass over many papers |
+
+Four later runs tried to improve on the default and none did. Section 14.2 and
+`EXPERIMENTS.md` record what was tried and what it measured.
+
+### Read every number beside two facts
+
+1. **The ceiling is the labels.** Every label is a machine label, and the
+   measured ceiling is 90.5% on the holdout.
+2. **Not every result can be checked, and that is the literature.** More than
+   one published result in five carries no p-value. The tool now names the part
+   the paper omitted rather than reporting a bare `undecidable`, so an
+   incomplete paper is not confused with a tool that failed.

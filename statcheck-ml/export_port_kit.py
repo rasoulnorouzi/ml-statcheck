@@ -55,6 +55,9 @@ def main(argv=None) -> int:
     ap.add_argument("target", help="the port repository to copy into")
     ap.add_argument("--name", default=None,
                     help="the name of the port, recorded in the manifest")
+    ap.add_argument("--model", default=None,
+                    help="a model directory holding tagger.onnx and "
+                         "decoder.json, such as models/final-crf-aug")
     args = ap.parse_args(argv)
 
     target = Path(args.target)
@@ -64,6 +67,28 @@ def main(argv=None) -> int:
     tests_out.mkdir(parents=True, exist_ok=True)
 
     files = {}
+
+    if args.model:
+        model_dir = Path(args.model)
+        model_out = target / "model"
+        model_out.mkdir(parents=True, exist_ok=True)
+        for name in ("tagger.onnx", "decoder.json"):
+            src = model_dir / name
+            if not src.exists():
+                print(f"  WARNING: {src} is missing. Run "
+                      f"`python -m statcheck_ml.export` first.")
+                continue
+            # A loose weight file is the way a port ends up with a model that
+            # has no weights in it. The exporter writes one file for that
+            # reason, and this refuses to copy a split pair.
+            if (model_dir / (name + ".data")).exists():
+                raise SystemExit(
+                    f"{src} keeps its weights in a separate .data file. Export "
+                    f"it again: the browser runtime cannot follow that link.")
+            shutil.copyfile(src, model_out / name)
+            files[f"model/{name}"] = {
+                "sha256": digest(src), "bytes": src.stat().st_size}
+            print(f"  model/{name}")
 
     for path in sorted(SPEC_DIR.glob("*.json")):
         dest = spec_out / path.name

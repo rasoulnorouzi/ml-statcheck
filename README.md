@@ -34,8 +34,10 @@ Holdout: 576 passages, 315 results, 164 of them damaged by the PDF conversion.
 damaged text the regular expression finds 2 results of 164, and the cascade
 finds 152.
 
-Use **crf-aug** where recall matters, which is the usual case for a screening
-tool. Use **gru-crf** in a browser: it is 24% smaller and 0.013 F2 behind.
+**Use `crf-aug` everywhere, including the browser.** The smaller `gru-crf`
+saves 600 kB and 0.6 seconds over a whole document, and costs 0.013 of F2. That
+is the wrong trade. `gru-crf` remains available for a host where 600 kB
+genuinely matters.
 
 Every number, and every definition behind it, is in **[REPORT.md](statcheck-ml/REPORT.md)**.
 
@@ -75,8 +77,16 @@ Every rule that more than one port needs lives in one JSON file:
 statcheck-ml/src/statcheck_ml/spec/
   prefilter.json     which passages can hold a result
   normalize.json     how to make the text engine independent
+  repair.json        how to restore an operator the conversion destroyed
   charmap.json       the 175 characters the model reads
   font_table.json    the operator each damaged font produced
+```
+
+A port also needs the model, which `export_port_kit.py` copies:
+
+```
+  model/tagger.onnx   the graph, 2.47 MB for crf-aug, opset 17
+  model/decoder.json  the CRF, which decodes outside the graph
 ```
 
 **Never restate a rule in a port.** A port reads the file and applies it.
@@ -140,14 +150,39 @@ The models are trained, frozen and measured. **The packages are not built.**
 | Character models, 11 trained | done |
 | Evaluation against the R package | done |
 | Engine portability study | done |
-| Python pipeline, end to end | usable on torch |
-| ONNX export | code exists, **never run** |
+| **ONNX export** | **done, and verified against PyTorch** |
+| Python pipeline, end to end | usable |
 | p-value core in JavaScript and R | **not started** |
-| Browser port | text layer only |
-| R port | text layer only |
+| Browser port | text and model files only |
+| R port | text and model files only |
 
-The p-value core is the right next piece. It unblocks both ports, and it decides
-the verdict, so a silent mistake there would do the most harm.
+**Every port gets the repair stage.** It is measured to help every engine, and
+most of all poppler, which is what R uses. See the table below.
+
+The p-value core is the right next piece. It unblocks both ports, it decides the
+verdict, and the repair depends on it, so a silent mistake there would do the
+most harm.
+
+### Why the repair belongs in every port
+
+| Engine | Operator readable before | after repair |
+|---|---|---|
+| poppler | 0.134 | **0.899** |
+| PyMuPDF | 0.167 | 0.849 |
+| PDF.js | 0.160 | 0.840 |
+| R pdftools | 0.146 | 0.764 |
+| PDFium | 0.163 | 0.602 |
+
+The repair also decides whether the pattern branch is worth having at all:
+
+| Cascade | Results found | Recall |
+|---|---|---|
+| model alone | 287 | 0.911 |
+| model + statcheck on **raw** text | 287 | 0.911 |
+| model + statcheck on **repaired** text | **295** | **0.937** |
+
+**Statcheck reading raw text adds nothing the model did not already find.** The
+repair is the only reason the second branch earns its place.
 
 [PLAN.md](PLAN.md) holds the phase table and the current state of each phase.
 

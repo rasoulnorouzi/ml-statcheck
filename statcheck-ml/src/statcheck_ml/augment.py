@@ -52,6 +52,12 @@ OPERATOR_DAMAGE = {
     ">": ["N", "\x06", "\x08"],
 }
 
+# --- family 3b: the minus sign and the decimal point ------------------------
+# The font that destroys an operator destroys these too, because all three are
+# symbols and not digits. Every character below stands where a minus sign or a
+# decimal point belongs somewhere in the corpus.
+NUMBER_DAMAGE = ["\x01", "\x02", "\x03", "\x05", "\x06", "−", " ", ""]
+
 # --- family 4: the same damage, as another PDF engine writes it --------------
 # A destroyed operator has no Unicode value, so each engine invents one. PyMuPDF
 # writes a control character and poppler writes a letter in the Greek and Coptic
@@ -81,6 +87,14 @@ class Augmenter:
     unicode: bool = True
     operator: bool = True
     hard_negative: bool = True
+    #: Destroy the minus sign or the decimal point inside a number. Measured
+    #: and switched OFF, because it made every score worse. See
+    #: `damage_number` for the numbers.
+    number_damage: bool = False
+    #: The hard negatives written from observed false positives. Measured
+    #: together with `number_damage` only, so its own effect is not yet known.
+    #: See `make_hard_negative`.
+    extra_negatives: bool = False
     rng: random.Random = field(init=False)
 
     def __post_init__(self):
@@ -124,6 +138,40 @@ class Augmenter:
         real = {"POP_EQ": "=", "POP_LT": "<", "POP_GT": ">"}[lab]
         replacement = self.rng.choice(OPERATOR_DAMAGE[real])
         return self._replace(text, spans, s, e, replacement)
+
+    def damage_number(self, text, spans):
+        """Destroy the minus sign or the decimal point inside a number.
+
+        The same font that destroys an operator also destroys the minus sign and
+        the decimal point, because all three are symbols rather than digits.
+        Error analysis on the holdout found this in the largest group of missed
+        results:
+
+            t(8) \x01 \x034.40, p \x04 .001      the statistic is -4.40
+            t(454) \x02 \x031.950, p \x02 .052   the statistic is -1.950
+            r = 0\x0592                          the statistic is 0.92
+
+        Most replacements are one character for one character. Two are not: a
+        space splits the number, and an empty string removes the decimal point
+        altogether. Both happen in the corpus, and `_replace` moves the later
+        spans, so the labels stay aligned either way.
+
+        A number whose decimal point is gone cannot be read correctly by
+        anything. The label still carries the true value, so the model learns
+        to mark the span, and the arithmetic then reports what it can.
+        """
+        targets = [(s, e, lab) for s, e, lab in spans
+                   if lab in ("STAT", "PVAL")]
+        self.rng.shuffle(targets)
+        for s, e, _ in targets:
+            inner = text[s:e]
+            sites = [i for i, ch in enumerate(inner) if ch in "-.−"]
+            if not sites:
+                continue
+            at = s + self.rng.choice(sites)
+            replacement = self.rng.choice(NUMBER_DAMAGE)
+            return self._replace(text, spans, at, at + 1, replacement)
+        return text, spans
 
     def corrupt_characters(self, text, spans, rate: float = 0.02):
         """Swap confusable characters outside the labelled spans.
@@ -174,18 +222,74 @@ class Augmenter:
         are the cheapest way to teach the model what a result is not.
         """
         rng = self.rng
+
+        def dec(low=0, high=9):
+            return f"{rng.randint(low, high)}.{rng.randint(10, 99)}"
+
         patterns = [
             f"see pp. {rng.randint(10, 99)}-{rng.randint(100, 300)} for the full table",
             f"as reported by Smith ({rng.randint(1990, 2020)}), n({rng.randint(10, 99)}) "
-            f"= {rng.randint(1, 9)}.{rng.randint(10, 99)}",
+            f"= {dec(1)}",
             f"Journal of Testing, {rng.randint(10, 60)}({rng.randint(1, 4)}), "
             f"{rng.randint(100, 400)}-{rng.randint(400, 800)}",
-            f"the model was M = {rng.randint(1, 9)}.{rng.randint(10, 99)} "
-            f"(SD = {rng.randint(0, 3)}.{rng.randint(10, 99)}) across conditions",
+            f"the model was M = {dec(1)} "
+            f"(SD = {dec(0, 3)}) across conditions",
             f"* p < .05, ** p < .01, *** p < .001",
-            f"the coefficient was b = {rng.choice('-')}{rng.randint(0, 2)}."
-            f"{rng.randint(10, 99)}, p = .{rng.randint(10, 99)}",
+            f"the coefficient was b = -{dec(0, 2)}, p = .{rng.randint(10, 99)}",
+
         ]
+
+        # Every pattern below was written from a false positive the model
+        # produced on the holdout. Economics and finance use `t` for time, and
+        # that alone accounted for four of the twenty-eight.
+        #
+        # They are OFF by default. Trained together with `number_damage` they
+        # cut false positives from 28 to 6, and cost 0.06 of recall, which is
+        # the wrong trade for a screening tool. Their effect on their own has
+        # not been measured yet.
+        extra = [
+            f"and t = {rng.randint(1, 40)}, {rng.randint(41, 60)}, . . . , T "
+            f"with T = {rng.randint(80, 200)}. For notational convenience",
+            f"a share repurchase program at t = {dec(0, 3)} The riskfree rate "
+            f"is set to {dec(0, 1)}",
+            f"for years t = {rng.randint(1970, 1999)} and t = "
+            f"{rng.randint(2000, 2020)}, respectively",
+            f"of those excluded at t = {rng.randint(10, 60)}, "
+            f"{dec(10, 80)}% are retired",
+
+            # A convention or a rule of thumb, not a measurement.
+            f"with r = .{rng.randint(1, 9):02d}, .{rng.randint(10, 30)}, and "
+            f".{rng.randint(30, 60)} representing small, medium and large effects",
+            f"to identify true small effects (f2 = .{rng.randint(1, 9):02d}, "
+            f"r = .{rng.randint(10, 30)}) in a sample of {rng.randint(100, 900)} firms",
+            f"falls below the Altman threshold value of z = {dec(1, 3)}, "
+            f"denoting that the firm is in the bad state",
+
+            # A percentage, a count, or a share of a sample.
+            f"race and ethnicity were: White = {dec(60, 80)}%, "
+            f"Black = {dec(5, 15)}%, Asian = {dec(1, 9)}%",
+            f"{rng.randint(100, 400)} ({dec(40, 70)} per cent) were men, and "
+            f"the average age was {dec(30, 60)} years",
+            f"records of {rng.randint(300, 600)} of {rng.randint(600, 900)} "
+            f"({dec(50, 90)} percent) employees",
+
+            # A range, an interval bound, or a section number.
+            f"mean age {dec(12, 16)} years, SD = .{rng.randint(40, 90)}; "
+            f"range: [{dec(10, 13)}; {dec(15, 19)}]",
+            f"95% confidence interval (CI) {dec(1, 9)}-{rng.randint(100, 700)}."
+            f"{rng.randint(10, 99)}, controlling for the covariates",
+            f"(from 0.{rng.randint(100, 500)} to 0.{rng.randint(500, 900)}, "
+            f"t = {dec(1, 3)}). {rng.randint(2, 9)}.{rng.randint(1, 9)}. "
+            f"Robustness In this subsection",
+
+            # A mean beside another mean, which is not a test.
+            f"(Msimultaneous = {dec(3, 5)}, Msequential = {dec(3, 5)}) across "
+            f"the two presentation modes",
+            f"Source: EB {dec(60, 62)}, {dec(62, 64)}, {dec(64, 66)}, "
+            f"{dec(66, 68)}, {dec(68, 70)}, {dec(70, 72)}",
+        ]
+        if self.extra_negatives:
+            patterns = patterns + extra
         return rng.choice(patterns)
 
     # -- driver --------------------------------------------------------------
@@ -200,6 +304,8 @@ class Augmenter:
         steps: List[Callable] = []
         if self.operator:
             steps.append(self.damage_operator)
+        if self.number_damage:
+            steps.append(self.damage_number)
         if self.unicode:
             steps.append(self.vary_unicode)
         if self.ocr:

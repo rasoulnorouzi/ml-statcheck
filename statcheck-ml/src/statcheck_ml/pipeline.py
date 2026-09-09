@@ -60,6 +60,10 @@ class Found:
     verdict: Optional[str] = None
     computed_p: Optional[float] = None
     reason: str = ""
+    #: The parts the paper did not report, such as ("p_value",). Empty when the
+    #: result was reported in full. A reader uses this to tell an incomplete
+    #: paper apart from a tool that failed.
+    missing: tuple = ()
 
 
 def _num(text):
@@ -238,6 +242,7 @@ class Pipeline:
         found.verdict = outcome.verdict
         found.computed_p = outcome.computed_p
         found.reason = outcome.reason
+        found.missing = outcome.missing
         return found
 
     # ---------------- the whole thing ----------------
@@ -285,9 +290,17 @@ class Pipeline:
 
         checked = [self.check_one(f) for f in found]
         verdicts: Dict[str, int] = {}
+        incomplete: Dict[str, int] = {}
         for f in checked:
             verdicts[f.verdict or "unknown"] = verdicts.get(f.verdict or "unknown", 0) + 1
+            for part in f.missing:
+                incomplete[part] = incomplete.get(part, 0) + 1
         stages["check"] = verdicts
+        # The parts the tool did not find beside a result. It cannot know why:
+        # the author may have omitted the number, the font may have destroyed
+        # it, or the extraction may have missed it. The quote beside each result
+        # is what tells a reader which.
+        stages["not_found"] = incomplete
 
         return {
             "results": [asdict(f) for f in checked],
@@ -315,6 +328,9 @@ def summarise(report: dict) -> str:
         f"  found by pattern  : {s['find']['by_pattern']}",
         f"  found by model    : {s['find']['by_model']}",
         f"  verdicts          : " + ", ".join(f"{k}={v}" for k, v in s["check"].items()),
+        f"  parts not found   : " + (", ".join(f"{k}={v}" for k, v in
+                                              s.get("not_found", {}).items())
+                                     or "none"),
         f"  seconds           : {report['seconds']}",
     ]
     if s.get("repair", {}).get("replacements"):
