@@ -1,8 +1,8 @@
 ---
 name: adversarial-engineer
 description: >
-  Builds the noise and adversarial generator that turns silver labels into training
-  data which generalizes past the regex that produced them. Use for phase 4 of
+  Builds the noise and adversarial generator that turns bronze labels into training
+  data which generalizes past the text the raters saw. Use for phase 4 of
   PLAN.md and when adding or tuning a noise family.
 tools: [Read, Write, Edit, Grep, Glob, Bash]
 model: opus

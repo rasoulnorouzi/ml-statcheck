@@ -1,21 +1,34 @@
-# Pipeline Stages
+# Pipeline stages
 
-| Stage | Script | Input | Output | Needs Corpus? | Needs Agents? |
-|-------|--------|-------|--------|---------------|---------------|
-| 00 | 00_convert.py | PDF archive | Text files | Yes | No |
-| 00 | 00_font_table.py | PDF archive | Font mappings (JSON) | Yes | No |
-| 01 | 01_sample_windows.py | Clean text directory | Window sample (JSON) | Yes | No |
-| 01 | 01_sample_holdout.py | Clean text directory, used key | Holdout sample (JSON) | Yes | No |
-| 02 | 02_chunk.py | Documents | Chunks | Yes | No |
-| 03 | 03_collect.py | Chunks | Collected results | Yes | No |
-| 04 | 04_agree.py | Annotations from all raters | Agreement metrics (JSON) | No | Yes |
-| 05 | 05_adjudicate.py | Disagreements, rater annotations | Final adjudicated labels | No | Yes |
-| 06 | 06_dataset.py | Windows, annotations, final labels | Training dataset (JSONL) | No | No |
-| 07 | 07_train.py | Training dataset, config grid | Trained models (PyTorch) | No | No |
-| 08 | 08_export.py | Models, training data | ONNX export, manifest | No | No |
-| 08 | 08_port_kit.py | Source repository | Port kit with manifest | No | No |
-| 09 | 09_evaluate.py | Holdout windows, baseline results, models | Evaluation metrics (JSON) | No | No |
-| 10 | 10_figures.py | Evaluation results, agreement | Figures (PNG) | No | No |
-| 11 | 11_report.py | All results and evaluation | Report (Markdown) | No | No |
-| 12 | 12_engines.py | PDFs, text from all engines | Engine comparison report | Yes | No |
-| 12 | 12_regex_parity.py | Windows, annotations, baseline CSV | Regex vs baseline comparison | No | No |
+Each stage is one script with explicit inputs and outputs. `reproduce.sh` runs
+stages 04 to 11 from the committed files. Stages that need the corpus or a
+rater agent are marked; they were run once, and their outputs are committed
+with a manifest of hashes.
+
+| Stage | Script | Input | Output | Needs |
+|---|---|---|---|---|
+| 00 | `00_convert.py` | PDF archive | text files | corpus |
+| 00 | `00_font_table.py` | PDF archive | `spec/font_table.json` | corpus |
+| 01 | `01_sample_windows.py` | text files | `dataset/windows/train.json`, `key.json` | corpus |
+| 01 | `01_sample_holdout.py` | text files, used key | `dataset/windows/holdout.json` | corpus |
+| 02 | `02_chunk.py` | windows | rater batches of 20 windows, manifest | — |
+| 03 | `03_collect.py` | rater output files | `annotations/<split>/<rater>.json`, stamped | rater agents |
+| 04 | `04_agree.py` | three rater files, final labels | `agreement/<split>.json` | — |
+| 05 | `05_adjudicate.py` | three rater files | `disputes.json`, `final.json` | adjudicator agent |
+| 06 | `06_dataset.py` | windows, final labels | `train.jsonl`, `holdout.jsonl`, `splits.json` | — |
+| 07 | `07_train.py` | `train.jsonl`, `splits.json`, `grid.json` | `models/<run>/`, `models/runs.json` | CPU hours |
+| 08 | `08_export.py` | trained runs | `models/zoo/`, `models/export.json` | — |
+| 08 | `08_port_kit.py` | spec, zoo | a port kit with its manifest | — |
+| 09 | `09_evaluate.py` | holdout, baseline CSVs, zoo | `results/eval.json` | — |
+| 10 | `10_figures.py` | eval, agreement, runs | `results/figures/*.png` | — |
+| 11 | `11_report.py` | template, every result file | `results/REPORT.md`, `results/readme_block.md` | — |
+| 12 | `12_baseline.py` | holdout windows | `dataset/baseline/*.csv` | R, statcheck |
+| 12 | `12_engines.py` | PDFs, text from every engine | `results/engines.json` | corpus |
+| 12 | `12_regex_parity.py` | windows, baseline CSV | parity of the Python port of the regex | — |
+
+Rules that every stage follows:
+
+- Every stage that samples takes `--seed`, and the default is 0. A rerun with
+  the same inputs gives the same bytes. `reproduce.sh` prints the hashes.
+- A stage reads the committed inputs only. No stage reads a scratch file.
+- `--help` on any script prints its arguments and defaults.

@@ -53,7 +53,7 @@ Do not raise an agent's model because a task feels hard. Split the task instead.
 - **The processing unit is an overlapping window, not a sentence.** One result can
   cross a sentence boundary.
 - **Never train on the gold set, and never call a machine annotation gold.** Label
-  tiers are silver, bronze, and gold, defined in `PLAN.md`.
+  tiers are bronze and gold, defined in `PLAN.md`. Silver is retired.
 - **The ported regex keeps its faults.** It is the baseline improvement is measured
   against, so it must stay faithful rather than better.
 
@@ -87,7 +87,18 @@ corpus. Each exits non-zero when a port drifts. Run both after any change to
 
 ```
 cd statcheck-ml
-python pipeline/12_engines.py <pdf_dir> <key.json> <labels.json> --text-dir <dir>
+python -m pytest tests -q          # the Python units, about a minute
+bash reproduce.sh                  # agreement, dataset, evaluation, figures, report
+bash reproduce.sh --train          # also the training grid and the zoo export
+```
+
+`reproduce.sh` prints the SHA-256 of every result file. Run it twice before a
+release and compare the hashes. Never edit `results/REPORT.md` by hand; edit
+`docs/report_template.md` and run the report stage.
+
+```
+cd statcheck-ml
+python pipeline/12_engines.py <pdf_dir> <key.json> <labels.json> --text-dir <dir> --recursive
 ```
 
 Measures every PDF engine and reports the spread between the best and the worst.
