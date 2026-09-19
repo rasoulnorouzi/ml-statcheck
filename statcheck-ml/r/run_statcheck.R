@@ -51,7 +51,7 @@ if (is.null(found) || nrow(found) == 0) {
     p_comp = character(0), reported_p = numeric(0), computed_p = numeric(0),
     error = logical(0), decision_error = logical(0), raw = character(0)
   )
-  write.csv(empty, args[2], row.names = FALSE)
+  write.csv(empty, args[2], row.names = FALSE, fileEncoding = "UTF-8")
   cat("statcheck found 0 results in", length(texts), "passages\n")
   quit(status = 0)
 }
@@ -71,7 +71,7 @@ out <- data.frame(
   stringsAsFactors = FALSE
 )
 
-write.csv(out, args[2], row.names = FALSE)
+write.csv(out, args[2], row.names = FALSE, fileEncoding = "UTF-8")
 cat("statcheck found", nrow(out), "results in", length(texts), "passages\n")
 cat("  passages with at least one result:", length(unique(out$window_id)), "\n")
 cat("  inconsistencies:", sum(out$error, na.rm = TRUE), "\n")

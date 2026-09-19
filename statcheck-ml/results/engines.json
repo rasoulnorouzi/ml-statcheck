@@ -1,0 +1,17 @@
+{
+  "documents": 200,
+  "gold": 327,
+  "recall": {
+    "pymupdf": 0.9113149847094801,
+    "pdfium": 0.9021406727828746,
+    "poppler": 0.8715596330275229
+  },
+  "in_text": {
+    "pymupdf": 0.9113149847094801,
+    "pdfium": 0.9051987767584098,
+    "poppler": 0.8715596330275229
+  },
+  "spread": 0.03975535168195721,
+  "limit": 0.06,
+  "command": "C:\\Users\\norouzin\\Downloads\\Projects\\practice_claude\\.venv\\Scripts\\python.exe C:\\Users\\norouzin\\Downloads\\Projects\\practice_claude\\statcheck-ml\\pipeline\\12_engines.py ../02_pdfs/02_pdfs dataset/windows/key.json dataset/annotations/holdout/final.json --recursive --max-spread 0.06 --out results/engines.json"
+}

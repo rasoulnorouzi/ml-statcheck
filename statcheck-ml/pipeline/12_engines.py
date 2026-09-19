@@ -14,10 +14,17 @@ earlier, so this script does not need Node or R to run.
 
 Usage:
     python pipeline/12_engines.py <pdf_dir> <key.json> <labels.json> [--text-dir DIR]
-                                  [--max-spread 0.06]
+                                  [--max-spread 0.06] [--recursive]
 
 `--text-dir` holds one folder for each engine, named `txt_<engine>`, each with
 one text file per PDF. Use it for PDF.js and for R pdftools.
+
+`--recursive` globs `pdf_dir` for `**/*.pdf` instead of the top level only, so
+the corpus can be read straight from its per-journal layout with no separate
+flattening step. A document is matched by its basename, the same way the flat
+run matched it, unless two journals hold a PDF with the same basename; then
+the match falls back to the path relative to `pdf_dir`, without its suffix,
+which is how `doc` in `key.json` is already written.
 """
 from __future__ import annotations
 
@@ -28,6 +35,7 @@ import os
 import re
 import subprocess
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
@@ -103,6 +111,25 @@ def flatten(text: str) -> str:
     return re.sub(r"\s+", " ", text)
 
 
+def collect_pdfs(pdf_dir: Path, recursive: bool):
+    """Every PDF under `pdf_dir`, indexed two ways.
+
+    `stems` holds a basename only when it is unique, because a recursive scan
+    of a corpus organised by journal can give two files the same name. Every
+    file is also indexed by its path relative to `pdf_dir`, without a suffix,
+    which is how `doc` in `key.json` is written and so never collides.
+    """
+    pattern = "**/*.pdf" if recursive else "*.pdf"
+    by_stem = defaultdict(list)
+    by_relpath = {}
+    for p in pdf_dir.glob(pattern):
+        by_stem[p.stem].append(p)
+        rel = p.relative_to(pdf_dir).with_suffix("").as_posix()
+        by_relpath[rel] = str(p)
+    stems = {stem: str(ps[0]) for stem, ps in by_stem.items() if len(ps) == 1}
+    return stems, by_relpath
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("pdf_dir")
@@ -111,6 +138,8 @@ def main(argv=None):
     ap.add_argument("--text-dir", default=None)
     ap.add_argument("--max-spread", type=float, default=DEFAULT_MAX_SPREAD)
     ap.add_argument("--out", default=None)
+    ap.add_argument("--recursive", action="store_true",
+                     help="glob pdf_dir for **/*.pdf instead of the top level only")
     args = ap.parse_args(argv)
 
     key = {k["window_id"]: k for k in
@@ -126,19 +155,29 @@ def main(argv=None):
         by_doc.setdefault(doc, []).extend(row["results"])
 
     # The PDF of a document is found by its stem, so a corpus can be renamed
-    # without changing this script.
-    stems = {Path(p).stem: p for p in
-             (str(x) for x in Path(args.pdf_dir).glob("*.pdf"))}
+    # without changing this script. `doc_to_stem` still names the file for the
+    # --text-dir engines, which are prepared flat, one file per stem.
+    # `doc_to_path` is what actually opens the PDF, and prefers the relative
+    # path when two journals share a basename.
+    stems, by_relpath = collect_pdfs(Path(args.pdf_dir), args.recursive)
     mapping_path = Path(args.pdf_dir).parent / "pdfmap.json"
     doc_to_stem = {}
+    doc_to_path = {}
     if mapping_path.exists():
         pdfmap = json.loads(mapping_path.read_text(encoding="utf-8"))
         doc_to_stem = {v: Path(k).stem for k, v in pdfmap.items()}
+        for doc, stem in doc_to_stem.items():
+            if stem in stems:
+                doc_to_path[doc] = stems[stem]
     else:
         for doc in by_doc:
             stem = Path(doc).stem
+            doc_to_stem[doc] = stem
+            rel = Path(doc).with_suffix("").as_posix()
             if stem in stems:
-                doc_to_stem[doc] = stem
+                doc_to_path[doc] = stems[stem]
+            elif rel in by_relpath:
+                doc_to_path[doc] = by_relpath[rel]
 
     engines = list(NATIVE)
     if args.text_dir:
@@ -153,14 +192,19 @@ def main(argv=None):
     total = 0
     missing = {e: 0 for e in engines}
 
-    docs = sorted(d for d in by_doc if d in doc_to_stem)
+    # A document only counts once its PDF is found (the pdfmap.json branch
+    # trusts the map instead, matching its behaviour before --recursive).
+    if mapping_path.exists():
+        docs = sorted(d for d in by_doc if d in doc_to_stem)
+    else:
+        docs = sorted(d for d in by_doc if d in doc_to_path)
     for n, doc in enumerate(docs):
         stem = doc_to_stem[doc]
         results = by_doc[doc]
         total += len(results)
         for engine in engines:
             if engine in NATIVE:
-                pdf = stems.get(stem)
+                pdf = doc_to_path.get(doc)
                 if pdf is None:
                     missing[engine] += len(results)
                     continue
@@ -205,11 +249,13 @@ def main(argv=None):
           f"   limit {args.max_spread:.3f}")
 
     if args.out:
+        command = " ".join([sys.executable, str(Path(__file__).resolve())] + (argv if argv is not None else sys.argv[1:]))
         Path(args.out).write_text(json.dumps(
             {"documents": len(docs), "gold": total, "recall": rates,
              "in_text": {e: found[e] / max(total - missing[e], 1)
                          for e in engines},
-             "spread": spread, "limit": args.max_spread}, indent=2),
+             "spread": spread, "limit": args.max_spread,
+             "command": command}, indent=2),
             encoding="utf-8")
         print(f"wrote {args.out}")
 
