@@ -115,7 +115,7 @@ sample can show that.
 1. Done. All 3100 PDF files converted in 53 seconds. No file failed. The conversion
    recovered non-ASCII characters in 99.8% of them.
 2. Done. Findings 5 and 6 now report the new conversion.
-3. Next: sample the annotation. See SAMPLING.md.
+3. Next: sample the annotation. See docs/PROTOCOL.md.
 4. Add the backslash operator to the list of known variants.
 
 ## Finding 7 — a third of results hide behind control characters
