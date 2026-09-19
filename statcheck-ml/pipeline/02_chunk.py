@@ -50,6 +50,7 @@ def main():
     parser.add_argument('--out', type=str, help='Output directory for batch files')
     parser.add_argument('--size', type=int, default=20, help='Batch size (default 20)')
     parser.add_argument('--manifest', type=str, help='Path to manifest file to generate')
+    parser.add_argument('--manifest-root', type=str, help='Root directory for recursive manifest')
 
     args = parser.parse_args()
 
@@ -61,6 +62,21 @@ def main():
         cmd = f"python pipeline/02_chunk.py --manifest dataset/MANIFEST.json"
         write_manifest(window_files, args.manifest, cmd)
         print(f"Wrote manifest to {args.manifest}")
+
+    elif args.manifest_root:
+        # Generate manifest for entire root directory recursively
+        root_dir = Path(args.manifest_root)
+        manifest_path = root_dir / 'MANIFEST.json'
+
+        # Find all files recursively except MANIFEST.json
+        all_files = []
+        for file_path in root_dir.rglob('*'):
+            if file_path.is_file() and file_path.name != 'MANIFEST.json':
+                all_files.append(file_path)
+
+        cmd = f"python pipeline/02_chunk.py --manifest-root {args.manifest_root}"
+        write_manifest(all_files, str(manifest_path), cmd)
+        print(f"Wrote manifest to {manifest_path}")
 
     elif args.windows and args.out:
         batch_count, total = chunk(args.windows, args.out, args.size)

@@ -127,50 +127,6 @@ def load_charmap(model_dir: str | Path | None = None) -> dict:
     return json.loads(SPEC_CHARMAP_PATH.read_text(encoding="utf-8"))
 
 
-def split_by_document(examples: Sequence[dict], dev_share: float = 0.15,
-                      test_share: float = 0.15,
-                      test_journals: Sequence[str] = ()) -> dict:
-    """Split into training, development and test parts.
-
-    Whole documents move together. Two windows from one paper share an author,
-    a template and a font, so splitting by window leaks the answers and every
-    score comes out too high.
-
-    The development part chooses when to stop training. It is therefore not a
-    fair test, because the model was selected on it. The test part is touched
-    once, at the end, and never guides a decision.
-
-    Named journals are held out on top of that. That part measures whether the
-    model reads a venue it has never seen, which a random split cannot show.
-    """
-    test_journals = set(test_journals)
-    held, rest = [], []
-    for ex in examples:
-        (held if ex.get("journal") in test_journals else rest).append(ex)
-
-    # A stable hash, so a rerun gives the same split.
-    import hashlib
-
-    def bucket(doc: str) -> float:
-        h = hashlib.sha1(doc.encode()).hexdigest()[:8]
-        return int(h, 16) / 0xFFFFFFFF
-
-    def key(ex):
-        return ex.get("source_doc") or ex["window_id"]
-
-    train, dev, test = [], [], []
-    for ex in rest:
-        b = bucket(key(ex))
-        if b < dev_share:
-            dev.append(ex)
-        elif b < dev_share + test_share:
-            test.append(ex)
-        else:
-            train.append(ex)
-    return {"train": train, "dev": dev, "test": test,
-            "test_unseen_journals": held}
-
-
 def load_splits(path: str | Path) -> dict:
     """Read a committed document-level split.
 

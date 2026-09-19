@@ -27,8 +27,7 @@ import torch
 import torch.nn as nn
 
 from .data import (apply_splits, build_vocab, class_weights, encode,
-                   load_jsonl, load_splits, row_to_example, save_vocab,
-                   split_by_document)
+                   load_jsonl, load_splits, row_to_example, save_vocab)
 from .labels import ENTITIES, TAG_TO_ID, ID_TO_TAG, tags_to_spans
 from .model import CharTagger
 
@@ -110,8 +109,7 @@ def score(examples: Sequence[dict], predicted: Dict[str, list]) -> dict:
 
 def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
           batch_size: int = 16, lr: float = 2e-3, seed: int = 0,
-          test_journals: Sequence[str] = (), patience: int = 6,
-          use_crf: bool = False, augment: int = 0,
+          patience: int = 6, use_crf: bool = False, augment: int = 0,
           hard_negatives: int = 0, unit: str = "lstm",
           splits_path: str | None = None) -> dict:
     random.seed(seed)
@@ -124,18 +122,14 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
     examples = [row_to_example(r) for r in rows]
 
     # A committed splits file assigns every document once, so a rerun always
-    # sees the same train/dev boundary. Without one, the split falls back to
-    # the stable hash, which is what every run used before splits.json.
-    unseen_journals: List[dict] = []
-    if splits_path:
-        splits = load_splits(splits_path)
-        train_set, dev_set = apply_splits(examples, splits)
-        print(f"splits: {splits_path} (seed {splits.get('seed')}, "
-              f"dev_share {splits.get('dev_share')})")
-    else:
-        parts = split_by_document(examples, test_journals=test_journals)
-        train_set, dev_set = parts["train"], parts["dev"]
-        unseen_journals = parts["test_unseen_journals"]
+    # sees the same train/dev boundary.
+    if not splits_path:
+        raise SystemExit("--splits is required; use dataset/splits.json")
+
+    splits = load_splits(splits_path)
+    train_set, dev_set = apply_splits(examples, splits)
+    print(f"splits: {splits_path} (seed {splits.get('seed')}, "
+          f"dev_share {splits.get('dev_share')})")
     if not dev_set:
         raise SystemExit("the development split is empty; add more documents")
 
@@ -168,8 +162,7 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
     opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
     sched = torch.optim.lr_scheduler.ReduceLROnPlateau(opt, mode="max", factor=0.5, patience=2)
 
-    print(f"windows: train {len(train_set)}, dev {len(dev_set)}, "
-          f"held-out journals {len(unseen_journals)}")
+    print(f"windows: train {len(train_set)}, dev {len(dev_set)}")
     print(f"vocabulary: {len(vocab)} characters")
     print(f"model: {model.size_report()}")
 
@@ -240,19 +233,17 @@ def main():
     ap.add_argument("--batch-size", type=int, default=16)
     ap.add_argument("--lr", type=float, default=2e-3)
     ap.add_argument("--seed", type=int, default=0)
-    ap.add_argument("--hold-out-journals", nargs="*", default=[])
     ap.add_argument("--crf", action="store_true", help="add a CRF above the emissions")
     ap.add_argument("--augment", type=int, default=0,
                     help="perturbed copies to make of each training window")
     ap.add_argument("--hard-negatives", type=int, default=0,
                     help="generated passages that look like results and are not")
     ap.add_argument("--unit", choices=["lstm", "gru", "cnn"], default="lstm")
-    ap.add_argument("--splits", default=None,
-                    help="a committed dataset/splits.json; overrides the "
-                         "hash-based split when given")
+    ap.add_argument("--splits", required=True,
+                    help="dataset/splits.json with train/dev document split")
     args = ap.parse_args()
     train(args.data, args.out, epochs=args.epochs, batch_size=args.batch_size,
-          lr=args.lr, seed=args.seed, test_journals=args.hold_out_journals,
+          lr=args.lr, seed=args.seed,
           use_crf=args.crf, augment=args.augment,
           hard_negatives=args.hard_negatives, unit=args.unit,
           splits_path=args.splits)
