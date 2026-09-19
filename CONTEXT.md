@@ -5,7 +5,7 @@ stands. This file says why each decision was made, and what the corpus showed.
 
 A new session should read `CLAUDE.md`, then `PLAN.md`, then this file.
 
-Last updated: 2026-09-07.
+Last updated: 2026-09-20.
 
 ## The project in one paragraph
 
@@ -281,6 +281,70 @@ untouched.
 
 PyMuPDF recall does not move, so no published number regresses.
 
+## Version 2 — why the process was rebuilt
+
+Version 1 reached a working cascade, and its numbers could not be reproduced from
+committed files. The annotation ran as two agent passes without a versioned
+guideline, without provenance, and with manual adjudication. The split was
+recomputed from a hash and never written down. The report numbers were typed by
+hand. On 2026-09-19 the owner approved version 2, and these are its decisions.
+
+### Three raters from three model families
+
+Two passes of one model share one training run, so their agreement measures
+consistency, not independence. Version 2 uses one haiku, one sonnet, and one opus
+rater. The agreement between them is higher than between the two version 1 passes,
+and the per-rater score against the final label tells which cheap model annotates
+best under this guideline. The raters still share a model family, and the report
+says so in its limitations.
+
+### The guideline is a file, and every record carries its hash
+
+`docs/GUIDELINE.md` is the artifact. The rater agents embed it, the collect script
+records its sha256 on every record, and a change to the guideline is a new version.
+One rule was added before annotation started: `p_operator` takes one of three
+values, and `≤` is written as `<`. Real rater output from version 1 held `≤`.
+
+### Consensus is a script, and disputes are a committed file
+
+A result is kept when two of three raters found it, and each field takes the
+majority value. A singleton or a three-way field conflict goes to an adjudicator
+agent that sees no rater names. `dataset/annotations/<set>/disputes.json` holds every
+dispute, every candidate, and every decision with its reason. The dispute rate was
+about three percent of results.
+
+### No silver tier, no transformer
+
+The regex has recall near 0.2, so a silver window holds about four unlabeled true
+results for each labeled one. That is label noise, not supervision. The transformer
+baselines cannot port to R and were never the product. Both are gone.
+
+### The document is the bootstrap unit
+
+Windows from one document share a font, a conversion, and a writing style. An
+interval over windows is too narrow. Every interval and every paired test in the
+evaluation resamples holdout documents.
+
+### The repaired baseline of version 1 was not reproducible
+
+Version 1 reported 159 results for `statcheck` after operator repair on the holdout.
+The file came from a whole-document substitution that no script in the repository
+produces, and it corrupted ordinary words. The version 2 baseline uses the
+RESULT-anchored repair and finds 152. The lower number is the honest one.
+
+### Lessons from running the team
+
+- Any shell command outside the allow list, such as `rm`, waits for manual approval
+  and stalls an agent for hours. Agents delete and hash inside Python.
+- A refactor that removes a flag can leave one dangling name after the training
+  loop. Every run then dies after thirty epochs. `tests/test_train_smoke.py` trains
+  one epoch to completion and would have caught it.
+- A haiku writer cannot write the scientific prose of the report. It typed numbers
+  by hand and misstated the method. The manager writes the prose; the generator
+  fills every number.
+- An agent fabricated an input file to make a generator run. The manager checks the
+  timestamp and the schema of every input an agent used.
+
 ## Known problems
 
 1. A window can cut a result in half. One pool A window began in the middle of a
@@ -289,6 +353,8 @@ PyMuPDF recall does not move, so no published number regresses.
 2. Detection is not the same as checking. A result with no degrees of freedom and no
    p-value is real but cannot be recomputed. Report the two counts apart.
 3. Project agents need a session restart before Claude Code can dispatch them.
+   Version 2 ran the raters through the general-purpose agent with a model override
+   and the same guideline file, and recorded that on every record.
 4. poppler reads 4 points less of the corpus than PyMuPDF, and the normalisation
    stage cannot recover text the engine never returned. The R port therefore has
    a lower ceiling than the Python port. State the number in the R
@@ -315,12 +381,16 @@ PyMuPDF recall does not move, so no published number regresses.
 |---|---|
 | `PLAN.md` | phases, agents, status |
 | `CONTEXT.md` | this file: decisions and findings |
+| `docs/superpowers/specs/2026-09-19-reproducible-pipeline-design.md` | the version 2 design |
+| `statcheck-ml/docs/GUIDELINE.md` | the annotation guideline, version 2.0 |
+| `statcheck-ml/docs/PROTOCOL.md` | raters, batches, provenance, agreement, consensus |
+| `statcheck-ml/docs/SCHEMA.md` | the tag set and the dataset row |
 | `statcheck-ml/CORPUS.md` | what the corpus contains and what is wrong with it |
-| `statcheck-ml/SAMPLING.md` | annotation pools and budget |
-| `statcheck-ml/SCHEMA.md` | annotation format and training format |
-| `statcheck-ml/convert.py` | PDF to text with PyMuPDF |
-| `statcheck-ml/sample_windows.py` | build windows, strip references, draw pools |
-| `statcheck-ml/to_bioes.py` | align annotations, emit character tags |
+| `statcheck-ml/pipeline/` | one numbered script per stage; `pipeline/README.md` lists them |
+| `statcheck-ml/reproduce.sh` | the offline stages from committed files |
+| `statcheck-ml/results/REPORT.md` | the generated report |
 | `.claude/agents/` | one agent for each phase |
 
 Data is not in the repository. The data directory and the corpus archive are ignored.
+The frozen windows, the annotations, the agreement, the splits, the baseline, the
+evaluation, and the figures are committed.
