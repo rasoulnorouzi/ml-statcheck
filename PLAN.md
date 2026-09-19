@@ -3,11 +3,18 @@
 Single source of truth. Update the Status column as work lands. Do not track progress
 anywhere else.
 
+Version 2, 2026-09-19. Version 1 reached a working cascade but its process was not
+reproducible. `docs/superpowers/specs/2026-09-19-reproducible-pipeline-design.md`
+holds the approved design for version 2. `CONTEXT.md` holds the reasons.
+
 ## Goal
 
 Replace the regex extraction of statcheck with a learned extractor, keep the p-value
 recomputation exact, and ship the result as ONNX. The tool runs in three places: a
 browser, R, and Python.
+
+Version 2 adds one requirement: every number in the final report comes from a script
+that reads a committed file.
 
 ## Non-goal
 
@@ -31,83 +38,55 @@ mistake.
 
 The risk is that the prefilter becomes the new bottleneck. Text the filter discards
 can never be recovered by the model, so the filter sets the recall ceiling of the
-whole system.
-
-Therefore the prefilter is tuned for recall, not precision. It answers "could this
-contain a result", not "does this look like a result". Candidate signals:
-
-- a digit is present
-- the density of non-alphabetic characters is above a threshold
-- a trigger character is present, such as a parenthesis, a comparison operator, or a
-  Greek letter
-- a test letter or keyword is present, such as t, F, r, z, chi, Q, p, df, or N
-
-Prefilter recall on the gold set is a gate. Below the agreed threshold, the system is
-reported as prefilter-limited and model tuning stops.
+whole system. Therefore the prefilter is tuned for recall, not precision. Prefilter
+recall on the holdout is a gate. Below the agreed threshold, the system is reported as
+prefilter-limited and model tuning stops.
 
 ### The processing unit is a window, not a sentence
 
-One result can span a sentence boundary, as in "the effect was significant, t(23) =
-2.45. The p-value was .02." Tables split results further apart.
-
-So the prefilter selects overlapping windows and expands each one by a sentence on
-both sides. The model tags across the window, and result-block grouping links spans
-across the internal boundaries.
-
-This is a schema decision. It belongs in phase 3 and is expensive to add later.
+One result can span a sentence boundary. Tables split results further apart. So the
+prefilter selects overlapping windows and expands each one by context lines on both
+sides. The model tags across the window.
 
 ## Three ports — one spec
 
-Three components must behave identically in Python, JavaScript, and R: the prefilter,
-the character vocabulary, and the p-value math.
+The prefilter, the character vocabulary, the normalisation, the repair rules, and the
+p-value math behave identically in Python, JavaScript, and R. The rules live in shared
+JSON files under `src/statcheck_ml/spec/`, and each port reads them. A port holds
+only the code that applies the spec.
 
-These are not written three times. The rules and the vocabulary live in shared JSON
-files, and each port reads them. A port holds only the code that applies the spec.
-
-This principle drives the model choice. A character model needs a character map,
-which is trivial in all three languages. A transformer needs a tokenizer ported three
-times.
-
+This drives the model choice. A character model needs a character map, which is
+trivial in all three languages. A transformer needs a tokenizer ported three times.
+Version 2 therefore drops the transformer baselines entirely.
 
 ## The hybrid cascade
 
-The measurements decide the design. On the round 2 passages the real statcheck
-package reaches a precision of 1.000 and a recall near 0.205. It almost never
-reports a result that is not there, and it misses about four results in five.
-
-A learned extractor should therefore not replace it. It should follow it.
+On the holdout the real statcheck package reaches a precision near 1.0 and a recall
+near 0.19. A learned extractor should not replace it. It should follow it.
 
 | Step | Component | Why |
 |---|---|---|
 | 1 | prefilter | 1 line in 700 holds a result, so this makes the rest affordable |
-| 2 | statcheck | accept everything it finds, because its precision is 1.000 |
+| 2 | statcheck, with operator repair | accept everything it finds, because its precision is near 1.0 |
 | 3 | the model | read the same candidates, add only what statcheck did not find |
 | 4 | the mathematics | recompute and compare, the same code for both sources |
 
-Two properties matter more than the score.
-
-An existing statcheck user sees no regression. Every result the package reports
-today is still reported, and it is still parsed by the package, so the cascade
-cannot introduce a disagreement into work that already depends on it.
-
-The model is answerable only for what the package cannot read. That is also
-where the evidence is strongest, because 51.9% of what statcheck misses is text
-whose operator the conversion from PDF destroyed.
-
-The cascade is scored beside statcheck alone and the model alone, on passages
-from documents no model has seen. Three rows, one table, one metric.
+The cascade is scored beside statcheck alone and the model alone, on the holdout,
+with confidence intervals and a paired test.
 
 ## Model zoo
 
-| Tier | Model | Target size | Ported to all three? |
-|---|---|---|---|
-| `lite` | char-BiLSTM-CRF | < 10 MB | yes, this is the product |
-| `balanced` | MobileBERT | ~25 MB | browser and Python only |
-| `best` | DistilBERT | ~66 MB | research baseline, not ported |
+Every candidate is character-level, so every candidate ports to all three runtimes.
 
-Accuracy decides which tier is recommended. Size is reported, not constrained. The
-`lite` tier must work everywhere regardless of which tier scores best, because it is
-the only one that runs natively in R.
+| Family | Heads | Status |
+|---|---|---|
+| char-BiLSTM | softmax, CRF | exists |
+| char-BiGRU | softmax, CRF | exists |
+| char-CNN, dilated | softmax, CRF | version 2 |
+
+Six configurations are screened with seed 0. The top three by dev F1 train again with
+seeds 1 and 2. The three shipped ONNX files are the seed-0 exports of those three.
+Accuracy decides which is recommended. Size and latency are reported, not constrained.
 
 Training runs on local CPU. No GPU is assumed. Every training script checkpoints and
 resumes.
@@ -116,62 +95,61 @@ resumes.
 
 | Tier | Source | Allowed use |
 |---|---|---|
-| Silver | the ported statcheck regex, run at scale | bulk training |
-| Bronze | multi-agent annotation by a language model, with agreement scoring | training and development |
-| Gold | human labels, supplied by the project owner | held-out test only |
+| Bronze | three rater agents, majority vote, scripted adjudication | training, development, and the holdout |
+| Gold | human labels, supplied by the project owner | held-out test only, when it exists |
 
-The gold set is frozen on arrival. No model trains on it. Annotations produced by a
-language model are never reported as gold.
+There is no human gold set today. Every reported number is measured against bronze
+labels, and the report says so. Annotations produced by a language model are never
+reported as gold.
+
+The silver tier of version 1 is retired. The regex has recall near 0.2, so a window it
+labels holds about four unlabeled true results for each labeled one. That is label
+noise, not supervision.
 
 ## Adversarial and noise layer
 
-Applied to silver spans, so the model generalizes past the regex that produced them.
+Applied to training spans only, so the model generalises past the text it has seen.
 
 | Family | Content |
 |---|---|
 | OCR corruption | confusable characters, ligatures, spacing lost in PDF extraction |
 | Unicode variance | Greek letter versus spelled name, superscript versus plain digit, dash forms |
+| Operator damage | the operator replaced by a control character, as the PDF conversion does |
 | Format perturbation | prose phrasing, a result split across a line break, a table row |
 | Hard negatives | text that resembles a result and is not, such as a page range or a citation year |
 
-Hard negatives carry the most value. The regex fires on them. A trained model can
-learn not to.
-
-## Phases
+## Phases, version 2
 
 Status values: `blocked`, `ready`, `active`, `done`.
 
 | M | # | Phase | Agent | Model | Status |
 |---|---|---|---|---|---|
-| M1 | 0 | Repository layout, environment, size and latency gate | data-engineer | haiku | ready |
-| M1 | 1 | Ingest corpus, RE-CONVERT the PDFs with PyMuPDF, keep both versions | data-engineer | haiku | ready |
-| M1 | 2a | Port the statcheck regex to Python, prove parity against R | regex-porter | sonnet | done, 74% only |
-| M1 | 2b | Build the prefilter spec, three ports, measure its recall | regex-porter | sonnet | ready |
-| M2 | 3 | Label schema, window unit, result-block grouping, silver labels | label-architect | opus | ready |
-| M2 | 4 | Noise and adversarial generator | adversarial-engineer | opus | done |
-| M2 | 5 | Annotator agents, agreement, adjudication | label-architect | opus | done |
-| M3 | 6 | Train the character model and the transformer baselines | ml-trainer | sonnet | active |
-| M3 | 7 | ONNX export, quantization, the three-tier zoo | onnx-engineer | sonnet | blocked |
-| M4 | 8 | p-value core in Python, JavaScript, and R, with a parity suite | stats-core | opus | ready |
-| M4 | 8b | Text normalisation spec, so the PDF engine cannot change the answer | regex-porter | sonnet | done |
-| M4 | 9 | Python reference port and the browser web app | runtime-engineer | sonnet | blocked |
-| M4 | 10 | R package, native `lite` path | runtime-engineer | sonnet | blocked |
-| M4 | 11 | Evaluation on an unseen test part: statcheck, model, cascade | eval-engineer | sonnet | active |
-| M4 | 11b | The hybrid cascade, and its ablation against each part alone | eval-engineer | sonnet | active |
-| M4 | 12 | Documentation in ASD-STE100 | doc-writer | haiku | blocked |
+| M1 | 1 | Guideline v2, schema synced with `labels.py`, adjudication rules | label-architect | opus | ready |
+| M1 | 2 | Layout: `pipeline/` stages, `reproduce.sh`, pinned requirements, BERT removed | data-engineer | haiku | ready |
+| M1 | 3 | Frozen windows, manifest, chunk and collect scripts with provenance | data-engineer | haiku | ready |
+| M1 | 4 | Agreement module: κ, α, span F1, bootstrap, unit tests | eval-engineer | sonnet | ready |
+| M1 | 5 | char-CNN, grid runner with seeds and parallel runs, export parity | ml-trainer | sonnet | ready |
+| M2 | 6 | Annotate every window three times, blind | annotator-haiku, -sonnet, -opus | haiku, sonnet, opus | blocked on 1, 3 |
+| M2 | 7 | Collect, agreement report, adjudicate disputes, final labels | data-engineer, adjudicator | haiku, opus | blocked on 4, 6 |
+| M2 | 8 | Dataset, splits, alignment gate | data-engineer | haiku | blocked on 7 |
+| M3 | 9 | Train the grid: 6 screens, 3 × 3 seeds, 1 ablation | ml-trainer | sonnet | blocked on 5, 8 |
+| M3 | 10 | Export the zoo, parity, size, latency, quantisation delta | ml-trainer | sonnet | blocked on 9 |
+| M4 | 11 | Evaluate on the holdout: systems, subsets, bootstrap, paired tests, McNemar | eval-engineer | sonnet | blocked on 10 |
+| M4 | 12 | R baseline regenerated, engine gate, JS and R parity tests green | regex-porter | sonnet | blocked on 2 |
+| M4 | 13 | Figures | eval-engineer | sonnet | blocked on 11 |
+| M4 | 14 | Report template and generated report, README, PROTOCOL, CONTEXT | doc-writer | haiku | blocked on 13 |
+| M4 | 15 | Final review: reproduce.sh from clean checkout, hashes match | manager | fable | blocked on 14 |
 
-Phase 1 is blocked until the owner supplies the corpus folder. Phases 6, 7, 9, 10, 11
-and 12 are blocked on their predecessors.
+Phases 1 to 5 need no annotation and can run in parallel now.
 
-Phases 9 and 10 have a second gate. Each port gets a different PDF engine, and the
-engines do not read the same text. `bench_engines.py` measures every engine and
-reports the spread between the best and the worst. A port must not ship while the
-spread is above 0.06. The spread was 0.136 before phase 8b and is 0.050 now.
-`CONTEXT.md` holds the measurements and the reason.
+## Version 1 phases, for the record
 
-Phases 0, 2a, 2b, 3, 4, 5 and 8 need no data. They can start now.
+Version 1 delivered: the corpus conversion with PyMuPDF, the ported regex (74 %
+parity), the prefilter spec and its three ports, the normalisation and repair specs,
+the p-value core in Python, the augmentation layer, two annotation passes, the
+BiLSTM and BiGRU models with CRF, the cascade, and the JS and R normalisation ports
+with parity tests. All of that code is kept. Only the process around it changes.
 
 ## Waiting on the owner
 
-- Corpus received. See statcheck-ml/CORPUS.md. The supplied text lost all Greek letters, so phase 1 must convert the PDF files again.
 - The human-labeled gold set, whenever it is ready.
