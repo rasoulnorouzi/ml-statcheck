@@ -21,7 +21,7 @@ Metrics, and why each one is here.
   coverage                the share of passages where a system finds anything.
 
 Usage:
-  python evaluate_all.py <windows.json> <labels.json> <statcheck.csv> <out.json> \
+  python pipeline/09_evaluate.py <windows.json> <labels.json> <statcheck.csv> <out.json> \
       name=path/to/model.pt[:crf] [name=... ...]
 """
 from __future__ import annotations
@@ -31,8 +31,12 @@ import json
 import re
 import sys
 from collections import Counter, defaultdict
+from pathlib import Path
 
 import torch
+
+# Add src to path so statcheck_ml can be imported
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from statcheck_ml.data import encode, normalise
 from statcheck_ml.labels import TAG_TO_ID, ID_TO_TAG, ENTITY_OPERATOR, tags_to_spans

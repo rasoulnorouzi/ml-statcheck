@@ -13,8 +13,8 @@ The engines that need another runtime are read from folders of text prepared
 earlier, so this script does not need Node or R to run.
 
 Usage:
-    python bench_engines.py <pdf_dir> <key.json> <labels.json> [--text-dir DIR]
-                            [--max-spread 0.06]
+    python pipeline/12_engines.py <pdf_dir> <key.json> <labels.json> [--text-dir DIR]
+                                  [--max-spread 0.06]
 
 `--text-dir` holds one folder for each engine, named `txt_<engine>`, each with
 one text file per PDF. Use it for PDF.js and for R pdftools.
@@ -30,7 +30,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from statcheck_ml.normalize import normalize
 from statcheck_ml.prefilter import Prefilter

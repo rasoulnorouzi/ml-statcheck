@@ -43,8 +43,8 @@ The prefilter rules, the character vocabulary, and the p-value constants live in
 shared JSON. Python, JavaScript, and R read the same files. Nothing is written three
 times, because three copies drift.
 
-This is also why a character model is preferred to a transformer. A character map
-ports to three languages. A subword tokenizer does not.
+Version 2 uses character models only. A character map ports to three languages
+without runtime dependencies.
 
 ### There is no human annotator. Every label comes from a language model.
 

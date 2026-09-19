@@ -12,7 +12,7 @@ The output is annotated by the full protocol, two blind passes and adjudication
 of every dispute, and is then frozen.
 
 Usage:
-  python sample_holdout.py <clean_dir> <used_key.json> <out_dir> [n_windows]
+  python pipeline/01_sample_holdout.py <clean_dir> <used_key.json> <out_dir> [n_windows]
 """
 from __future__ import annotations
 

@@ -11,17 +11,12 @@ model: sonnet
 Train token classifiers that locate statistical results in text. Report honest
 numbers. Never touch the gold set.
 
-## Candidates
+## Model
 
-| Tier | Model | Notes |
-|---|---|---|
-| `lite` | char-BiLSTM-CRF | primary bet; small enough for native R |
-| `balanced` | MobileBERT | subword, quantizes well |
-| `best` | DistilBERT | accuracy ceiling and reference point |
-
-Character input is preferred because subword tokenizers split statistical notation
-unpredictably. When training a subword model, inspect how the tokenizer segments real
-results and record it. A silent tokenization failure looks like a modeling failure.
+Version 2 uses character-level models only. The BiLSTM-CRF architecture processes
+raw text without a subword tokenizer, avoiding tokenization failures on statistical
+notation. This trades accuracy for portability: the same model runs native in Python,
+R, and JavaScript without external dependencies.
 
 ## Compute
 

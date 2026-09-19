@@ -22,7 +22,7 @@ Two sources of evidence are combined:
             the reported ones. That check involves no annotator at all.
 
 Usage:
-  python build_font_table.py <archive.zip> <out.json> [n_documents]
+  python pipeline/00_font_table.py <archive.zip> <out.json> [n_documents]
 """
 from __future__ import annotations
 

@@ -25,6 +25,7 @@ statcheck-ml/        the project itself
   js/                the browser port
   r/                 the R port
   tests/             parity of the three ports, from committed cases
+  pipeline/          reproducible command-line stages
 .claude/agents/      one agent per phase, with its model fixed in frontmatter
 .claude/hooks/       session inventory, write guard, frontmatter validator
 scripts/             repository tooling, not project code
@@ -85,7 +86,8 @@ corpus. Each exits non-zero when a port drifts. Run both after any change to
 `python tests/make_parity_cases.py` only when the rules themselves change.
 
 ```
-python bench_engines.py <pdf_dir> <key.json> <labels.json> --text-dir <dir>
+cd statcheck-ml
+python pipeline/12_engines.py <pdf_dir> <key.json> <labels.json> --text-dir <dir>
 ```
 
 Measures every PDF engine and reports the spread between the best and the worst.

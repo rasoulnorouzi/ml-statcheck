@@ -5,7 +5,7 @@ from a value typed here. When a run is missing, the report says so rather than
 leaving a gap that reads like a zero.
 
 Usage:
-  python make_report.py <report_dir> <out.md>
+  python pipeline/11_report.py <report_dir> <out.md>
 """
 from __future__ import annotations
 

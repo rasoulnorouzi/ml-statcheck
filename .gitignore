@@ -39,5 +39,16 @@ node_modules/
 .venv/
 *.egg-info/
 
-# Trained models are rebuilt from the dataset
+# Trained models are rebuilt from the dataset, but keep the zoo and manifests
 statcheck-ml/models/
+!statcheck-ml/models/
+statcheck-ml/models/*
+!statcheck-ml/models/zoo/
+!statcheck-ml/models/zoo/**
+!statcheck-ml/models/*.onnx
+!statcheck-ml/models/runs.json
+!statcheck-ml/models/export.json
+
+# Results are committed
+!statcheck-ml/results/
+!statcheck-ml/results/**

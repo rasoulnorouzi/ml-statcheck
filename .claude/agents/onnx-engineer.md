@@ -33,6 +33,6 @@ that regresses in size gets flagged in the CI gate.
 
 - Prefer int8 dynamic quantization. Report the accuracy cost of quantization for each
   tier rather than assuming it is negligible.
-- Bundle the tokenizer or the character vocabulary with the model. A model shipped
-  without its input mapping is unusable.
+- Bundle the character vocabulary with the model. A model shipped without its input
+  mapping is unusable.
 - Pin the opset version and record it. Runtimes disagree across opsets.

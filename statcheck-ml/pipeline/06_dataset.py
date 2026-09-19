@@ -10,7 +10,7 @@ tag arrays are about ten times the size of the text and they produce an
 unreadable difference in version control. `to_bioes.py` expands the spans into
 tags at training time.
 
-Usage: python build_dataset.py <sample_dir> <dataset_dir> <round_name>
+Usage: python pipeline/06_dataset.py <sample_dir> <dataset_dir> <round_name>
 """
 import sys, os, json
 

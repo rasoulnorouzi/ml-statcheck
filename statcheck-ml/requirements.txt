@@ -1,0 +1,12 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+numpy==2.5.3
+scipy==1.18.1
+torch==2.14.0+cpu
+onnx==1.22.0
+onnxruntime==1.29.0
+onnxscript==0.7.1
+pymupdf==1.28.2
+pypdfium2==5.13.0
+krippendorff==0.8.2
+matplotlib==3.11.2
+pytest==9.1.1

@@ -6,7 +6,7 @@ symbol and the effect-size symbols are gone. This conversion recovers them.
 Both versions are kept. The supplied text becomes an aligned damaged copy of
 each document, which phase 4 uses as real rather than simulated corruption.
 
-Usage: python statcheck-ml/convert.py <archive.zip> <output_dir> [workers]
+Usage: python pipeline/00_convert.py <archive.zip> <output_dir> [workers]
 """
 import sys, os, zipfile, time, json
 from concurrent.futures import ProcessPoolExecutor

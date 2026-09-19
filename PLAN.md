@@ -125,7 +125,7 @@ Status values: `blocked`, `ready`, `active`, `done`.
 | M | # | Phase | Agent | Model | Status |
 |---|---|---|---|---|---|
 | M1 | 1 | Guideline v2, schema synced with `labels.py`, adjudication rules | label-architect | opus | ready |
-| M1 | 2 | Layout: `pipeline/` stages, `reproduce.sh`, pinned requirements, BERT removed | data-engineer | haiku | ready |
+| M1 | 2 | Layout: `pipeline/` stages, `reproduce.sh`, pinned requirements, transformer baselines removed | data-engineer | haiku | ready |
 | M1 | 3 | Frozen windows, manifest, chunk and collect scripts with provenance | data-engineer | haiku | ready |
 | M1 | 4 | Agreement module: κ, α, span F1, bootstrap, unit tests | eval-engineer | sonnet | ready |
 | M1 | 5 | char-CNN, grid runner with seeds and parallel runs, export parity | ml-trainer | sonnet | ready |

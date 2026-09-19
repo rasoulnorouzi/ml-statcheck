@@ -1,27 +1,25 @@
----
-name: result-annotator
-description: >
-  Marks the spans of reported statistical hypothesis test results inside short
-  passages of text taken from academic articles. Reports what is written, and
-  nothing more. Use when a batch of text windows needs annotation.
-tools: [Read, Write]
-model: sonnet
----
+# Annotation guideline — reported statistical test results
 
-Ignore all repository, project, and conversation context. It is not relevant and it
-must not influence a judgement. Read only the text you are given, and describe what
-is written in it.
+Guideline version: 2.0 (2026-09-19)
 
-Many passages contain no test result. That is a normal and expected outcome. Do not
-try to find something in every passage.
+This guideline is the written artifact of the annotation protocol. Each rater agent
+embeds this text verbatim. A collection script records the sha256 of this file on
+every annotation record. Change the version number when you change the text.
 
 ## The task
+
+You read short passages of text. The passages come from academic articles. You mark
+each reported statistical hypothesis test result in each passage.
 
 A statistical hypothesis test result reports a test statistic together with the
 values that belong to it. A complete report has a test name, a test statistic value,
 one or two degrees of freedom, and a p-value.
 
-Mark each result that appears in the passage.
+Read only the passage. Judge only what the passage contains. Report what the passage
+says, and nothing more.
+
+Many passages contain no test result. That is a normal and expected outcome. Do not
+try to find something in every passage.
 
 ## The most important instruction
 
@@ -54,7 +52,7 @@ So:
 If you find yourself reporting that a passage holds nothing, read it once more for a
 damaged operator before you decide.
 
-## What to mark
+## The parts of a result
 
 For each result, record these parts when they are present:
 
@@ -81,6 +79,12 @@ calculate a missing value.
 - A result split by a line break. The statistic can end one line and the p-value
   begin the next. It is one result.
 - A test statistic with no degrees of freedom, such as `t = 7.70, p < .0001`.
+- A result whose operator is a damaged character. This is the most valuable case.
+- A chi-square written as `2`, `c2`, `v2`, `X2`, or `χ2` before the parentheses.
+- A chi-square that carries a sample size inside the parentheses, such as
+  `chi2(1, N = 223) = 8.69`.
+- A negative statistic, including one whose minus sign became a damaged character.
+- Each result of a series, even when the results repeat one shape.
 
 **Do not mark these:**
 
@@ -91,11 +95,19 @@ calculate a missing value.
 - A bare p-value with no statistic anywhere near it.
 - A row of numbers in a correlation matrix with no test reported.
 - A page range, a year in parentheses, or a numbered reference.
+- An effect size or a fit index: `R2`, `η2`, `g2`, `ω2`, Cohen `d`, `AIC`, `BIC`,
+  `RMSEA`, `CFI`, or Cronbach `α`.
+- A sample size on its own, such as `N = 223` outside the parentheses of a test.
+- A degrees of freedom value with no statistic value.
+- A p-value whose statistic lies outside the passage. The window cut the result, so
+  the passage does not hold it.
 
 ## Several results in one passage
 
 A passage often holds several results. Keep the parts of each result together, and
 never mix parts from two different results. Mark every one, not only the first.
+
+Order the results as the passage writes them, from the first character to the last.
 
 ## Output
 
@@ -122,6 +134,10 @@ have exactly as many objects as the input has passages.
 ]
 ```
 
+Each result object holds exactly ten keys: the nine keys `test_type`, `statistic`,
+`df1`, `df2`, `n`, `p_operator`, `p_value`, `quote`, `damaged`, and the key
+`confidence`. Write every key, even when the value is `null`.
+
 `quote` is the exact text of the result, copied character for character from the
 passage, including any line break or damaged character inside it.
 
@@ -129,5 +145,22 @@ passage, including any line break or damaged character inside it.
 
 - Copy values exactly as written. Keep a leading decimal point. Do not add a zero.
 - Report a result even when it looks wrong. Judging correctness is not your task.
+- `confidence` is `high` or `low`, and nothing else. Use no other word.
 - Use `low` confidence when a passage is ambiguous. Do not guess silently.
+- `damaged` is `true` or `false`. Set it to `true` when any operator or symbol of the
+  result is not the character you expect.
+- `contains_result` is `true` when the `results` list holds one result or more.
 - Return only the JSON array. Write no other text.
+
+## Decision table for recurring cases
+
+These cases return in almost every batch. Decide them the same way every time.
+
+| The passage holds | The decision | Why |
+|---|---|---|
+| A `β` and a `t` in one sentence, such as `β = .34, t(98) = 2.11, p = .04` | Mark the `t` result. Do not mark the `β`. | The `t` is the test statistic. The `β` is a coefficient. |
+| A correlation `r` with no degrees of freedom, such as `r = .73, p < .01` | Mark it. Set `df1` and `df2` to `null`. | A reported statistic stays a result. A script decides later whether it is checkable. |
+| A chi-square with a sample size inside the parentheses, such as `c2(1, N = 96) = 4.2` | Mark it. Put `1` in `df1` and `96` in `n`. | The sample size is a part of the report, not a second degrees of freedom. |
+| A table row with the statistic in one column and the p-value in another column | Mark one result that holds both. Copy the whole row into `quote`. | The columns report one result. The layout split it. |
+| A p-value at the start of a window, with its statistic cut off before the window | Mark nothing. Set `contains_result` to `false`. | The passage does not hold the result. Never guess a statistic you cannot see. |
+| A test name in any other spelling, such as `X2`, `chi-square`, or `χ2` | Write `test_type` as exactly one of `t`, `F`, `r`, `z`, `chi2`, `Q`. | One spelling per test keeps the field comparable between raters. |

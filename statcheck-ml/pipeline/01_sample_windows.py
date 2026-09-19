@@ -27,7 +27,7 @@ Pools, and why each one exists:
 
 The pool label goes to a key file, never to the file the annotator reads.
 
-Usage: python sample_windows.py <clean_dir> <out_dir> [total_windows]
+Usage: python pipeline/01_sample_windows.py <clean_dir> <out_dir> [total_windows]
 """
 import sys, os, re, json, random, hashlib
 

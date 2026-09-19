@@ -20,7 +20,7 @@ search window one character too wide in JavaScript, an index counted from one
 instead of zero in R, and a tie broken by locale collation in R.
 
 Usage:
-    python export_port_kit.py <target_dir> [--name statcheck-ml-r]
+    python pipeline/08_port_kit.py <target_dir> [--name statcheck-ml-r]
 """
 from __future__ import annotations
 
@@ -31,7 +31,7 @@ import shutil
 from datetime import date
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
+HERE = Path(__file__).resolve().parents[1]
 SPEC_DIR = HERE / "src" / "statcheck_ml" / "spec"
 PARITY_CASES = HERE / "tests" / "parity_cases.json"
 

@@ -9,7 +9,7 @@ character offsets. statcheck reports values, not positions, so an offset
 comparison is not possible and a value comparison is what a user would judge.
 
 Usage:
-  python compare_baseline.py <windows.json> <annotations.json> <statcheck.csv>
+  python pipeline/12_regex_parity.py <windows.json> <annotations.json> <statcheck.csv>
 """
 from __future__ import annotations
 
