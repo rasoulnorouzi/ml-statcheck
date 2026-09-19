@@ -234,7 +234,10 @@ def main():
     if args.update_spec:
         if not top3:
             raise SystemExit("--update-spec: no zoo configs to promote")
-        check_charmaps_consistent(done, models_dir)
+        # The no-augmentation ablation sees fewer characters by design, so it is
+        # not a candidate and must not veto the promotion.
+        check_charmaps_consistent([r for r in done if "noaug" not in r.get("config", "")],
+                                  models_dir)
         top1 = top3[0]
         src_charmap = zoo_dir / top1["config"] / "charmap.json"
         SPEC_CHARMAP_PATH.parent.mkdir(parents=True, exist_ok=True)

@@ -124,23 +124,23 @@ Status values: `blocked`, `ready`, `active`, `done`.
 
 | M | # | Phase | Agent | Model | Status |
 |---|---|---|---|---|---|
-| M1 | 1 | Guideline v2, schema synced with `labels.py`, adjudication rules | label-architect | opus | ready |
-| M1 | 2 | Layout: `pipeline/` stages, `reproduce.sh`, pinned requirements, transformer baselines removed | data-engineer | haiku | ready |
-| M1 | 3 | Frozen windows, manifest, chunk and collect scripts with provenance | data-engineer | haiku | ready |
-| M1 | 4 | Agreement module: κ, α, span F1, bootstrap, unit tests | eval-engineer | sonnet | ready |
-| M1 | 5 | char-CNN, grid runner with seeds and parallel runs, export parity | ml-trainer | sonnet | ready |
-| M2 | 6 | Annotate every window three times, blind | annotator-haiku, -sonnet, -opus | haiku, sonnet, opus | blocked on 1, 3 |
-| M2 | 7 | Collect, agreement report, adjudicate disputes, final labels | data-engineer, adjudicator | haiku, opus | blocked on 4, 6 |
-| M2 | 8 | Dataset, splits, alignment gate | data-engineer | haiku | blocked on 7 |
-| M3 | 9 | Train the grid: 6 screens, 3 × 3 seeds, 1 ablation | ml-trainer | sonnet | blocked on 5, 8 |
-| M3 | 10 | Export the zoo, parity, size, latency, quantisation delta | ml-trainer | sonnet | blocked on 9 |
+| M1 | 1 | Guideline v2, schema synced with `labels.py`, adjudication rules | label-architect | opus | done |
+| M1 | 2 | Layout: `pipeline/` stages, `reproduce.sh`, pinned requirements, transformer baselines removed | data-engineer | haiku | done |
+| M1 | 3 | Frozen windows, manifest, chunk and collect scripts with provenance | data-engineer | haiku | done |
+| M1 | 4 | Agreement module: κ, α, span F1, bootstrap, unit tests | eval-engineer | sonnet | done |
+| M1 | 5 | char-CNN, grid runner with seeds and parallel runs, export parity | ml-trainer | sonnet | done |
+| M2 | 6 | Annotate every window three times, blind | annotator-haiku, -sonnet, -opus | haiku, sonnet, opus | done |
+| M2 | 7 | Collect, agreement report, adjudicate disputes, final labels | data-engineer, adjudicator | haiku, opus | done |
+| M2 | 8 | Dataset, splits, alignment gate | data-engineer | haiku | done |
+| M3 | 9 | Train the grid: 6 screens, 3 × 3 seeds, 1 ablation | ml-trainer | sonnet | active |
+| M3 | 10 | Export the zoo, parity, size, latency, quantisation delta | ml-trainer | sonnet | ready |
 | M4 | 11 | Evaluate on the holdout: systems, subsets, bootstrap, paired tests, McNemar | eval-engineer | sonnet | blocked on 10 |
-| M4 | 12 | R baseline regenerated, engine gate, JS and R parity tests green | regex-porter | sonnet | blocked on 2 |
+| M4 | 12 | R baseline regenerated, engine gate, JS and R parity tests green | regex-porter | sonnet | done |
 | M4 | 13 | Figures | eval-engineer | sonnet | blocked on 11 |
 | M4 | 14 | Report template and generated report, README, PROTOCOL, CONTEXT | doc-writer | haiku | blocked on 13 |
 | M4 | 15 | Final review: reproduce.sh from clean checkout, hashes match | manager | fable | blocked on 14 |
 
-Phases 1 to 5 need no annotation and can run in parallel now.
+Phases 1 to 8 and 12 are done. Phase 9 trains the grid. Phases 10 to 15 follow it in order.
 
 ## Version 1 phases, for the record
 

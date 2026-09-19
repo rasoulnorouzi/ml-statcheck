@@ -69,10 +69,12 @@ if [ $TRAIN_MODE = true ] && [ $start_idx -le 2 ]; then
 fi
 
 # export stage
+# --update-spec is the one path that changes the shared spec: it promotes the
+# top-1 zoo config's charmap.json, which the three ports read as the known set.
 if [ $TRAIN_MODE = true ] && [ $start_idx -le 3 ]; then
   echo "Running: export stage..."
-  echo "$PY pipeline/08_export.py --runs models/runs.json --models models --zoo models/zoo --dev dataset/train.jsonl --splits dataset/splits.json --out models/export.json"
-  $PY pipeline/08_export.py --runs models/runs.json --models models --zoo models/zoo --dev dataset/train.jsonl --splits dataset/splits.json --out models/export.json
+  echo "$PY pipeline/08_export.py --runs models/runs.json --models models --zoo models/zoo --dev dataset/train.jsonl --splits dataset/splits.json --out models/export.json --update-spec"
+  $PY pipeline/08_export.py --runs models/runs.json --models models --zoo models/zoo --dev dataset/train.jsonl --splits dataset/splits.json --out models/export.json --update-spec
 fi
 
 # evaluate stage
@@ -92,10 +94,10 @@ fi
 # report stage
 if [ $start_idx -le 6 ]; then
   echo "Running: report stage..."
-  echo "$PY pipeline/11_report.py --template docs/report_template.md --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --engines results/engines.json --out results/REPORT.md"
-  $PY pipeline/11_report.py --template docs/report_template.md --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --engines results/engines.json --out results/REPORT.md
+  echo "$PY pipeline/11_report.py --template docs/report_template.md --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --engines results/engines.json --out results/REPORT.md --readme-block results/readme_block.md"
+  $PY pipeline/11_report.py --template docs/report_template.md --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --engines results/engines.json --out results/REPORT.md --readme-block results/readme_block.md
 fi
 
 # Verify artifacts
 echo "Verifying artifacts..."
-sha256sum results/eval.json results/REPORT.md results/figures/*.png
+sha256sum results/eval.json results/REPORT.md results/readme_block.md results/figures/*.png

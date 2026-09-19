@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 from statcheck_ml.data import load_charmap, save_vocab
 
@@ -40,3 +41,23 @@ def test_load_charmap_falls_back_to_spec(tmp_path, monkeypatch):
     # No model directory at all also falls back to spec.
     default = load_charmap(None)
     assert default["chars"] == {"\x00": 0, "\x01": 1, "x": 2}
+
+
+def test_check_charmaps_consistent_accepts_equal_and_rejects_different(tmp_path):
+    import importlib.util
+    import pytest
+
+    spec = importlib.util.spec_from_file_location(
+        "export_stage", Path(__file__).resolve().parents[1] / "pipeline" / "08_export.py")
+    stage = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(stage)
+
+    for name, chars in (("a-s0", ["<pad>", "<unk>", "x"]), ("a-s1", ["<pad>", "<unk>", "x"]),
+                        ("b-noaug-s0", ["<pad>", "<unk>"])):
+        (tmp_path / name).mkdir()
+        (tmp_path / name / "charmap.json").write_text(json.dumps({"chars": chars}),
+                                                      encoding="utf-8")
+    runs = [{"name": "a-s0"}, {"name": "a-s1"}]
+    stage.check_charmaps_consistent(runs, tmp_path)          # equal: no error
+    with pytest.raises(SystemExit):
+        stage.check_charmaps_consistent(runs + [{"name": "b-noaug-s0"}], tmp_path)
