@@ -146,6 +146,8 @@ passage, including any line break or damaged character inside it.
 - Copy values exactly as written. Keep a leading decimal point. Do not add a zero.
 - Report a result even when it looks wrong. Judging correctness is not your task.
 - `confidence` is `high` or `low`, and nothing else. Use no other word.
+- `p_operator` is `=`, `<`, or `>`, and nothing else. Write `<` for `≤` and `>` for
+  `≥`. Write the operator you infer for a damaged character, never the character.
 - Use `low` confidence when a passage is ambiguous. Do not guess silently.
 - `damaged` is `true` or `false`. Set it to `true` when any operator or symbol of the
   result is not the character you expect.
