@@ -1,0 +1,18 @@
+[
+ {
+  "batch_id": "batch_016",
+  "errors": [
+   "output length 19 != batch length 20",
+   "record 16: window_id ho5674be80 != batch hobcd83437",
+   "record 17: window_id hoa451b1fc != batch ho5674be80",
+   "record 18: window_id hoea591277 != batch hoa451b1fc"
+  ]
+ },
+ {
+  "batch_id": "batch_028",
+  "errors": [
+   "output length 15 != batch length 16",
+   "record 14: window_id hoe9dbc30d != batch ho361ed063"
+  ]
+ }
+]
