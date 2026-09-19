@@ -1,0 +1,878 @@
+[
+ {
+  "dispute_id": "holdout-ho906bdb69-0",
+  "window_id": "ho906bdb69",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".01",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .01",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The passage writes \"r = .01, .03, and .05 representing small, medium, and large effect size\", which states effect size benchmarks rather than a computed correlation result.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-ho906bdb69-1",
+  "window_id": "ho906bdb69",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".03",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": ".03",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The bare \".03\" is one of the benchmark values that represent small, medium, and large effect size, so the passage reports no test statistic here.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-ho906bdb69-2",
+  "window_id": "ho906bdb69",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".05",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": ".05",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The bare \".05\" is one of the benchmark values that represent small, medium, and large effect size, so the passage reports no test statistic here.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-hobc0f2bed-0",
+  "window_id": "hobc0f2bed",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "Q",
+    "statistic": "498.485",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "survival (498.485, p < .001)",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "Q",
+    "statistic": "498.485",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "498.485, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "Q",
+    "statistic": "498.485",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "as well as sur-\nvival (498.485, p < .001)",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "Q",
+    "statistic": "498.485",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "498.485, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   "reason": "The passage names the Q statistic and reports it for survival as \"(498.485, p < .001)\", and this quote copies the result itself character for character, unlike the variant that drops the \"sur-\" line break.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-ho2513d7fc-0",
+  "window_id": "ho2513d7fc",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": "−0.07",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "ρ =−0.07",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": "−0.07",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "ρ =−0.07",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The passage reports a correlation coefficient \"ρ =−0.07\" between Co-option and board independence, and a correlation with a value is a result even without a p-value.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-ho2513d7fc-1",
+  "window_id": "ho2513d7fc",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": "−0.09",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "ρ =−0.09",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": "−0.09",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "ρ =−0.09",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The passage reports a second correlation coefficient \"ρ =−0.09\" for TW Co-option with board independence.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-ho556edb14-0",
+  "window_id": "ho556edb14",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "2.19",
+    "df1": "3",
+    "df2": null,
+    "n": "96",
+    "p_operator": "=",
+    "p_value": ".535",
+    "quote": "c2 (3, N = 96) ¼ 2.19, p ¼ .535",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The passage holds two MANOVA F results with damaged operators and no chi-square at all; the candidate quote \"c2 (3, N = 96) ¼ 2.19, p ¼ .535\" appears nowhere in the text.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-hoaf6eb9cd-0",
+  "window_id": "hoaf6eb9cd",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".770",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": ".770 (p < .01)",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": ".770",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": ".770 (p < .01)",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The passage describes an analysis of two sets of ranks and then reports the agreement value \".770 (p < .01)\", so a rank correlation statistic and its p-value both sit inside the window.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-ho5315d506-0",
+  "window_id": "ho5315d506",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": "0.65 to 0.91",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.001",
+    "quote": "r = 0.65 to 0.91, all p's ⩽0.001",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "\"0.65 to 0.91\" is a range and not a statistic value, and the same sentence is already covered by the record that reports the written value 0.65.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-ho5315d506-1",
+  "window_id": "ho5315d506",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": "0.65",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.001",
+    "quote": "r = 0.65 to 0.91, all p’s ⩽0.001",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": "0.65",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.001",
+    "quote": "r = 0.65 to 0.91, all p’s ⩽0.001",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The passage names Pearson's r with the value 0.65 and the p-value \"⩽0.001\", and the guideline maps ≤ to the operator <.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-ho2b0894cd-0",
+  "window_id": "ho2b0894cd",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "937.06",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t00 = 937.06",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "\"t00 = 937.06\" is the multilevel between-class variance component that the following x2(69) = 990.32 test evaluates, not a t test statistic.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-ho05b7b9aa-0",
+  "window_id": "ho05b7b9aa",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".54",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".000",
+    "quote": "\u0002 = .54, SE = .01, p< .000",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The symbol before \"= .54\" is an unreadable character sitting where a test name belongs, and the reported \"SE = .01\" marks it as a coefficient, so the passage names no test statistic.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-ho3b08f332-0",
+  "window_id": "ho3b08f332",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "5.518",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.019",
+    "quote": "F ¼ 5.518, p ¼ 0.019",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "5.518",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.019",
+    "quote": "F ¼ 5.518, p ¼ 0.019 < 0.05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "5.518",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.019",
+    "quote": "F = 5.518, p = 0.019",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "F",
+    "statistic": "5.518",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.019",
+    "quote": "F ¼ 5.518, p ¼ 0.019",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The passage writes \"(F ¼ 5.518, p ¼ 0.019 < 0.05)\" for external expectations; the quote keeps the damaged ¼ operators unrepaired and stops at the reported p-value.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-ho3b08f332-1",
+  "window_id": "ho3b08f332",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "4.126",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.042",
+    "quote": "F = 4.126, p = 0.042",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "4.126",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.042",
+    "quote": "F ¼ 4.126, p ¼ 0.042 < 0.05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "4.126",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.042",
+    "quote": "F ¼ 4.126, p ¼ 0.042",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "F",
+    "statistic": "4.126",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.042",
+    "quote": "F ¼ 4.126, p ¼ 0.042",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The passage writes \"(F ¼ 4.126, p ¼ 0.042 < 0.05)\" for school support; the quote copies the damaged ¼ characters exactly and covers the statistic and its p-value.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-ho3b08f332-2",
+  "window_id": "ho3b08f332",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "12.309",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.000",
+    "quote": "F = 12.309, p = 0.000",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "12.309",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.000",
+    "quote": "F ¼ 12.309, p ¼ 0.000",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "12.309",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.000",
+    "quote": "F ¼ 12.309, p ¼ 0.000 < 0.05",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "F",
+    "statistic": "12.309",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.000",
+    "quote": "F ¼ 12.309, p ¼ 0.000",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The passage writes \"(F ¼ 12.309, p ¼ 0.000 < 0.05)\" for student achievement; the quote keeps the damaged ¼ operators as written.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-hoca35149f-0",
+  "window_id": "hoca35149f",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "z",
+    "statistic": "-82.367",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "–82.367",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The note says z-statistics stand in parentheses, and \"–82.367\" stands alone in a table footer row without parentheses, so it is a fit value and not a z statistic.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-hoca35149f-1",
+  "window_id": "hoca35149f",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "z",
+    "statistic": "-72.613",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "–72.613",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "\"–72.613\" is a second bare table footer number outside the parentheses that the note reserves for z-statistics, so the passage reports no test.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-ho42ae6381-0",
+  "window_id": "ho42ae6381",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".62",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Pearson's r = .62",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "r",
+    "statistic": ".62",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Pearson’s r = .62",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "r",
+    "statistic": ".62",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .62",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": ".62",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Pearson’s r = .62",
+    "damaged": false,
+    "confidence": "high"
+   },
+   "reason": "The passage writes \"(Pearson’s r = .62 in Study 1\", and this quote copies the curly apostrophe of the source character for character.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "holdout-ho9ae01dce-0",
+  "window_id": "ho9ae01dce",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".82",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "a correlation of .82",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": ".82",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "a correlation of .82",
+    "damaged": false,
+    "confidence": "high"
+   },
+   "reason": "The passage names the test in words, \"had a correlation of .82 with the within-country mean\", and a correlation with a value counts even without a p-value.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:25.566196+00:00"
+   }
+  }
+ }
+]

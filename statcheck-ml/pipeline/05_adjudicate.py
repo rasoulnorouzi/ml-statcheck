@@ -258,6 +258,42 @@ def _apply_singleton(results: list, decision: Optional[dict], raters: list, text
     return True
 
 
+def _write_disputes_audit(set_name: str, out_dir: Path, decisions_by_id: dict,
+                           audit_path: Optional[Path] = None) -> dict:
+    """Write the committed audit trail: every dispute, what the adjudicator
+    saw, and what it decided. `data/annotation/` is gitignored; this file is
+    not, so the record of a disputed label survives outside the scratch dir.
+
+    `audit_path` defaults to `dataset/annotations/<set>/disputes.json`; a
+    caller (a test) may redirect it to a temporary file.
+
+    Returns dispute counts by kind, for the caller to report.
+    """
+    disputes_dir = out_dir / "disputes"
+    audit = []
+    kind_counts: dict = {}
+    for batch_file in sorted(disputes_dir.glob("batch_*.json")):
+        for d in read_json(batch_file):
+            decision = decisions_by_id.get(d["dispute_id"])
+            decision_out = None
+            if decision is not None:
+                decision_out = {"keep": decision["keep"], "result": decision["result"],
+                                 "reason": decision["reason"], "provenance": decision["provenance"]}
+            kind_counts[d["kind"]] = kind_counts.get(d["kind"], 0) + 1
+            audit.append({
+                "dispute_id": d["dispute_id"],
+                "window_id": d["window_id"],
+                "kind": d["kind"],
+                "field": d["field"],
+                "candidates": d["candidates"],  # exactly as shown to the adjudicator
+                "decision": decision_out,
+            })
+    if audit_path is None:
+        audit_path = ROOT / "dataset" / "annotations" / set_name / "disputes.json"
+    write_json(audit_path, audit)
+    return kind_counts
+
+
 def run_merge(set_name: str) -> None:
     out_dir = ROOT / "data" / "annotation" / set_name
     consensus_path = out_dir / "consensus.json"
@@ -268,6 +304,7 @@ def run_merge(set_name: str) -> None:
     consensus_records = read_json(consensus_path)
     decisions_by_id = {d["dispute_id"]: d for d in read_json(adjudicated_path)}
     texts = {w["window_id"]: w["text"] for w in read_json(windows_path)}
+    audit_kind_counts = _write_disputes_audit(set_name, out_dir, decisions_by_id)
 
     guideline_sha = sha256_file(GUIDELINE_PATH)
     built_at = datetime.now(timezone.utc).isoformat()
@@ -347,6 +384,7 @@ def run_merge(set_name: str) -> None:
     if unresolved:
         print("unresolved dispute ids: " + ", ".join(unresolved))
     print(f"results with a None field on a disputed field/adjudicated result: {n_none_in_disputed_field}")
+    print("disputes.json by kind: " + ", ".join(f"{k}={v}" for k, v in sorted(audit_kind_counts.items())))
 
 
 def main() -> None:

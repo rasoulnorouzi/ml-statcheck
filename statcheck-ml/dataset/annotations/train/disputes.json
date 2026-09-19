@@ -1,0 +1,2584 @@
+[
+ {
+  "dispute_id": "train-bce13f1ce1-0",
+  "window_id": "bce13f1ce1",
+  "kind": "field_conflict",
+  "field": "p_operator",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "1.43",
+    "df1": "56",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": null,
+    "quote": "t(56) \u0002 1.43",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "1.43",
+    "df1": "56",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(56) \u0002 1.43",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "1.43",
+    "df1": "56",
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "t(56) \u0002 1.43, or education (M \u0002 14.5, SD \u0002 2.5; M \u0002 15.5, SD \u0002\n2, respectively), t(56) \u0002 1.38, ps \u0003.05",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "t",
+    "statistic": "1.43",
+    "df1": "56",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(56) \u0002 1.43",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The passage attaches no p-value to t(56) \u0002 1.43, because the plural clause \"ps \u0003.05\" is written after the second t test, so no p operator belongs to this result.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-bce13f1ce1-1",
+  "window_id": "bce13f1ce1",
+  "kind": "field_conflict",
+  "field": "p_operator",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "1.38",
+    "df1": "56",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(56) \u0002 1.38",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "t",
+    "statistic": "1.38",
+    "df1": "56",
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "t(56) \u0002 1.38, ps \u0003.05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "1.38",
+    "df1": "56",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": null,
+    "quote": "t(56) \u0002 1.38",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "t",
+    "statistic": "1.38",
+    "df1": "56",
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": null,
+    "quote": "t(56) \u0002 1.38",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The clause \"ps \u0003.05\" follows t(56) \u0002 1.38 directly, and the sentence reports no significant difference, so the damaged character is a greater-than sign.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-abb67c64fe-0",
+  "window_id": "abb67c64fe",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".16",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .16",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The passage gives r = .16 as the correlation a power calculation could detect, not as a correlation the study tested.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-657b9588f1-0",
+  "window_id": "657b9588f1",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "2.0",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "t = 2.0, p ≤.05",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The table note writes \"The significance levels are as follows: t = 2.0, p ≤.05\", which is a significance legend of critical values, not a reported test.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-657b9588f1-1",
+  "window_id": "657b9588f1",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "2.7",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "t = 2.7, p ≤.01",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The value t = 2.7, p ≤.01 belongs to the same legend of significance levels in the table note, so it reports no test of the data.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-657b9588f1-2",
+  "window_id": "657b9588f1",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "3.5",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t = 3.5, p ≤.001",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The value t = 3.5, p ≤.001 is the last entry of the legend of significance levels, so it reports no test of the data.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-2df46db55b-0",
+  "window_id": "2df46db55b",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "7.79",
+    "df1": "191",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(191) ¼ \u00047.79, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-7.79",
+    "df1": "191",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(191) ¼ \u00047.79, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "\u00047.79",
+    "df1": "191",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(191) ¼ \u00047.79, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "t",
+    "statistic": "-7.79",
+    "df1": "191",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(191) ¼ \u00047.79, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The same damaged character \u0004 stands before 46.93 and 39.97 as a minus sign in this passage, so the statistic is negative and the sign is inferred, while the quote keeps the damaged character.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-e659b2226b-0",
+  "window_id": "e659b2226b",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "\u00002.93",
+    "df1": "12",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(12) = \u00002.93, n.s.",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "t",
+    "statistic": "-.93",
+    "df1": "12",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(12) = \u0002.93, n.s.",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The passage reports a one-sample t with 12 degrees of freedom whose minus sign became the damaged character \u0002, as in t(12) = \u00025.00 later in the sentence.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-0cbffac096-0",
+  "window_id": "0cbffac096",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "2.62",
+    "df1": null,
+    "df2": "12",
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".015",
+    "quote": "12) = 2.62,\np = .015",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The window opens at \"12) = 2.62\", so the test name and the first degrees of freedom lie before the passage and the passage does not hold the whole result.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-5ddf40d210-0",
+  "window_id": "5ddf40d210",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".01–.06",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .01–.06",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The passage writes \"(r = .01–.06)\", a range of correlations for difference scores, not one reported statistic value.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-33d9663e49-0",
+  "window_id": "33d9663e49",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".40",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .40",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The r = .40 sits beside d = 0.88 inside the report of t[71] = 3.70, so it is an effect size of that t test, not a separate result.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-33d9663e49-1",
+  "window_id": "33d9663e49",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".57",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .57",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The r = .57 sits beside d = 1.39 inside the report of t[80] = 6.22, so it is an effect size of that t test, not a separate result.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-1360ad3eba-0",
+  "window_id": "1360ad3eba",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".238",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .238",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "r",
+    "statistic": ".238",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": ".238",
+    "damaged": false,
+    "confidence": "low"
+   },
+   {
+    "test_type": "r",
+    "statistic": ".238",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .326 and .238, respectively",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": ".238",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .326 and .238, respectively",
+    "damaged": false,
+    "confidence": "high"
+   },
+   "reason": "The passage writes \"(r = .326 and .238, respectively)\", so only this span holds the .238 value together with its r label, character for character.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-eb638ae41f-0",
+  "window_id": "eb638ae41f",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "208.29",
+    "df1": "1",
+    "df2": "193",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "F(1, 193) p 208.29, p !\n.001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "208.29",
+    "df1": "1",
+    "df2": "193",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "F(1, 193) p 208.29, p !\nIn addition, two independent coders read individuals’\n.001)",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "208.29",
+    "df1": "1",
+    "df2": "193",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "F(1, 193) p 208.29, p !\nIn addition, two independent coders read individuals’\n.001",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "F",
+    "statistic": "208.29",
+    "df1": "1",
+    "df2": "193",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "F(1, 193) p 208.29, p !\nIn addition, two independent coders read individuals’\n.001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "A stray line of text sits between \"p !\" and \".001\" in the passage, and the quote is copied character for character, so it must hold that line and end at the p-value.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-02e730d1d3-0",
+  "window_id": "02e730d1d3",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": "−.06",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".0001",
+    "quote": "−.06 (p < .0001)",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": "–.06",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".0001",
+    "quote": "–.06 (p < .0001)",
+    "damaged": false,
+    "confidence": "high"
+   },
+   "reason": "The passage names the test in words, \"Kendall Tau’s correlation\", and reports –.06 (p < .0001) between childhood health and educational attainment.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-02e730d1d3-1",
+  "window_id": "02e730d1d3",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": "−.32",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".0001",
+    "quote": "−.32 (p < .0001)",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": "–.32",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".0001",
+    "quote": "–.32 (p < .0001)",
+    "damaged": false,
+    "confidence": "high"
+   },
+   "reason": "The same sentence names \"Kendall Tau’s correlation\" and reports –.32 (p < .0001) between childhood SES and educational attainment, and every result of a series is marked.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-1947602a90-0",
+  "window_id": "1947602a90",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "-1.40",
+    "df1": "56",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.05",
+    "quote": "t(56)=−1.40, pb0.05",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "t",
+    "statistic": "−0.1.40",
+    "df1": "56",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.05",
+    "quote": "t(56)=−0.1.40, pb0.05",
+    "damaged": true,
+    "confidence": "low"
+   },
+   "reason": "The passage writes t(56)=−0.1.40, pb0.05, where the letter b replaced the less-than sign, and the damaged statistic is copied as written.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-313db24591-0",
+  "window_id": "313db24591",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": ".520",
+    "df1": "15",
+    "df2": "456",
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "F = (15, 456) = .520, p\n> .05",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": ".520",
+    "df1": "15",
+    "df2": "456",
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "Wilks' Lambda F = (15, 456) = .520, p\n> .05",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": ".520",
+    "df1": "15",
+    "df2": "456",
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "Wilks’ Lambda F = (15, 456) = .520, p\n> .05",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "F",
+    "statistic": ".520",
+    "df1": "15",
+    "df2": "456",
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "Wilks’ Lambda F = (15, 456) = .520, p\n> .05",
+    "damaged": false,
+    "confidence": "high"
+   },
+   "reason": "The passage writes \"Wilks’ Lambda F = (15, 456) = .520, p\n> .05\" with a curved apostrophe, and the quote copies the test name and the line break character for character.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-4048535772-0",
+  "window_id": "4048535772",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".12",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .12",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The passage calls r = .12 \"a small effect size\" that the sample had power to detect, so it reports no test.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-200f034112-0",
+  "window_id": "200f034112",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".17",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "with coefﬁcients of .17 (p < .001) for the measures of\nimportance",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The passage writes only \"coefﬁcients of .17 (p < .001)\", and it names no test statistic for the value, so a coefficient with a p-value is not marked.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_000",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-200f034112-1",
+  "window_id": "200f034112",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".42",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": ".42 (p < .001) for measures of likelihood",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": ".42",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": ".42 (p < .001) for measures of likelihood",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The passage names the correlation analysis and reports a coefficient of .42 with its own p-value, so it is a reported r with no degrees of freedom.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-200f034112-2",
+  "window_id": "200f034112",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".52",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": ".52 (p < .001) for the measures of attainment",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": ".52",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": ".52 (p < .001) for the measures of attainment",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The same correlation sentence reports a third coefficient, .52 (p < .001), and each result of a series is marked.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-e89c4e0d9d-0",
+  "window_id": "e89c4e0d9d",
+  "kind": "field_conflict",
+  "field": "p_operator",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "1.37",
+    "df1": "74",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".17",
+    "quote": "t(74) p 1.37 p 1 .17",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "t",
+    "statistic": "1.37",
+    "df1": "74",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".17",
+    "quote": "t(74) p 1.37 p 1 .17",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "t",
+    "statistic": "1.37",
+    "df1": "74",
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".17",
+    "quote": "t(74) p 1.37 p 1 .17",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "t",
+    "statistic": "1.37",
+    "df1": "74",
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".17",
+    "quote": "t(74) p 1.37 p 1 .17",
+    "damaged": true,
+    "confidence": "low"
+   },
+   "reason": "The passage writes \"p 1 .17\" where the digit 1 replaced the greater-than sign, and t(74) = 1.37 is a non-significant value consistent with p > .17.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-0825bf416f-0",
+  "window_id": "0825bf416f",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".02",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Pearson’s r = .02 to .11",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The passage gives a range of correlations, \"r = .02 to .11, depending on the sample size\", not a single reported statistic with a value.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-b3ed3ec403-0",
+  "window_id": "b3ed3ec403",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "1.8",
+    "df1": "91",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".07",
+    "quote": "(91) = 1.8, p = .07",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "t",
+    "statistic": "1.8",
+    "df1": "91",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".07",
+    "quote": "(91) = 1.8, p = .07",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The statistic, its degrees of freedom and its p-value all lie inside the window, and the passage itself names \"one-sample t-tests, t(91)\" for the parallel results.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-087914c146-0",
+  "window_id": "087914c146",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "14.94",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".06",
+    "quote": "14.94, p = .06",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The window opens with the bare number \"14.94, p = .06)\"; no test name and no degrees of freedom survive, so the passage does not hold the result.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-69212bf72c-0",
+  "window_id": "69212bf72c",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": "0.84-0.96",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = 0.84-0.96",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The passage reports test-retest reliability coefficients as a range, r = 0.84-0.96, which is a reliability index and not a single test statistic.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-0942b2b302-0",
+  "window_id": "0942b2b302",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "0.12",
+    "df1": "601",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".002",
+    "quote": "(601) = 0.12, p = .002",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": "0.12",
+    "df1": "601",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".002",
+    "quote": "(601) = 0.12, p = .002",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The statistic, degrees of freedom and p-value are inside the window, and the parallel reports r(669) = 0.37 and r(571) = 0.15 in the same passage identify the test as a correlation.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-04e75a7a9b-0",
+  "window_id": "04e75a7a9b",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": "\u0003.397",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "r ¼ \u0003.397, p < .05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "r",
+    "statistic": "−.397",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "(r ¼ \u0003.397, p < .05)",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "r",
+    "statistic": "-.397",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "r ¼ \\u0003.397, p < .05",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": "-.397",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "r ¼ \u0003.397, p < .05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The quote must copy the passage character for character, so it keeps the fraction sign and the control character of \"r ¼ \u0003.397, p < .05\" without the surrounding parentheses.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-4c7c29ae32-0",
+  "window_id": "4c7c29ae32",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": "4",
+    "df2": "160",
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "F(4,\n160) < 1, ns",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": "4",
+    "df2": "160",
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "F(4,\n160) < 1, ns",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The passage reports an F with both degrees of freedom and a value, split by a line break, and a result stays a result when no p-value follows.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-c557cdd432-0",
+  "window_id": "c557cdd432",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "-2.17",
+    "df1": "95",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "t(95) = \u00022.17, p < .05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "\u00022.17",
+    "df1": "95",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "t(95) = \u00022.17, p < .05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "2.17",
+    "df1": "95",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "t(95) = \u00022.17, p < .05",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "t",
+    "statistic": "-2.17",
+    "df1": "95",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "t(95) = \u00022.17, p < .05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The control character before 2.17 sits where a minus sign belongs, so the statistic is negative and the inferred sign goes in the field while the damaged character stays in the quote.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-747bd223f4-0",
+  "window_id": "747bd223f4",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "148.34",
+    "df1": "11",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "Δχ2(11) =148.34,\np< .001",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "chi2",
+    "statistic": "148.34",
+    "df1": "11",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "Δχ2(11) =148.34,\np< .001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   "reason": "The passage reports a chi-square difference statistic with its degrees of freedom and p-value, \"Δχ2(11) =148.34, p< .001\", split by a line break.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-747bd223f4-1",
+  "window_id": "747bd223f4",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "359.37",
+    "df1": "11",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "Δχ2(11) = 359.37, p <.001",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "chi2",
+    "statistic": "359.37",
+    "df1": "11",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "Δχ2(11) = 359.37, p <.001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   "reason": "The peer situation clause reports a second chi-square difference statistic, Δχ2(11) = 359.37, p <.001, and every result of a series is marked.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-3ef141d1de-0",
+  "window_id": "3ef141d1de",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "336.1",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "likelihood ratio = 336.1, df = 1, p < .001",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The passage names a likelihood ratio, not any of t, F, r, z, chi-square or Q, so calling it a chi-square would supply a test name the passage never writes.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-913c1b2b07-0",
+  "window_id": "913c1b2b07",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1.58",
+    "df1": "10",
+    "df2": "181",
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "F (10, 181) \u0004 1.58",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "F",
+    "statistic": "1.58",
+    "df1": "10",
+    "df2": "181",
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "F (10, 181) \u0004 1.58",
+    "damaged": true,
+    "confidence": "low"
+   },
+   "reason": "The passage reports F (10, 181) with both degrees of freedom and the value 1.58, joined by a control character that replaced a less-than-or-equal sign.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-ea96a7ee8a-0",
+  "window_id": "ea96a7ee8a",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "190.50",
+    "df1": "125",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "(125) = 190.50",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "chi2",
+    "statistic": "190.50",
+    "df1": "125",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "(125) = 190.50",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The statistic and its degrees of freedom are inside the window, and the parallel report \"χ2 (130) = 252.49, N = 142\" in the same passage identifies the test as chi-square; N = 142 sits outside the parentheses, so n stays null.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-e501312669-0",
+  "window_id": "e501312669",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": ".25",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".61",
+    "quote": "v2 = .25, B = .08,\nodds ratio (OR) = 1.08, p = .61",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": ".25",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".61",
+    "quote": "Wald's v2 = .25, B = .08, odds ratio (OR) = 1.08, p = .61",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": ".25",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".61",
+    "quote": "Wald’s v2 = .25, B = .08,\nodds ratio (OR) = 1.08, p = .61",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "chi2",
+    "statistic": ".25",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".61",
+    "quote": "Wald’s v2 = .25, B = .08,\nodds ratio (OR) = 1.08, p = .61",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The quote copies the passage character for character, keeping the curly apostrophe of \"Wald’s\", the letter v that replaced the chi-square symbol, and the line break.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-e501312669-1",
+  "window_id": "e501312669",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "13.10",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".0004",
+    "quote": "Wald’s v2 = 13.10, B = .73, OR = 2.08, p = .0004",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "13.10",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".0004",
+    "quote": "Wald's v2 = 13.10, B = .73, OR = 2.08, p = .0004",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "13.10",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".0004",
+    "quote": "v2 = 13.10, B = .73, OR = 2.08, p = .0004",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "chi2",
+    "statistic": "13.10",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".0004",
+    "quote": "Wald’s v2 = 13.10, B = .73, OR = 2.08, p = .0004",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The passage writes \"Wald’s v2 = 13.10, B = .73, OR = 2.08, p = .0004\" with a curly apostrophe and no line break, so this quote is the exact copy.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-9dc0408ab1-0",
+  "window_id": "9dc0408ab1",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".15",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .15",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": ".15",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .32 vs . .15",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The comparison \"r = .32 vs . .15\" reports a second correlation value for generic IATs, and the quote is corrected because \"r = .15\" is not written in the passage.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-8dae6f7e70-0",
+  "window_id": "8dae6f7e70",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1.0",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "F < 1.0",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "F",
+    "statistic": "1.0",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "F < 1.0",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The passage reports an F statistic with a value, \"(F < 1.0)\", and a test statistic without degrees of freedom is still a result.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_001",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-fbe7b85e6f-0",
+  "window_id": "fbe7b85e6f",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".82",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "R = .82",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": ".82",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "R = .82",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The passage writes the correlation \"R = .82\" with a value, and the guideline marks an r with a value even when no p-value follows it.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_002",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-86a496098d-0",
+  "window_id": "86a496098d",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".85",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .85 or better",
+    "damaged": false,
+    "confidence": "low"
+   },
+   {
+    "test_type": "r",
+    "statistic": ".85",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "(r = .85 or better)",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "r",
+    "statistic": ".85",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .85",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": ".85",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .85",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The result itself is \"r = .85\"; the enclosing parentheses and the words \"or better\" are passage text around the result, not part of it.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_002",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-c404656db4-0",
+  "window_id": "c404656db4",
+  "kind": "field_conflict",
+  "field": "p_operator",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1.13",
+    "df1": "6",
+    "df2": "306",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".30",
+    "quote": "F(6, 306) p\n1.13, p 1 .30",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "1.13",
+    "df1": "6",
+    "df2": "306",
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".30",
+    "quote": "F(6, 306) p\n1.13, p 1 .30",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "1.13",
+    "df1": "6",
+    "df2": "306",
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".30",
+    "quote": "F(6, 306) p\n1.13, p 1 .30",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "F",
+    "statistic": "1.13",
+    "df1": "6",
+    "df2": "306",
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".30",
+    "quote": "F(6, 306) p\n1.13, p 1 .30",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The passage reports \"no signiﬁcant three-way interaction\" with p .30, so the damaged character \"1\" stands for a greater-than sign.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_002",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-d76d6288fa-0",
+  "window_id": "d76d6288fa",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "-21.671",
+    "df1": "69",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".099",
+    "quote": "t (69) = −21.671, p = .099",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "t",
+    "statistic": "-1.671",
+    "df1": "69",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".099",
+    "quote": "t (69) = \u00021.671, p = .099",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The passage reports \"t (69) = \u00021.671, p = .099\", where the control character is a damaged minus sign before 1.671, not a digit 2.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_002",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-ce9331dc08-0",
+  "window_id": "ce9331dc08",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".25",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "7 × 10−6",
+    "quote": ".25, 95% CI = [.20, .30], p < 7 × 10−6",
+    "damaged": false,
+    "confidence": "low"
+   },
+   {
+    "test_type": "r",
+    "statistic": ".12",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "7 × 10−6",
+    "quote": "partial rs = .12, 95% CI = \n[.07, .17], to .25, 95% CI = [.20, .30], p < 7 × 10−6",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "r",
+    "statistic": ".25",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "7 × 10−6",
+    "quote": "to .25, 95% CI = [.20, .30], p < 7 × 10−6",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": ".25",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "7 × 10−6",
+    "quote": ".25, 95% CI = [.20, .30], p < 7 × 10−6",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The passage writes \".25, 95% CI = [.20, .30], p < 7 × 10−6\"; the preceding word \"to\" joins the two values and is not part of the result.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_002",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-ce9331dc08-1",
+  "window_id": "ce9331dc08",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".25",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "7 × 10−6",
+    "quote": "to .25, 95% CI = [.20, .30], p < 7 × 10−6",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": ".25",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "7 × 10−6",
+    "quote": ".25, 95% CI = [.20, .30], p < 7 × 10−6",
+    "damaged": false,
+    "confidence": "low"
+   },
+   "reason": "The passage reports a second partial correlation of .25 with p < 7 × 10−6, and each value of a series is its own result.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_002",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-e6223f39c7-0",
+  "window_id": "e6223f39c7",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "-1.844",
+    "df1": "110",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".067",
+    "quote": "t (110) = −1.844, p = .067",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-1.844",
+    "df1": "110",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".067",
+    "quote": "t (110) = \u00021.844,\np = .067",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-1.844",
+    "df1": "110",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".067",
+    "quote": "t (110) = \\u00021.844,\np = .067",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "t",
+    "statistic": "-1.844",
+    "df1": "110",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".067",
+    "quote": "t (110) = \u00021.844,\np = .067",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The quote copies the passage character for character, so it keeps the damaged minus sign and the line break instead of repairing them.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_002",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-6156792503-0",
+  "window_id": "6156792503",
+  "kind": "field_conflict",
+  "field": "quote",
+  "candidates": [
+   {
+    "test_type": "z",
+    "statistic": "3.309",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "p\\:01 level using a Wilcoxon rank-sum test (z = 3.309)",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "z",
+    "statistic": "3.309",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "Wilcoxon rank-sum test (z = 3.309)",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "z",
+    "statistic": "3.309",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "signiﬁcant at p\\:01 level using a Wilcoxon rank-sum test (z = 3.309)",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "z",
+    "statistic": "3.309",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "p\\:01 level using a Wilcoxon rank-sum test (z = 3.309)",
+    "damaged": true,
+    "confidence": "high"
+   },
+   "reason": "The passage reports the p-value as \"p\\:01\" and the statistic as \"(z = 3.309)\", so the quote must span both parts of the one result.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_002",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-a9874fcac5-0",
+  "window_id": "a9874fcac5",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1.60",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fs \u0003 1.60",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "F",
+    "statistic": "1.60",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fs \u0003 1.60",
+    "damaged": true,
+    "confidence": "low"
+   },
+   "reason": "The passage writes \"Fs \u0003 1.60\", an F statistic with a value and a damaged operator, which counts even when no p-value follows.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_002",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-316488294c-0",
+  "window_id": "316488294c",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "2762.02",
+    "df1": null,
+    "df2": null,
+    "n": "2010",
+    "p_operator": "<",
+    "p_value": "0.010",
+    "quote": "N = 2010)\n= 2762.02, p < 0.010",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The window starts inside the parentheses, so the test symbol and its degrees of freedom lie before the passage and only the tail \"= 2762.02, p < 0.010\" remains.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_002",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-e785bf5f5c-0",
+  "window_id": "e785bf5f5c",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".665",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "f ¼ .665, SE ¼ .002; p < .001",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ],
+  "decision": {
+   "keep": true,
+   "result": {
+    "test_type": "r",
+    "statistic": ".665",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "f ¼ .665, SE ¼ .002; p < .001",
+    "damaged": true,
+    "confidence": "low"
+   },
+   "reason": "The passage names it \"A high correlation\" with the value .665 and p < .001, and the \"¼\" characters are damaged equals signs.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_002",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-04c9b8363a-0",
+  "window_id": "04c9b8363a",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".32",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": ".32",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The passage writes only the bare number \".32 in Chicago\" inside a comparison; no statistic symbol, operator or p-value belongs to it.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_002",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ },
+ {
+  "dispute_id": "train-04c9b8363a-1",
+  "window_id": "04c9b8363a",
+  "kind": "singleton",
+  "field": null,
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".17",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": ".17",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ],
+  "decision": {
+   "keep": false,
+   "result": null,
+   "reason": "The passage writes only the bare number \".17 in New York\" inside a comparison; no statistic symbol, operator or p-value belongs to it.",
+   "provenance": {
+    "rater": "adjudicator",
+    "model_alias": "opus",
+    "model_id": "claude-opus-5",
+    "guideline_sha": "9419abb1d150e014fdfef5f63fda166889d0c176a2db7f701243563f97bb1f3f",
+    "agent_sha": "a007822b30108c39ce868af8d66b019a8c290a2d2a4f55808f5a49afad2d5560",
+    "batch_id": "batch_002",
+    "collected_at": "2026-09-19T20:27:23.086805+00:00"
+   }
+  }
+ }
+]
