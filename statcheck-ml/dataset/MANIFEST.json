@@ -1,0 +1,9 @@
+{
+ "generated_at": "2026-09-19T12:11:16.705104+00:00",
+ "command": "python pipeline/02_chunk.py --manifest dataset/MANIFEST.json",
+ "files": {
+  "windows/holdout.json": "ba26e07c5bab591ec69ba8e44573f699690c1805a7fdf1f671ac58bbecbfec71",
+  "windows/key.json": "170b7244234369c7de262c69222333343d5e74bb49bb2ff733cd4df6bb8e82c0",
+  "windows/train.json": "1995f299f15273781441f451dae08816ad7bee8e9210189127ad74d7623ba5e3"
+ }
+}

@@ -13,49 +13,15 @@ tags at training time.
 Usage: python pipeline/06_dataset.py <sample_dir> <dataset_dir> <round_name>
 """
 import sys, os, json
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from statcheck_ml.align import squeeze, find_span
 
 
 PARTS = [('test_type', 'TEST'), ('statistic', 'STAT'), ('df1', 'DF1'),
          ('df2', 'DF2'), ('n', 'N'), ('p_operator', 'POP'), ('p_value', 'PVAL')]
-
-
-def squeeze(text):
-    """Collapse each run of whitespace to one space.
-
-    Returns the collapsed string and a list that maps every collapsed index
-    back to its index in the original string.
-    """
-    out, idx, prev_ws = [], [], False
-    for i, ch in enumerate(text):
-        if ch.isspace():
-            if not prev_ws:
-                out.append(' ')
-                idx.append(i)
-            prev_ws = True
-        else:
-            out.append(ch)
-            idx.append(i)
-            prev_ws = False
-    return ''.join(out), idx
-
-
-def find_span(flat, imap, needle, lo=0, hi=None):
-    """Find `needle` while ignoring differences in whitespace.
-
-    `lo` and `hi` bound the search in collapsed coordinates. Returns
-    (start, end, flat_start, flat_end) where start and end are original
-    coordinates, or None.
-    """
-    if needle in (None, ''):
-        return None
-    nflat = ' '.join(str(needle).split())
-    if not nflat:
-        return None
-    hi = len(flat) if hi is None else hi
-    j = flat.find(nflat, lo, hi)
-    if j < 0:
-        return None
-    return imap[j], imap[j + len(nflat) - 1] + 1, j, j + len(nflat)
 
 
 def build(sample_dir, out_dir, name):
