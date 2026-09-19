@@ -11,7 +11,6 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
-from typing import List, TypedDict
 
 # --------------------------------------------------------------- colours --
 
@@ -60,43 +59,8 @@ def family_of(name: str) -> str:
     return ""
 
 
-# ---------------------------------------------------------------- logs ----
-
-class Epoch(TypedDict):
-    epoch: int
-    loss: float
-    p: float
-    r: float
-    f1: float
-    seconds: float
-
-
-_EPOCH_RE = re.compile(
-    r"epoch\s+(\d+)\s+loss\s+([0-9.]+)\s+dev\s+P\s+([0-9.]+)\s+R\s+([0-9.]+)\s+"
-    r"F1\s+([0-9.]+)\s+\(([0-9.]+)s\)"
-)
-
-
-def parse_log(text: str) -> List[Epoch]:
-    """Every `epoch N loss L dev P p R r F1 f (Ns)` line in a training log.
-
-    Lines that do not match (banner lines such as `splits: ...` or
-    `vocabulary: ...`) are skipped rather than raising.
-    """
-    out: List[Epoch] = []
-    for line in text.splitlines():
-        m = _EPOCH_RE.search(line)
-        if not m:
-            continue
-        epoch, loss, p, r, f1, seconds = m.groups()
-        out.append({"epoch": int(epoch), "loss": float(loss), "p": float(p),
-                    "r": float(r), "f1": float(f1), "seconds": float(seconds)})
-    return out
-
-
 # ------------------------------------------------------------ figure I/O --
 
-GRID_LOG = re.compile(r"^(lstm|gru|cnn)-(softmax|crf)-s0\.log$")
 
 
 class Skip(Exception):
@@ -137,5 +101,19 @@ def curve_configs(eval_data, logs_dir: Path) -> list:
         top3 = [cfg for cfg, _, _ in seed0_configs(eval_data.get("systems", {}))[:3]]
         if top3:
             return top3
-    names = sorted(p.name for p in logs_dir.glob("*-s0.log") if GRID_LOG.match(p.name))
-    return [n[: -len("-s0.log")] for n in names[:3]]
+    names = sorted(p.parent.name for p in logs_dir.glob("*-s0/report.json"))
+    return [n[: -len("-s0")] for n in names[:3]]
+
+
+def load_history(run_dir: Path) -> list:
+    """The per-epoch dev scores that train() wrote to report.json.
+
+    The training log holds the same numbers, but logs are not committed;
+    report.json is, so a clean checkout can redraw the learning curves.
+    """
+    path = run_dir / "report.json"
+    if not path.exists():
+        return []
+    report = json.loads(path.read_text(encoding="utf-8"))
+    return [{"epoch": int(h["epoch"]), "loss": float(h["loss"]), "p": float(h["precision"]),
+             "r": float(h["recall"]), "f1": float(h["f1"])} for h in report.get("history", [])]

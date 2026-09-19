@@ -23,8 +23,8 @@ import numpy as np
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 
-from statcheck_ml.figutil import (COLORS, Skip, clean_axes, color_for, curve_configs,
-                                  load_json, need, parse_log, seed0_configs)
+from statcheck_ml.figutil import (COLORS, Skip, clean_axes, color_for, curve_configs, load_history,
+                                  load_json, need, seed0_configs)
 
 DPI = 150
 META = {"Software": None, "Creation Time": None}
@@ -223,25 +223,27 @@ def fig_zoo(eval_data: dict, export: list, out: Path) -> Path:
 
 
 def fig_learning_curves(eval_data: dict, logs_dir: Path, out: Path) -> Path:
-    """6: dev F1 per epoch, top-3 configs seed 0 (or best available logs)."""
+    """6: dev F1 per epoch, top-3 configs seed 0, from each run's report.json."""
     need(logs_dir.exists(), f"{logs_dir} not found")
     configs = curve_configs(eval_data, logs_dir)
-    need(bool(configs), "no seed-0 training logs found")
+    need(bool(configs), "no seed-0 run directory with a report.json found")
 
     fig, ax = plt.subplots(figsize=(8, 5.5))
     drawn = 0
     for cfg in configs:
-        log_path = logs_dir / f"{cfg}-s0.log"
-        epochs = parse_log(log_path.read_text(encoding="utf-8")) if log_path.exists() else []
+        epochs = load_history(logs_dir / f"{cfg}-s0")
         if epochs:
+            # Colour is the family; the head is the line style, so two heads of
+            # one family stay apart.
             ax.plot([e["epoch"] for e in epochs], [e["f1"] for e in epochs], label=cfg,
-                   color=color_for(cfg), marker=".")
+                   color=color_for(cfg), marker=".",
+                   linestyle="-" if cfg.endswith("-crf") else "--")
             drawn += 1
-    need(drawn > 0, "no log file had a parseable epoch line")
+    need(drawn > 0, "no report.json had a history")
 
     ax.set_xlabel("Epoch")
     ax.set_ylabel("Dev F1")
-    ax.set_title("Learning curves, seed 0, top-3 configs (or best available logs)")
+    ax.set_title("Learning curves, seed 0, top-3 configs")
     ax.legend()
     clean_axes(ax)
     fig.tight_layout()

@@ -1,31 +1,21 @@
-from statcheck_ml.figutil import COLORS, parse_log
+import json
 
-LOG = """\
-splits: dataset/splits.json (seed 0, dev_share 0.15)
-augmentation: 1944 extra windows (400 of them hard negatives)
-windows: train 3626, dev 280
-vocabulary: 183 characters
-model: lstm model, 615,141 parameters, 2.5 MB as float32, about 0.6 MB as int8
-  epoch   1  loss 0.4079  dev P 0.684 R 0.863 F1 0.763  (68s)
-  epoch   2  loss 0.0687  dev P 0.715 R 0.917 F1 0.803  (71s)
-  epoch  10  loss 0.0079  dev P 0.825 R 0.895 F1 0.859  (71s)
-"""
-
-
-def test_parse_log_reads_every_epoch_line():
-    epochs = parse_log(LOG)
-    assert [e["epoch"] for e in epochs] == [1, 2, 10]
-    assert epochs[0] == {"epoch": 1, "loss": 0.4079, "p": 0.684, "r": 0.863,
-                         "f1": 0.763, "seconds": 68.0}
-    assert epochs[2]["f1"] == 0.859
-
-
-def test_parse_log_skips_banner_lines():
-    epochs = parse_log(LOG)
-    assert len(epochs) == 3  # not the 8 lines in the log
-
+from statcheck_ml.figutil import COLORS, load_history
 
 def test_color_map_has_every_required_system():
     for name in ("statcheck_raw", "statcheck_repaired", "cascade", "lstm", "gru", "cnn"):
         assert name in COLORS
         assert isinstance(COLORS[name], str) and COLORS[name].startswith("#")
+
+
+def test_load_history_reads_report_json(tmp_path):
+    run = tmp_path / "gru-crf-s0"
+    run.mkdir()
+    (run / "report.json").write_text(json.dumps({"history": [
+        {"epoch": 1, "loss": 0.4, "precision": 0.68, "recall": 0.86, "f1": 0.76},
+        {"epoch": 2, "loss": 0.07, "precision": 0.72, "recall": 0.92, "f1": 0.80}]}),
+        encoding="utf-8")
+    epochs = load_history(run)
+    assert [e["epoch"] for e in epochs] == [1, 2]
+    assert epochs[1] == {"epoch": 2, "loss": 0.07, "p": 0.72, "r": 0.92, "f1": 0.80}
+    assert load_history(tmp_path / "missing") == []

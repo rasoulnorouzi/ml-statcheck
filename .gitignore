@@ -48,6 +48,12 @@ statcheck-ml/models/*
 !statcheck-ml/models/*.onnx
 !statcheck-ml/models/runs.json
 !statcheck-ml/models/export.json
+# each grid run's small files; model.pt and the logs stay out
+!statcheck-ml/models/*-s[0-9]/
+!statcheck-ml/models/*-s[0-9]/report.json
+!statcheck-ml/models/*-s[0-9]/charmap.json
+!statcheck-ml/models/*-s[0-9]/export_report.json
+statcheck-ml/models/*-s[0-9]/model.pt
 
 # Results are committed
 !statcheck-ml/results/
