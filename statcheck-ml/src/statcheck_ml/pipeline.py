@@ -101,13 +101,24 @@ class Pipeline:
 
     def _load_model(self, path: str):
         import torch
+        from .data import load_charmap
+        from .export import infer_unit
         from .model import CharTagger
 
         ckpt = torch.load(path, weights_only=False)
-        self.vocab = ckpt["vocab"]
-        self.model = CharTagger(len(self.vocab), len(TAG_TO_ID),
+        vocab = ckpt.get("vocab")
+        if vocab is None:
+            # A checkpoint normally embeds the vocabulary it trained with. A
+            # checkpoint that does not still needs one, and the run's own
+            # charmap.json (beside the checkpoint) is closer to correct than
+            # the shared spec file, which may belong to a different run.
+            vocab = load_charmap(Path(path).parent)["chars"]
+        self.vocab = vocab
+        state = ckpt["state_dict"]
+        unit = ckpt.get("unit") or infer_unit(state)
+        self.model = CharTagger(len(self.vocab), len(TAG_TO_ID), unit=unit,
                                 tags=list(TAG_TO_ID) if self.use_crf else None)
-        self.model.load_state_dict(ckpt["state_dict"])
+        self.model.load_state_dict(state)
         self.model.eval()
 
     # ---------------- stage 1 ----------------

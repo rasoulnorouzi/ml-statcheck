@@ -43,12 +43,16 @@ CHECK_LENGTHS = (16, 64, 283, 512, 1024)
 
 
 def infer_unit(state_dict) -> str:
-    """Recover the recurrent unit from the weight shape.
+    """Recover the unit from the checkpoint's own weight names and shapes.
 
-    A GRU has three gates and an LSTM four, so the recurrent weight of the first
-    layer has 3*hidden rows against 4*hidden. Older checkpoints do not record
-    the unit, and this makes them loadable anyway.
+    A CNN has no recurrent weight at all, only `convs.*` entries, so that is
+    checked first. Otherwise a GRU has three gates and an LSTM four, so the
+    recurrent weight of the first layer has 3*hidden rows against 4*hidden.
+    Older checkpoints do not record the unit, and this makes them loadable
+    anyway.
     """
+    if any(k.startswith("convs.") for k in state_dict):
+        return "cnn"
     weight = state_dict.get("lstm.weight_hh_l0")
     if weight is None:
         return "lstm"
@@ -59,7 +63,14 @@ def infer_unit(state_dict) -> str:
 def load(model_path: str):
     """Load a checkpoint, whatever unit it uses and whether it has a CRF."""
     ckpt = torch.load(model_path, weights_only=False)
-    vocab = ckpt["vocab"]
+    vocab = ckpt.get("vocab")
+    if vocab is None:
+        # A checkpoint normally embeds its own vocabulary. When it does not,
+        # the run's own charmap.json (beside the checkpoint) is closer to
+        # correct than the shared spec file, which may belong to another run.
+        from .data import load_charmap
+
+        vocab = load_charmap(Path(model_path).parent)["chars"]
     state = ckpt["state_dict"]
     unit = ckpt.get("unit") or infer_unit(state)
     has_crf = ckpt.get("crf")

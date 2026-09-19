@@ -1,0 +1,15 @@
+{
+  "common": ["--data", "dataset/train.jsonl", "--splits", "dataset/splits.json",
+             "--augment", "2", "--hard-negatives", "400", "--epochs", "30"],
+  "screen": {
+    "lstm-softmax": ["--unit", "lstm"],
+    "lstm-crf":     ["--unit", "lstm", "--crf"],
+    "gru-softmax":  ["--unit", "gru"],
+    "gru-crf":      ["--unit", "gru", "--crf"],
+    "cnn-softmax":  ["--unit", "cnn"],
+    "cnn-crf":      ["--unit", "cnn", "--crf"]
+  },
+  "seeds": [1, 2],
+  "top_k": 3,
+  "ablation": {"drop": ["--augment", "2", "--hard-negatives", "400"], "suffix": "noaug"}
+}

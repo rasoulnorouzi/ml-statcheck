@@ -105,6 +105,28 @@ def encode(text: str, vocab: Dict[str, int]) -> List[int]:
     return [vocab.get(ch, 1) for ch in text]
 
 
+#: The one charmap the ports (JavaScript, R) read. Training never writes here
+#: any more, because every run has its own vocabulary and two runs training at
+#: once would race to overwrite this file. It changes only through
+#: `pipeline/08_export.py --update-spec`, once a run is chosen to ship.
+SPEC_CHARMAP_PATH = Path(__file__).parent / "spec" / "charmap.json"
+
+
+def load_charmap(model_dir: str | Path | None = None) -> dict:
+    """Read a character map, preferring a run's own over the shared spec.
+
+    `<model_dir>/charmap.json` is what `save_vocab` writes beside a checkpoint,
+    so a model reads exactly the vocabulary it was trained with. When no run
+    directory is given, or it has no charmap of its own, this falls back to
+    `spec/charmap.json`, the copy the ports read.
+    """
+    if model_dir is not None:
+        candidate = Path(model_dir) / "charmap.json"
+        if candidate.exists():
+            return json.loads(candidate.read_text(encoding="utf-8"))
+    return json.loads(SPEC_CHARMAP_PATH.read_text(encoding="utf-8"))
+
+
 def split_by_document(examples: Sequence[dict], dev_share: float = 0.15,
                       test_share: float = 0.15,
                       test_journals: Sequence[str] = ()) -> dict:
@@ -147,6 +169,34 @@ def split_by_document(examples: Sequence[dict], dev_share: float = 0.15,
             train.append(ex)
     return {"train": train, "dev": dev, "test": test,
             "test_unseen_journals": held}
+
+
+def load_splits(path: str | Path) -> dict:
+    """Read a committed document-level split.
+
+    The file assigns every source document to "train" or "dev" once, so a
+    rerun uses exactly the same split rather than a rehash. The holdout is a
+    separate file and is never read here.
+    """
+    return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+def apply_splits(examples: Sequence[dict], splits: dict) -> tuple:
+    """Assign each example to train or dev by its `source_doc`.
+
+    Every document in `examples` must appear in `splits["documents"]`. One
+    missing document means the split file is stale, and training on it
+    silently would measure the wrong thing, so this raises instead.
+    """
+    documents = splits.get("documents", {})
+    train, dev = [], []
+    for ex in examples:
+        doc = ex.get("source_doc")
+        if doc not in documents:
+            raise KeyError(doc)
+        bucket = train if documents[doc] == "train" else dev
+        bucket.append(ex)
+    return train, dev
 
 
 def tag_frequencies(examples: Iterable[dict]) -> Counter:

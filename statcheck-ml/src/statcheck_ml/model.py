@@ -39,17 +39,35 @@ class CharTagger(nn.Module):
             self.crf = CRF(tags)
         # Index 0 is PAD. Its embedding stays at zero and never trains.
         self.embed = nn.Embedding(vocab_size, embed_dim, padding_idx=0)
-        # A GRU has three gates where an LSTM has four, so it carries about a
-        # quarter fewer recurrent parameters. Whether that costs accuracy on
-        # this task is a question for the measurement, not for an assumption.
-        rnn = {"lstm": nn.LSTM, "gru": nn.GRU}[unit.lower()]
         self.unit = unit.lower()
-        self.lstm = rnn(
-            embed_dim, hidden, num_layers=layers, batch_first=True,
-            bidirectional=True, dropout=dropout if layers > 1 else 0.0,
-        )
         self.dropout = nn.Dropout(dropout)
-        self.out = nn.Linear(hidden * 2, n_tags)
+        if self.unit == "cnn":
+            # A dilated causal-free stack: four layers with dilation 1, 2, 4, 8
+            # and a fixed kernel of 5. Each layer's padding (2 * dilation) keeps
+            # the sequence length exact, so no cropping is needed around the
+            # convolutions. This unit has no recurrence, which makes it the
+            # cheapest of the three to run and the easiest to export.
+            self.lstm = None
+            self.convs = nn.ModuleList()
+            in_channels = embed_dim
+            for dilation in (1, 2, 4, 8):
+                self.convs.append(nn.Conv1d(
+                    in_channels, hidden, kernel_size=5,
+                    dilation=dilation, padding=2 * dilation))
+                in_channels = hidden
+            self.out = nn.Linear(hidden, n_tags)
+        else:
+            # A GRU has three gates where an LSTM has four, so it carries about
+            # a quarter fewer recurrent parameters. Whether that costs accuracy
+            # on this task is a question for the measurement, not for an
+            # assumption.
+            rnn = {"lstm": nn.LSTM, "gru": nn.GRU}[self.unit]
+            self.convs = None
+            self.lstm = rnn(
+                embed_dim, hidden, num_layers=layers, batch_first=True,
+                bidirectional=True, dropout=dropout if layers > 1 else 0.0,
+            )
+            self.out = nn.Linear(hidden * 2, n_tags)
 
     def forward(self, ids: torch.Tensor) -> torch.Tensor:
         """Map a batch of character ids to tag scores.
@@ -61,8 +79,14 @@ class CharTagger(nn.Module):
         free of packed sequences keeps the ONNX export simple.
         """
         x = self.embed(ids)
-        x, _ = self.lstm(x)
-        x = self.dropout(x)
+        if self.unit == "cnn":
+            x = x.transpose(1, 2)                 # (batch, channels, time)
+            for conv in self.convs:
+                x = self.dropout(torch.relu(conv(x)))
+            x = x.transpose(1, 2)                 # (batch, time, channels)
+        else:
+            x, _ = self.lstm(x)
+            x = self.dropout(x)
         return self.out(x)
 
     def n_parameters(self) -> int:
