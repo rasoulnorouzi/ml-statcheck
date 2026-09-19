@@ -213,9 +213,6 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
               "augment": augment, "hard_negatives": hard_negatives, "unit": unit, "dev": final, "history": history,
               "vocab_size": len(vocab), "parameters": model.n_parameters(),
               "train_windows": len(train_set), "dev_windows": len(dev_set)}
-    if unseen_journals:
-        report["unseen_journals"] = score(unseen_journals,
-                                          predict_spans(model, unseen_journals, vocab))
     (out / "report.json").write_text(json.dumps(report, indent=1), encoding="utf-8")
 
     print(f"\nbest epoch {best_epoch}, dev F1 {final['overall']['f1']:.3f}")
