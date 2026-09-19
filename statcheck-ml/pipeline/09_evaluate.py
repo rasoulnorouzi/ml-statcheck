@@ -1,355 +1,339 @@
-"""Compare every model, alone and inside the cascade, against the real statcheck.
+"""Score every system against the holdout: statcheck, each trained model, and
+the cascade that follows statcheck with a model.
 
-This is the measurement the project exists to produce. It answers one question
-for each system: how many of the reported results does it find, and how often
-does it reach the right verdict about them.
+This is the measurement the project exists to produce, and it runs once
+against a gold-discipline holdout: log the run, do not tune against it and
+run again pretending the first run did not happen.
 
-Metrics, and why each one is here.
+Systems scored:
 
-  precision, recall, F1   the standard three.
-  F2                      recall counted twice as heavily as precision. This
-                          tool screens papers for a human to check, so a missed
-                          result costs more than one to reject by eye.
-  damaged and undamaged   reported apart. More than half the results in the
-                          holdout are text whose operator the conversion
-                          destroyed, and the whole case for a learned extractor
-                          rests on that part.
-  by test type            a system can read t tests and miss chi-square.
-  checkable               results carrying everything the arithmetic needs. A
-                          result that is found but cannot be recomputed does
-                          not help a user.
-  coverage                the share of passages where a system finds anything.
+  statcheck_raw          the R package, unmodified text
+  statcheck_repaired      the same package, operator-repaired text
+  <config>-s<seed>        every finished model run named in runs.json
+  cascade_<config>-s0     statcheck_repaired, plus what the best model adds
+
+"Best" is chosen from `runs.json`'s own `dev_f1`, the development score
+recorded at training time, never from a score computed in this file. Picking
+"best" from the holdout score computed here would be the leak the project's
+own rules warn against: the holdout is evaluated, not tuned against.
 
 Usage:
-  python pipeline/09_evaluate.py <windows.json> <labels.json> <statcheck.csv> <out.json> \
-      name=path/to/model.pt[:crf] [name=... ...]
+  python pipeline/09_evaluate.py --windows dataset/holdout.jsonl \\
+      --statcheck dataset/baseline/statcheck_r.csv \\
+      --repaired dataset/baseline/statcheck_repaired.csv \\
+      --runs models/runs.json --zoo models/zoo --export models/export.json \\
+      --out results/eval.json --resamples 2000 --seed 0
 """
 from __future__ import annotations
 
-import csv
+import argparse
 import json
-import re
+import statistics
 import sys
-from collections import Counter, defaultdict
 from pathlib import Path
 
-import torch
+REPO = Path(__file__).resolve().parents[1]      # statcheck-ml
+sys.path.insert(0, str(REPO / "src"))
 
-# Add src to path so statcheck_ml can be imported
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-
-from statcheck_ml.data import encode, normalise
-from statcheck_ml.labels import TAG_TO_ID, ID_TO_TAG, ENTITY_OPERATOR, tags_to_spans
-from statcheck_ml.model import CharTagger
-from statcheck_ml.pvalue import Result, check, CONSISTENT
+from statcheck_ml import evalutil as ev
+from statcheck_ml.onnx_runtime import OnnxTagger
+from statcheck_ml.stats import mcnemar_exact, paired_bootstrap
 
 
-def as_number(text):
-    if text is None:
+def resolve(p) -> Path:
+    path = Path(p)
+    return path if path.is_absolute() else REPO / path
+
+
+# --------------------------------------------------------------- models ---
+
+def load_run_records(runs_path: Path, only) -> list:
+    if not runs_path.exists():
+        print(f"note: {runs_path} not found, no model runs to score")
+        return []
+    records = [r for r in ev.read_json(runs_path) if r.get("status") == "done"]
+    if only:
+        records = [r for r in records if r["name"] in only]
+    return records
+
+
+def load_tagger(models_dir: Path, name: str):
+    run_dir = models_dir / name
+    if not (run_dir / "tagger.onnx").exists():
+        print(f"note: {run_dir}/tagger.onnx missing, skipping {name} "
+              f"(run pipeline/08_export.py first)")
         return None
-    s = str(text).strip().replace("−", "-").replace("–", "-").lstrip("<>=").strip()
-    if s.startswith("."):
-        s = "0" + s
-    elif s.startswith("-."):
-        s = "-0" + s[1:]
-    try:
-        return round(float(s), 4)
-    except ValueError:
-        return None
+    return OnnxTagger(run_dir)
 
 
-CONTROL_CLASS = "[" + "".join(
-    chr(c) for c in list(range(1, 9)) + [11, 12] + list(range(14, 32))) + "]"
-
-# Ordered: the first pattern that matches names the family. Order matters,
-# because one result can carry two kinds of damage, and the first entry names
-# the one that does the most harm.
-DAMAGE_FAMILIES = [
-    # The decimal point is gone, so the value itself is wrong. Repairing the
-    # operator does not help, which makes this the worst kind.
-    ("decimal point lost", re.compile(r"=\s*\d{3,}\s*,\s*p\s*[<>=]\s*\d{3,}")),
-    ("control character", re.compile(CONTROL_CLASS)),
-    ("fraction sign for =", re.compile("\u00bc")),
-    ("backslash for <", re.compile(r"\\")),
-    ("letter b for <", re.compile(r"\)\s*b\s*[-.0-9]|\bp\s*b\s*\.?[0-9]")),
-    ("letter N for >", re.compile(r"\bp\s*N\s*\.?[0-9]")),
-    ("chi-square symbol lost",
-     re.compile(r"\b(v2|c2|x2)\s*\(|(?<![0-9A-Za-z])2\s*\(\s*\d")),
-    ("letter p or ! for operator",
-     re.compile(r"\)\s*p\s*[-.0-9]|\bp\s*!\s*\.?[0-9]")),
-]
-
-
-def damage_family(quote: str) -> str:
-    """Name the kind of damage in a quote, for the per-family report."""
-    for name, pattern in DAMAGE_FAMILIES:
-        if pattern.search(quote or ""):
-            return name
-    return "other damage"
-
-
-def read_json(path):
-    with open(path, encoding="utf-8") as fh:
-        return json.loads(fh.read(), strict=False)
-
-
-def group_spans(text, spans):
-    """Turn a flat span list into results, one per test name."""
-    results, current = [], None
-    for start, end, label in sorted(spans):
-        if label == "TEST" or (label == "STAT" and current and "STAT" in current):
-            if current:
-                results.append(current)
-            current = {}
-        if current is None:
-            current = {}
-        current.setdefault(label, text[start:end])
-    if current:
-        results.append(current)
-    return results
-
-
-def build_result(parts):
-    stat = as_number(parts.get("STAT"))
-    if stat is None:
-        return None, None
-    operator = next((ENTITY_OPERATOR[k] for k in parts if k.startswith("POP_")), None)
-    return Result(
-        test_type=(parts.get("TEST") or "").strip().lower() or "t",
-        statistic=stat,
-        df1=as_number(parts.get("DF1")),
-        df2=as_number(parts.get("DF2")),
-        p_operator=operator,
-        p_value=as_number(parts.get("PVAL")),
-    ), parts.get("PVAL")
-
-
-def infer_unit(state_dict) -> str:
-    """Recover the recurrent unit from the weight shape.
-
-    A GRU has three gates and an LSTM four, so the input weight of the first
-    layer has 3*hidden rows against 4*hidden. Older checkpoints do not record
-    the unit, and this makes them loadable anyway.
+def pick_best_seed0(records: list):
+    """The seed-0 run with the highest recorded dev F1, excluding the
+    augmentation ablation. Chosen from training-time dev_f1, not from any
+    score in this file.
     """
-    w = state_dict.get("lstm.weight_hh_l0")
-    if w is None:
-        return "lstm"
-    rows, hidden = w.shape
-    return "gru" if rows == 3 * hidden else "lstm"
+    seed0 = [r for r in records if r.get("seed") == 0 and "noaug" not in r.get("config", "")]
+    seed0 = [r for r in seed0 if r.get("dev_f1") is not None]
+    return max(seed0, key=lambda r: r["dev_f1"]) if seed0 else None
 
 
-def load_model(spec):
-    path, _, flag = spec.partition(":")
-    use_crf = flag == "crf"
-    ck = torch.load(path, weights_only=False)
-    vocab = ck["vocab"]
-    unit = ck.get("unit") or infer_unit(ck["state_dict"])
-    model = CharTagger(len(vocab), len(TAG_TO_ID),
-                       tags=list(TAG_TO_ID) if use_crf else None, unit=unit)
-    model.load_state_dict(ck["state_dict"])
-    model.eval()
-    return model, vocab, use_crf
+def top3_seed0(records: list) -> list:
+    seed0 = [r for r in records if r.get("seed") == 0 and "noaug" not in r.get("config", "")]
+    seed0 = [r for r in seed0 if r.get("dev_f1") is not None]
+    return sorted(seed0, key=lambda r: r["dev_f1"], reverse=True)[:3]
 
 
-def model_predictions(model, vocab, use_crf, windows):
-    """Return {window_id: [(Result, p_text), ...]}."""
-    out = {}
-    with torch.no_grad():
-        for w in windows:
-            text = normalise(w["text"])
-            ids = torch.tensor([encode(text, vocab)], dtype=torch.long)
-            logits = model(ids)
-            if use_crf and model.crf is not None:
-                mask = torch.ones(1, ids.size(1))
-                tags = [ID_TO_TAG[int(t)] for t in model.crf.decode(logits, mask)[0]]
-            else:
-                tags = [ID_TO_TAG[int(t)] for t in logits.argmax(-1)[0]]
-            built = []
-            for parts in group_spans(text, tags_to_spans(tags[:len(text)])):
-                res, ptext = build_result(parts)
-                if res is not None:
-                    built.append((res, ptext))
-            out[w["window_id"]] = built
-    return out
+# --------------------------------------------------------------- scoring --
+
+def build_system_report(found_by_window, window_ids, doc_ids, doc_to_windows,
+                        gold_by_window, gold_meta, resamples, seed,
+                        block_spans_by_window=None, gold_spans_by_window=None) -> dict:
+    report = ev.score_system(found_by_window, gold_by_window, gold_meta, window_ids)
+    report["bootstrap"] = ev.bootstrap_prf(doc_ids, doc_to_windows, found_by_window,
+                                           gold_by_window, gold_meta, n=resamples, seed=seed)
+    if block_spans_by_window is not None:
+        report["span_strict"] = ev.score_span_strict(block_spans_by_window,
+                                                      gold_spans_by_window, window_ids)
+    return report
 
 
-def prf(tp, fp, fn):
-    p = tp / (tp + fp) if tp + fp else 0.0
-    r = tp / (tp + fn) if tp + fn else 0.0
-    f1 = 2 * p * r / (p + r) if p + r else 0.0
-    # F2 weights recall four times as heavily inside the harmonic mean, which
-    # suits a tool that screens for a human reader.
-    f2 = 5 * p * r / (4 * p + r) if (4 * p + r) else 0.0
-    return {"precision": p, "recall": r, "f1": f1, "f2": f2,
-            "tp": tp, "fp": fp, "fn": fn}
+def f1_stat(found_by_window, gold_by_window, gold_meta, doc_to_windows, bucket="overall"):
+    def stat(doc_sample):
+        window_ids = [wid for d in doc_sample for wid in doc_to_windows.get(d, [])]
+        scored = ev.score_system(found_by_window, gold_by_window, gold_meta, window_ids)
+        return scored.get(bucket, {}).get("f1", 0.0)
+    return stat
 
 
-def score_system(found_by_window, gold_by_window, gold_meta, window_ids):
-    """Score one system, overall and by subset."""
-    buckets = defaultdict(lambda: [0, 0, 0])     # tp, fp, fn
-    windows_with_hit = 0
+def paired_entry(name_a, found_a, name_b, found_b, gold_by_window, gold_meta,
+                 doc_ids, doc_to_windows, resamples, seed) -> dict:
+    diff, (lo, hi), p = paired_bootstrap(
+        doc_ids,
+        f1_stat(found_a, gold_by_window, gold_meta, doc_to_windows),
+        f1_stat(found_b, gold_by_window, gold_meta, doc_to_windows),
+        n=resamples, seed=seed)
+    return {"a": name_a, "b": name_b, "diff": diff, "ci": [lo, hi], "p": p}
 
-    for wid in window_ids:
-        gold = gold_by_window.get(wid, set())
-        got = found_by_window.get(wid, set())
-        if got:
-            windows_with_hit += 1
 
-        for value in got & gold:
-            meta = gold_meta.get((wid, value), {})
-            buckets["overall"][0] += 1
-            buckets["damaged" if meta.get("damaged") else "undamaged"][0] += 1
-            buckets[f"test:{meta.get('test_type') or 'unknown'}"][0] += 1
-            if meta.get("family"):
-                buckets[f"damage:{meta['family']}"][0] += 1
-            if meta.get("checkable"):
-                buckets["checkable"][0] += 1
-        for value in got - gold:
-            buckets["overall"][1] += 1
-        for value in gold - got:
-            meta = gold_meta.get((wid, value), {})
-            buckets["overall"][2] += 1
-            buckets["damaged" if meta.get("damaged") else "undamaged"][2] += 1
-            buckets[f"test:{meta.get('test_type') or 'unknown'}"][2] += 1
-            if meta.get("family"):
-                buckets[f"damage:{meta['family']}"][2] += 1
-            if meta.get("checkable"):
-                buckets["checkable"][2] += 1
+def mcnemar_entry(name_a, found_a, name_b, found_b, gold_by_window) -> dict:
+    b, c = ev.mcnemar_pair(found_a, found_b, gold_by_window)
+    return {"a": name_a, "b_only_a": b, "b_only_b": c, "p": mcnemar_exact(b, c)}
 
-    out = {k: prf(*v) for k, v in buckets.items()}
-    out["coverage"] = windows_with_hit / max(len(window_ids), 1)
-    return out
 
+# ------------------------------------------------------------------ main --
 
 def main():
-    windows_path, labels_path, csv_path, out_path = sys.argv[1:5]
-    specs = [a for a in sys.argv[5:] if not a.startswith("--repaired=")]
-    repaired_csv = next((a.split("=", 1)[1] for a in sys.argv[5:]
-                         if a.startswith("--repaired=")), None)
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--windows", default="dataset/holdout.jsonl")
+    ap.add_argument("--statcheck", default="dataset/baseline/statcheck_r.csv")
+    ap.add_argument("--repaired", default="dataset/baseline/statcheck_repaired.csv")
+    ap.add_argument("--runs", default="models/runs.json")
+    ap.add_argument("--zoo", default="models/zoo")
+    ap.add_argument("--export", default="models/export.json")
+    ap.add_argument("--out", default="results/eval.json")
+    ap.add_argument("--resamples", type=int, default=2000)
+    ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--only", nargs="+", default=None,
+                    help="restrict model runs to these names from runs.json")
+    ap.add_argument("--no-models", action="store_true",
+                    help="score statcheck alone; skip every model and the cascade")
+    args = ap.parse_args()
 
-    windows = read_json(windows_path)
+    windows_path = resolve(args.windows)
+    windows = ev.read_jsonl(windows_path)
     window_ids = [w["window_id"] for w in windows]
-    labels = {r["window_id"]: r for r in read_json(labels_path)}
+    gold_by_window, gold_meta, gold_spans_by_window, doc_to_windows, gold_unparseable = \
+        ev.extract_gold(windows)
+    doc_ids = sorted(doc_to_windows)
+    n_gold = sum(len(v) for v in gold_by_window.values())
+    n_damaged = sum(1 for m in gold_meta.values() if m["damaged"])
+    n_checkable = sum(1 for m in gold_meta.values() if m["checkable"])
 
-    # --- the labels ---
-    gold_by_window, gold_meta = {}, {}
-    n_gold = n_damaged = n_checkable = 0
-    for wid in window_ids:
-        values = set()
-        for res in (labels.get(wid, {}).get("results") or []):
-            v = as_number(res.get("statistic"))
-            if v is None:
+    notes: list = []
+    systems: dict = {}
+    found_by_system: dict = {}          # name -> {wid: {value, ...}}
+    input_files = [windows_path]
+
+    def add_system(name, found, block_spans=None):
+        systems[name] = build_system_report(
+            found, window_ids, doc_ids, doc_to_windows, gold_by_window, gold_meta,
+            args.resamples, args.seed, block_spans, gold_spans_by_window)
+        found_by_system[name] = found
+
+    # --- statcheck, raw and repaired ---
+    statcheck_path = resolve(args.statcheck)
+    if statcheck_path.exists():
+        raw_found, _ = ev.load_statcheck(statcheck_path)
+        add_system("statcheck_raw", raw_found)
+        input_files.append(statcheck_path)
+    else:
+        notes.append(f"{statcheck_path} not found; statcheck_raw skipped")
+
+    repaired_path = resolve(args.repaired)
+    repaired_rows = []
+    if repaired_path.exists():
+        repaired_found, repaired_rows = ev.load_statcheck(repaired_path)
+        add_system("statcheck_repaired", repaired_found)
+        input_files.append(repaired_path)
+    else:
+        notes.append(f"{repaired_path} not found; statcheck_repaired skipped")
+
+    verdicts = ev.verdict_agreement(repaired_rows) if repaired_rows else None
+
+    # --- models ---
+    best_record = top3 = None
+    export_by_name = {}
+    if not args.no_models:
+        runs_path = resolve(args.runs)
+        records = load_run_records(runs_path, set(args.only) if args.only else None)
+        if records:
+            input_files.append(runs_path)
+        export_path = resolve(args.export)
+        if export_path.exists():
+            export_by_name = {r["name"]: r for r in ev.read_json(export_path)}
+
+        models_dir = runs_path.parent        # each run lives in <runs.json's dir>/<name>/
+        block_spans_by_system = {}
+        for record in records:
+            tagger = load_tagger(models_dir, record["name"])
+            if tagger is None:
                 continue
-            values.add(v)
-            checkable = bool(res.get("statistic")) and bool(res.get("df1")) and bool(res.get("p_value"))
-            gold_meta[(wid, v)] = {
-                "damaged": bool(res.get("damaged")),
-                "test_type": (res.get("test_type") or "").lower(),
-                "checkable": checkable,
-                "family": (damage_family(res.get("quote") or "")
-                           if res.get("damaged") else None),
+            preds = ev.model_predictions(tagger, windows)
+            found = {wid: {round(r.statistic, 4) for r, _, _ in v} for wid, v in preds.items()}
+            spans = {wid: {span for _, _, span in v} for wid, v in preds.items()}
+            add_system(record["name"], found, spans)
+            block_spans_by_system[record["name"]] = spans
+            if record["name"] in export_by_name:
+                a = export_by_name[record["name"]]
+                systems[record["name"]]["artifact"] = {
+                    "onnx_bytes": a.get("onnx_bytes"), "quant_bytes": a.get("quant_bytes"),
+                    "latency_ms_median": a.get("latency_ms_median"), "dev_f1": a.get("dev_f1")}
+
+        loaded = {r["name"] for r in records if r["name"] in found_by_system}
+        best_record = pick_best_seed0([r for r in records if r["name"] in loaded])
+        top3 = [r for r in top3_seed0(records) if r["name"] in loaded]
+        if best_record is None:
+            notes.append("no seed-0 model loaded; cascade and best_model comparisons skipped")
+    else:
+        notes.append("--no-models: model runs, cascade, and model comparisons skipped")
+
+    # --- cascade: statcheck_repaired, plus what the best model adds ---
+    cascade_name = None
+    if best_record is not None and "statcheck_repaired" in found_by_system:
+        cascade_name = f"cascade_{best_record['config']}-s0"
+        base = found_by_system["statcheck_repaired"]
+        model_found = found_by_system[best_record["name"]]
+        cascade_found = {wid: base.get(wid, set()) | model_found.get(wid, set())
+                         for wid in set(base) | set(model_found)}
+        add_system(cascade_name, cascade_found)
+    elif best_record is not None:
+        notes.append("statcheck_repaired unavailable; cascade skipped")
+
+    # --- seeds: mean/sd of holdout F1 per config ---
+    seeds_report = {}
+    if not args.no_models:
+        by_config: dict = {}
+        for record in [r for r in load_run_records(resolve(args.runs),
+                                                    set(args.only) if args.only else None)
+                       if r["name"] in found_by_system]:
+            by_config.setdefault(record["config"], []).append(
+                systems[record["name"]]["overall"]["f1"])
+        for config, values in by_config.items():
+            seeds_report[config] = {
+                "mean_f1": statistics.fmean(values),
+                "sd_f1": statistics.pstdev(values) if len(values) > 1 else 0.0,
+                "values": values,
             }
-            n_damaged += bool(res.get("damaged"))
-            n_checkable += checkable
-        gold_by_window[wid] = values
-        n_gold += len(values)
 
-    # --- statcheck ---
-    sc_by_window = defaultdict(set)
-    sc_rows = defaultdict(dict)
-    with open(csv_path, encoding="utf-8") as fh:
-        for row in csv.DictReader(fh):
-            v = as_number(row["test_value"])
-            if v is not None:
-                sc_by_window[row["window_id"]].add(v)
-                sc_rows[row["window_id"]][v] = row
+    # --- paired tests and McNemar ---
+    paired = {}
+    mcnemar = {}
+    if top3 and len(top3) >= 2:
+        ranked = sorted(top3, key=lambda r: systems[r["name"]]["overall"]["f1"], reverse=True)
+        names = [r["name"] for r in ranked]
+        paired["top1_vs_top2"] = paired_entry(
+            names[0], found_by_system[names[0]], names[1], found_by_system[names[1]],
+            gold_by_window, gold_meta, doc_ids, doc_to_windows, args.resamples, args.seed)
+        if len(names) >= 3:
+            paired["top1_vs_top3"] = paired_entry(
+                names[0], found_by_system[names[0]], names[2], found_by_system[names[2]],
+                gold_by_window, gold_meta, doc_ids, doc_to_windows, args.resamples, args.seed)
 
-    report = {"windows": len(window_ids), "gold_results": n_gold,
-              "gold_damaged": n_damaged, "gold_checkable": n_checkable,
-              "systems": {}}
-    report["systems"]["statcheck (raw text)"] = score_system(
-        sc_by_window, gold_by_window, gold_meta, window_ids)
+    if cascade_name and "statcheck_repaired" in found_by_system:
+        paired["cascade_vs_statcheck_repaired"] = paired_entry(
+            cascade_name, found_by_system[cascade_name],
+            "statcheck_repaired", found_by_system["statcheck_repaired"],
+            gold_by_window, gold_meta, doc_ids, doc_to_windows, args.resamples, args.seed)
+        mcnemar["cascade_vs_statcheck_repaired"] = mcnemar_entry(
+            cascade_name, found_by_system[cascade_name],
+            "statcheck_repaired", found_by_system["statcheck_repaired"], gold_by_window)
 
-    # The same package, reading text whose damaged operators were repaired.
-    sc_fixed = defaultdict(set)
-    if repaired_csv:
-        with open(repaired_csv, encoding="utf-8") as fh:
-            for row in csv.DictReader(fh):
-                v = as_number(row["test_value"])
-                if v is not None:
-                    sc_fixed[row["window_id"]].add(v)
-        report["systems"]["statcheck (repaired)"] = score_system(
-            sc_fixed, gold_by_window, gold_meta, window_ids)
+    if best_record and "statcheck_repaired" in found_by_system:
+        paired["best_model_vs_statcheck_repaired"] = paired_entry(
+            best_record["name"], found_by_system[best_record["name"]],
+            "statcheck_repaired", found_by_system["statcheck_repaired"],
+            gold_by_window, gold_meta, doc_ids, doc_to_windows, args.resamples, args.seed)
+        mcnemar["best_model_vs_statcheck_repaired"] = mcnemar_entry(
+            best_record["name"], found_by_system[best_record["name"]],
+            "statcheck_repaired", found_by_system["statcheck_repaired"], gold_by_window)
 
-    # --- each model, alone and in the cascade ---
-    for spec in specs:
-        name, _, path = spec.partition("=")
-        model, vocab, use_crf = load_model(path)
-        preds = model_predictions(model, vocab, use_crf, windows)
+    # --- family recall ---
+    family = {}
+    if "statcheck_repaired" in found_by_system:
+        family["statcheck_repaired"] = ev.family_recall(
+            found_by_system["statcheck_repaired"], gold_by_window, gold_meta)
+    if best_record:
+        family["best_model"] = ev.family_recall(
+            found_by_system[best_record["name"]], gold_by_window, gold_meta)
+    if cascade_name:
+        family["cascade"] = ev.family_recall(
+            found_by_system[cascade_name], gold_by_window, gold_meta)
 
-        alone = {wid: {round(r.statistic, 4) for r, _ in v} for wid, v in preds.items()}
-        report["systems"][name] = score_system(alone, gold_by_window, gold_meta, window_ids)
+    # --- provenance ---
+    provenance = {
+        "date": None,        # filled by the caller's log, not guessed here
+        "git_sha": ev.git_sha(REPO),
+        "seed": args.seed,
+        "resamples": args.resamples,
+        "systems": sorted(systems),
+        "inputs": {str(p.relative_to(REPO)) if p.is_relative_to(REPO) else str(p):
+                  ev.sha256_file(p) for p in input_files},
+        # Gold results `align.as_number` cannot parse at all, so they never
+        # enter value matching: no system can find them, and none is blamed
+        # for missing them. See `align.as_number` for what it does and does
+        # not repair.
+        "gold_unparseable": {"count": len(gold_unparseable), "items": gold_unparseable},
+    }
 
-        # The cascade: statcheck first, the model adds only what it missed.
-        # The repaired reading is used when it is available, because that is
-        # the cascade a user would actually run.
-        base = sc_fixed if sc_fixed else sc_by_window
-        hybrid = {}
-        from_sc = from_model = 0
-        for wid in window_ids:
-            s = base.get(wid, set())
-            m = alone.get(wid, set())
-            hybrid[wid] = s | m
-            from_sc += len(s)
-            from_model += len(m - s)
-        h = score_system(hybrid, gold_by_window, gold_meta, window_ids)
-        h["from_statcheck"] = from_sc
-        h["from_model"] = from_model
-        report["systems"][f"{name}+statcheck"] = h
+    report = {
+        "provenance": provenance,
+        "gold": {"windows": len(window_ids), "results": n_gold,
+                "damaged": n_damaged, "checkable": n_checkable},
+        "systems": systems,
+        "seeds": seeds_report,
+        "paired": paired,
+        "mcnemar": mcnemar,
+        "family_recall": family,
+        "verdicts": verdicts,
+        "notes": notes,
+        "cascade_name": cascade_name,
+        "best_model": best_record["name"] if best_record else None,
+    }
 
-        # --- verdicts, on results both systems found ---
-        agree = disagree = undecidable = 0
-        for wid in window_ids:
-            rows = sc_rows.get(wid, {})
-            for res, ptext in preds.get(wid, []):
-                key = round(res.statistic, 4)
-                if key not in rows:
-                    continue
-                ours = check(res, reported_p_text=ptext)
-                if ours.computed_p is None:
-                    undecidable += 1
-                    continue
-                theirs = str(rows[key].get("error", "")).strip().upper() in ("TRUE", "1")
-                if (ours.verdict != CONSISTENT) == theirs:
-                    agree += 1
-                else:
-                    disagree += 1
-        report["systems"][name]["verdicts"] = {
-            "agree": agree, "disagree": disagree, "undecidable": undecidable}
+    out_path = resolve(args.out)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(report, indent=1, sort_keys=True), encoding="utf-8")
 
-    with open(out_path, "w", encoding="utf-8") as fh:
-        json.dump(report, fh, indent=1)
-
-    # --- printed tables ---
-    print(f"{report['windows']} windows, {n_gold} annotated results "
+    print(f"{len(window_ids)} windows, {n_gold} gold results "
           f"({n_damaged} damaged, {n_checkable} checkable)\n")
-    header = f"{'system':22s} {'P':>6s} {'R':>6s} {'F1':>6s} {'F2':>6s} {'TP':>5s} {'FP':>5s} {'FN':>5s} {'cover':>6s}"
-    print("OVERALL"); print(header)
-    for name, s in report["systems"].items():
-        o = s["overall"]
-        print(f"{name:22s} {o['precision']:6.3f} {o['recall']:6.3f} {o['f1']:6.3f} "
-              f"{o['f2']:6.3f} {o['tp']:5d} {o['fp']:5d} {o['fn']:5d} {s['coverage']:6.3f}")
-
-    for subset in ("damaged", "undamaged", "checkable"):
-        print(f"\n{subset.upper()}")
-        print(f"{'system':22s} {'P':>6s} {'R':>6s} {'F1':>6s} {'TP':>5s} {'FN':>5s}")
-        for name, s in report["systems"].items():
-            if subset not in s:
-                continue
-            o = s[subset]
-            print(f"{name:22s} {o['precision']:6.3f} {o['recall']:6.3f} {o['f1']:6.3f} "
-                  f"{o['tp']:5d} {o['fn']:5d}")
-
+    print(f"{'system':28s} {'P':>7s} {'R':>7s} {'F1':>7s} {'F1 95% CI':>17s} {'dmgR':>7s}")
+    for name, s in systems.items():
+        o, d = s.get("overall", {}), s.get("damaged", {})
+        lo, hi = s.get("bootstrap", {}).get("overall", {}).get("f1", (0.0, 0.0))
+        print(f"{name:28s} {o.get('p', 0):7.3f} {o.get('r', 0):7.3f} {o.get('f1', 0):7.3f} "
+              f"[{lo:6.3f},{hi:6.3f}] {d.get('r', 0):7.3f}")
+    for note in notes:
+        print(f"note: {note}")
     print(f"\nwrote {out_path}")
 
 

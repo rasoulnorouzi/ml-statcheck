@@ -85,3 +85,41 @@ def test_as_number_invalid():
     assert as_number("") is None
     assert as_number(None) is None
     assert as_number("   ") is None
+
+
+def test_as_number_thousands_comma():
+    """A comma between a digit and exactly three digits is a thousands
+    separator. A comma followed by two digits is left alone: this corpus
+    writes its decimals with a period, not a comma.
+    """
+    assert as_number("1,234.5") == 1234.5
+    assert as_number("1,168.57") == 1168.57
+    assert as_number("1,234,567.89") == 1234567.89
+    assert as_number("12,345") == 12345.0
+    assert as_number("2,45") is None
+    assert as_number("1,2345") is None
+
+
+def test_as_number_en_dash_minus():
+    """An en dash, a minus sign, and an ASCII hyphen all mean negative."""
+    assert as_number("–2.52") == -2.52   # en dash, U+2013
+    assert as_number("−2.45") == -2.45   # minus sign, U+2212
+    assert as_number("-2.45") == -2.45        # ASCII hyphen
+
+
+def test_as_number_leading_trailing_control_character():
+    """A control character at either end often stands in for a damaged
+    minus sign. The sign is then unknown, so the magnitude is returned.
+    """
+    assert as_number("\x012.08") == 2.08
+    assert as_number("\x030.53") == 0.53
+    assert as_number("\x02.07") == 0.07
+    assert as_number("2.08\x01") == 2.08
+    assert as_number("\x012.08\x02") == 2.08
+
+
+def test_as_number_control_character_mid_string_stays_unparsed():
+    """A control character in the middle of a number is not covered: only a
+    leading or trailing one is a known stand-in for a damaged sign.
+    """
+    assert as_number("0\x0592") is None
