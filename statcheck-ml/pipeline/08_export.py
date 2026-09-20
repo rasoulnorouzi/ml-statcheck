@@ -39,6 +39,7 @@ from statcheck_ml.export import load as load_checkpoint
 from statcheck_ml.labels import ID_TO_TAG, tags_to_spans
 from statcheck_ml.train import make_batches
 from statcheck_ml.train import score as span_score
+from statcheck_ml.weights import write_weights
 
 
 def resolve(p: str) -> Path:
@@ -233,6 +234,11 @@ def main():
         dest.mkdir(parents=True, exist_ok=True)
         for fname in ("tagger.onnx", "decoder.json", "charmap.json", "export_report.json"):
             shutil.copy2(run_dir / fname, dest / fname)
+        # weights.json is not copied like the four files above: it is not
+        # produced by export_model, so it is built fresh from the checkpoint
+        # straight into the zoo directory. The R port reads this file; the
+        # other three ports read the ones copied above.
+        write_weights(str(run_dir / "model.pt"), str(dest / "weights.json"))
         by_name[record["name"]]["in_zoo"] = True
         print(f"zoo: {record['config']} <- {record['name']}")
 
