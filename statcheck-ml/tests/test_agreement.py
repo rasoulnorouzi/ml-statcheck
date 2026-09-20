@@ -1,5 +1,7 @@
 import math
 
+import pytest
+
 from statcheck_ml.agreement import (cohen_kappa, fleiss_kappa, krippendorff_alpha,
                                     match_results, pairwise_f1, bootstrap_ci)
 
@@ -20,6 +22,7 @@ def test_fleiss_kappa_wikipedia():
 
 
 def test_krippendorff_perfect_and_two_rater_matches_cohen_direction():
+    pytest.importorskip("krippendorff")  # only in the `agreement` extra, not `test`
     a = ["y", "n", "y", "n", "y", "n", "y", "y", "n", "n"]
     assert math.isclose(krippendorff_alpha([a, a]), 1.0, abs_tol=1e-9)
     b = ["y", "n", "n", "n", "y", "y", "y", "y", "n", "n"]

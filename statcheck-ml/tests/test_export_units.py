@@ -6,7 +6,8 @@ No test had run export() on a recurrent checkpoint under the pinned torch, so
 this one runs all three units, with and without a CRF, at a tiny size.
 """
 import pytest
-import torch
+
+torch = pytest.importorskip("torch")  # only in the `train` extra, not `test`
 
 from statcheck_ml.export import export
 from statcheck_ml.labels import TAG_TO_ID

@@ -1,0 +1,116 @@
+name: Python package
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install statcheck-ml
+        run: pip install "./statcheck-ml[pdf,test]"
+
+      - name: Run the unit tests
+        working-directory: statcheck-ml
+        run: pytest tests -q -p no:warnings
+
+      - name: Generate the sample PDF
+        working-directory: statcheck-ml
+        run: python examples/make_sample_paper.py
+
+      - name: Check the damaged sample with the CLI
+        working-directory: statcheck-ml
+        run: statcheck-ml check examples/sample_paper_damaged.pdf --json > out.json
+
+      - name: Assert the CLI found results
+        working-directory: statcheck-ml
+        run: python -c "import json; assert len(json.load(open('out.json', encoding='utf-8'))['results']) > 0"
+
+  wheel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install build tools
+        run: pip install build twine
+
+      - name: Build the sdist and the wheel
+        working-directory: statcheck-ml
+        run: python -m build
+
+      - name: Check the distribution
+        working-directory: statcheck-ml
+        run: twine check dist/*
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: statcheck-ml/dist/*
+
+      - name: Install the wheel into a fresh venv
+        run: |
+          python -m venv wheel-venv
+          wheel-venv/bin/pip install --upgrade pip
+          wheel-venv/bin/pip install statcheck-ml/dist/*.whl
+          wheel-venv/bin/pip install pymupdf
+
+      - name: Generate the sample PDF
+        run: wheel-venv/bin/python statcheck-ml/examples/make_sample_paper.py
+
+      - name: Check the damaged sample with the installed CLI, from the repo root
+        run: wheel-venv/bin/statcheck-ml check statcheck-ml/examples/sample_paper_damaged.pdf --json > out.json
+
+      - name: Assert the CLI found results
+        run: wheel-venv/bin/python -c "import json; assert len(json.load(open('out.json', encoding='utf-8'))['results']) > 0"
+
+  from-git:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install statcheck-ml from the git address the README gives
+        run: pip install "git+https://github.com/${{ github.repository }}.git@${{ github.sha }}#subdirectory=statcheck-ml"
+
+      - name: Install pymupdf
+        run: pip install pymupdf
+
+      - name: Generate the sample PDF
+        run: python statcheck-ml/examples/make_sample_paper.py
+
+      - name: Check the damaged sample with the installed CLI, from the repo root
+        run: statcheck-ml check statcheck-ml/examples/sample_paper_damaged.pdf --json > out.json
+
+      - name: Assert the CLI found results
+        run: python -c "import json; assert len(json.load(open('out.json', encoding='utf-8'))['results']) > 0"

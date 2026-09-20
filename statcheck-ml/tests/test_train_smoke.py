@@ -8,6 +8,10 @@ for one epoch, in a few seconds.
 import json
 from pathlib import Path
 
+import pytest
+
+pytest.importorskip("torch")  # only in the `train` extra, not `test`
+
 from statcheck_ml.data import load_jsonl
 from statcheck_ml.splits import make_splits
 from statcheck_ml.train import train

@@ -6,9 +6,20 @@ build-backend = "setuptools.build_meta"
 name = "statcheck-ml"
 version = "2.0.0"
 description = "Find reported statistical results with a learned model, then check them with exact mathematics."
-license = { text = "GPL-3.0-or-later" }
-requires-python = ">=3.9"
+readme = "README.md"
+license = "GPL-3.0-or-later"
+requires-python = ">=3.10"
 dependencies = ["numpy>=1.24", "scipy>=1.10", "onnxruntime>=1.17"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+[project.urls]
+Repository = "https://github.com/rasoulnorouzi/ml-statcheck"
 
 [project.optional-dependencies]
 pdf = ["pymupdf>=1.24"]

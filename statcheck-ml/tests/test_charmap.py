@@ -47,6 +47,8 @@ def test_check_charmaps_consistent_accepts_equal_and_rejects_different(tmp_path)
     import importlib.util
     import pytest
 
+    pytest.importorskip("torch")  # pipeline/08_export.py needs the `train` extra
+
     spec = importlib.util.spec_from_file_location(
         "export_stage", Path(__file__).resolve().parents[1] / "pipeline" / "08_export.py")
     stage = importlib.util.module_from_spec(spec)

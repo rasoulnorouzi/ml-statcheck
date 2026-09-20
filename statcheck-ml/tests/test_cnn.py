@@ -1,4 +1,7 @@
-import torch
+import pytest
+
+torch = pytest.importorskip("torch")  # only in the `train` extra, not `test`
+
 from statcheck_ml.model import make_model
 
 

@@ -22,7 +22,8 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-import torch
+
+torch = pytest.importorskip("torch")  # only in the `train` extra, not `test`
 
 from statcheck_ml.data import apply_splits, load_jsonl, load_splits, row_to_example
 from statcheck_ml.export import load as load_checkpoint

@@ -79,6 +79,10 @@ def main(argv: Optional[List[str]] = None) -> int:
     check.add_argument("--engine", default="pymupdf", choices=list(Pipeline.ENGINES),
                         help="the PDF engine to use (default: pymupdf)")
     args = parser.parse_args(argv)
+    # A Windows console defaults to its code page; a chi-square sign in a
+    # result line would end the run with an encoding error.
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
 
     path = Path(args.file)
     if not path.exists():

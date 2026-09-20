@@ -1,0 +1,9 @@
+include pyproject.toml
+include README.md
+
+# Corpus, derived data, results, and the test suite do not ship in the sdist.
+prune models
+prune dataset
+prune results
+prune data
+prune tests

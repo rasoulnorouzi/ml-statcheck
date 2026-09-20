@@ -1,5 +1,7 @@
 # statcheck-ml
 
+![Python package](https://github.com/rasoulnorouzi/ml-statcheck/actions/workflows/python.yml/badge.svg)
+
 A machine-learned replacement for the extraction step of the R package
 [`statcheck`](https://github.com/MicheleNuijten/statcheck).
 
@@ -123,6 +125,10 @@ node --version                             # Node 24, for the browser port and t
 
 `reproduce.sh` looks for `../.venv/Scripts/python.exe`; on Linux or macOS run it
 as `PY=../.venv/bin/python bash reproduce.sh`.
+
+On Windows, `onnxruntime`'s own files can exceed 260 characters under a deep
+venv path. Enable long paths, or create the venv at a short path. A fresh-venv
+check hit this limit at a 150-character prefix.
 
 Not in the repository, on purpose:
 
