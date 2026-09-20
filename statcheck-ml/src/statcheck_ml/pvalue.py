@@ -124,6 +124,10 @@ def compute_p(test_type: str, statistic: float,
     t = (test_type or "").strip().lower()
     if statistic is None:
         return None
+    # scipy returns nan, not an error, for a non-positive degree of freedom,
+    # and nan would then pass through the comparison as a number.
+    if (df1 is not None and df1 <= 0) or (df2 is not None and df2 <= 0):
+        return None
 
     try:
         if t == "t":
@@ -159,7 +163,7 @@ def compute_p(test_type: str, statistic: float,
 
     if one_tailed:
         p = p / 2
-    return float(p)
+    return None if p != p else float(p)     # nan never leaves this function
 
 
 def _decimals(text: str) -> int:

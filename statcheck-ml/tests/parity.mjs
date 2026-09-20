@@ -21,7 +21,7 @@ const spec = JSON.parse(fs.readFileSync(
 const charmap = JSON.parse(fs.readFileSync(
   path.join(root, 'src', 'statcheck_ml', 'spec', 'charmap.json'), 'utf8'));
 const cases = JSON.parse(fs.readFileSync(
-  path.join(here, 'parity_cases.json'), 'utf8'));
+  path.join(here, 'parity_cases.json'), 'utf8')).sections.normalise;
 
 const { normalize, reflow } = createNormalizer(spec, charmap);
 

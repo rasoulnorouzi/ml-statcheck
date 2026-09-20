@@ -18,7 +18,7 @@ source(file.path(root, "r", "normalize.R"))
 spec <- load_normalize_spec(file.path(root, "src", "statcheck_ml", "spec",
                                       "normalize.json"))
 cases <- jsonlite::fromJSON(file.path(here, "parity_cases.json"),
-                            simplifyDataFrame = FALSE)
+                            simplifyVector = FALSE)$sections$normalise
 
 first_difference <- function(a, b) {
   ca <- strsplit(a, "")[[1]]
