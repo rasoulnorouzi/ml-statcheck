@@ -4,5 +4,5 @@
  "jsonlite_version": "2.0.0",
  "repair_spec_sha256": "5d781a770f9b3171147dbbf838f9b532177d4ad61f1380cf53cbc76723aeb3f4",
  "repair_function": "statcheck_ml.repair_validated.repair_validated",
- "command": "C:\\Users\\norouzin\\Downloads\\Projects\\practice_claude\\.venv\\Scripts\\python.exe C:\\Users\\norouzin\\Downloads\\Projects\\practice_claude\\statcheck-ml\\pipeline\\12_baseline.py --windows dataset\\windows\\holdout.json --out-dir dataset\\baseline --rscript C:/Users/norouzin/AppData/Local/Programs/R/R-4.6.1/bin/Rscript.exe"
+ "command": "python pipeline/12_baseline.py --windows dataset/windows/holdout.json --out-dir dataset/baseline --rscript <Rscript>"
 }

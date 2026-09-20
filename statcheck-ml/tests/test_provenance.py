@@ -204,3 +204,15 @@ def test_validate_batch_valid_v2():
 
     errors = validate_batch(batch, output)
     assert errors == [], f"Validation errors: {errors}"
+
+
+def test_sha256_of_text_ignores_line_endings(tmp_path):
+    from statcheck_ml.provenance import sha256_file
+    lf, crlf = tmp_path / "a.json", tmp_path / "b.json"
+    lf.write_bytes(b'{"a": 1}\n{"b": 2}\n')
+    crlf.write_bytes(b'{"a": 1}\r\n{"b": 2}\r\n')
+    assert sha256_file(lf) == sha256_file(crlf)
+    # a binary file is hashed as it is
+    x, y = tmp_path / "a.onnx", tmp_path / "b.onnx"
+    x.write_bytes(b'\x00\n'); y.write_bytes(b'\x00\r\n')
+    assert sha256_file(x) != sha256_file(y)

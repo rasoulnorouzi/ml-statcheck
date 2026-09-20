@@ -6,12 +6,24 @@ from pathlib import Path
 from typing import Optional
 
 
+TEXT_SUFFIXES = {'.json', '.jsonl', '.csv', '.txt', '.md'}
+
+
 def sha256_file(path) -> str:
-    """Return the SHA256 hash of a file."""
+    """Return the SHA256 hash of a file.
+
+    A text file is hashed with its line endings folded to LF, so the hash is
+    the same whether git checked the file out on Windows (CRLF) or on Linux
+    (LF), and whether a stage rewrote it on either platform. A binary file is
+    hashed as it is.
+    """
     h = hashlib.sha256()
     with open(path, 'rb') as f:
-        for chunk in iter(lambda: f.read(4096), b''):
-            h.update(chunk)
+        if Path(path).suffix.lower() in TEXT_SUFFIXES:
+            h.update(f.read().replace(b'\r\n', b'\n'))
+        else:
+            for chunk in iter(lambda: f.read(4096), b''):
+                h.update(chunk)
     return h.hexdigest()
 
 

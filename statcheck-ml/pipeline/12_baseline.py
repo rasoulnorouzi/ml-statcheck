@@ -104,10 +104,11 @@ def main():
     versions = r_versions(args.rscript)
     versions["repair_spec_sha256"] = sha256_of(REPAIR_SPEC)
     versions["repair_function"] = "statcheck_ml.repair_validated.repair_validated"
+    # Paths relative to the project, so the record carries no machine name.
     versions["command"] = " ".join([
-        sys.executable, str(Path(__file__).resolve()),
-        "--windows", str(windows_path), "--out-dir", str(out_dir),
-        "--rscript", args.rscript,
+        "python", "pipeline/12_baseline.py",
+        "--windows", args.windows, "--out-dir", args.out_dir,
+        "--rscript", "<Rscript>",
     ])
     versions_path = out_dir / "versions.json"
     versions_path.write_text(json.dumps(versions, indent=1), encoding="utf-8")

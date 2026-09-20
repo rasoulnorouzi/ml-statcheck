@@ -1,0 +1,8 @@
+# Text files are stored with LF and checked out in the platform's line ending.
+* text=auto
+# Binary artefacts: never converted.
+*.onnx binary
+*.pt binary
+*.png binary
+*.pdf binary
+*.zip binary

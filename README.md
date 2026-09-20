@@ -110,6 +110,39 @@ recommended. Size and latency are reported, not constrained.
 
 ---
 
+## Set up on a new machine
+
+```
+git clone https://github.com/rasoulnorouzi/ml-statcheck.git
+cd ml-statcheck
+python -m venv .venv                       # Python 3.12
+.venv/Scripts/pip install -r statcheck-ml/requirements.txt   # Linux, macOS: .venv/bin/pip
+Rscript -e 'install.packages(c("statcheck", "jsonlite"))'    # R 4.6, for the baseline and the R port
+node --version                             # Node 24, for the browser port and the parity suite
+```
+
+`reproduce.sh` looks for `../.venv/Scripts/python.exe`; on Linux or macOS run it
+as `PY=../.venv/bin/python bash reproduce.sh`.
+
+Not in the repository, on purpose:
+
+| Item | Why | Where it comes from |
+|---|---|---|
+| the article corpus (`02_pdfs.zip`, `statcheck-ml/data/`) | copyright | the owner |
+| the torch checkpoints (`models/*/model.pt`) | 2 MB each and not needed: every run's ONNX is committed | `reproduce.sh --train` |
+| the training logs | `report.json` holds the same numbers | `reproduce.sh --train` |
+| the raw rater outputs (`data/annotation/`) | the collected, stamped files in `dataset/annotations/` are the record | `docs/PROTOCOL.md` |
+| the example PDFs | generated | `python examples/make_sample_paper.py` |
+
+Everything the report needs is committed, so `bash reproduce.sh` works without
+the corpus. Only stages 00 to 03 and the engine gate need it.
+
+The `.claude/` directory is committed too: the agent charters, the hooks and the
+permission rules. A clone opened in Claude Code starts with the same team.
+`CLAUDE.md` tells an agent to read `PLAN.md` and `CONTEXT.md` first.
+
+---
+
 ## Reproduce
 
 ```
