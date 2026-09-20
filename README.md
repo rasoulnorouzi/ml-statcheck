@@ -233,17 +233,15 @@ python pipeline/12_engines.py <pdf_dir> <key.json> <labels.json> --text-dir <dir
 
 Install the command line tool. The package ships its own model, so no
 checkout is needed. A PyPI release comes later; install from the repository
-until then. **This repository is private**, so `pip` needs a credential: a
-`gh auth login` or a personal access token with `repo` scope, or SSH.
+until then.
 
 ```
-pip install "git+https://github.com/rasoulnorouzi/ml-statcheck.git#subdirectory=statcheck-ml"
-pip install "git+ssh://git@github.com/rasoulnorouzi/ml-statcheck.git#subdirectory=statcheck-ml"
+pip install "statcheck-ml[pdf] @ git+https://github.com/rasoulnorouzi/ml-statcheck.git#subdirectory=statcheck-ml"
 statcheck-ml check paper.pdf
 ```
 
-Add `[pdf]` for PDF input: `pip install "statcheck-ml[pdf] @ git+https://..."`.
-When the repository becomes public, the first line works with no credential.
+The `[pdf]` extra adds PyMuPDF, which reads the PDF. Without it the tool
+still checks a `.txt` file.
 
 Call the same pipeline from Python code:
 
