@@ -25,6 +25,7 @@ with a manifest of hashes.
 | 12 | `12_baseline.py` | holdout windows | `dataset/baseline/*.csv` | R, statcheck |
 | 12 | `12_engines.py` | PDFs, text from every engine | `results/engines.json` | corpus |
 | 12 | `12_regex_parity.py` | windows, baseline CSV | parity of the Python port of the regex | — |
+| 13 | `13_ports.py` | the two port repositories under `ports/` | `results/ports.json` | R, node |
 
 Rules that every stage follows:
 

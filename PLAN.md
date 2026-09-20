@@ -166,16 +166,16 @@ accepts on evidence.
 | A | A4 | Python package: console script, packaged model, ONNX-only install | runtime-engineer | sonnet | done |
 | A | A5 | Layout, CONTEXT, PLAN, CLAUDE | manager | fable | done |
 | A | A6 | Python package proof: wheel, twine, CI matrix on three OS × four Pythons, install from the repository address | runtime-engineer | sonnet | done |
-| B | B1 | R package skeleton, kit, normalise, extract | runtime-engineer | sonnet | active |
-| B | B2 | R model forward pass and Viterbi | stats-core | opus | blocked on B1 |
-| B | B3 | R prefilter, repair, grouping, p-value, pipeline | runtime-engineer | sonnet | blocked on B2 |
-| B | B4 | R PDF input, docs, CI | runtime-engineer, doc-writer | sonnet, haiku | blocked on B3 |
-| C | C1 | Web package skeleton, kit, normalise, extract | runtime-engineer | sonnet | active |
-| C | C2 | Web p-value core | stats-core | opus | blocked on C1 |
-| C | C3 | Web model, grouping, prefilter, repair, pipeline | runtime-engineer | sonnet | blocked on C2 |
-| C | C4 | Web PDF.js, demo page, Pages, docs | runtime-engineer, doc-writer | sonnet, haiku | blocked on C3 |
-| D | D1 | Retire the copies in the mother repository | manager | fable | blocked on B4, C4 |
-| D | D2 | Report section on the ports, reproduction check | manager | fable | blocked on D1 |
+| B | B1 | R package skeleton, kit, normalise, extract | runtime-engineer | sonnet | done |
+| B | B2 | R model forward pass and Viterbi | stats-core | opus | done |
+| B | B3 | R prefilter, repair, grouping, p-value, pipeline | runtime-engineer | sonnet | done |
+| B | B4 | R PDF input, docs, CI | runtime-engineer, doc-writer | sonnet, haiku | done |
+| C | C1 | Web package skeleton, kit, normalise, extract | runtime-engineer | sonnet | done |
+| C | C2 | Web p-value core | stats-core | opus | done |
+| C | C3 | Web model, grouping, prefilter, repair, pipeline | runtime-engineer | sonnet | done |
+| C | C4 | Web PDF.js, demo page, Pages, docs | runtime-engineer, doc-writer | sonnet, haiku | done |
+| D | D1 | Retire the copies in the mother repository | manager | fable | done |
+| D | D2 | Report section on the ports, reproduction check | manager | fable | done |
 | D | D3 | Push the port repositories, CI green | manager | fable | blocked on the owner |
 | D | D4 | Tutorials for Python, R and the web, from executed examples | runtime-engineer | sonnet | blocked on B4, C4, A6 |
 

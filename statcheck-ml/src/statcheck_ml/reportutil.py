@@ -383,6 +383,25 @@ def paired_tests(paired: Optional[dict], mcnemar: Optional[dict]) -> str:
     return md_table(headers, body)
 
 
+def ports_table(ports: Optional[dict]) -> str:
+    """results/ports.json: each port's own test suite and one timed sample."""
+    if not ports:
+        return note("results/ports.json not found; run pipeline/13_ports.py (needs R and node)")
+    labels = {"python": "Python", "r": "R", "web": "Web"}
+    headers = ["Port", "PDF engine", "Tests passed", "Tests failed", "Kit from commit",
+               "Sample PDF, s", "Results", "100 windows, s"]
+    body = []
+    for key in ("python", "r", "web"):
+        p = ports["ports"].get(key)
+        if not p:
+            continue
+        commit = p["kit_mother_commit"][:7] if p.get("kit_mother_commit") else "-"
+        body.append([labels[key], p["engine"], str(p["tests_passed"]), str(p["tests_failed"]),
+                     commit, _f(p["seconds_sample_pdf"], 2), str(p["sample_results"]),
+                     _f(p["seconds_100_windows"], 2)])
+    return md_table(headers, body)
+
+
 def zoo(records: Optional[Sequence[dict]]) -> str:
     """records: models/export.json"""
     if not records:

@@ -1,0 +1,42 @@
+{
+ "parity_sections": {
+  "extract": 32,
+  "group": 32,
+  "model": 32,
+  "model_logits": 3,
+  "normalise": 20,
+  "pipeline": 4,
+  "prefilter": 4,
+  "pvalue": 64,
+  "repair": 32
+ },
+ "ports": {
+  "python": {
+   "engine": "pymupdf",
+   "sample_results": 5,
+   "seconds_100_windows": 0.83,
+   "seconds_sample_pdf": 0.058,
+   "tests_failed": 0,
+   "tests_passed": 226
+  },
+  "r": {
+   "engine": "pdftools (poppler)",
+   "kit_mother_commit": "b71a9f92304cb99144279a852b7c815471be0168",
+   "sample_results": 5,
+   "seconds_100_windows": 7.49,
+   "seconds_sample_pdf": 0.61,
+   "tests_failed": 0,
+   "tests_passed": 1057
+  },
+  "web": {
+   "engine": "pdf.js",
+   "kit_mother_commit": "b71a9f92304cb99144279a852b7c815471be0168",
+   "sample_results": 5,
+   "seconds_100_windows": 1.01,
+   "seconds_sample_pdf": 0.09,
+   "tests_failed": 0,
+   "tests_passed": 309
+  }
+ },
+ "sample_pdf": "sample_paper_damaged.pdf"
+}

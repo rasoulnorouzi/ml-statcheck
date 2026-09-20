@@ -351,6 +351,15 @@ def build_values(dataset_dir: Path, agreement: dict, runs, export, engines, eval
     values["divergent_runs"] = "; ".join(divergent) if divergent else "none"
     values["n_divergent"] = len(divergent)
 
+    cases = REPO / "tests" / "parity_cases.json"
+    sections = json.loads(cases.read_text(encoding="utf-8"))["sections"] if cases.exists() else {}
+    values["n_parity_sections"] = len(sections)
+    values["n_parity_cases"] = sum(len(v) for v in sections.values())
+    values["n_parity_pvalue"] = len(sections.get("pvalue", []))
+    values["n_parity_model"] = len(sections.get("model", []))
+    values["logit_tolerance"] = (json.loads(cases.read_text(encoding="utf-8")).get("logit_tolerance")
+                                 if cases.exists() else None)
+
     return values
 
 
@@ -367,6 +376,7 @@ def main():
     ap.add_argument("--engines", default="results/engines.json")
     ap.add_argument("--dataset", default="dataset")
     ap.add_argument("--out", default="results/REPORT.md")
+    ap.add_argument("--ports", default="results/ports.json")
     ap.add_argument("--readme-block", default=None)
     args = ap.parse_args()
 
@@ -374,6 +384,7 @@ def main():
     agreement_dir = resolve(args.agreement)
 
     eval_data = read_json(resolve(args.eval))
+    ports = read_json(resolve(args.ports)) if resolve(args.ports).exists() else None
     runs = read_json(resolve(args.runs))
     export = read_json(resolve(args.export))
     engines = read_json(resolve(args.engines))
@@ -397,6 +408,7 @@ def main():
         "systems_overall": lambda: ru.systems_overall((eval_data or {}).get("systems")),
         "systems_damaged": lambda: ru.systems_damaged((eval_data or {}).get("systems")),
         "family_recall": lambda: ru.family_recall_table((eval_data or {}).get("family_recall")),
+        "ports": lambda: ru.ports_table(ports),
         "paired_tests": lambda: ru.paired_tests((eval_data or {}).get("paired"),
                                                 (eval_data or {}).get("mcnemar")),
         "zoo": lambda: ru.zoo(export),

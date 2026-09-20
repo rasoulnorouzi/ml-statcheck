@@ -331,3 +331,37 @@ in `docs/PROTOCOL.md`. `dataset/MANIFEST.json` holds the sha256 of every dataset
 export. A run of `reproduce.sh` on a clean checkout must give the same bytes for every figure,
 and the same bytes for `results/eval.json` and this file apart from the commit id and
 its date, which name the checkout the run was made from.
+
+## 12 Ports
+
+The extraction runs in three languages. Python is the reference, in this repository.
+R (`statcheck-ml-r`) and the browser (`statcheck-ml-web`) live in their own
+repositories and read one kit that this repository writes: the five spec files, the
+shipped model, the parity cases, and a manifest with a hash per file that the port
+verifies when it loads. A port never restates a rule.
+
+Parity is one file, {{n_parity_cases|int}} cases in {{n_parity_sections|int}} sections,
+one per stage: normalise, repair, prefilter, extract, model tags, model logits,
+grouping, p-value ({{n_parity_pvalue|int}} rows), and the whole pipeline on four
+documents. The Python reference produces every expected value; each port reproduces
+them in its own test suite. R runs the model in pure R from the raw weights, batched
+over the windows of a document; the browser runs the ONNX graph through
+onnxruntime-web. Both must match the Python logits within {{logit_tolerance}} with
+every tag equal; the parity file states the bound. The p-value core in JavaScript is
+an own implementation of the incomplete beta and gamma functions, tested against
+SciPy values stored with the test; R uses `pt`, `pf`, `pchisq` and `pnorm`.
+
+Writing the ports found two faults in the reference and two in the ports, each now a
+parity case: a chi-square with zero degrees of freedom gave NaN and a verdict instead
+of `undecidable`; a Greek chi with a space on each side escaped the regex in
+JavaScript and in PCRE, whose word boundary is ASCII-only; and the reference's own
+rounding of a p-value text differs between Python's `repr` and JavaScript's number
+formatting, which the port now reproduces exactly.
+
+{{table:ports}}
+
+Both timings are the second of two runs on one machine with the model loaded and
+one thread: the damaged sample PDF end to end, and one hundred windows of three
+hundred characters through the model alone. The model is where a port spends its
+time; the R port pays for running it in interpreted matrix code, and a long article
+with hundreds of windows costs it under a minute.
