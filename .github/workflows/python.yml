@@ -100,8 +100,10 @@ jobs:
           python-version: "3.12"
           cache: pip
 
+      # The repository is private: the runner clones with the job token. A
+      # reader with access uses the plain address the README gives.
       - name: Install statcheck-ml from the git address the README gives
-        run: pip install "git+https://github.com/${{ github.repository }}.git@${{ github.sha }}#subdirectory=statcheck-ml"
+        run: pip install "git+https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git@${{ github.sha }}#subdirectory=statcheck-ml"
 
       - name: Install pymupdf
         run: pip install pymupdf
