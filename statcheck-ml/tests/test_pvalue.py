@@ -74,3 +74,16 @@ def test_operators_use_the_interval():
     # p < .05 claimed where the statistic gives .38 flips the conclusion.
     res = Result(test_type="t", statistic=0.88, df1=90, p_operator="<", p_value=0.05)
     assert check(res, reported_p_text=".05", statistic_text="0.88").verdict == DECISION_ERROR
+
+
+def test_damaged_statistic_text_is_ignored():
+    # A model span can hand over the damaged characters it read. The text is
+    # used only when it reads back as the same number.
+    res = Result(test_type="t", statistic=1.48, df1=67, p_operator="=", p_value=0.143)
+    good = check(res, reported_p_text=".143", statistic_text="1.48").verdict
+    junk = check(res, reported_p_text=".143", statistic_text="1\x0348").verdict
+    assert good == junk == CONSISTENT
+    # And a text that says more decimals than the number has is not trusted
+    # either, because it cannot be what was printed.
+    res = Result(test_type="t", statistic=1.48, df1=67, p_operator="=", p_value=0.143)
+    assert check(res, reported_p_text=".143", statistic_text="1.4899").verdict == CONSISTENT

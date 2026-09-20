@@ -181,8 +181,16 @@ def rounding_interval(result: "Result", statistic_text=None):
     must do the same or it calls a correctly reported result an error.
     Returns (low_p, up_p), or (None, None) when no p can be computed.
     """
-    decimals = _decimals(statistic_text if statistic_text is not None
-                         else repr(float(result.statistic)))
+    # The text is trusted only when it reads back as the number it should be.
+    # A model span of damaged text, `245` for 2.45, has no decimal point
+    # and would otherwise open the interval to plus or minus a half.
+    printed = statistic_text
+    try:
+        if printed is None or float(printed) != float(result.statistic):
+            printed = repr(float(result.statistic))
+    except (TypeError, ValueError):
+        printed = repr(float(result.statistic))
+    decimals = _decimals(printed)
     half = 0.5 / (10 ** decimals)
     statistic = float(result.statistic)
     # The end nearer zero implies the larger p-value, so a negative statistic

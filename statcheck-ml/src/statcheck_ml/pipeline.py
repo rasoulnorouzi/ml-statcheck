@@ -53,6 +53,12 @@ class Found:
     df2: Optional[float] = None
     p_operator: Optional[str] = None
     p_value: Optional[float] = None
+    #: The statistic and the p-value exactly as the paper printed them. The
+    #: comparison allows for the rounding of both, and the decimals live in
+    #: the text: a statistic printed 5.10 leaves a tenth of the room one
+    #: printed 5.1 does.
+    statistic_text: Optional[str] = None
+    p_text: Optional[str] = None
     quote: str = ""
     source: str = "model"          # "pattern" or "model"
     line: int = -1
@@ -201,6 +207,7 @@ class Pipeline:
                 test_type=e.test_type, statistic=_num(e.statistic),
                 df1=_num(e.df1), df2=_num(e.df2),
                 p_operator=e.p_operator, p_value=_num(e.p_value),
+                statistic_text=e.statistic, p_text=e.p_value,
                 quote=e.raw, source="pattern", line=line))
         return out
 
@@ -255,6 +262,8 @@ class Pipeline:
                 df2=_num(g.get("DF2", ("",))[0]),
                 p_operator=operator,
                 p_value=_num(g.get("PVAL", ("",))[0]),
+                statistic_text=g.get("STAT", ("",))[0] or None,
+                p_text=g.get("PVAL", ("",))[0] or None,
                 quote=text[min(spans):max(ends)] if spans else "",
                 source="model", line=line))
         return out
@@ -265,8 +274,11 @@ class Pipeline:
         result = Result(test_type=found.test_type, statistic=found.statistic,
                         df1=found.df1, df2=found.df2,
                         p_operator=found.p_operator, p_value=found.p_value)
-        p_text = None if found.p_value is None else f"{found.p_value}"
-        outcome: Check = check(result, alpha=self.alpha, reported_p_text=p_text)
+        p_text = found.p_text
+        if p_text is None and found.p_value is not None:
+            p_text = f"{found.p_value}"
+        outcome: Check = check(result, alpha=self.alpha, reported_p_text=p_text,
+                               statistic_text=found.statistic_text)
         found.verdict = outcome.verdict
         found.computed_p = outcome.computed_p
         found.reason = outcome.reason
