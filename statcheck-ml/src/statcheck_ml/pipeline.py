@@ -27,8 +27,13 @@ Every stage records what it did, so a result can be traced back to the page
 and the character it came from.
 
 Usage:
-    from statcheck_ml.pipeline import Pipeline
-    report = Pipeline(model_path="models/zoo/gru-crf").run_pdf("paper.pdf")
+    from statcheck_ml import Pipeline
+    report = Pipeline().run_pdf("paper.pdf")
+
+The model is the one packaged with the install, so no path is needed and no
+checkout is needed. A checkout that compares configurations names a zoo
+directory instead, such as "models/zoo/gru-softmax". `model_path=None` loads
+no model at all, which is how the pattern-only baseline is measured.
 """
 from __future__ import annotations
 
@@ -72,6 +77,26 @@ class Found:
     missing: tuple = ()
 
 
+def bundled_model_path() -> Path:
+    """The zoo directory packaged inside this install.
+
+    `pipeline/08_export.py --update-spec` puts the recommended config there,
+    so an install carries exactly one model and needs no checkout to find it.
+    """
+    zoo = Path(__file__).parent / "zoo"
+    configs = sorted(d for d in zoo.iterdir()
+                     if (d / "tagger.onnx").exists()) if zoo.is_dir() else []
+    if len(configs) != 1:
+        raise FileNotFoundError(
+            f"expected one packaged model under {zoo}, found {len(configs)}")
+    return configs[0]
+
+
+#: `model_path` was not given. The packaged model is then used. An explicit
+#: None still loads no model, so the pattern-only baseline stays reachable.
+_BUNDLED = "<bundled>"
+
+
 def _num(text):
     if text in (None, ""):
         return None
@@ -87,9 +112,13 @@ def _num(text):
 
 
 class Pipeline:
-    """Read a document and check every statistical result in it."""
+    """Read a document and check every statistical result in it.
 
-    def __init__(self, model_path: Optional[str] = None, use_crf: bool = False,
+    `Pipeline()` uses the model packaged with the install. Pass `model_path`
+    to name another one, or None to run the pattern alone.
+    """
+
+    def __init__(self, model_path=_BUNDLED, use_crf: bool = False,
                  repair_text: bool = True, use_pattern: bool = True,
                  alpha: float = 0.05, engine: str = "pymupdf",
                  normalize_text: bool = True):
@@ -102,14 +131,26 @@ class Pipeline:
         self.model = None
         self.tagger = None
         self.vocab = None
+        #: Which model actually loaded. The caller asks for it by a path that
+        #: may be left out, so the answer is worth keeping.
+        self.model_path = None
         self.use_crf = use_crf
+        if model_path is _BUNDLED:
+            model_path = bundled_model_path()
         if model_path:
-            self._load_model(model_path)
+            self._load_model(str(model_path))
 
     def _load_model(self, path: str):
         # A zoo directory (tagger.onnx, decoder.json, charmap.json) is what a
         # clean checkout holds; the torch checkpoint is for the training side.
         p = Path(path)
+        if not p.exists():
+            raise FileNotFoundError(
+                f"no model at {path!r}. A relative path such as "
+                f"'models/zoo/gru-crf' resolves only inside a checkout of the "
+                f"repository. Pipeline() with no model_path uses the model "
+                f"packaged with this install")
+        self.model_path = str(p)
         run_dir = p if p.is_dir() else (p.parent if p.suffix == ".onnx" else None)
         if run_dir is not None:
             from .onnx_runtime import OnnxTagger

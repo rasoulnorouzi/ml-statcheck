@@ -13,7 +13,7 @@ be measured, and it is never used as a fallback for the model.
 """
 
 from .normalize import canonicalise, normalize, reflow
-from .pipeline import Found, Pipeline, summarise
+from .pipeline import Found, Pipeline, bundled_model_path, summarise
 from .prefilter import Prefilter, Window
 from .pvalue import (Result, Check, compute_p, check,
                      CONSISTENT, INCONSISTENT, DECISION_ERROR, UNDECIDABLE)
@@ -23,6 +23,8 @@ __version__ = "2.0.0"
 __all__ = [
     # The whole pipeline: a PDF goes in, checked results come out.
     "Pipeline", "Found", "summarise",
+    # The model the install carries, for a caller with no checkout.
+    "bundled_model_path",
     # The stages, for a caller that wants one of them alone.
     "normalize", "reflow", "canonicalise",
     "Prefilter", "Window",

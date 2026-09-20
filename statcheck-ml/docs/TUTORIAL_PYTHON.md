@@ -177,6 +177,7 @@ from statcheck_ml.repair_validated import repair_validated
 from statcheck_ml.prefilter import Prefilter
 from statcheck_ml.extract import extract
 from statcheck_ml.onnx_runtime import OnnxTagger
+from statcheck_ml import bundled_model_path
 from statcheck_ml.pvalue import Result, check
 
 text = "F(1, 40) \x02 6.20, p = .016"   # \x02 stands where "=" belongs
@@ -185,7 +186,7 @@ normalized, norm_info = normalize(text)
 repaired, repair_info = repair_validated(normalized)
 windows = list(Prefilter().windows(repaired))
 matches = extract(repaired)
-tags = OnnxTagger("models/zoo/gru-crf").tag_text(repaired)
+tags = OnnxTagger(bundled_model_path()).tag_text(repaired)
 outcome = check(Result(test_type="f", statistic=6.20, df1=1, df2=40,
                        p_operator="=", p_value=0.016),
                 reported_p_text=".016")
@@ -250,9 +251,9 @@ not consume a kit; it is the repository the kit is built from, so it reads
 ## 5. The API
 
 ```python
-from statcheck_ml.pipeline import Pipeline, summarise
+from statcheck_ml import Pipeline, summarise
 
-pipeline = Pipeline(model_path="models/zoo/gru-crf")
+pipeline = Pipeline()          # the model packaged with the install
 report = pipeline.run_pdf("examples/sample_paper.pdf")
 print(summarise(report))
 ```
@@ -270,7 +271,7 @@ examples/sample_paper.pdf
 
 | Argument | Default | What it changes |
 |---|---|---|
-| `model_path` | `None` | A zoo directory, an `.onnx` file, or a raw `.pt` checkpoint. `None` skips the model stage; only the pattern runs. |
+| `model_path` | the packaged model | A zoo directory, an `.onnx` file, or a raw `.pt` checkpoint. Left out, it is the model packaged with the install, which needs no checkout. `None` skips the model stage; only the pattern runs. |
 | `use_crf` | `False` | Ignored for an ONNX zoo directory — `OnnxTagger` reads it from `decoder.json`. Matters only for a raw torch checkpoint. |
 | `repair_text` | `True` | Runs the arithmetic-validated repair (stage 3) first. `False` leaves damaged operators as-is, so only the model can read a damaged result. |
 | `use_pattern` | `True` | Runs the regex extractor. `False` means every result comes from the model alone. |
@@ -281,13 +282,13 @@ examples/sample_paper.pdf
 Two arguments that flip a verdict, both executed:
 
 ```python
-p2 = Pipeline(model_path="models/zoo/gru-crf", repair_text=False)
+p2 = Pipeline(repair_text=False)
 r2 = p2.run_text("Recall was lower under pressure, t(46) \x02 1.80, p \x02 .04.")
 
-p3 = Pipeline(model_path="models/zoo/gru-crf", alpha=0.05)
+p3 = Pipeline(alpha=0.05)
 r3 = p3.run_text("Borderline effect, t(46) = 1.70, p = .04.")   # computed_p 0.0959
 
-p4 = Pipeline(model_path="models/zoo/gru-crf", alpha=0.10)
+p4 = Pipeline(alpha=0.10)
 r4 = p4.run_text("Borderline effect, t(46) = 1.70, p = .04.")
 ```
 ```
@@ -388,8 +389,9 @@ core will adopt R's rule so the two agree.
 
 ## 7. Choosing a model
 
-Three configurations ship in `models/zoo/`: `gru-crf`, `gru-softmax`,
-`lstm-softmax` — a BiGRU or BiLSTM over characters, softmax or CRF head,
+The install carries one model, `gru-crf`, and `Pipeline()` uses it with no
+path. A checkout holds three configurations in `models/zoo/`: `gru-crf`,
+`gru-softmax`, `lstm-softmax` — a BiGRU or BiLSTM over characters, softmax or CRF head,
 the top three of a six-configuration grid by *development* F1, each
 retrained on three seeds. Holdout F1, seed 0 (`results/REPORT.md` section
 6):
@@ -440,14 +442,14 @@ import csv
 import sys
 from pathlib import Path
 
-from statcheck_ml.pipeline import Pipeline
+from statcheck_ml import Pipeline
 
 FIELDS = ["file", "line", "test_type", "statistic", "df1", "df2",
           "p_operator", "p_value", "computed_p", "verdict", "source"]
 
 
 def main(pdf_dir: str, out_csv: str) -> None:
-    pipeline = Pipeline(model_path="models/zoo/gru-crf")
+    pipeline = Pipeline()
     rows = []
     for pdf in sorted(Path(pdf_dir).glob("*.pdf")):
         report = pipeline.run_pdf(str(pdf))

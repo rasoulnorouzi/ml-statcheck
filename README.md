@@ -246,11 +246,14 @@ still checks a `.txt` file.
 Call the same pipeline from Python code:
 
 ```python
-from statcheck_ml.pipeline import Pipeline
+from statcheck_ml import Pipeline
 
-pipeline = Pipeline(model_path="models/zoo/gru-crf")
+pipeline = Pipeline()          # the model packaged with the install
 report = pipeline.run_pdf("paper.pdf")
 ```
+
+The install carries the model, so this needs no checkout and no path. A
+checkout can name another configuration, such as `models/zoo/gru-softmax`.
 
 ---
 

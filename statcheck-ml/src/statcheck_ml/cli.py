@@ -11,19 +11,17 @@ import sys
 from pathlib import Path
 from typing import List, Optional
 
-from .pipeline import Pipeline
+from .pipeline import Pipeline, bundled_model_path
 
 class _UsageError(Exception):
     pass
 
 def default_model_dir() -> Path:
-    """The one model packaged inside the wheel (`pipeline/08_export.py --update-spec`
-    puts the recommended config there)."""
-    zoo = Path(__file__).parent / "zoo"
-    configs = sorted(p for p in zoo.iterdir() if (p / "tagger.onnx").exists()) if zoo.exists() else []
-    if len(configs) != 1:
-        raise _UsageError(f"expected one packaged model under {zoo}, found {len(configs)}")
-    return configs[0]
+    """The one model packaged inside the wheel, as a usage error when absent."""
+    try:
+        return bundled_model_path()
+    except FileNotFoundError as err:
+        raise _UsageError(str(err)) from err
 
 def _fmt_num(x) -> str:
     if x is None:
