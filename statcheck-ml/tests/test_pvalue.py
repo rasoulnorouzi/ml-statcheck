@@ -34,3 +34,43 @@ def test_verdicts():
     assert v("t", 1.8, 46, None, "=", ".04") == DECISION_ERROR
     assert v("t", 5.59, 99, None, "<", ".01") == CONSISTENT
     assert v("r", 1.0, 30, None, "=", ".001") == UNDECIDABLE
+
+
+def test_the_statistic_rounding_widens_the_comparison():
+    # t(67) = 1.48 implies p = .1436, and a paper that writes p = .143 is not
+    # wrong: the statistic itself was rounded, so the true p lies in a range.
+    # statcheck 1.5.0 accepts this row; before the rule matched statcheck this
+    # project called it inconsistent.
+    res = Result(test_type="t", statistic=1.48, df1=67, p_operator="=", p_value=0.143)
+    assert check(res, reported_p_text=".143", statistic_text="1.48").verdict == CONSISTENT
+    # A statistic printed to more decimals leaves less room, and the same
+    # reported p is then an error.
+    res = Result(test_type="t", statistic=1.4800, df1=67, p_operator="=", p_value=0.143)
+    assert check(res, reported_p_text=".143", statistic_text="1.4800").verdict == INCONSISTENT
+
+
+def test_a_reported_p_of_zero_is_an_error():
+    # No test gives exactly zero, whatever the computed value is.
+    res = Result(test_type="t", statistic=12.0, df1=30, p_operator="=", p_value=0.0)
+    assert check(res, reported_p_text=".000", statistic_text="12.0").verdict == INCONSISTENT
+
+
+def test_ns_reads_as_greater_than_alpha():
+    res = Result(test_type="t", statistic=0.54, df1=178, p_operator="ns", p_value=None)
+    assert check(res, statistic_text="0.54").verdict == CONSISTENT
+    # A statistic that is significant contradicts the claim of no significance.
+    res = Result(test_type="t", statistic=5.0, df1=178, p_operator="ns", p_value=None)
+    assert check(res, statistic_text="5.0").verdict == DECISION_ERROR
+
+
+def test_operators_use_the_interval():
+    # p < .01 with a computed .0099: the paper's bound holds.
+    res = Result(test_type="t", statistic=2.70, df1=90, p_operator="<", p_value=0.01)
+    assert check(res, reported_p_text=".01", statistic_text="2.70").verdict == CONSISTENT
+    # p < .001 with a computed .008 does not. Both sit under alpha, so the
+    # paper's conclusion still holds and the verdict is not a decision error.
+    res = Result(test_type="t", statistic=2.70, df1=90, p_operator="<", p_value=0.001)
+    assert check(res, reported_p_text=".001", statistic_text="2.70").verdict == INCONSISTENT
+    # p < .05 claimed where the statistic gives .38 flips the conclusion.
+    res = Result(test_type="t", statistic=0.88, df1=90, p_operator="<", p_value=0.05)
+    assert check(res, reported_p_text=".05", statistic_text="0.88").verdict == DECISION_ERROR

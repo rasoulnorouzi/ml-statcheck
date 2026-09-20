@@ -22,7 +22,7 @@ import numpy as np
 from .align import as_number
 from .data import normalise
 from .labels import ENTITY_OPERATOR, tags_to_spans
-from .pvalue import CONSISTENT, UNDECIDABLE, Result, check
+from .pvalue import CONSISTENT, DECISION_ERROR, UNDECIDABLE, Result, check
 from .stats import wilson
 
 # ---------------------------------------------------------------- I/O -----
@@ -158,6 +158,32 @@ def _csv_degrees_of_freedom(row: dict, test_type: str) -> Tuple[Optional[float],
     return (df1_raw if df1_raw is not None else df2_raw), None
 
 
+def printed_decimals(row: dict, key: str) -> str:
+    """The number as the paper printed it, taken from statcheck's `raw` match.
+
+    Both rounding rules count decimals, and the CSV holds parsed numbers: a
+    printed 5.10 is written 5.1, and the comparison would then allow more
+    room than the paper does. The raw text still has the digits.
+    """
+    raw = (row.get("raw") or "").replace("\n", " ")
+    value = (row.get(key) or "").strip()
+    if not value:
+        return value
+    try:
+        wanted = float(value)
+    except ValueError:
+        return value
+    # The token that equals the number, not the first token that contains its
+    # digits: the 0.9 inside 10.9 would otherwise pass for a reported .21.
+    for token in re.findall(r"\d*\.\d+|\d+", raw):
+        try:
+            if float(token) == wanted:
+                return token
+        except ValueError:
+            continue
+    return value
+
+
 def verdict_agreement(rows: Iterable[dict]) -> dict:
     """Compare this project's p-value math with statcheck's own error flag,
     on the results statcheck itself reports. Checks the arithmetic, not the
@@ -178,14 +204,17 @@ def verdict_agreement(rows: Iterable[dict]) -> dict:
             p_operator=(row.get("p_comp") or "").strip() or None,
             p_value=as_number(row.get("reported_p")),
         )
-        ours = check(res, reported_p_text=row.get("reported_p"))
+        ours = check(res, reported_p_text=printed_decimals(row, "reported_p"),
+                     statistic_text=printed_decimals(row, "test_value"))
         if ours.computed_p is None or ours.verdict == UNDECIDABLE:
             # No p to compare: statcheck writes `ns` as the operator and NA as
             # the value, and reports no error. That is not a disagreement.
             undecidable += 1
             continue
         theirs = str(row.get("error", "")).strip().upper() in ("TRUE", "1")
-        if (ours.verdict != CONSISTENT) == theirs:
+        theirs_decision = str(row.get("decision_error", "")).strip().upper() in ("TRUE", "1")
+        if ((ours.verdict != CONSISTENT) == theirs
+                and (ours.verdict == DECISION_ERROR) == theirs_decision):
             agree += 1
         else:
             disagree += 1

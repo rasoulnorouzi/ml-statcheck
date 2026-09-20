@@ -166,10 +166,34 @@ def compute_p(test_type: str, statistic: float,
     return None if p != p else float(p)     # nan never leaves this function
 
 
-def _decimals(text: str) -> int:
+def _decimals(text) -> int:
     """Count the digits after the decimal point in a number written as text."""
     s = str(text)
     return len(s.split(".", 1)[1]) if "." in s else 0
+
+
+def rounding_interval(result: "Result", statistic_text=None):
+    """The p-values the statistic could imply, given how it was rounded.
+
+    A paper writes `t(67) = 1.48`. The true statistic is anywhere in
+    [1.475, 1.485], and each end implies a different p-value. statcheck
+    compares the reported p against that whole interval, and this project
+    must do the same or it calls a correctly reported result an error.
+    Returns (low_p, up_p), or (None, None) when no p can be computed.
+    """
+    decimals = _decimals(statistic_text if statistic_text is not None
+                         else repr(float(result.statistic)))
+    half = 0.5 / (10 ** decimals)
+    statistic = float(result.statistic)
+    # The end nearer zero implies the larger p-value, so a negative statistic
+    # swaps which end is which.
+    near, far = ((statistic - half, statistic + half) if statistic >= 0
+                 else (statistic + half, statistic - half))
+    up_p = compute_p(result.test_type, near, result.df1, result.df2, result.one_tailed)
+    low_p = compute_p(result.test_type, far, result.df1, result.df2, result.one_tailed)
+    if up_p is None or low_p is None:
+        return None, None
+    return low_p, up_p
 
 
 def is_significant(p: float, alpha: float = 0.05, p_equal_alpha_sig: bool = True) -> bool:
@@ -179,12 +203,24 @@ def is_significant(p: float, alpha: float = 0.05, p_equal_alpha_sig: bool = True
 
 def check(result: Result, alpha: float = 0.05,
           p_equal_alpha_sig: bool = True,
-          reported_p_text: Optional[str] = None) -> Check:
+          reported_p_text: Optional[str] = None,
+          statistic_text: Optional[str] = None,
+          p_zero_error: bool = True) -> Check:
     """Compare a reported p-value with the value implied by the statistic.
 
-    `reported_p_text` is the p-value exactly as written, for example ".03".
-    It is used to learn how many decimals were reported, so the comparison
-    allows for the rounding the author applied.
+    The rule is statcheck's own (`error_test` and `decision_error_test` in
+    statcheck 1.5.0), because statcheck is the baseline this project is
+    measured against and its convention is what a reader expects. Both
+    numbers in a paper are rounded, and the comparison allows for both:
+    `reported_p_text` gives the decimals of the p-value, `statistic_text`
+    the decimals of the statistic. Without them the decimals are read from
+    the numbers themselves, which is right whenever they were parsed from
+    the text they were printed as.
+
+    An inconsistency is not the same as a wrong conclusion. The verdict is
+    `decision_error` when the reported and the computed p-value fall on
+    opposite sides of `alpha`, and `inconsistent` when they disagree without
+    changing what the paper claims.
     """
     computed = compute_p(result.test_type, result.statistic,
                          result.df1, result.df2, result.one_tailed)
@@ -197,40 +233,50 @@ def check(result: Result, alpha: float = 0.05,
         reason = (describe_missing(absent) if absent else
                   "the statistic and its degrees of freedom give no p-value")
         return Check(UNDECIDABLE, None, result.p_value, reason, absent)
-    if result.p_value is None or result.p_operator not in ("=", "<", ">"):
+    # "ns" is a claim about alpha, not a number: the paper says the result was
+    # not significant. statcheck reads it as `p > alpha`, and so does this.
+    if result.p_operator == "ns":
+        reported, op = float(alpha), ">"
+    elif result.p_value is None or result.p_operator not in ("=", "<", ">"):
         return Check(UNDECIDABLE, computed, result.p_value,
                      describe_missing(absent) or
                      "there is no reported p-value to compare against",
                      absent)
-
-    reported = float(result.p_value)
-    op = result.p_operator
-
-    if op == "=":
-        # The author rounded. A reported .03 stands for any value that rounds
-        # to .03 at the same number of decimals.
-        nd = _decimals(reported_p_text if reported_p_text is not None else result.p_value)
-        tol = 0.5 * (10 ** -nd) if nd > 0 else 0.5
-        agrees = abs(computed - reported) <= tol
-    elif op == "<":
-        agrees = computed < reported
     else:
-        agrees = computed > reported
+        reported = float(result.p_value)
+        op = result.p_operator
+    low_p, up_p = rounding_interval(result, statistic_text)
+    if low_p is None:
+        low_p = up_p = computed
 
-    if agrees:
+    if p_zero_error and reported <= 0:
+        # No test gives a p-value of exactly zero, so the paper reports a
+        # number that cannot be right, however small the computed value is.
+        error = True
+    elif op == "=":
+        p_dec = _decimals(reported_p_text if reported_p_text is not None else reported)
+        error = reported > round(up_p, p_dec) or reported < round(low_p, p_dec)
+    elif op == "<":
+        error = reported < low_p
+    else:
+        error = reported > up_p
+
+    if not error:
         return Check(CONSISTENT, computed, reported)
 
-    # The values disagree. A disagreement that also flips the conclusion is
-    # reported separately, because it changes what the paper claims.
+    # statcheck decides significance on the computed value itself, not on the
+    # interval: the interval says whether the two numbers can agree, alpha
+    # says what the paper concluded.
+    computed_sig = is_significant(computed, alpha, p_equal_alpha_sig)
     if op == "=":
         reported_sig = is_significant(reported, alpha, p_equal_alpha_sig)
+        decision_error = reported_sig != computed_sig
     elif op == "<":
-        reported_sig = reported <= alpha
+        decision_error = reported <= alpha and not computed_sig
     else:
-        reported_sig = False
-    computed_sig = is_significant(computed, alpha, p_equal_alpha_sig)
+        decision_error = reported >= alpha and computed_sig
 
-    if reported_sig != computed_sig:
+    if decision_error:
         return Check(DECISION_ERROR, computed, reported,
                      "the reported and computed p-values disagree about significance")
     return Check(INCONSISTENT, computed, reported,

@@ -1,6 +1,6 @@
 # statcheck-ml — results report
 
-Generated from commit 39c2077 (2026-09-20T13:58:54+02:00). Every number in this
+Generated from commit 07d94ad (2026-09-20T16:06:44+02:00). Every number in this
 report comes from a committed measurement file. `pipeline/11_report.py` fills this
 template. No number is typed by hand.
 
@@ -402,14 +402,21 @@ lstm-softmax-s0 by 0.010 [-0.015, 0.036]
 a choice of size and latency, not of accuracy.
 
 The p-value arithmetic is compared with the R package on the results the package itself
-reports after repair: 135 verdicts agree, 15
-disagree, and 2 carry no p-value to compare. The disagreements
-have two causes, and both are conventions of rounding. The R package accepts a reported
-p-value when the interval implied by the rounded test statistic contains it, and this
-project does not yet widen the check that way. This project accepts a p-value reported
-as zero or as a fixed small bound where the R package flags it. Neither convention is a
-fault in the extraction, and the next version of the p-value core will adopt the R
-package's rule so the two agree.
+reports after repair: 152 verdicts agree, 0
+disagree, and 0 carry no p-value to compare.
+
+Reaching that agreement needed a correction. Until 2026-09-20 this project allowed only
+for the rounding of the reported p-value, and called a result inconsistent when the two
+numbers differed by more than half of the last reported decimal. The R package allows
+for the rounding of the test statistic as well: a paper that writes `t(67) = 1.48` has a
+statistic anywhere in [1.475, 1.485], and each end implies a different p-value, so a
+reported .143 is not an error even though 1.48 implies .1436. The stricter rule reported
+errors that were not errors, which is the damaging direction for a tool that flags
+mistakes in published work. The rule is now statcheck's own, taken from `error_test` and
+`decision_error_test` in statcheck 1.5.0: the reported p must lie in the interval the
+rounded statistic implies, `ns` reads as p greater than alpha, and a p reported as zero
+is an error whatever the statistic implies. Fifteen of these 152 rows
+changed verdict, all from an error to no error.
 
 ## 8 Shipped models
 
@@ -471,9 +478,9 @@ Spread 0.040 against a limit of 0.060, over 200 documents and 327 gold results.
 - The version 1 repaired baseline came from a whole-document substitution that no
   script in the repository reproduces. The version 2 repaired baseline is the
   reproducible one, and it finds fewer results.
-- The project's p-value consistency check and the R package differ in two rounding
-  conventions, stated in section 7. Verdict agreement between the two is a comparison
-  of conventions, not a measure of extraction.
+- The p-value check follows statcheck's rule, and agrees with the R package on every
+  result the package reports. That is a check of the arithmetic, not of the extraction:
+  a result neither tool finds is invisible to both.
 - The R port reads less of the corpus than the Python port, because its PDF engine
   returns less text. Its ceiling is lower, and the engine table states it.
 - Robustness is claimed only for the damage families that the holdout holds. A family
@@ -482,9 +489,9 @@ Spread 0.040 against a limit of 0.060, over 200 documents and 327 gold results.
 
 ## 11 Reproduction
 
-This report was generated from commit 39c2077 (2026-09-20T13:58:54+02:00). The
+This report was generated from commit 07d94ad (2026-09-20T16:06:44+02:00). The
 evaluation numbers in it come from `results/eval.json`, itself run at commit
-3bb0d79ff4e073163c0d722f261a697c62ddb0b3, with R 4.6.1 and statcheck 1.5.0.
+07d94add9c3b207e0f2be5927dcd0e994d64a5be, with R 4.6.1 and statcheck 1.5.0.
 
 `reproduce.sh` runs the offline stages from committed files: agreement, dataset,
 evaluation, figures, and this report. `reproduce.sh --train` adds the training grid
@@ -503,9 +510,9 @@ repositories and read one kit that this repository writes: the five spec files, 
 shipped model, the parity cases, and a manifest with a hash per file that the port
 verifies when it loads. A port never restates a rule.
 
-Parity is one file, 223 cases in 9 sections,
+Parity is one file, 232 cases in 9 sections,
 one per stage: normalise, repair, prefilter, extract, model tags, model logits,
-grouping, p-value (64 rows), and the whole pipeline on four
+grouping, p-value (73 rows), and the whole pipeline on four
 documents. The Python reference produces every expected value; each port reproduces
 them in its own test suite. R runs the model in pure R from the raw weights, batched
 over the windows of a document; the browser runs the ONNX graph through

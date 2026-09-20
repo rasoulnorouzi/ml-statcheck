@@ -41,11 +41,17 @@ MODEL_DIR = ROOT / "models" / "zoo" / "gru-crf"
 #: rounded. A reported .03 stands for any value that rounds to .03 at the
 #: same number of decimals."
 PVALUE_ROUNDING_RULE = (
-    "reported_p_text is the p-value exactly as written, for example \".03\". "
-    "It is used to learn how many decimals were reported, so the comparison "
-    "allows for the rounding the author applied. The author rounded. A "
-    "reported .03 stands for any value that rounds to .03 at the same "
-    "number of decimals."
+    "statcheck's own rule (error_test in statcheck 1.5.0). Both numbers in a "
+    "paper are rounded and the comparison allows for both. The statistic "
+    "printed as 1.48 stands for anything in [1.475, 1.485], and each end "
+    "implies a p-value: low_p from the end further from zero, up_p from the "
+    "end nearer it. With p reported as `=`, the result is consistent when the "
+    "reported p lies in [round(low_p, p_dec), round(up_p, p_dec)], where "
+    "p_dec is the decimals of the p-value as written. With `<` it is "
+    "consistent when reported_p >= low_p, with `>` when reported_p <= up_p. "
+    "`ns` reads as p > alpha. A p reported as zero or less is an error "
+    "whatever the computed value is. The verdict is decision_error when the "
+    "reported and the computed p fall on opposite sides of alpha."
 )
 
 LOGIT_TOLERANCE = 1e-3
@@ -212,12 +218,17 @@ def parse_number(text) -> Optional[float]:
 
 def pvalue_case(test_type: str, statistic: Optional[float], df1: Optional[float],
                 df2: Optional[float], p_operator: Optional[str],
-                p_text: Optional[str]) -> Check:
-    """Build a `Result` the way a port would from parsed fields, and check it."""
+                p_text: Optional[str], statistic_text: Optional[str] = None) -> Check:
+    """Build a `Result` the way a port would from parsed fields, and check it.
+
+    Both numbers are passed as text as well as parsed, because the comparison
+    allows for the rounding the paper applied and the decimals live in the
+    text: a statistic printed 1.48 leaves more room than one printed 1.4800.
+    """
     p_value = parse_number(p_text)
     res = Result(test_type=test_type, statistic=statistic, df1=df1, df2=df2,
                 p_operator=p_operator, p_value=p_value)
-    return check(res, reported_p_text=p_text)
+    return check(res, reported_p_text=p_text, statistic_text=statistic_text)
 
 
 def pvalue_expected(outcome: Check) -> Optional[dict]:

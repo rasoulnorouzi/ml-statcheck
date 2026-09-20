@@ -494,6 +494,17 @@ def pvalue_rows() -> list:
         ("q-operator-gt", "q", 2.00, 8, None, ">", ".90"),
         ("q-p-text-dot000", "q", 40.0, 6, None, "=", ".000"),
         ("q-statistic-none", "q", None, 5, None, "=", ".05"),
+        # The statistic's own rounding decides these: same numbers, different
+        # decimals on the statistic, different verdict.
+        ("rounding-stat-2dp", "t", 1.48, 67, None, "=", ".143"),
+        ("rounding-stat-4dp", "t", 1.48, 67, None, "=", ".143", "1.4800"),
+        ("rounding-wide-f", "f", 4.64, 2, 117, "=", ".012"),
+        ("rounding-chi2-edge", "chi2", 10.9, 8, None, "=", ".21"),
+        ("rounding-r-edge", "r", -0.45, 83, None, "<", ".001"),
+        ("ns-not-significant", "t", 0.54, 178, None, "ns", None),
+        ("ns-contradicted", "t", 5.00, 178, None, "ns", None),
+        ("p-reported-zero", "t", 12.0, 30, None, "=", "0"),
+        ("p-reported-zero-decimals", "f", 205.634, 1, 80, "=", ".000"),
     ]
     assert len(rows) == len({r[0] for r in rows}), "pvalue: duplicate case name"
     return rows
@@ -502,14 +513,22 @@ def pvalue_rows() -> list:
 def build_pvalue_section() -> list:
     rows = []
     skipped = []
-    for name, test_type, statistic, df1, df2, p_operator, p_text in pvalue_rows():
-        outcome = pl.pvalue_case(test_type, statistic, df1, df2, p_operator, p_text)
+    for row in pvalue_rows():
+        # A row may state how the statistic was printed. 1.4800 and 1.48 are
+        # one float, and the decimals decide the verdict, so the text has to
+        # be given rather than derived.
+        name, test_type, statistic, df1, df2, p_operator, p_text = row[:7]
+        statistic_text = row[7] if len(row) > 7 else (
+            None if statistic is None else repr(float(statistic)))
+        outcome = pl.pvalue_case(test_type, statistic, df1, df2, p_operator, p_text,
+                                 statistic_text)
         expected = pl.pvalue_expected(outcome)
         if expected is None:
             skipped.append(name)
             continue
         rows.append({
             "name": name, "test_type": test_type, "statistic": statistic,
+            "statistic_text": statistic_text,
             "df1": df1, "df2": df2, "p_operator": p_operator, "p_text": p_text,
             "expected": expected,
         })

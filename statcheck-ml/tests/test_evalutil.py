@@ -131,10 +131,7 @@ def test_verdict_agreement_basic():
          "p_comp": "ns", "reported_p": "NA", "error": "FALSE"},
     ]
     out = verdict_agreement(rows)
-    # None are undecidable once the df column quirk is handled. The t(67)
-    # row disagrees: our tolerance on a 3-decimal reported p is stricter
-    # than R's own, a real, narrow mismatch worth reporting rather than
-    # hiding behind a looser test.
-    # The `ns` row has no p-value to compare, so it is undecidable, not a
-    # disagreement.
-    assert out == {"agree": 2, "disagree": 1, "undecidable": 1}
+    # Every row agrees with statcheck, including the t(67) row that the old
+    # rule called an error: the statistic's own rounding leaves room for a
+    # reported .143. `ns` reads as p > alpha, as statcheck reads it.
+    assert out == {"agree": 4, "disagree": 0, "undecidable": 0}

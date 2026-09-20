@@ -116,7 +116,8 @@ def test_group(case):
 @pytest.mark.parametrize("case", SECTIONS["pvalue"], ids=lambda c: c["name"])
 def test_pvalue(case):
     outcome = pl.pvalue_case(case["test_type"], case["statistic"], case["df1"],
-                             case["df2"], case["p_operator"], case["p_text"])
+                             case["df2"], case["p_operator"], case["p_text"],
+                             case.get("statistic_text"))
     got = pl.pvalue_expected(outcome)
     assert got is not None, f"{case['name']}: reference now returns NaN"
     assert got["verdict"] == case["expected"]["verdict"]
