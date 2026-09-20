@@ -62,7 +62,7 @@ out <- data.frame(
   df1 = found$df1,
   df2 = found$df2,
   test_value = found$test_value,
-  p_comp = as.character(found$test_comp),
+  p_comp = as.character(found$p_comp),   # the p operator, not test_comp
   reported_p = found$reported_p,
   computed_p = found$computed_p,
   error = found$error,

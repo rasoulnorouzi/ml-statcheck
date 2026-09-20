@@ -127,10 +127,14 @@ def test_verdict_agreement_basic():
          "p_comp": "<", "reported_p": "0.01", "error": "FALSE"},
         {"test_type": "Chi2", "df1": "10", "df2": "NA", "test_value": "13.76",
          "p_comp": "=", "reported_p": "0.18", "error": "FALSE"},
+        {"test_type": "t", "df1": "NA", "df2": "178", "test_value": "0.54",
+         "p_comp": "ns", "reported_p": "NA", "error": "FALSE"},
     ]
     out = verdict_agreement(rows)
     # None are undecidable once the df column quirk is handled. The t(67)
     # row disagrees: our tolerance on a 3-decimal reported p is stricter
     # than R's own, a real, narrow mismatch worth reporting rather than
     # hiding behind a looser test.
-    assert out == {"agree": 2, "disagree": 1, "undecidable": 0}
+    # The `ns` row has no p-value to compare, so it is undecidable, not a
+    # disagreement.
+    assert out == {"agree": 2, "disagree": 1, "undecidable": 1}

@@ -22,7 +22,7 @@ import numpy as np
 from .align import as_number
 from .data import normalise
 from .labels import ENTITY_OPERATOR, tags_to_spans
-from .pvalue import CONSISTENT, Result, check
+from .pvalue import CONSISTENT, UNDECIDABLE, Result, check
 from .stats import wilson
 
 # ---------------------------------------------------------------- I/O -----
@@ -179,7 +179,9 @@ def verdict_agreement(rows: Iterable[dict]) -> dict:
             p_value=as_number(row.get("reported_p")),
         )
         ours = check(res, reported_p_text=row.get("reported_p"))
-        if ours.computed_p is None:
+        if ours.computed_p is None or ours.verdict == UNDECIDABLE:
+            # No p to compare: statcheck writes `ns` as the operator and NA as
+            # the value, and reports no error. That is not a disagreement.
             undecidable += 1
             continue
         theirs = str(row.get("error", "")).strip().upper() in ("TRUE", "1")

@@ -89,7 +89,7 @@ def fig_agreement(agreement_dir: Path, out: Path) -> Path:
 
 
 def fig_benchmark(eval_data: dict, out: Path) -> Path:
-    """2: holdout F1 per model config, seed 0, with CI, seed 1-2 dots on top-3."""
+    """2: holdout F1 per model config, seed 0, with CI, seed 1-2 dots where they exist."""
     need(eval_data is not None, "eval.json not found")
     systems = eval_data.get("systems", {})
     configs = seed0_configs(systems)
@@ -106,7 +106,9 @@ def fig_benchmark(eval_data: dict, out: Path) -> Path:
         hi.append(ci[1] - f1)
     ax.bar(x, f1s, yerr=[lo, hi], capsize=4, color=[color_for(c) for c, _, _ in configs])
 
-    for i, (cfg, _, _) in enumerate(configs[:3]):
+    # Seeds 1 and 2 exist only for the grid's top three by dev F1, which is
+    # not the top three by holdout F1 that orders this chart.
+    for i, (cfg, _, _) in enumerate(configs):
         for seed in (1, 2):
             other = f"{cfg}-s{seed}"
             if other in systems:
@@ -118,7 +120,7 @@ def fig_benchmark(eval_data: dict, out: Path) -> Path:
               label=f"statcheck_repaired ({ref:.3f})")
     ax.set_xticks(x, [c for c, _, _ in configs], rotation=30, ha="right")
     ax.set_ylabel("Holdout overall F1")
-    ax.set_title("Holdout F1 by model configuration, seed 0 (dots: seeds 1-2 of top 3)")
+    ax.set_title("Holdout F1 by model configuration, seed 0 (dots: seeds 1 and 2)")
     ax.set_ylim(0.5, 1.05)
     ax.legend()
     clean_axes(ax)
@@ -156,7 +158,7 @@ def fig_family_recall(eval_data: dict, out: Path) -> Path:
     ax.set_ylabel("Recall")
     ax.set_title("Recall by damage family (Wilson 95% CI)")
     ax.set_ylim(0, 1.05)
-    ax.legend()
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.32), ncol=3, frameon=False)
     clean_axes(ax)
     fig.tight_layout()
     return save(fig, out / "family_recall.png")
@@ -177,12 +179,39 @@ def fig_precision_recall(eval_data: dict, out: Path) -> Path:
         ax.annotate(f"F1={target}", (0.98, target * 0.98 / (2 * 0.98 - target)),
                    color="#999999", fontsize=8)
 
-    for name, s in systems.items():
-        o = s.get("overall", {})
+    # The main axes show the whole range, where the two statcheck systems sit
+    # far from the models. The models crowd one corner, so an inset in the
+    # empty lower left magnifies it. Seeds 1 and 2 are drawn without labels.
+    def is_seed0(name):
+        return not (name[-3:-1] == "-s" and name[-1] in "12")
+
+    def draw(axis, label):
+        for name, s in systems.items():
+            o = s.get("overall", {})
+            if "p" in o and "r" in o:
+                axis.scatter([o["r"]], [o["p"]], color=color_for(name),
+                             s=60 if is_seed0(name) else 25, zorder=3,
+                             alpha=1.0 if is_seed0(name) else 0.6)
+                if label and is_seed0(name):
+                    # The cascade sits on top of its model; its label goes below.
+                    offset = (4, -9) if name.startswith("cascade") else (4, 3)
+                    axis.annotate(name, (o["r"], o["p"]), fontsize=7, xytext=offset,
+                                  textcoords="offset points")
+
+    draw(ax, label=False)
+    for name in ("statcheck_raw", "statcheck_repaired"):
+        o = systems.get(name, {}).get("overall", {})
         if "p" in o and "r" in o:
-            ax.scatter([o["r"]], [o["p"]], color=color_for(name), s=60, zorder=3)
             ax.annotate(name, (o["r"], o["p"]), fontsize=8, xytext=(4, 4),
-                       textcoords="offset points")
+                        textcoords="offset points")
+
+    inset = ax.inset_axes([0.08, 0.08, 0.55, 0.55])
+    draw(inset, label=True)
+    inset.set_xlim(0.70, 0.92)
+    inset.set_ylim(0.80, 1.005)
+    inset.set_title("models, magnified", fontsize=8)
+    inset.tick_params(labelsize=7)
+    ax.indicate_inset_zoom(inset, edgecolor="#999999")
 
     ax.set_xlabel("Recall (holdout, overall)")
     ax.set_ylabel("Precision (holdout, overall)")
