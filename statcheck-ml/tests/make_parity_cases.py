@@ -162,6 +162,10 @@ HAND_WINDOWS = [
      "t(24) = 3.10, p b .01"),
     ("hand-citation-year",
      "See pages 12-34 for details (Smith, 2015-2016)."),
+    # A Greek chi with a space on both sides: JavaScript's  is ASCII-only
+    # and missed it; a port's word boundary must be Unicode-aware.
+    ("hand-greek-chi",
+     "Group and outcome were related, χ2(1, N = 223) = 8.69, p = .003, η² = .04."),
 ]
 
 
