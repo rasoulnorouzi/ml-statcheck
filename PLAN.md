@@ -176,11 +176,10 @@ accepts on evidence.
 | C | C4 | Web PDF.js, demo page, Pages, docs | runtime-engineer, doc-writer | sonnet, haiku | done |
 | D | D1 | Retire the copies in the mother repository | manager | fable | done |
 | D | D2 | Report section on the ports, reproduction check | manager | fable | done |
-| D | D3 | Push the three repositories, CI green, repository metadata, Pages | manager | fable | blocked on the owner |
+| D | D3 | Push the three repositories, CI green, repository metadata, Pages | manager | fable | done |
 | D | D4 | Tutorials for Python, R and the web, from executed examples | runtime-engineer | sonnet | done |
 
 ## Waiting on the owner
 
 - The human-labeled gold set, whenever it is ready.
-- Two empty private repositories, `statcheck-ml-r` and `statcheck-ml-web`, and the
-  `git push` deny rule lifted in `.claude/settings.json` for the duration of track D.
+- Nothing. The three repositories are pushed and their workflows are green.

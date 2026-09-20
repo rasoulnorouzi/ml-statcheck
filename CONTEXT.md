@@ -373,6 +373,27 @@ The port repositories live under `ports/` in this checkout, each its own git
 repository, gitignored by the mother. Reason: the agents' tool calls stay inside the
 project directory, where the permission rules allow them without a prompt per file.
 
+## Where the three repositories live
+
+Pushed on 2026-09-20. Every workflow green on the first day.
+
+| Repository | Holds | Workflow |
+|---|---|---|
+| [ml-statcheck](https://github.com/rasoulnorouzi/ml-statcheck) | the spec, the dataset, the models, the evaluation, the report, the Python package | `Python package`: ubuntu, macos, windows x Python 3.10 to 3.13, a wheel job, and an install from the repository address |
+| [rasoulnorouzi-statcheck-ml-r](https://github.com/rasoulnorouzi/rasoulnorouzi-statcheck-ml-r) | the R package `statcheckml` | `R-CMD-check`: windows and ubuntu on the current R, macOS on the previous one |
+| [rasoulnorouzi-statcheck-ml-web](https://github.com/rasoulnorouzi/rasoulnorouzi-statcheck-ml-web) | the npm package and the demo page | `test` on Node 20 and 24; `pages` deploys https://rasoulnorouzi.github.io/rasoulnorouzi-statcheck-ml-web/ |
+
+Two facts the first CI run taught us. CRAN's macOS arm64 binaries for R 4.6 were
+incomplete: pak downloaded a `knitr` archive it could not extract, twice, so macOS
+runs one release behind. The R timing bound of ten seconds for a hundred windows is
+a benchmark of this machine, not a correctness check; a shared runner took 10.9
+seconds, so the bound is skipped on CI.
+
+A port keeps the kit it was exported with, not the mother's newest commit. The kit
+manifest names that commit. Re-export only when a spec file or the shipped model
+changes, then rerun the port's tests and commit the kit with the mother commit in
+the message.
+
 ## Known problems
 
 1. A window can cut a result in half. One pool A window began in the middle of a
