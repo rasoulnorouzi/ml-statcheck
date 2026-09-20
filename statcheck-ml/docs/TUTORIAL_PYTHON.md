@@ -6,9 +6,9 @@ against this repository at commit `e0fe47f`, and the output shown is pasted
 from that run.
 
 The other two ports have their own tutorials: R at
-[`ports/statcheck-ml-r/vignettes/statcheckml.Rmd`](https://github.com/rasoulnorouzi/statcheck-ml-r/blob/main/vignettes/statcheckml.Rmd),
+[`ports/statcheck-ml-r/vignettes/statcheckml.Rmd`](https://github.com/rasoulnorouzi/rasoulnorouzi-statcheck-ml-r/blob/main/vignettes/statcheckml.Rmd),
 the browser at
-[`statcheck-ml-web/docs/TUTORIAL.md`](https://github.com/rasoulnorouzi/statcheck-ml-web/blob/main/docs/TUTORIAL.md).
+[`statcheck-ml-web/docs/TUTORIAL.md`](https://github.com/rasoulnorouzi/rasoulnorouzi-statcheck-ml-web/blob/main/docs/TUTORIAL.md).
 All three read the same spec files and the same model.
 [`results/REPORT.md`](../results/REPORT.md) section 9 measures how close the
 PDF text each one starts from actually is.

@@ -207,8 +207,8 @@ proves it against the parity cases in its own test suite.
 | Port | Repository | Runs the model with |
 |---|---|---|
 | Python | this repository, `statcheck-ml/` | onnxruntime |
-| R | [statcheck-ml-r](https://github.com/rasoulnorouzi/statcheck-ml-r) | pure R, from `weights.json` |
-| Web | [statcheck-ml-web](https://github.com/rasoulnorouzi/statcheck-ml-web), demo at https://rasoulnorouzi.github.io/statcheck-ml-web/ | onnxruntime-web (WASM) |
+| R | [rasoulnorouzi-statcheck-ml-r](https://github.com/rasoulnorouzi/rasoulnorouzi-statcheck-ml-r) | pure R, from `weights.json` |
+| Web | [rasoulnorouzi-statcheck-ml-web](https://github.com/rasoulnorouzi/rasoulnorouzi-statcheck-ml-web), demo at https://rasoulnorouzi.github.io/rasoulnorouzi-statcheck-ml-web/ | onnxruntime-web (WASM) |
 
 ### Each port needs a different PDF engine
 
