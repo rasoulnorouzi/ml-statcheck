@@ -55,11 +55,11 @@ fi
 # dataset stage
 if [ $start_idx -le 1 ]; then
   echo "Running: dataset stage..."
-  echo "$PY pipeline/06_dataset.py --windows dataset/windows/train.json --key dataset/windows/key.json --final dataset/annotations/train/final.json --out dataset/train.jsonl --splits dataset/splits.json --seed 0"
-  $PY pipeline/06_dataset.py --windows dataset/windows/train.json --key dataset/windows/key.json --final dataset/annotations/train/final.json --out dataset/train.jsonl --splits dataset/splits.json --seed 0
+  echo "$PY pipeline/06_dataset.py --windows dataset/windows/train.json --key dataset/windows/key.json --final dataset/annotations/train/final.json --set train --out dataset/train.jsonl --splits dataset/splits.json --seed 0 --holdout-windows dataset/windows/holdout.json"
+  $PY pipeline/06_dataset.py --windows dataset/windows/train.json --key dataset/windows/key.json --final dataset/annotations/train/final.json --set train --out dataset/train.jsonl --splits dataset/splits.json --seed 0 --holdout-windows dataset/windows/holdout.json
 
-  echo "$PY pipeline/06_dataset.py --windows dataset/windows/holdout.json --key dataset/windows/key.json --final dataset/annotations/holdout/final.json --out dataset/holdout.jsonl"
-  $PY pipeline/06_dataset.py --windows dataset/windows/holdout.json --key dataset/windows/key.json --final dataset/annotations/holdout/final.json --out dataset/holdout.jsonl
+  echo "$PY pipeline/06_dataset.py --windows dataset/windows/holdout.json --key dataset/windows/key.json --final dataset/annotations/holdout/final.json --set holdout --out dataset/holdout.jsonl"
+  $PY pipeline/06_dataset.py --windows dataset/windows/holdout.json --key dataset/windows/key.json --final dataset/annotations/holdout/final.json --set holdout --out dataset/holdout.jsonl
 fi
 
 # train stage
@@ -100,5 +100,7 @@ if [ $start_idx -le 6 ]; then
 fi
 
 # Verify artifacts
+echo "Verifying the dataset manifest (regenerated files must match the committed hashes)..."
+$PY -c "import sys; sys.path.insert(0, 'src'); from statcheck_ml.provenance import verify_manifest; bad = verify_manifest('dataset/MANIFEST.json'); print('manifest: ok' if not bad else 'manifest: MISMATCH ' + ', '.join(bad)); sys.exit(1 if bad else 0)"
 echo "Verifying artifacts..."
 sha256sum results/eval.json results/REPORT.md results/readme_block.md results/figures/*.png

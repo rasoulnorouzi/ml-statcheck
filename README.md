@@ -70,7 +70,8 @@ Two design rules carry most of the weight:
 Version 2 rebuilt the annotation so that every number can be reproduced.
 
 1. The windows are frozen. `dataset/MANIFEST.json` holds the SHA-256 of every
-   input file.
+   file under `dataset/`, and `reproduce.sh` verifies it after it regenerates
+   the agreement and the dataset files.
 2. Three rater agents read each window blind: one on Haiku, one on Sonnet, one
    on Opus. Each reads only the guideline, `docs/GUIDELINE.md`, and one batch
    of twenty windows. Every record carries the rater, the model id, the guideline
