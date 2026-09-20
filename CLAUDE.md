@@ -66,6 +66,12 @@ English: active voice, articles kept, one meaning per word, procedural sentences
 This applies to documents and to chat responses about them. It does not apply to code
 comments, to commit messages, or to names in the code.
 
+No machine-written texture, in prose or in code. Prose: no "In this section we will",
+no "It's important to note", no emoji, no selling adjectives, no summary that repeats
+the section; a real number and a real output over a general claim. Code: comments say
+why, not what; no docstring that restates a signature; no wrapper of one line; no
+guard against a caller you control. Match the file you are in.
+
 ## Commands
 
 ```
