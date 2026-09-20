@@ -177,6 +177,7 @@ accepts on evidence.
 | D | D1 | Retire the copies in the mother repository | manager | fable | blocked on B4, C4 |
 | D | D2 | Report section on the ports, reproduction check | manager | fable | blocked on D1 |
 | D | D3 | Push the port repositories, CI green | manager | fable | blocked on the owner |
+| D | D4 | Tutorials for Python, R and the web, from executed examples | runtime-engineer | sonnet | blocked on B4, C4, A6 |
 
 ## Waiting on the owner
 
