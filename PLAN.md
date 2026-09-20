@@ -161,16 +161,16 @@ accepts on evidence.
 | Track | # | Task | Agent | Model | Status |
 |---|---|---|---|---|---|
 | A | A1 | `weights.json` per zoo model, numpy reference forward pass, 1e-3 parity | ml-trainer | sonnet | done |
-| A | A2 | Parity cases for nine stages, Python self-test | eval-engineer | sonnet | active |
-| A | A3 | The kit: spec, model, parity, manifest | runtime-engineer | sonnet | blocked on A1, A2 |
-| A | A4 | Python package: console script, packaged model, ONNX-only install | runtime-engineer | sonnet | active |
+| A | A2 | Parity cases for nine stages, Python self-test | eval-engineer | sonnet | done |
+| A | A3 | The kit: spec, model, parity, manifest | runtime-engineer | sonnet | done |
+| A | A4 | Python package: console script, packaged model, ONNX-only install | runtime-engineer | sonnet | done |
 | A | A5 | Layout, CONTEXT, PLAN, CLAUDE | manager | fable | done |
-| A | A6 | Python package proof: wheel, twine, CI matrix on three OS × four Pythons, install from the repository address | runtime-engineer | sonnet | blocked on A4 |
-| B | B1 | R package skeleton, kit, normalise, extract | runtime-engineer | sonnet | blocked on A3 |
+| A | A6 | Python package proof: wheel, twine, CI matrix on three OS × four Pythons, install from the repository address | runtime-engineer | sonnet | done |
+| B | B1 | R package skeleton, kit, normalise, extract | runtime-engineer | sonnet | active |
 | B | B2 | R model forward pass and Viterbi | stats-core | opus | blocked on B1 |
 | B | B3 | R prefilter, repair, grouping, p-value, pipeline | runtime-engineer | sonnet | blocked on B2 |
 | B | B4 | R PDF input, docs, CI | runtime-engineer, doc-writer | sonnet, haiku | blocked on B3 |
-| C | C1 | Web package skeleton, kit, normalise, extract | runtime-engineer | sonnet | blocked on A3 |
+| C | C1 | Web package skeleton, kit, normalise, extract | runtime-engineer | sonnet | active |
 | C | C2 | Web p-value core | stats-core | opus | blocked on C1 |
 | C | C3 | Web model, grouping, prefilter, repair, pipeline | runtime-engineer | sonnet | blocked on C2 |
 | C | C4 | Web PDF.js, demo page, Pages, docs | runtime-engineer, doc-writer | sonnet, haiku | blocked on C3 |
