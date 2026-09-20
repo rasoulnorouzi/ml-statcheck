@@ -1,6 +1,6 @@
 # statcheck-ml — results report
 
-Generated from commit 07d94ad (2026-09-20T16:06:44+02:00). Every number in this
+Generated from commit 513efd9 (2026-09-20T17:00:15+02:00). Every number in this
 report comes from a committed measurement file. `pipeline/11_report.py` fills this
 template. No number is typed by hand.
 
@@ -489,7 +489,7 @@ Spread 0.040 against a limit of 0.060, over 200 documents and 327 gold results.
 
 ## 11 Reproduction
 
-This report was generated from commit 07d94ad (2026-09-20T16:06:44+02:00). The
+This report was generated from commit 513efd9 (2026-09-20T17:00:15+02:00). The
 evaluation numbers in it come from `results/eval.json`, itself run at commit
 07d94add9c3b207e0f2be5927dcd0e994d64a5be, with R 4.6.1 and statcheck 1.5.0.
 
@@ -521,18 +521,20 @@ every tag equal; the parity file states the bound. The p-value core in JavaScrip
 an own implementation of the incomplete beta and gamma functions, tested against
 SciPy values stored with the test; R uses `pt`, `pf`, `pchisq` and `pnorm`.
 
-Writing the ports found two faults in the reference and two in the ports, each now a
+Writing the ports found four faults in the reference and two in the ports, each now a
 parity case: a chi-square with zero degrees of freedom gave NaN and a verdict instead
 of `undecidable`; a Greek chi with a space on each side escaped the regex in
-JavaScript and in PCRE, whose word boundary is ASCII-only; and the reference's own
+JavaScript and in PCRE, whose word boundary is ASCII-only; the reference's own
 rounding of a p-value text differs between Python's `repr` and JavaScript's number
-formatting, which the port now reproduces exactly.
+formatting, which the port now reproduces exactly; and the finders threw away the
+numbers as the paper printed them, so a statistic printed 5.10 was compared as the
+float 5.1 and the rounding interval was ten times too wide.
 
 | Port | PDF engine | Tests passed | Tests failed | Kit from commit | Sample PDF, s | Results | 100 windows, s |
 |---|---|---|---|---|---|---|---|
-| Python | pymupdf | 226 | 0 | - | 0.06 | 5 | 0.83 |
-| R | pdftools (poppler) | 1057 | 0 | b71a9f9 | 0.61 | 5 | 7.49 |
-| Web | pdf.js | 309 | 0 | b71a9f9 | 0.09 | 5 | 1.01 |
+| Python | pymupdf | 235 | 0 | - | 0.05 | 5 | 0.91 |
+| R | pdftools (poppler) | 1085 | 0 | 49f6453 | 0.66 | 5 | 7.64 |
+| Web | pdf.js | 354 | 0 | 49f6453 | 0.09 | 5 | 0.96 |
 
 Both timings are the second of two runs on one machine with the model loaded and
 one thread: the damaged sample PDF end to end, and one hundred windows of three

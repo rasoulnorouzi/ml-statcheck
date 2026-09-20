@@ -358,12 +358,14 @@ every tag equal; the parity file states the bound. The p-value core in JavaScrip
 an own implementation of the incomplete beta and gamma functions, tested against
 SciPy values stored with the test; R uses `pt`, `pf`, `pchisq` and `pnorm`.
 
-Writing the ports found two faults in the reference and two in the ports, each now a
+Writing the ports found four faults in the reference and two in the ports, each now a
 parity case: a chi-square with zero degrees of freedom gave NaN and a verdict instead
 of `undecidable`; a Greek chi with a space on each side escaped the regex in
-JavaScript and in PCRE, whose word boundary is ASCII-only; and the reference's own
+JavaScript and in PCRE, whose word boundary is ASCII-only; the reference's own
 rounding of a p-value text differs between Python's `repr` and JavaScript's number
-formatting, which the port now reproduces exactly.
+formatting, which the port now reproduces exactly; and the finders threw away the
+numbers as the paper printed them, so a statistic printed 5.10 was compared as the
+float 5.1 and the rounding interval was ten times too wide.
 
 {{table:ports}}
 
