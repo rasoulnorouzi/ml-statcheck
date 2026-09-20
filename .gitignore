@@ -48,6 +48,8 @@ statcheck-ml/models/*
 !statcheck-ml/models/*.onnx
 !statcheck-ml/models/runs.json
 !statcheck-ml/models/export.json
+# the one model the wheel ships (pipeline/08_export.py --update-spec writes it)
+!statcheck-ml/src/statcheck_ml/zoo/**
 # each grid run's small files; model.pt and the logs stay out
 !statcheck-ml/models/*-s[0-9]/
 !statcheck-ml/models/*-s[0-9]/report.json
@@ -64,3 +66,5 @@ statcheck-ml/models/*-s[0-9]/model.pt
 !statcheck-ml/results/**
 # the two port repositories, each its own git repository (docs/superpowers/specs/2026-09-20-ports-design.md)
 ports/
+build/
+dist/

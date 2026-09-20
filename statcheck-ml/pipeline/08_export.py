@@ -254,6 +254,16 @@ def main():
         SPEC_CHARMAP_PATH.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src_charmap, SPEC_CHARMAP_PATH)
         print(f"updated spec: {SPEC_CHARMAP_PATH} <- {top1['config']} ({top1['name']})")
+        # The wheel ships the recommended model. Replace whatever config was
+        # packaged before, so the package never holds two.
+        packaged = SPEC_CHARMAP_PATH.parent.parent / "zoo"
+        if packaged.exists():
+            shutil.rmtree(packaged)
+        dest = packaged / top1["config"]
+        dest.mkdir(parents=True)
+        for fname in ("tagger.onnx", "decoder.json", "charmap.json"):
+            shutil.copy2(zoo_dir / top1["config"] / fname, dest / fname)
+        print(f"packaged model: {dest} <- {top1['config']}")
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(reports, indent=1), encoding="utf-8")

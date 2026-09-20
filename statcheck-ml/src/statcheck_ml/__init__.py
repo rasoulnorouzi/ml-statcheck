@@ -18,7 +18,7 @@ from .prefilter import Prefilter, Window
 from .pvalue import (Result, Check, compute_p, check,
                      CONSISTENT, INCONSISTENT, DECISION_ERROR, UNDECIDABLE)
 
-__version__ = "0.1.0"
+__version__ = "2.0.0"
 
 __all__ = [
     # The whole pipeline: a PDF goes in, checked results come out.

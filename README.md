@@ -220,7 +220,16 @@ Rscript tests/parity.R               # the R port matches Python
 python pipeline/12_engines.py <pdf_dir> <key.json> <labels.json> --text-dir <dir> --recursive
 ```
 
-Use the Python port like this:
+Install the command line tool. The package ships its own model, so no
+checkout is needed. A PyPI release comes later; install from the repository
+until then.
+
+```
+pip install "git+https://github.com/rasoulnorouzi/ml-statcheck.git#subdirectory=statcheck-ml"
+statcheck-ml check paper.pdf
+```
+
+Call the same pipeline from Python code:
 
 ```python
 from statcheck_ml.pipeline import Pipeline
