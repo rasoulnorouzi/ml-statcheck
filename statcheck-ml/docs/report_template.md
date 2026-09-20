@@ -328,5 +328,6 @@ evaluation, figures, and this report. `reproduce.sh --train` adds the training g
 and the export. The annotation stages need the rater agents and follow the procedure
 in `docs/PROTOCOL.md`. `dataset/MANIFEST.json` holds the sha256 of every dataset file,
 `models/runs.json` records every training run, and `models/export.json` records every
-export. A run of `reproduce.sh` on a clean checkout of this commit must give the same
-bytes for `results/eval.json`, every figure, and this file.
+export. A run of `reproduce.sh` on a clean checkout must give the same bytes for every figure,
+and the same bytes for `results/eval.json` and this file apart from the commit id and
+its date, which name the checkout the run was made from.

@@ -132,15 +132,15 @@ Status values: `blocked`, `ready`, `active`, `done`.
 | M2 | 6 | Annotate every window three times, blind | annotator-haiku, -sonnet, -opus | haiku, sonnet, opus | done |
 | M2 | 7 | Collect, agreement report, adjudicate disputes, final labels | data-engineer, adjudicator | haiku, opus | done |
 | M2 | 8 | Dataset, splits, alignment gate | data-engineer | haiku | done |
-| M3 | 9 | Train the grid: 6 screens, 3 × 3 seeds, 1 ablation | ml-trainer | sonnet | active |
-| M3 | 10 | Export the zoo, parity, size, latency, quantisation delta | ml-trainer | sonnet | ready |
-| M4 | 11 | Evaluate on the holdout: systems, subsets, bootstrap, paired tests, McNemar | eval-engineer | sonnet | blocked on 10 |
+| M3 | 9 | Train the grid: 6 screens, 3 × 3 seeds, 1 ablation | ml-trainer | sonnet | done |
+| M3 | 10 | Export the zoo, parity, size, latency, quantisation delta | ml-trainer | sonnet | done |
+| M4 | 11 | Evaluate on the holdout: systems, subsets, bootstrap, paired tests, McNemar | eval-engineer | sonnet | done |
 | M4 | 12 | R baseline regenerated, engine gate, JS and R parity tests green | regex-porter | sonnet | done |
-| M4 | 13 | Figures | eval-engineer | sonnet | blocked on 11 |
-| M4 | 14 | Report template and generated report, README, PROTOCOL, CONTEXT | doc-writer | haiku | blocked on 13 |
-| M4 | 15 | Final review: reproduce.sh from clean checkout, hashes match | manager | fable | blocked on 14 |
+| M4 | 13 | Figures | eval-engineer | sonnet | done |
+| M4 | 14 | Report template and generated report, README, PROTOCOL, CONTEXT | doc-writer | haiku | done |
+| M4 | 15 | Final review: reproduce.sh from clean checkout, hashes match | manager | fable | active |
 
-Phases 1 to 8 and 12 are done. Phase 9 trains the grid. Phases 10 to 15 follow it in order.
+Phases 1 to 14 are done. Phase 15 is the final reproduction check.
 
 ## Version 1 phases, for the record
 

@@ -3,7 +3,8 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-PY=../.venv/Scripts/python.exe
+# The interpreter: the sibling virtual environment by default, or PY=<path>.
+PY="${PY:-../.venv/Scripts/python.exe}"
 export PYTHONIOENCODING=utf-8
 
 # Parse command-line arguments

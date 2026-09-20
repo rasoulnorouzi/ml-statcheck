@@ -1,6 +1,6 @@
 # statcheck-ml — results report
 
-Generated from commit e7e83c8 (2026-09-20T03:09:16+02:00). Every number in this
+Generated from commit cb29721 (2026-09-20T03:15:58+02:00). Every number in this
 report comes from a committed measurement file. `pipeline/11_report.py` fills this
 template. No number is typed by hand.
 
@@ -482,7 +482,7 @@ Spread 0.040 against a limit of 0.060, over 200 documents and 327 gold results.
 
 ## 11 Reproduction
 
-This report was generated from commit e7e83c8 (2026-09-20T03:09:16+02:00). The
+This report was generated from commit cb29721 (2026-09-20T03:15:58+02:00). The
 evaluation numbers in it come from `results/eval.json`, itself run at commit
 3bb0d79ff4e073163c0d722f261a697c62ddb0b3, with R 4.6.1 and statcheck 1.5.0.
 
@@ -491,5 +491,6 @@ evaluation, figures, and this report. `reproduce.sh --train` adds the training g
 and the export. The annotation stages need the rater agents and follow the procedure
 in `docs/PROTOCOL.md`. `dataset/MANIFEST.json` holds the sha256 of every dataset file,
 `models/runs.json` records every training run, and `models/export.json` records every
-export. A run of `reproduce.sh` on a clean checkout of this commit must give the same
-bytes for `results/eval.json`, every figure, and this file.
+export. A run of `reproduce.sh` on a clean checkout must give the same bytes for every figure,
+and the same bytes for `results/eval.json` and this file apart from the commit id and
+its date, which name the checkout the run was made from.
