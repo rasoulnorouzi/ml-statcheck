@@ -63,8 +63,16 @@ pip install "git+https://github.com/rasoulnorouzi/ml-statcheck.git#subdirectory=
 pip install "statcheck-ml[pdf] @ git+https://github.com/rasoulnorouzi/ml-statcheck.git#subdirectory=statcheck-ml"
 ```
 
-I cannot run either line — this checkout is not pushed to
-`rasoulnorouzi/ml-statcheck`, so the URL 404s. What I can run is the same
+The repository is private. Without a credential pip stops at
+`fatal: could not read Username for 'https://github.com'`. Three ways to give
+it one: `gh auth login` (git then uses the stored credential), a personal
+access token with `repo` scope in the URL
+(`git+https://<token>@github.com/rasoulnorouzi/ml-statcheck.git#subdirectory=statcheck-ml`),
+or SSH (`git+ssh://git@github.com/rasoulnorouzi/ml-statcheck.git#subdirectory=statcheck-ml`).
+When the repository becomes public, none of this is needed.
+
+The lines above were not run here: they need the network and a credential.
+What I can run is the same
 install from a local path, which exercises the same `pyproject.toml`. I
 built it in a throwaway venv at a short path, to stay clear of Windows'
 260-character path limit, and deleted the venv afterward with `shutil`:

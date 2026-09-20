@@ -8,7 +8,9 @@ the R package `statcheck`.
 
     pip install "statcheck-ml[pdf] @ git+https://github.com/rasoulnorouzi/ml-statcheck.git#subdirectory=statcheck-ml"
 
-A PyPI release follows; then `pip install "statcheck-ml[pdf]"`.
+The repository is private, so pip needs a credential: `gh auth login`, a
+personal access token with `repo` scope, or the `git+ssh://git@github.com/...`
+form. A PyPI release follows; then `pip install "statcheck-ml[pdf]"`.
 
 ## Use
 
