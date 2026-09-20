@@ -22,10 +22,10 @@ PLAN.md              phase table and status; the single source of truth
 CONTEXT.md           why the decisions were made, and what the corpus showed
 statcheck-ml/        the project itself
   src/.../spec/      shared rules; every port reads these, none restates them
-  js/                the browser port
-  r/                 the R port
+  js/, r/            thin reference copies of two ports, until their repositories pass parity
   tests/             parity of the three ports, from committed cases
   pipeline/          reproducible command-line stages
+ports/               the R and web port repositories, each its own git repository (gitignored)
 .claude/agents/      one agent per phase, with its model fixed in frontmatter
 .claude/hooks/       session inventory, write guard, frontmatter validator
 scripts/             repository tooling, not project code

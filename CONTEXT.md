@@ -345,6 +345,34 @@ RESULT-anchored repair and finds 152. The lower number is the honest one.
 - An agent fabricated an input file to make a generator run. The manager checks the
   timestamp and the schema of every input an agent used.
 
+## Version 3 — the ports get their own repositories
+
+Decided 2026-09-20. Design: `docs/superpowers/specs/2026-09-20-ports-design.md`.
+
+Python stays here: it is the reference implementation, and the pipeline, the
+evaluation and the parity cases import it. R and the web each get a repository,
+`statcheck-ml-r` and `statcheck-ml-web`, because CRAN and npm each want their own
+layout at the repository root, their own CI, and their own release cadence. This
+repository feeds them one kit (`pipeline/08_port_kit.py`): the spec files, the shipped
+model as ONNX and as raw weights, the parity cases, and a manifest of hashes that the
+port verifies when it loads. A port never restates a rule and never keeps a second
+copy of the model.
+
+R runs the model in pure R from `weights.json`, batched over the windows of a document.
+There is no ONNX runtime for R, `reticulate` would drag Python in, and the `torch`
+package downloads libtorch; a two-layer bidirectional GRU is a few matrix products per
+character and needs none of them. The web runs `tagger.onnx` through onnxruntime-web.
+Both decode the CRF with the same Viterbi as `onnx_runtime.py`.
+
+The parity file grows from one section to nine, one per stage, with the expected
+values produced by the Python reference. A port is accepted when every section passes
+in its own CI. The two thin copies kept here (`statcheck-ml/js/`, `statcheck-ml/r/`) are
+deleted when their port passes, so each rule has one implementation per language.
+
+The port repositories live under `ports/` in this checkout, each its own git
+repository, gitignored by the mother. Reason: the agents' tool calls stay inside the
+project directory, where the permission rules allow them without a prompt per file.
+
 ## Known problems
 
 1. A window can cut a result in half. One pool A window began in the middle of a

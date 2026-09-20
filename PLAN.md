@@ -153,6 +153,32 @@ the p-value core in Python, the augmentation layer, two annotation passes, the
 BiLSTM and BiGRU models with CRF, the cascade, and the JS and R normalisation ports
 with parity tests. All of that code is kept. Only the process around it changes.
 
+## Phases, version 3 — the ports
+
+Plan: `docs/superpowers/plans/2026-09-20-ports.md`. One agent per task; the manager
+accepts on evidence.
+
+| Track | # | Task | Agent | Model | Status |
+|---|---|---|---|---|---|
+| A | A1 | `weights.json` per zoo model, numpy reference forward pass, 1e-4 parity | ml-trainer | sonnet | active |
+| A | A2 | Parity cases for nine stages, Python self-test | eval-engineer | sonnet | ready |
+| A | A3 | The kit: spec, model, parity, manifest | runtime-engineer | sonnet | blocked on A1, A2 |
+| A | A4 | Python package: console script, ONNX-only install | runtime-engineer | sonnet | ready |
+| A | A5 | Layout, CONTEXT, PLAN, CLAUDE | manager | fable | done |
+| B | B1 | R package skeleton, kit, normalise, extract | runtime-engineer | sonnet | blocked on A3 |
+| B | B2 | R model forward pass and Viterbi | stats-core | opus | blocked on B1 |
+| B | B3 | R prefilter, repair, grouping, p-value, pipeline | runtime-engineer | sonnet | blocked on B2 |
+| B | B4 | R PDF input, docs, CI | runtime-engineer, doc-writer | sonnet, haiku | blocked on B3 |
+| C | C1 | Web package skeleton, kit, normalise, extract | runtime-engineer | sonnet | blocked on A3 |
+| C | C2 | Web p-value core | stats-core | opus | blocked on C1 |
+| C | C3 | Web model, grouping, prefilter, repair, pipeline | runtime-engineer | sonnet | blocked on C2 |
+| C | C4 | Web PDF.js, demo page, Pages, docs | runtime-engineer, doc-writer | sonnet, haiku | blocked on C3 |
+| D | D1 | Retire the copies in the mother repository | manager | fable | blocked on B4, C4 |
+| D | D2 | Report section on the ports, reproduction check | manager | fable | blocked on D1 |
+| D | D3 | Push the port repositories, CI green | manager | fable | blocked on the owner |
+
 ## Waiting on the owner
 
 - The human-labeled gold set, whenever it is ready.
+- Two empty private repositories, `statcheck-ml-r` and `statcheck-ml-web`, and the
+  `git push` deny rule lifted in `.claude/settings.json` for the duration of track D.
