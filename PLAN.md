@@ -138,9 +138,12 @@ Status values: `blocked`, `ready`, `active`, `done`.
 | M4 | 12 | R baseline regenerated, engine gate, JS and R parity tests green | regex-porter | sonnet | done |
 | M4 | 13 | Figures | eval-engineer | sonnet | done |
 | M4 | 14 | Report template and generated report, README, PROTOCOL, CONTEXT | doc-writer | haiku | done |
-| M4 | 15 | Final review: reproduce.sh from clean checkout, hashes match | manager | fable | active |
+| M4 | 15 | Final review: reproduce.sh from clean checkout, hashes match | manager | fable | done |
 
-Phases 1 to 14 are done. Phase 15 is the final reproduction check.
+All fifteen phases are done (2026-09-20). A clean clone reproduced `results/eval.json`,
+every figure, and `results/REPORT.md` byte for byte, apart from the commit id the
+report names. Open work: the p-value core adopts statcheck's statistic-rounding rule
+(section 7 of the report); a human gold set, when the owner supplies one.
 
 ## Version 1 phases, for the record
 
