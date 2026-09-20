@@ -321,13 +321,15 @@ def benchmark_seeds(seeds: Optional[dict]) -> str:
     return md_table(headers, body)
 
 
-def systems_overall(systems: Optional[dict]) -> str:
-    """systems: eval.json["systems"]"""
+def systems_overall(systems: Optional[dict], only: Optional[Sequence[str]] = None) -> str:
+    """systems: eval.json["systems"]; `only` keeps the named rows, in that order."""
     if not systems:
         return note("results/eval.json has no systems")
     headers = ["System", "P", "R", "F1 [CI]"]
     body = []
-    for name, s in systems.items():
+    names = [n for n in only if n in systems] if only else list(systems)
+    for name in names:
+        s = systems[name]
         o = s.get("overall", {})
         ci = s.get("bootstrap", {}).get("overall", {}).get("f1")
         body.append([name, _f(o.get("p")), _f(o.get("r")), f"{_f(o.get('f1'))} {_ci(ci)}"])
@@ -420,7 +422,11 @@ def engines_table(engines: Optional[dict]) -> str:
 
 
 def readme_block(values: dict, systems_table_md: str) -> str:
-    """A short Markdown block for README.md: the systems table and one sentence."""
+    """A short Markdown block for README.md: a systems table and one sentence.
+
+    The caller passes a table of the rows a reader of the README needs: the two
+    statcheck baselines, the shipped seed-0 models, and the cascade.
+    """
     cascade_f1, repaired_f1 = values.get("cascade_f1"), values.get("statcheck_repaired_f1")
     if cascade_f1 is not None and repaired_f1 is not None:
         headline = (f"The cascade reaches holdout F1 {cascade_f1:.3f}, against "

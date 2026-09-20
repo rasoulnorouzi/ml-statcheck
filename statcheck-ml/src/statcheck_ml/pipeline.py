@@ -28,7 +28,7 @@ and the character it came from.
 
 Usage:
     from statcheck_ml.pipeline import Pipeline
-    report = Pipeline(model_path="models/final-crf/model.pt", use_crf=True).run_pdf("paper.pdf")
+    report = Pipeline(model_path="models/zoo/gru-crf").run_pdf("paper.pdf")
 """
 from __future__ import annotations
 
@@ -94,12 +94,24 @@ class Pipeline:
         self.normalize_text = normalize_text
         self.prefilter = Prefilter()
         self.model = None
+        self.tagger = None
         self.vocab = None
         self.use_crf = use_crf
         if model_path:
             self._load_model(model_path)
 
     def _load_model(self, path: str):
+        # A zoo directory (tagger.onnx, decoder.json, charmap.json) is what a
+        # clean checkout holds; the torch checkpoint is for the training side.
+        p = Path(path)
+        run_dir = p if p.is_dir() else (p.parent if p.suffix == ".onnx" else None)
+        if run_dir is not None:
+            from .onnx_runtime import OnnxTagger
+            self.tagger = OnnxTagger(run_dir)
+            self.use_crf = self.tagger.has_crf
+            self.model, self.vocab = None, self.tagger.vocab
+            return
+
         import torch
         from .data import load_charmap
         from .export import infer_unit
@@ -195,21 +207,26 @@ class Pipeline:
     # ---------------- stage 5b ----------------
 
     def find_with_model(self, window_text: str, line: int) -> List[Found]:
-        if self.model is None:
+        if self.model is None and self.tagger is None:
             return []
-        import torch
-
-        from .data import encode, normalise
+        from .data import normalise
 
         text = normalise(window_text)
-        ids = torch.tensor([encode(text, self.vocab)], dtype=torch.long)
-        with torch.no_grad():
-            logits = self.model(ids)
-            if self.use_crf and self.model.crf is not None:
-                mask = torch.ones(1, ids.size(1))
-                tags = [ID_TO_TAG[int(t)] for t in self.model.crf.decode(logits, mask)[0]]
-            else:
-                tags = [ID_TO_TAG[int(t)] for t in logits.argmax(-1)[0]]
+        if self.tagger is not None:
+            tags = self.tagger.tag_text(text)
+        else:
+            import torch
+
+            from .data import encode
+
+            ids = torch.tensor([encode(text, self.vocab)], dtype=torch.long)
+            with torch.no_grad():
+                logits = self.model(ids)
+                if self.use_crf and self.model.crf is not None:
+                    mask = torch.ones(1, ids.size(1))
+                    tags = [ID_TO_TAG[int(t)] for t in self.model.crf.decode(logits, mask)[0]]
+                else:
+                    tags = [ID_TO_TAG[int(t)] for t in logits.argmax(-1)[0]]
 
         out, current = [], None
         groups = []

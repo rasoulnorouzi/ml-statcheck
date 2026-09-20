@@ -296,6 +296,61 @@ def build_values(dataset_dir: Path, agreement: dict, runs, export, engines, eval
         sum(r["wall_seconds"] for r in runs if r.get("wall_seconds") is not None) / 3600
         if runs else None)
 
+    # --- values the interpretation sentences need, all from the same files ---
+    gold = (eval_data or {}).get("gold", {})
+    values["eval_gold_results"] = gold.get("results")
+    values["eval_gold_damaged"] = gold.get("damaged")
+    values["eval_gold_checkable"] = gold.get("checkable")
+
+    verdicts = (eval_data or {}).get("verdicts") or {}
+    values["verdict_agree"] = verdicts.get("agree")
+    values["verdict_disagree"] = verdicts.get("disagree")
+    values["verdict_undecidable"] = verdicts.get("undecidable")
+
+    for key in ("top1_vs_top2", "top1_vs_top3", "best_model_vs_statcheck_repaired"):
+        entry = paired.get(key) or {}
+        values[f"paired_{key}_a"] = entry.get("a")
+        values[f"paired_{key}_b"] = entry.get("b")
+        values[f"paired_{key}_diff"] = entry.get("diff")
+        values[f"paired_{key}_ci"] = entry.get("ci")
+        values[f"paired_{key}_p"] = entry.get("p")
+
+    # The ablation: the best config trained without augmentation.
+    ablation = next((r for r in (runs or []) if "noaug" in (r.get("config") or "")), None)
+    values["ablation_name"] = ablation["name"] if ablation else None
+    values["ablation_f1"] = sysval(ablation["name"], "overall", "f1") if ablation else None
+    values["ablation_damaged_r"] = sysval(ablation["name"], "damaged", "r") if ablation else None
+    values["best_damaged_r"] = sysval(best_name, "damaged", "r")
+
+    # The seed-0 run with the highest holdout F1, which the protocol did not
+    # use for selection, and whether it reached the zoo.
+    seed0_runs = [r for r in (runs or []) if r.get("seed") == 0
+                  and "noaug" not in (r.get("config") or "") and r["name"] in systems]
+    top_holdout = max(seed0_runs, key=lambda r: systems[r["name"]]["overall"]["f1"],
+                      default=None)
+    values["holdout_top_config"] = top_holdout["config"] if top_holdout else None
+    values["holdout_top_f1"] = (sysval(top_holdout["name"], "overall", "f1")
+                                if top_holdout else None)
+    values["holdout_top_dev_f1"] = top_holdout.get("dev_f1") if top_holdout else None
+    values["holdout_top_in_zoo"] = ("yes" if top_holdout and top_holdout["config"] in
+                                    (values.get("top3") or "") else "no")
+
+    # Runs whose loss blew up: a tenfold rise between two epochs to above 100.
+    divergent = []
+    for r in (runs or []):
+        report_path = REPO / "models" / r["name"] / "report.json"
+        if not report_path.exists():
+            continue
+        history = json.loads(report_path.read_text(encoding="utf-8")).get("history", [])
+        for prev, cur in zip(history, history[1:]):
+            if cur["loss"] > 100 and cur["loss"] > 10 * prev["loss"]:
+                divergent.append(f"{r['name']} at epoch {cur['epoch']} "
+                                 f"(loss {prev['loss']:.1f} to {cur['loss']:.0f}, "
+                                 f"dev F1 {cur['f1']:.3f})")
+                break
+    values["divergent_runs"] = "; ".join(divergent) if divergent else "none"
+    values["n_divergent"] = len(divergent)
+
     return values
 
 
@@ -362,7 +417,11 @@ def main():
     print(f"wrote {out_path}")
 
     if args.readme_block:
-        block = ru.readme_block(values, tables["systems_overall"]())
+        systems = (eval_data or {}).get("systems", {})
+        zoo_runs = [r["name"] for r in (export or []) if r.get("in_zoo")]
+        readme_rows = (["statcheck_raw", "statcheck_repaired"] + sorted(zoo_runs)
+                       + [n for n in systems if n.startswith("cascade")])
+        block = ru.readme_block(values, ru.systems_overall(systems, only=readme_rows))
         block_path = resolve(args.readme_block)
         block_path.parent.mkdir(parents=True, exist_ok=True)
         block_path.write_text(block, encoding="utf-8")
