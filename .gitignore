@@ -62,3 +62,5 @@ statcheck-ml/models/*-s[0-9]/model.pt
 # Results are committed
 !statcheck-ml/results/
 !statcheck-ml/results/**
+# the two port repositories, each its own git repository (docs/superpowers/specs/2026-09-20-ports-design.md)
+ports/
