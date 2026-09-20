@@ -160,11 +160,12 @@ accepts on evidence.
 
 | Track | # | Task | Agent | Model | Status |
 |---|---|---|---|---|---|
-| A | A1 | `weights.json` per zoo model, numpy reference forward pass, 1e-4 parity | ml-trainer | sonnet | active |
-| A | A2 | Parity cases for nine stages, Python self-test | eval-engineer | sonnet | ready |
+| A | A1 | `weights.json` per zoo model, numpy reference forward pass, 1e-3 parity | ml-trainer | sonnet | done |
+| A | A2 | Parity cases for nine stages, Python self-test | eval-engineer | sonnet | active |
 | A | A3 | The kit: spec, model, parity, manifest | runtime-engineer | sonnet | blocked on A1, A2 |
-| A | A4 | Python package: console script, ONNX-only install | runtime-engineer | sonnet | ready |
+| A | A4 | Python package: console script, packaged model, ONNX-only install | runtime-engineer | sonnet | active |
 | A | A5 | Layout, CONTEXT, PLAN, CLAUDE | manager | fable | done |
+| A | A6 | Python package proof: wheel, twine, CI matrix on three OS × four Pythons, install from the repository address | runtime-engineer | sonnet | blocked on A4 |
 | B | B1 | R package skeleton, kit, normalise, extract | runtime-engineer | sonnet | blocked on A3 |
 | B | B2 | R model forward pass and Viterbi | stats-core | opus | blocked on B1 |
 | B | B3 | R prefilter, repair, grouping, p-value, pipeline | runtime-engineer | sonnet | blocked on B2 |
