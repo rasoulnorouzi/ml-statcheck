@@ -53,6 +53,10 @@ statcheck-ml/models/*
 !statcheck-ml/models/*-s[0-9]/report.json
 !statcheck-ml/models/*-s[0-9]/charmap.json
 !statcheck-ml/models/*-s[0-9]/export_report.json
+# the ONNX of every grid run (about 2 MB each) so 09_evaluate.py reproduces
+# from a clean checkout; the torch checkpoints stay out
+!statcheck-ml/models/*-s[0-9]/tagger.onnx
+!statcheck-ml/models/*-s[0-9]/decoder.json
 statcheck-ml/models/*-s[0-9]/model.pt
 
 # Results are committed

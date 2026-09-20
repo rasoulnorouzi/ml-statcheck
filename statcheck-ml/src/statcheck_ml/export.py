@@ -199,12 +199,17 @@ def export(model_path: str, out_path: str, quantize: bool = False,
     out.parent.mkdir(parents=True, exist_ok=True)
 
     example = torch.randint(2, len(vocab), (1, 283), dtype=torch.long)
+    # The TorchScript exporter, not the dynamo one that torch 2.9+ selects by
+    # default. The dynamo exporter traces the recurrent units with a static
+    # time axis (283) and refuses the dynamic one every port needs; the
+    # TorchScript exporter keeps the axis free for all three units.
     torch.onnx.export(
         model, (example,), str(out),
         input_names=["ids"], output_names=["logits"],
         dynamic_axes={"ids": {0: "batch", 1: "time"},
                       "logits": {0: "batch", 1: "time"}},
         opset_version=OPSET,
+        dynamo=False,
     )
 
     inline_external_data(out)

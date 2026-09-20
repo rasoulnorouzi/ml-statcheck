@@ -1,0 +1,79 @@
+{
+ "model": "C:\\Users\\norouzin\\Downloads\\Projects\\practice_claude\\statcheck-ml\\models\\lstm-crf-s0\\model.pt",
+ "path": "C:\\Users\\norouzin\\Downloads\\Projects\\practice_claude\\statcheck-ml\\models\\lstm-crf-s0\\tagger.onnx",
+ "opset": 17,
+ "unit": "lstm",
+ "has_crf": true,
+ "vocabulary": 183,
+ "tags": 37,
+ "parameters": 616584,
+ "size_mb": 2.465,
+ "checks": [
+  {
+   "length": 16,
+   "batch": 1,
+   "max_difference": 1.33514404296875e-05,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 16,
+   "batch": 3,
+   "max_difference": 1.1444091796875e-05,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 64,
+   "batch": 1,
+   "max_difference": 1.33514404296875e-05,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 64,
+   "batch": 3,
+   "max_difference": 2.09808349609375e-05,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 283,
+   "batch": 1,
+   "max_difference": 1.52587890625e-05,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 283,
+   "batch": 3,
+   "max_difference": 2.09808349609375e-05,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 512,
+   "batch": 1,
+   "max_difference": 1.71661376953125e-05,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 512,
+   "batch": 3,
+   "max_difference": 1.71661376953125e-05,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 1024,
+   "batch": 1,
+   "max_difference": 1.9073486328125e-05,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 1024,
+   "batch": 3,
+   "max_difference": 1.71661376953125e-05,
+   "same_tag_share": 1.0
+  }
+ ],
+ "max_difference": 2.09808349609375e-05,
+ "decoder": {
+  "path": "C:\\Users\\norouzin\\Downloads\\Projects\\practice_claude\\statcheck-ml\\models\\lstm-crf-s0\\decoder.json",
+  "has_crf": true,
+  "tags": 37
+ }
+}

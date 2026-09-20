@@ -1,0 +1,79 @@
+{
+ "model": "C:\\Users\\norouzin\\Downloads\\Projects\\practice_claude\\statcheck-ml\\models\\gru-crf-s0\\model.pt",
+ "path": "C:\\Users\\norouzin\\Downloads\\Projects\\practice_claude\\statcheck-ml\\models\\gru-crf-s0\\tagger.onnx",
+ "opset": 17,
+ "unit": "gru",
+ "has_crf": true,
+ "vocabulary": 183,
+ "tags": 37,
+ "parameters": 468104,
+ "size_mb": 1.87,
+ "checks": [
+  {
+   "length": 16,
+   "batch": 1,
+   "max_difference": 0.000152587890625,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 16,
+   "batch": 3,
+   "max_difference": 0.0001373291015625,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 64,
+   "batch": 1,
+   "max_difference": 0.0001220703125,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 64,
+   "batch": 3,
+   "max_difference": 0.000152587890625,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 283,
+   "batch": 1,
+   "max_difference": 0.000152587890625,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 283,
+   "batch": 3,
+   "max_difference": 0.000152587890625,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 512,
+   "batch": 1,
+   "max_difference": 0.000152587890625,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 512,
+   "batch": 3,
+   "max_difference": 0.000152587890625,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 1024,
+   "batch": 1,
+   "max_difference": 0.000152587890625,
+   "same_tag_share": 1.0
+  },
+  {
+   "length": 1024,
+   "batch": 3,
+   "max_difference": 0.00018310546875,
+   "same_tag_share": 1.0
+  }
+ ],
+ "max_difference": 0.00018310546875,
+ "decoder": {
+  "path": "C:\\Users\\norouzin\\Downloads\\Projects\\practice_claude\\statcheck-ml\\models\\gru-crf-s0\\decoder.json",
+  "has_crf": true,
+  "tags": 37
+ }
+}
