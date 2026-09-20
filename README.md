@@ -270,6 +270,7 @@ report = pipeline.run_pdf("paper.pdf")
 
 | Path | Content |
 |---|---|
+| [statcheck-ml/docs/TUTORIAL_PYTHON.md](statcheck-ml/docs/TUTORIAL_PYTHON.md) | the Python tutorial: install, CLI, API, verdicts, model choice, batch use |
 | [statcheck-ml/results/REPORT.md](statcheck-ml/results/REPORT.md) | the generated report: method, agreement, grid, benchmarks, statistics |
 | [PLAN.md](PLAN.md) | the phase table and the state of each phase |
 | [CONTEXT.md](CONTEXT.md) | why each decision was made, and what the corpus showed |
