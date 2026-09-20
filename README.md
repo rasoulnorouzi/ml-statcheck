@@ -170,9 +170,9 @@ committed files.
 
 ## Three ports, one specification
 
-The project ships from three ports: Python, R, and a browser. **Each port will
-live in its own repository.** This repository stays the source of truth for the
-model, the shared rules, and the measurements.
+The project ships from three ports: Python, R, and a browser. The R and web
+ports live in their own repositories. This repository stays the source of truth
+for the model, the shared rules, and the measurements.
 
 Every rule that more than one port needs lives in one JSON file:
 
@@ -188,20 +188,27 @@ statcheck-ml/src/statcheck_ml/spec/
 `charmap.json` is written by one path only: `pipeline/08_export.py --update-spec`
 copies the charmap of the recommended model. No other script touches it.
 
-A port also needs the model, which `pipeline/08_port_kit.py` copies:
+A port also needs the model and the parity cases. `pipeline/08_port_kit.py`
+writes all of it as one kit:
 
 ```
-python pipeline/08_port_kit.py ../statcheck-ml-r --name statcheck-ml-r
+python pipeline/08_port_kit.py ../ports/statcheck-ml-r/inst/kit --name statcheck-ml-r
+python pipeline/08_port_kit.py ../ports/statcheck-ml-web/kit --name statcheck-ml-web
 ```
 
-That copies every shared file and the zoo into the port repository, and writes
-`statcheck-ml-manifest.json` beside them. The manifest records the version, the
-size and the SHA-256 of each file. The port checks every checksum when it loads,
-so a stale copy is found before it produces a wrong answer.
+The kit holds `spec/*.json`, the shipped model (ONNX for the web, raw weights
+for R), `parity/cases.json` with 220 cases over nine stages, and a manifest
+with the mother commit and a SHA-256 per file. A port verifies the manifest
+when it loads, so a stale copy fails before it produces a wrong answer.
 
-**Never restate a rule in a port.** A port reads the file and applies it. The
-parity suite, `tests/parity.mjs` and `tests/parity.R`, runs the committed cases
-through each port and fails when a port drifts.
+**Never restate a rule in a port.** A port reads the file and applies it, and
+proves it against the parity cases in its own test suite.
+
+| Port | Repository | Runs the model with |
+|---|---|---|
+| Python | this repository, `statcheck-ml/` | onnxruntime |
+| R | [statcheck-ml-r](https://github.com/rasoulnorouzi/statcheck-ml-r) | pure R, from `weights.json` |
+| Web | [statcheck-ml-web](https://github.com/rasoulnorouzi/statcheck-ml-web), demo at https://rasoulnorouzi.github.io/statcheck-ml-web/ | onnxruntime-web (WASM) |
 
 ### Each port needs a different PDF engine
 
@@ -219,9 +226,7 @@ while the spread is above 0.06. The measured spread is in
 node scripts/list-extensions.js      # every agent, skill and command loads
 
 cd statcheck-ml
-python -m pytest tests -q            # the Python units
-node tests/parity.mjs                # the browser port matches Python
-Rscript tests/parity.R               # the R port matches Python
+python -m pytest tests -q            # the Python units and the parity self-test
 
 python pipeline/12_engines.py <pdf_dir> <key.json> <labels.json> --text-dir <dir> --recursive
 ```

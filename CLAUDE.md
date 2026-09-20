@@ -22,8 +22,8 @@ PLAN.md              phase table and status; the single source of truth
 CONTEXT.md           why the decisions were made, and what the corpus showed
 statcheck-ml/        the project itself
   src/.../spec/      shared rules; every port reads these, none restates them
-  js/, r/            thin reference copies of two ports, until their repositories pass parity
-  tests/             parity of the three ports, from committed cases
+  r/run_statcheck.R  the R statcheck baseline runner for the evaluation (not a port)
+  tests/             the Python units and the parity generator and self-test
   pipeline/          reproducible command-line stages
 ports/               the R and web port repositories, each its own git repository (gitignored)
 .claude/agents/      one agent per phase, with its model fixed in frontmatter
@@ -82,14 +82,18 @@ Exits non-zero when an extension has broken frontmatter, so it can gate a commit
 
 ```
 cd statcheck-ml
-node tests/parity.mjs              # the JavaScript port matches Python
-Rscript tests/parity.R             # the R port matches Python
+python tests/make_parity_cases.py  # rebuild tests/parity_cases.json from the Python reference
+python pipeline/08_port_kit.py ../ports/statcheck-ml-r/inst/kit --name statcheck-ml-r
+python pipeline/08_port_kit.py ../ports/statcheck-ml-web/kit --name statcheck-ml-web
 ```
 
-Both read `tests/parity_cases.json`, which is committed, so neither needs the
-corpus. Each exits non-zero when a port drifts. Run both after any change to
-`spec/normalize.json` or to a port of it, and rebuild the cases with
-`python tests/make_parity_cases.py` only when the rules themselves change.
+The R and web ports live in their own repositories, `ports/statcheck-ml-r` and
+`ports/statcheck-ml-web` (each its own git repository, gitignored here). They
+read the kit and prove themselves against `parity/cases.json`, nine sections,
+in their own test suites. After any change to a spec file, a model, or the
+parity generator: rebuild the cases, export both kits, run each port's tests,
+commit the kit in each port. `tests/test_parity_self.py` checks that the Python
+reference still reproduces the committed cases.
 
 ```
 cd statcheck-ml
