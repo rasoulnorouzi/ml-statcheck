@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-20T01:18:00.972101+00:00",
+ "generated_at": "2026-09-20T01:22:18.726220+00:00",
  "command": "python pipeline/02_chunk.py --manifest-root dataset",
  "files": {
   "agreement/holdout.json": "1ff4d3993c64e2d3eee60029d89c7392e4a2da8c822a068346221e37c6e127d9",
@@ -22,7 +22,6 @@
   "baseline/versions.json": "8941e6babf52c3b004aca874d9e0ad78191d4a9d644877d72db0e75945d94ee5",
   "baseline/windows_repaired.json": "8073681ca8103c16769aca764a133f5c11d15a7074dbd30a482ec82556d2052e",
   "holdout.jsonl": "d7db058d30a401cd253bc9a878fb6728531ba8da5e80de22ee98ea5e75a43055",
-  "README.md": "228ad04a4af433ce2cbf5a05928f97bb68a35fb03a3db0fcff7ab2a1f5d21bcc",
   "splits.json": "bdcce293df349825dcb021a5c370603dfeb11a07b9f2dc41b7e0c451f033b2be",
   "train.jsonl": "4a610ca5f5c5a1ebfda9f4c6331ca3a436c752f24c9270e2da1e7e6a42949684",
   "windows/holdout.json": "ba26e07c5bab591ec69ba8e44573f699690c1805a7fdf1f671ac58bbecbfec71",

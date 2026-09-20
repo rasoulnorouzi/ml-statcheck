@@ -70,8 +70,11 @@ def main():
 
         # Find all files recursively except MANIFEST.json
         all_files = []
+        # Data files only. A Markdown file is documentation, and git rewrites
+        # its line endings on a Windows checkout, which would change its hash.
         for file_path in root_dir.rglob('*'):
-            if file_path.is_file() and file_path.name != 'MANIFEST.json':
+            if (file_path.is_file() and file_path.name != 'MANIFEST.json'
+                    and file_path.suffix != '.md'):
                 all_files.append(file_path)
 
         cmd = f"python pipeline/02_chunk.py --manifest-root {args.manifest_root}"
