@@ -87,3 +87,16 @@ def test_damaged_statistic_text_is_ignored():
     # either, because it cannot be what was printed.
     res = Result(test_type="t", statistic=1.48, df1=67, p_operator="=", p_value=0.143)
     assert check(res, reported_p_text=".143", statistic_text="1.4899").verdict == CONSISTENT
+
+
+def test_a_result_without_a_test_name_is_undecidable():
+    # pone.0358556 prints "chi-square = 7.42, df = 8, p = 0.492", which is
+    # right. Read as a t test it becomes a decision error. The name is never
+    # guessed: without it there is no verdict to give.
+    res = Result(test_type=None, statistic=7.42, df1=8, p_operator="=", p_value=0.492)
+    out = check(res, reported_p_text="0.492", statistic_text="7.42")
+    assert out.verdict == UNDECIDABLE
+    assert out.missing[0] == "test_type"
+    assert out.reason.startswith("no test name")
+    res = Result(test_type="chi2", statistic=7.42, df1=8, p_operator="=", p_value=0.492)
+    assert check(res, reported_p_text="0.492", statistic_text="7.42").verdict == CONSISTENT

@@ -297,7 +297,9 @@ class Pipeline:
             spans = [v[1] for v in g.values()]
             ends = [v[2] for v in g.values()]
             out.append(Found(
-                test_type=(g.get("TEST", ("",))[0] or "t").strip().lower(),
+                # A span with no test name stays nameless. Assuming t turned
+                # correct chi-squares into reported errors.
+                test_type=(g.get("TEST", ("",))[0] or "").strip().lower() or None,
                 statistic=stat,
                 df1=_num(g.get("DF1", ("",))[0]),
                 df2=_num(g.get("DF2", ("",))[0]),

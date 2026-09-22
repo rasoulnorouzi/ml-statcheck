@@ -250,7 +250,7 @@ def build_result(parts: dict) -> Tuple[Optional[Result], Optional[str]]:
         return None, None
     operator = next((ENTITY_OPERATOR[k] for k in parts if k.startswith("POP_")), None)
     return Result(
-        test_type=(parts.get("TEST") or "").strip().lower() or "t",
+        test_type=(parts.get("TEST") or "").strip().lower() or None,
         statistic=stat,
         df1=as_number(parts.get("DF1")),
         df2=as_number(parts.get("DF2")),

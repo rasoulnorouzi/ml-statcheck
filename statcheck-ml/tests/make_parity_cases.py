@@ -164,6 +164,12 @@ HAND_WINDOWS = [
      "See pages 12-34 for details (Smith, 2015-2016)."),
     # A Greek chi with a space on both sides: JavaScript's  is ASCII-only
     # and missed it; a port's word boundary must be Unicode-aware.
+    # The sentence that exposed the default test name: a correct
+    # Hosmer-Lemeshow chi-square (pone.0358556) whose superscript-two chi the
+    # model does not tag. Read as a t it became a decision error; with no
+    # name it must stay undecidable.
+    ("hand-chi-superscript-no-name",
+     "The model fits the data well (χ² = 7.42, df = 8, p = 0.492), suggesting no misfit."),
     ("hand-greek-chi",
      "Group and outcome were related, χ2(1, N = 223) = 8.69, p = .003, η² = .04."),
 ]

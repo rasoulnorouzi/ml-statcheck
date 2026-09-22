@@ -31,12 +31,13 @@ def _fmt_num(x) -> str:
 
 def _fmt_result_line(r: dict) -> str:
     df1, df2 = r.get("df1"), r.get("df2")
+    name = r["test_type"] or "?"
     if df1 is None:
-        test = r["test_type"]
+        test = name
     elif df2 is None:
-        test = f"{r['test_type']}({_fmt_num(df1)})"
+        test = f"{name}({_fmt_num(df1)})"
     else:
-        test = f"{r['test_type']}({_fmt_num(df1)}, {_fmt_num(df2)})"
+        test = f"{name}({_fmt_num(df1)}, {_fmt_num(df2)})"
     computed = "NA" if r.get("computed_p") is None else f"{r['computed_p']:.4f}"
     return (f"{r.get('line', -1):>5}  {test} = {_fmt_num(r.get('statistic'))}, "
             f"p {r.get('p_operator') or '='} {_fmt_num(r.get('p_value'))}  {computed}  "

@@ -53,6 +53,7 @@ REQUIRED_PARTS = {
 #: Saying "the paper does not report a p-value" claims the first, and a reader
 #: would act on that claim.
 PART_NAMES = {
+    "test_type": "no test name",
     "statistic": "no test statistic",
     "df1": "no degrees of freedom",
     "df2": "no second degrees of freedom",
@@ -71,6 +72,11 @@ def missing_parts(result: "Result") -> tuple:
     or the tool failed.
     """
     absent = []
+    # Without the test's name no p-value can be computed: the same 7.42 with
+    # df 8 is p = .49 as a chi-square and p = .00007 as a t. The name is never
+    # guessed.
+    if not (result.test_type or "").strip():
+        absent.append("test_type")
     if result.statistic is None:
         absent.append("statistic")
     for part in REQUIRED_PARTS.get((result.test_type or "").strip().lower(),
