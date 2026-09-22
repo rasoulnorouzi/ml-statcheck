@@ -287,3 +287,12 @@ checkout can name another configuration, such as `models/zoo/gru-softmax`.
 | [statcheck-ml/pipeline/README.md](statcheck-ml/pipeline/README.md) | every pipeline stage, its inputs and outputs |
 | [statcheck-ml/CORPUS.md](statcheck-ml/CORPUS.md) | what the supplied corpus contains |
 | [statcheck-ml/SAMPLING.md](statcheck-ml/SAMPLING.md) | how the windows were sampled |
+
+## Credit
+
+statcheck-ml stands on [statcheck](https://github.com/MicheleNuijten/statcheck), by
+Michèle B. Nuijten and Sacha Epskamp, with Willem Sleegers, Edoardo Costantini, Paul
+van der Laken, Sean Rife, John Sakaluk, Chris Hartgerink and Steve Haroz. Michèle
+Nuijten, the mother of statcheck, showed that a machine can read the statistics a
+paper reports and catch the ones that do not add up. This project only teaches that
+idea to read a damaged PDF. Thank you.
