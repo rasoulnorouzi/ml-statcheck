@@ -260,3 +260,99 @@ passed, 9 skipped), and each port committed: R `33faa2e`, web `32a74f4`. `result
 and is regenerated in M2b.5. The flaky-test cause is known (the unresolved
 `sys.path.insert` of `14_gold_eval.py` makes `statcheck_ml.__file__` differ when
 `test_gold` imports it first); its fix is M2b.1.
+
+## M2b — Close-out of M2 (closed 2026-10-04)
+
+The manager reran the suite after the five tasks: 419 passed, 6 skipped, 17.9 s. The
+parity file and both kits hold the same `cases.json` (sha256 3ef58509…) and the same
+`prefilter.json` (02fc9953…). Every number below was rechecked from the files.
+
+### M2b.1 — `line` from the statistic position in Python and the parity cases; the import-path flake; a fragment parity case — runtime-engineer, sonnet
+
+What changed: `run_text` sets `line = w.start_line + w.text.count("\n", 0,
+relative_start)` through a local `place()` helper, for results and fragments; the rule
+is `LINE_RULE` in `tests/parity_lib.py`, the top-level `line_rule` of the parity file,
+and a paragraph of the `run_text` docstring (the docstring test in `test_dedup.py`
+checks both rules); `finds_for` in `14_gold_eval.py` maps a find to the unit whose
+`[start_line, end_line]` contains its line; the three unresolved `sys.path.insert`
+lines of `14_gold.py`, `14_gold_eval.py` and `15_statcheck_gold.py` use
+`os.path.realpath`; new pipeline case `fragment-model-nameless` (holdout window
+`ho906bdb69`, one named result `r = .01` and one fragment, statistic 0.03, line 2);
+one sentence in the README output section; one assertion in
+`tests/test_prefilter_passages.py` that encoded the old first-line rule now expects
+line 8 (an edit outside the owned list, disclosed by the worker and accepted).
+Evidence: the manager recomputed `text.count("\n", 0, span_start)` for every result
+and fragment of the 8 pipeline cases, 0 mismatches; `doc-sample-paper` lines 11 for
+all → 14, 15, 17, 20, 21, 22, 23, 24, 18; `doc-holdout-2` 0, 0, 19, 32, 32, 32, 44,
+44, 44 → 3, 9, 22, 35, 39, 37, 53, 55, 59; `pytest tests/test_gold.py tests/test_cli.py`
+1 failed before (`statcheck_ml.__file__` under `pipeline/../src`), 17 passed after;
+the full suite usually passed because `test_cli` is collected before `test_gold`.
+Nit for a later cleanup: `place()` carries a what-docstring.
+
+### M2b.2 — The R port: `line` rule, kit, testthat, `R CMD check`, the library reinstalled — runtime-engineer, sonnet
+
+What changed (port `ports/statcheck-ml-r`): `statistic_line()` in `R/pipeline.R`
+(`start_line` plus the newlines in the unit text before the statistic's relative
+start), applied to pattern and model finds; the roxygen cites `line_rule`;
+`man/sc_check_text.Rd` regenerated; one hand test with the statistic on line index 2;
+README table and NEWS entry; the kit re-exported.
+Evidence: testthat before 34 failed of 269 tests (all `line` checks of the pipeline
+cases), after 270 tests, 1280 expectations, 0 failed (manager rerun); `R CMD build
+--no-build-vignettes` then `R CMD check --no-manual --ignore-vignettes` with
+`_R_CHECK_FORCE_SUGGESTS_=false`: Status OK, 0 ERROR, 0 WARNING, 0 NOTE, one INFO
+(installed size 5.5 Mb, kit 4.6 Mb); the vignette is unchecked because pandoc is not
+installed on this machine; `install.packages(…, type = "source")` DONE; a fresh
+`Rscript` with `library(statcheckml)` returns `line` 2, 3, 4, 5, 6 on the sample PDF
+(was 0, 0, 0, 0, 0; version 3 reported 2, 2, 2, 2, 4 from the trigger line, so the
+new values are the lines of the statistics themselves); `inst/kit` not in
+`.Rbuildignore`, as instructed.
+
+### M2b.3 — The web port: `line` rule, kit, vitest — runtime-engineer, sonnet
+
+What changed (port `ports/statcheck-ml-web`): `withSpan` in `src/pipeline.js` sets
+`line = startLine + newlines before statSpan[0]` for pattern and model finds, with a
+comment that cites `line_rule`; `test/pipeline.test.js` compares `line` on every
+result and fragment of every pipeline case and checks the kit carries `line_rule`;
+a stub-model test in `test/fragments.test.js` (result on line 2, fragment on line 1);
+one CHANGELOG line, one README sentence; the kit re-exported.
+Evidence: before 7 failed, 375 passed (the `line` checks, which the field loop already
+compared); after 385 passed, 0 failed, 9 skipped (the e2e file, no Chromium); the port
+returns [14, 15, 17, 20, 21, 22, 23, 24, 18] on `doc-sample-paper`, equal to the parity
+file; `demo/app.js` and `src/report.js` still read `r.line` under a line header.
+
+### M2b.4 — Stale sentences in the report template, `SAMPLING.md` and `dataset/README.md` — doc-writer, haiku; finished by the session
+
+The worker's diff held all six edits but was rejected twice: a 30-word sentence, a
+146-character line, and a report that stated 86 placeholders when the file held 126.
+The owner's session then applied the manager's fix prompt by hand. The manager
+verified the result: `SAMPLING.md` line 27 says "check the pattern's matches";
+`dataset/README.md` says gold.jsonl holds no paper text and that each result carries
+the coder's transcribed quote in `raw`; the template gains the passage sentence in
+section 1, the stage list names `units` and eight pipeline documents, "windows" is
+"passages" in the R sentence, and the parity paragraph ends with three sentences on
+the version 4 rules; 126 placeholders (HEAD 126); 9 lines over 90 characters, the
+same 9 as HEAD; the 33 report tests pass inside the 419.
+
+### M2b.5 — Close-out measurement: `recall_with_fragments` in the compare stage, the gold run `m2-close`, `ports.json`, the report — eval-engineer, sonnet
+
+What changed: `16_compare.py` prints `recall_with_fragments` before and after in both
+gold tables (a dash where the before file has no such key) and in the steps table;
+two tests in `test_compare.py`; gold run `m2-close` (the ninth log line);
+`ports.json`, figures and the report regenerated through `reproduce.sh --from compare`.
+Evidence: the manager walked every key under `gold_test` of `m2-after` against
+`m2-close` for all seven systems: no difference; the lines differ only in `label`,
+`date` and `git_sha` (e51e018 → 2042998); gold_test regex 0.498 / 0.498, model 0.689 /
+0.849, cascade 0.723 / 0.866 (named / with fragments), finds in the 120 no-result
+papers 2, 69, 69; two scratch runs of `16_compare.py` reproduce `compare.json`
+(e4590e56…) and `compare.md` (33ae0532…) byte for byte; `ports.json` Python 247, R
+1280, web 385 passed, 0 failed, `kit_mother_commit` 2042998 (a dirty export, replaced
+at the close below); manifest ok. Two quirks for a later cleanup: `13_ports.py` runs
+only `test_parity_self.py` for the Python port, and hard-codes `tests_failed: 0`
+for it instead of parsing the count.
+
+### M2b close — manager, fable
+
+Removals in M2b: none. M2 is closed with M2b. Order of the close: the mother commit
+with the five tasks and this ledger; both kits re-exported from that commit; the R and
+web suites rerun; each port committed; `13_ports.py` rerun so that `ports.json` names
+the clean export; the report regenerated; a second mother commit with the commit ids.

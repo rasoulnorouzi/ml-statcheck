@@ -32,7 +32,9 @@ The report holds two lists. `results` holds the finds with a test name, each
 with a verdict. `fragments` holds the finds with no test name: a statistic and
 sometimes a p-value, but nothing to recompute a p-value from. A fragment has
 the keys of a result without `verdict`, `computed_p`, `reason` and `missing`.
-The command line prints the fragments after the results.
+The command line prints the fragments after the results. `line` in a result or
+a fragment is the 0-based index of the line that holds the first character of
+its statistic value.
 
 Full method and setup: [root README](https://github.com/rasoulnorouzi/ml-statcheck#readme).
 Every number: [results/REPORT.md](https://github.com/rasoulnorouzi/ml-statcheck/blob/main/statcheck-ml/results/REPORT.md).

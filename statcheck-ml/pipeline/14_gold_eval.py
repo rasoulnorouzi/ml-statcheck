@@ -57,7 +57,7 @@ import sys
 from datetime import datetime, timezone
 from concurrent.futures import ProcessPoolExecutor
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
+sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 REPO_ROOT = os.path.realpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 IN_SCOPE = {"t", "F", "r", "z", "chi2", "Q"}
@@ -114,13 +114,16 @@ def finds_for(pipe, text, units):
     fragments, the finds with none. Recall counts the first list only.
     """
     named, fragments = [], []
-    span = {u.line: (u.start_line, u.end_line) for u in units}
+    ranges = [(u.start_line, u.end_line) for u in units]
     report = pipe.run_text(text)
     for key, rows in (("results", named), ("fragments", fragments)):
         for r in report[key]:
             if r["statistic"] is None:
                 continue
-            lo, hi = span.get(r["line"], (r["line"], r["line"]))
+            # A find reports the line of its statistic, which can sit
+            # anywhere inside its unit.
+            lo, hi = next(((a, b) for a, b in ranges if a <= r["line"] <= b),
+                          (r["line"], r["line"]))
             rows.append((lo, hi, round(abs(r["statistic"]), 4), r["test_type"]))
     return named, fragments
 

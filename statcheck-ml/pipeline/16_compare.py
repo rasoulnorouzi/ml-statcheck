@@ -36,6 +36,8 @@ def gold_rows(before, after):
         row = {"system": name, "recall_delta": delta(b["recall"], a["recall"])}
         for f in GOLD_FIELDS:
             row[f + "_before"], row[f + "_after"] = b[f], a[f]
+        row["recall_with_fragments_before"] = b.get("recall_with_fragments")
+        row["recall_with_fragments_after"] = a.get("recall_with_fragments")
         rows.append(row)
     only_after = [n for n in after_names if n not in names]
     return {"rows": rows, "only_before": only_before, "only_after": only_after}
@@ -71,6 +73,7 @@ def steps(log_path):
                         "git_sha": line.get("git_sha"),
                         "systems": {s: {"recall": per.get(s, {}).get("recall",
                                                                     line.get("gold_test_recall", {}).get(s)),
+                                        "recall_with_fragments": per.get(s, {}).get("recall_with_fragments"),
                                         "finds_in_papers_without_results":
                                         per.get(s, {}).get("finds_in_papers_without_results")}
                                     for s in line.get("systems", [])}})
@@ -79,6 +82,10 @@ def steps(log_path):
 
 def f3(x):
     return "n/a" if x is None else (f"{x:.3f}" if isinstance(x, float) else str(x))
+
+
+def dash(x):
+    return "\u2014" if x is None else f3(x)
 
 
 def ci(x):
@@ -92,14 +99,16 @@ def render(report):
         t = report["gold"][tier]
         md += [f"## Gold, {tier} (human-coded, recall)", "",
                "| system | recall before | recall after | delta | CI before | CI after | damaged before "
-               "| damaged after | finds without results before | after |",
-               "|---|---|---|---|---|---|---|---|---|---|"]
+               "| damaged after | finds without results before | after "
+               "| with fragments before | with fragments after |",
+               "|---|---|---|---|---|---|---|---|---|---|---|---|"]
         for r in t["rows"]:
             md.append(f"| {r['system']} | {f3(r['recall_before'])} | {f3(r['recall_after'])} "
                       f"| {f3(r['recall_delta'])} | {ci(r['recall_ci_before'])} | {ci(r['recall_ci_after'])} "
                       f"| {f3(r['recall_damaged_before'])} | {f3(r['recall_damaged_after'])} "
                       f"| {r['finds_in_papers_without_results_before']} "
-                      f"| {r['finds_in_papers_without_results_after']} |")
+                      f"| {r['finds_in_papers_without_results_after']} "
+                      f"| {dash(r['recall_with_fragments_before'])} | {dash(r['recall_with_fragments_after'])} |")
         md += ["", f"Only before: {', '.join(t['only_before']) or 'none'}. "
                    f"Only after: {', '.join(t['only_after']) or 'none'}.", ""]
     b = report["bronze_holdout"]
@@ -112,12 +121,14 @@ def render(report):
     md += ["", f"Only before: {', '.join(b['only_before']) or 'none'}. "
                f"Only after: {', '.join(b['only_after']) or 'none'}.", "",
            "## Steps (gold_test, one row per labelled evaluation in the log)", "",
-           "| label | date | git_sha | system | recall | finds without results |",
-           "|---|---|---|---|---|---|"]
+           "| label | date | git_sha | system | recall | recall with fragments "
+           "| finds without results |",
+           "|---|---|---|---|---|---|---|"]
     for s in report["steps"]:
         for name, v in s["systems"].items():
             md.append(f"| {s['label']} | {s['date']} | {(s['git_sha'] or '')[:7]} | {name} "
-                      f"| {f3(v['recall'])} | {v['finds_in_papers_without_results'] if v['finds_in_papers_without_results'] is not None else 'n/a'} |")
+                      f"| {f3(v['recall'])} | {dash(v['recall_with_fragments'])} "
+                      f"| {v['finds_in_papers_without_results'] if v['finds_in_papers_without_results'] is not None else 'n/a'} |")
     return "\n".join(md) + "\n"
 
 

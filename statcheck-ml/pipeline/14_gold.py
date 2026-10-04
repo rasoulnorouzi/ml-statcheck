@@ -24,7 +24,7 @@ import re
 import sys
 from concurrent.futures import ProcessPoolExecutor
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
+sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 NUM = re.compile(r"\d*\.?\d+")
 XESC = re.compile(r"_x([0-9A-Fa-f]{4})_")      # how Excel stores a control character

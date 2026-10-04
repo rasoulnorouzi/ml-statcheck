@@ -379,6 +379,13 @@ class Pipeline:
         runs over both lists together in emission order, so a named find
         that comes first removes a nameless one at the same statistic.
         stages["find"]["fragments"] is the count of the second list.
+
+        The line of a find is the 0-based index of the line that holds
+        the first character of its statistic value, counted over the
+        line split of the repaired document (the split the prefilter
+        uses; a blanked reference line keeps its newline, so the count
+        is the same). It applies to results and to fragments. A find
+        with no statistic interval keeps the first line of its unit.
         """
         started = time.time()
         stages = {}
@@ -422,21 +429,27 @@ class Pipeline:
                 seen_values.add(round(f.statistic, 3) if f.statistic is not None
                                 else None)
 
+        def place(f: Found, w):
+            """Shift the span to document offsets and set the line."""
+            if f.statistic_span is None:
+                return
+            start, end = f.statistic_span
+            # The unit text is the lines joined by "\n", so counting newlines
+            # before the value gives its line without a lookup table.
+            f.line = w.start_line + w.text.count("\n", 0, start)
+            f.statistic_span = (start + w.char_start, end + w.char_start)
+
         for w in units:
             hits = self.find_with_pattern(w.text, w.line) if self.use_pattern else []
             for f in hits:
-                if f.statistic_span is not None:
-                    f.statistic_span = (f.statistic_span[0] + w.char_start,
-                                        f.statistic_span[1] + w.char_start)
+                place(f, w)
                 if is_duplicate(f):
                     continue
                 remember(f)
                 found.append(f)
                 n_pattern += 1
             for f in self.find_with_model(w.text, w.line):
-                if f.statistic_span is not None:
-                    f.statistic_span = (f.statistic_span[0] + w.char_start,
-                                        f.statistic_span[1] + w.char_start)
+                place(f, w)
                 if is_duplicate(f):
                     continue
                 remember(f)

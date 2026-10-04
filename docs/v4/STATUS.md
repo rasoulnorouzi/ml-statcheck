@@ -6,7 +6,7 @@ Branch `v4-gold`. Team run `wf_963324ab-ab1`. Plan:
 
 `[x]` done · `[~]` doing · `[ ]` to do
 
-Last update: 2026-10-04, M2 tasks committed; M2b (close-out) prompts written.
+Last update: 2026-10-04, M2b accepted and committed; M2 closed; M3 prompts written.
 
 ## Done
 
@@ -61,22 +61,25 @@ Last update: 2026-10-04, M2 tasks committed; M2b (close-out) prompts written.
   - [x] M2.7 After numbers: bronze, gold, the compare table, the report — eval-engineer — sonnet. Accepted.
     Bronze: no number moved (the bronze scorer does not call run_text). Gold test, cascade: named recall 0.851 → 0.723, recall with fragments 0.851 → 0.866; no-result papers 155 finds → 69 finds + 82 fragments. Ports: Python 246, R 1259, web 381 parity checks, 0 failed.
 
-- [~] **M2b Close-out of M2** — prompts in `docs/v4/prompts/M2b.md`. The three items the
-  brief's session notes require before M2 closes, plus two small follow-ups.
-  - [ ] M2b.1 `line` from the statistic position (Python, parity `line_rule`), the
+- [x] **M2b Close-out of M2** — prompts in `docs/v4/prompts/M2b.md`. All five tasks
+  closed; the ledger holds one entry each. Suite at close: 419 passed, 6 skipped. M2 is closed.
+  - [x] M2b.1 (accepted: sample paper lines 11 for all → 14, 15, 17, 20–24, 18; flake reproduced and fixed; 417 passed) `line` from the statistic position (Python, parity `line_rule`), the
     import-path flake, a parity case with a real fragment — runtime-engineer — sonnet
-  - [ ] M2b.2 R port: `line` rule, kit, testthat, `R CMD check`, library reinstalled — runtime-engineer — sonnet
-  - [ ] M2b.3 Web port: `line` rule, kit, vitest — runtime-engineer — sonnet
-  - [ ] M2b.4 Stale sentences: report template lines 25, 352, 355, 362; `SAMPLING.md`
+  - [x] M2b.2 (accepted: testthat 270 tests, 1280 expectations, 0 failed; R CMD check Status OK with vignettes skipped, no pandoc; sample lines 0,0,0,0,0 → 2,3,4,5,6) R port: `line` rule, kit, testthat, `R CMD check`, library reinstalled — runtime-engineer — sonnet
+  - [x] M2b.3 (accepted: vitest 385 passed, 0 failed) Web port: `line` rule, kit, vitest — runtime-engineer — sonnet
+  - [x] M2b.4 (rejected twice; the session applied the manager's fix by hand: 126 placeholders, no new long line, report tests pass) Stale sentences: report template lines 25, 352, 355, 362; `SAMPLING.md`
     line 27; `dataset/README.md` on the `raw` field — doc-writer — haiku
-  - [ ] M2b.5 `recall_with_fragments` in `16_compare.py`; gold run `m2-close` (every
+  - [x] M2b.5 (accepted: gold run m2-close identical to m2-after; both recalls in compare.md; Python 419, R 1280, web 385 passed; compare output reproduces byte for byte) `recall_with_fragments` in `16_compare.py`; gold run `m2-close` (every
     number must equal `m2-after`); `ports.json`; report — eval-engineer — sonnet
 
 ## To do
 
-- [ ] M3 Annotation design and sampling: guideline 3.0 (label-architect, opus), the
-  gold-train dev split and the passage inventory, the sampler and batches of ten
-  (data-engineer, haiku)
+- [~] M3 Annotation design and sampling — prompts in `docs/v4/prompts/M3.md`.
+  - [ ] M3.1 Guideline 3.0 for passages, the four-vote rule, the agents and
+    PROTOCOL.md version 3 — label-architect — opus
+  - [ ] M3.2 The gold-train dev split (`dataset/gold/dev.json`) and the passage
+    inventory of the other gold-train papers — data-engineer — haiku
+  - [ ] M3.3 The passage sampler and the batches of ten — data-engineer — haiku
 - [ ] M4 Rating: three blind raters per batch, collect, agreement, four-vote consensus
 - [ ] M5 Consensus and dataset: disputes, adjudicator, merge, dataset, alignment gate
 - [ ] M6 Noise layer rebuilt and gated; the selection rule written before training
@@ -97,10 +100,11 @@ and the M6 gates run on the gold-train dev papers only. Every report states this
 ## Open points carried forward
 
 - Done in M2.1: `results/gold_eval.json` holds no date and a relative model path.
-- `SAMPLING.md` line 27 still says "check the silver labels"; `dataset/README.md` says
-  gold.jsonl holds no quotes, yet each result carries the owner's transcribed `raw`
-  field. Both go to M2b.4.
-- The parity file has no pipeline case with a non-empty fragment list; M2b.1 adds one.
-- `results/ports.json` names a kit exported from a dirty tree; M2b.5 regenerates it.
+- Done in M2b: `SAMPLING.md` line 27, the `raw` sentence in `dataset/README.md`, the
+  fragment parity case, `ports.json` from a clean export.
+- The R vignette is unchecked on this machine (no pandoc); `R CMD check` ran with
+  `--ignore-vignettes`.
+- `13_ports.py` runs only `test_parity_self.py` for the Python port and hard-codes
+  `tests_failed: 0` for it; a later cleanup task parses the count.
 - The `unparsed_units` count in `dataset/baseline/gold/versions.json` means "no result
   or error" for the text forms and "R error only" for the PDF form.

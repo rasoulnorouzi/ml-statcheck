@@ -1,6 +1,6 @@
 # statcheck-ml — results report
 
-Generated from commit e51e018 (2026-10-04T19:21:02+02:00). Every number in this
+Generated from commit 2042998 (2026-10-04T20:41:36+02:00). Every number in this
 report comes from a committed measurement file. `pipeline/11_report.py` fills this
 template. No number is typed by hand.
 
@@ -21,10 +21,12 @@ with repair alone and 0.308 for `statcheck` on the raw text.
 ## 1 Data
 
 The corpus holds 3100 open-access articles from psychology, sociology, political
-science, economics, education, and management. Each article was converted to text
-with PyMuPDF. A window is one candidate line with two context lines on each side,
-grown to at least 250 characters. The sampler drew windows from five pools. Pool A:
-the `statcheck` pattern matched a complete result. Pool AN: pool A with a negative
+science, economics, education, and management. Each article was converted to text with
+PyMuPDF. A window is one candidate line with two context lines on each side, grown to
+at least 250 characters. The pipeline reads merged passages at run time, which are
+overlapping windows joined into one unit per spec version 2. The window remains the
+sampling unit of the bronze set. The sampler drew windows from five pools. Pool A: the
+`statcheck` pattern matched a complete result. Pool AN: pool A with a negative
 statistic. Pool B1: a p-value is present, but no complete match. Pool B2: a test
 letter and digits, but no p-value. Pool C: the density prefilter rejected the line.
 
@@ -489,7 +491,7 @@ Spread 0.040 against a limit of 0.060, over 200 documents and 327 bronze results
 
 ## 11 Reproduction
 
-This report was generated from commit e51e018 (2026-10-04T19:21:02+02:00). The
+This report was generated from commit 2042998 (2026-10-04T20:41:36+02:00). The
 evaluation numbers in it come from `results/eval.json`, itself run at commit
 e51e0180abe8d034a082797cbbd859d074508bac, with R 4.6.1 and statcheck 1.5.0.
 
@@ -510,16 +512,17 @@ repositories and read one kit that this repository writes: the five spec files, 
 shipped model, the parity cases, and a manifest with a hash per file that the port
 verifies when it loads. A port never restates a rule.
 
-Parity is one file, 243 cases in 10 sections,
-one per stage: normalise, repair, prefilter, extract, model tags, model logits,
-grouping, p-value (73 rows), and the whole pipeline on four
-documents. The Python reference produces every expected value; each port reproduces
-them in its own test suite. R runs the model in pure R from the raw weights, batched
-over the windows of a document; the browser runs the ONNX graph through
-onnxruntime-web. Both must match the Python logits within 0.001 with
-every tag equal; the parity file states the bound. The p-value core in JavaScript is
-an own implementation of the incomplete beta and gamma functions, tested against
-SciPy values stored with the test; R uses `pt`, `pf`, `pchisq` and `pnorm`.
+Parity is one file, 244 cases in 10
+sections, one per stage: normalise, repair, prefilter, extract, model tags, model
+logits, grouping, units, p-value (73 rows), and the whole
+pipeline on eight documents: three holdout passages, the sample paper, and four hand
+cases. The Python reference produces every expected value; each port reproduces them
+in its own test suite. R runs the model in pure R from the raw weights, batched over
+the passages of a document; the browser runs the ONNX graph through onnxruntime-web.
+Both must match the Python logits within 0.001 with every tag equal; the
+parity file states the bound. The p-value core in JavaScript is an own implementation
+of the incomplete beta and gamma functions, tested against SciPy values stored with
+the test; R uses `pt`, `pf`, `pchisq` and `pnorm`.
 
 Writing the ports found four faults in the reference and two in the ports, each now a
 parity case: a chi-square with zero degrees of freedom gave NaN and a verdict instead
@@ -528,13 +531,16 @@ JavaScript and in PCRE, whose word boundary is ASCII-only; the reference's own
 rounding of a p-value text differs between Python's `repr` and JavaScript's number
 formatting, which the port now reproduces exactly; and the finders threw away the
 numbers as the paper printed them, so a statistic printed 5.10 was compared as the
-float 5.1 and the rounding interval was ten times too wide.
+float 5.1 and the rounding interval was ten times too wide. Version 4 added two rules
+to the pipeline and to the parity file. The first is the duplicate rule by statistic
+position. The second is the fragment rule for a find with no test name. Each rule is
+measured on the gold test before and after (results/v4/compare.md).
 
 | Port | PDF engine | Tests passed | Tests failed | Kit from commit | Sample PDF, s | Results | 100 windows, s |
 |---|---|---|---|---|---|---|---|
-| Python | pymupdf | 246 | 0 | - | 0.02 | 5 | 0.78 |
-| R | pdftools (poppler) | 1259 | 0 | e51e018 | 0.20 | 5 | 7.27 |
-| Web | pdf.js | 381 | 0 | e51e018 | 0.09 | 5 | 1.09 |
+| Python | pymupdf | 247 | 0 | - | 0.02 | 5 | 0.78 |
+| R | pdftools (poppler) | 1280 | 0 | 2042998 | 0.20 | 5 | 7.33 |
+| Web | pdf.js | 385 | 0 | 2042998 | 0.09 | 5 | 1.10 |
 
 Both timings are the second of two runs on one machine with the model loaded and
 one thread: the damaged sample PDF end to end, and one hundred windows of three

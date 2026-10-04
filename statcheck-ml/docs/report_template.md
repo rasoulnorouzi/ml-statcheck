@@ -21,10 +21,12 @@ with repair alone and {{statcheck_raw_f1|3}} for `statcheck` on the raw text.
 ## 1 Data
 
 The corpus holds 3100 open-access articles from psychology, sociology, political
-science, economics, education, and management. Each article was converted to text
-with PyMuPDF. A window is one candidate line with two context lines on each side,
-grown to at least 250 characters. The sampler drew windows from five pools. Pool A:
-the `statcheck` pattern matched a complete result. Pool AN: pool A with a negative
+science, economics, education, and management. Each article was converted to text with
+PyMuPDF. A window is one candidate line with two context lines on each side, grown to
+at least 250 characters. The pipeline reads merged passages at run time, which are
+overlapping windows joined into one unit per spec version 2. The window remains the
+sampling unit of the bronze set. The sampler drew windows from five pools. Pool A: the
+`statcheck` pattern matched a complete result. Pool AN: pool A with a negative
 statistic. Pool B1: a p-value is present, but no complete match. Pool B2: a test
 letter and digits, but no p-value. Pool C: the density prefilter rejected the line.
 
@@ -347,16 +349,17 @@ repositories and read one kit that this repository writes: the five spec files, 
 shipped model, the parity cases, and a manifest with a hash per file that the port
 verifies when it loads. A port never restates a rule.
 
-Parity is one file, {{n_parity_cases|int}} cases in {{n_parity_sections|int}} sections,
-one per stage: normalise, repair, prefilter, extract, model tags, model logits,
-grouping, p-value ({{n_parity_pvalue|int}} rows), and the whole pipeline on four
-documents. The Python reference produces every expected value; each port reproduces
-them in its own test suite. R runs the model in pure R from the raw weights, batched
-over the windows of a document; the browser runs the ONNX graph through
-onnxruntime-web. Both must match the Python logits within {{logit_tolerance}} with
-every tag equal; the parity file states the bound. The p-value core in JavaScript is
-an own implementation of the incomplete beta and gamma functions, tested against
-SciPy values stored with the test; R uses `pt`, `pf`, `pchisq` and `pnorm`.
+Parity is one file, {{n_parity_cases|int}} cases in {{n_parity_sections|int}}
+sections, one per stage: normalise, repair, prefilter, extract, model tags, model
+logits, grouping, units, p-value ({{n_parity_pvalue|int}} rows), and the whole
+pipeline on eight documents: three holdout passages, the sample paper, and four hand
+cases. The Python reference produces every expected value; each port reproduces them
+in its own test suite. R runs the model in pure R from the raw weights, batched over
+the passages of a document; the browser runs the ONNX graph through onnxruntime-web.
+Both must match the Python logits within {{logit_tolerance}} with every tag equal; the
+parity file states the bound. The p-value core in JavaScript is an own implementation
+of the incomplete beta and gamma functions, tested against SciPy values stored with
+the test; R uses `pt`, `pf`, `pchisq` and `pnorm`.
 
 Writing the ports found four faults in the reference and two in the ports, each now a
 parity case: a chi-square with zero degrees of freedom gave NaN and a verdict instead
@@ -365,7 +368,10 @@ JavaScript and in PCRE, whose word boundary is ASCII-only; the reference's own
 rounding of a p-value text differs between Python's `repr` and JavaScript's number
 formatting, which the port now reproduces exactly; and the finders threw away the
 numbers as the paper printed them, so a statistic printed 5.10 was compared as the
-float 5.1 and the rounding interval was ten times too wide.
+float 5.1 and the rounding interval was ten times too wide. Version 4 added two rules
+to the pipeline and to the parity file. The first is the duplicate rule by statistic
+position. The second is the fragment rule for a find with no test name. Each rule is
+measured on the gold test before and after (results/v4/compare.md).
 
 {{table:ports}}
 

@@ -156,3 +156,23 @@ def gold_eval_found(text, line):
     i = text.index("2.31")
     return Found(test_type=None, statistic=2.31, p_operator="=", p_value=0.02,
                  source="model", line=line, statistic_span=(i, i + 4))
+
+
+def test_find_on_the_second_line_of_a_unit_still_matches_the_first_line(tmp_path):
+    body = ("Introduction. We ran the study.\n\n"
+            "The sample was drawn from the university pool, and the groups\n"
+            "differed, t(28) = 2.10, p = .04, in the expected direction.\n\nEnd.")
+    (tmp_path / "paper.txt").write_text(body, encoding="utf-8")
+    s = body.index("2.10")
+    gold_line = body[:s].count("\n") - 1
+    paper = {"doc": "paper.txt", "bronze_set": "none", "has_results": True,
+             "results": [{"located": True, "span": [s - 4, s + 20], "anchor": [s, s + 4],
+                          "line": gold_line, "stat": 2.1,
+                          "test_type": "t", "damaged": False}]}
+    pipe = gold_eval.make_pipes(["regex"], None)["regex"]
+    units = list(pipe.prefilter.units(body))
+    named, _ = gold_eval.finds_for(pipe, body, units)
+    assert named[0][0] <= gold_line <= named[0][1]
+    assert named[0][0] < body[:s].count("\n")
+    out = gold_eval.score_paper((paper, str(tmp_path), ["regex"], None))
+    assert out["gold"][0]["regex"] is True

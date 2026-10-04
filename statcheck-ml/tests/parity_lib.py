@@ -275,6 +275,12 @@ DEDUP_RULE = (
     "per document."
 )
 
+#: Equal to the line paragraph in the `Pipeline.run_text` docstring; a unit
+#: test keeps the two in step.
+LINE_RULE = (
+    'The line of a find is the 0-based index of the line that holds the first character of its statistic value, counted over the line split of the repaired document (the split the prefilter uses; a blanked reference line keeps its newline, so the count is the same). It applies to results and to fragments. A find with no statistic interval keeps the first line of its unit.'
+)
+
 _FILL = ("The participants in the second study were recruited from the "
          "university pool and received course credit.")
 

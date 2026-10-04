@@ -31,7 +31,7 @@ import zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-sys.path.insert(0, os.path.join(ROOT, "src"))
+sys.path.insert(0, os.path.realpath(os.path.join(ROOT, "src")))
 
 RUN_TEXT = os.path.join(ROOT, "r", "run_statcheck.R")
 RUN_PDF = os.path.join(ROOT, "r", "run_statcheck_pdf.R")

@@ -409,9 +409,18 @@ def build_units_section(docs: list) -> list:
     return rows
 
 
-def build_pipeline_section(docs: list) -> list:
+#: A bronze holdout window whose text the shipped model reads as one named
+#: result (r = .01) and one fragment (.03). dataset/windows/holdout.json and
+#: dataset/holdout.jsonl hold the same 576 windows. Found by running all 576
+#: through the pipeline: 28 return a fragment. No gold paper is involved.
+FRAGMENT_WINDOW_ID = "ho906bdb69"
+
+
+def build_pipeline_section(docs: list, holdout_rows: list) -> list:
     rows = []
-    for name, text in list(docs) + pl.DEDUP_DOCS + pl.FRAGMENT_DOCS:
+    window = next(r for r in holdout_rows if r["window_id"] == FRAGMENT_WINDOW_ID)
+    extra = [("fragment-model-nameless", window["text"])]
+    for name, text in list(docs) + pl.DEDUP_DOCS + pl.FRAGMENT_DOCS + extra:
         rows.append({"name": name, "text": text, "expected": pl.pipeline_case(text),
                      "expected_fragments": pl.pipeline_fragments_case(text)})
     rows.sort(key=lambda r: r["name"])
@@ -577,7 +586,7 @@ def main(out_path: str | None = None):
     docs = build_documents(holdout_rows)
     prefilter_rows = build_prefilter_section(docs)
     units_rows = build_units_section(docs)
-    pipeline_rows = build_pipeline_section(docs)
+    pipeline_rows = build_pipeline_section(docs, holdout_rows)
 
     pvalue_section_rows = build_pvalue_section()
 
@@ -598,6 +607,7 @@ def main(out_path: str | None = None):
         "logit_note": pl.LOGIT_NOTE,
         "pvalue_rounding_rule": pl.PVALUE_ROUNDING_RULE,
         "dedup_rule": pl.DEDUP_RULE,
+        "line_rule": pl.LINE_RULE,
         "sections": {
             "normalise": normalise_rows,
             "repair": repair_rows,

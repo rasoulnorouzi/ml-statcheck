@@ -26,7 +26,7 @@ The papers themselves are not here. Papers are copyrighted and large, so they re
 
 ## Gold
 
-Gold is the owner's hand-coded set. The owner coded every reported result in 409 papers by hand. `gold/gold.jsonl` holds character offsets, line numbers, and the coded numbers for each result. It does not hold the paper text or the quotes, because the papers are copyrighted. A person with the corpus rebuilds the text with `pipeline/14_gold.py`.
+Gold is the owner's hand-coded set. The owner coded every reported result in 409 papers by hand. `gold/gold.jsonl` holds character offsets, line numbers, and the coded numbers for each result. It does not hold the paper text. Each result carries the coder's transcribed quote in the `raw` field. A person with the corpus rebuilds the text with `pipeline/14_gold.py`.
 
 `gold/split.json` divides the papers in two. No stage trains on a `gold_test` paper. `gold_train` papers may feed training in a later version. Gold labels are human labels. The bronze labels in the other files are not.
 

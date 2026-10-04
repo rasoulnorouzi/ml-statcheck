@@ -2118,9 +2118,9 @@
   }
  },
  "provenance": {
-  "git_sha": "e51e0180abe8d034a082797cbbd859d074508bac",
-  "label": "m2-after",
-  "command": "pipeline/14_gold_eval.py --resamples 2000 --seed 0 --label m2-after",
+  "git_sha": "204299899f164a29d9859be4cef3a3ef9d882a51",
+  "label": "m2-close",
+  "command": "pipeline/14_gold_eval.py --resamples 2000 --seed 0 --label m2-close",
   "seed": 0,
   "resamples": 2000,
   "systems": [

@@ -25,7 +25,9 @@
      "recall_damaged_before": 0.578,
      "recall_damaged_after": 0.578,
      "finds_in_papers_without_results_before": 2,
-     "finds_in_papers_without_results_after": 2
+     "finds_in_papers_without_results_after": 2,
+     "recall_with_fragments_before": null,
+     "recall_with_fragments_after": 0.498
     },
     {
      "system": "model",
@@ -43,7 +45,9 @@
      "recall_damaged_before": 0.807,
      "recall_damaged_after": 0.752,
      "finds_in_papers_without_results_before": 155,
-     "finds_in_papers_without_results_after": 69
+     "finds_in_papers_without_results_after": 69,
+     "recall_with_fragments_before": null,
+     "recall_with_fragments_after": 0.849
     },
     {
      "system": "cascade",
@@ -61,7 +65,9 @@
      "recall_damaged_before": 0.817,
      "recall_damaged_after": 0.761,
      "finds_in_papers_without_results_before": 155,
-     "finds_in_papers_without_results_after": 69
+     "finds_in_papers_without_results_after": 69,
+     "recall_with_fragments_before": null,
+     "recall_with_fragments_after": 0.866
     },
     {
      "system": "statcheck_r_fulltext_raw",
@@ -79,7 +85,9 @@
      "recall_damaged_before": 0.0,
      "recall_damaged_after": 0.0,
      "finds_in_papers_without_results_before": 2,
-     "finds_in_papers_without_results_after": 2
+     "finds_in_papers_without_results_after": 2,
+     "recall_with_fragments_before": null,
+     "recall_with_fragments_after": null
     },
     {
      "system": "statcheck_r_fulltext_repaired",
@@ -97,7 +105,9 @@
      "recall_damaged_before": 0.606,
      "recall_damaged_after": 0.606,
      "finds_in_papers_without_results_before": 2,
-     "finds_in_papers_without_results_after": 2
+     "finds_in_papers_without_results_after": 2,
+     "recall_with_fragments_before": null,
+     "recall_with_fragments_after": null
     },
     {
      "system": "statcheck_r_passages",
@@ -115,7 +125,9 @@
      "recall_damaged_before": 0.606,
      "recall_damaged_after": 0.606,
      "finds_in_papers_without_results_before": 2,
-     "finds_in_papers_without_results_after": 2
+     "finds_in_papers_without_results_after": 2,
+     "recall_with_fragments_before": null,
+     "recall_with_fragments_after": null
     },
     {
      "system": "statcheck_r_pdf",
@@ -133,7 +145,9 @@
      "recall_damaged_before": 0.0,
      "recall_damaged_after": 0.0,
      "finds_in_papers_without_results_before": 2,
-     "finds_in_papers_without_results_after": 2
+     "finds_in_papers_without_results_after": 2,
+     "recall_with_fragments_before": null,
+     "recall_with_fragments_after": null
     }
    ],
    "only_before": [
@@ -159,7 +173,9 @@
      "recall_damaged_before": 0.42,
      "recall_damaged_after": 0.422,
      "finds_in_papers_without_results_before": 0,
-     "finds_in_papers_without_results_after": 0
+     "finds_in_papers_without_results_after": 0,
+     "recall_with_fragments_before": null,
+     "recall_with_fragments_after": 0.52
     },
     {
      "system": "model",
@@ -177,7 +193,9 @@
      "recall_damaged_before": 0.684,
      "recall_damaged_after": 0.578,
      "finds_in_papers_without_results_before": 149,
-     "finds_in_papers_without_results_after": 54
+     "finds_in_papers_without_results_after": 54,
+     "recall_with_fragments_before": null,
+     "recall_with_fragments_after": 0.858
     },
     {
      "system": "cascade",
@@ -195,7 +213,9 @@
      "recall_damaged_before": 0.684,
      "recall_damaged_after": 0.578,
      "finds_in_papers_without_results_before": 149,
-     "finds_in_papers_without_results_after": 54
+     "finds_in_papers_without_results_after": 54,
+     "recall_with_fragments_before": null,
+     "recall_with_fragments_after": 0.861
     },
     {
      "system": "statcheck_r_fulltext_raw",
@@ -213,7 +233,9 @@
      "recall_damaged_before": 0.034,
      "recall_damaged_after": 0.034,
      "finds_in_papers_without_results_before": 0,
-     "finds_in_papers_without_results_after": 0
+     "finds_in_papers_without_results_after": 0,
+     "recall_with_fragments_before": null,
+     "recall_with_fragments_after": null
     },
     {
      "system": "statcheck_r_fulltext_repaired",
@@ -231,7 +253,9 @@
      "recall_damaged_before": 0.459,
      "recall_damaged_after": 0.459,
      "finds_in_papers_without_results_before": 0,
-     "finds_in_papers_without_results_after": 0
+     "finds_in_papers_without_results_after": 0,
+     "recall_with_fragments_before": null,
+     "recall_with_fragments_after": null
     },
     {
      "system": "statcheck_r_passages",
@@ -249,7 +273,9 @@
      "recall_damaged_before": 0.459,
      "recall_damaged_after": 0.459,
      "finds_in_papers_without_results_before": 0,
-     "finds_in_papers_without_results_after": 0
+     "finds_in_papers_without_results_after": 0,
+     "recall_with_fragments_before": null,
+     "recall_with_fragments_after": null
     },
     {
      "system": "statcheck_r_pdf",
@@ -267,7 +293,9 @@
      "recall_damaged_before": 0.034,
      "recall_damaged_after": 0.034,
      "finds_in_papers_without_results_before": 0,
-     "finds_in_papers_without_results_after": 0
+     "finds_in_papers_without_results_after": 0,
+     "recall_with_fragments_before": null,
+     "recall_with_fragments_after": null
     }
    ],
    "only_before": [
@@ -482,34 +510,42 @@
    "systems": {
     "regex": {
      "recall": 0.489,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "model": {
      "recall": 0.836,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 155
     },
     "cascade": {
      "recall": 0.851,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 155
     },
     "model_passages": {
      "recall": 0.849,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 150
     },
     "statcheck_r_fulltext_raw": {
      "recall": 0.113,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_fulltext_repaired": {
      "recall": 0.443,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_passages": {
      "recall": 0.479,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_pdf": {
      "recall": 0.237,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     }
    }
@@ -521,34 +557,42 @@
    "systems": {
     "regex": {
      "recall": 0.498,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "model": {
      "recall": 0.849,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 157
     },
     "cascade": {
      "recall": 0.866,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 157
     },
     "model_passages": {
      "recall": 0.849,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 150
     },
     "statcheck_r_fulltext_raw": {
      "recall": 0.113,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_fulltext_repaired": {
      "recall": 0.443,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_passages": {
      "recall": 0.479,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_pdf": {
      "recall": 0.237,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     }
    }
@@ -560,34 +604,42 @@
    "systems": {
     "regex": {
      "recall": 0.498,
+     "recall_with_fragments": 0.498,
      "finds_in_papers_without_results": 2
     },
     "model": {
      "recall": 0.689,
+     "recall_with_fragments": 0.849,
      "finds_in_papers_without_results": 73
     },
     "cascade": {
      "recall": 0.723,
+     "recall_with_fragments": 0.866,
      "finds_in_papers_without_results": 73
     },
     "model_passages": {
      "recall": 0.689,
+     "recall_with_fragments": 0.849,
      "finds_in_papers_without_results": 69
     },
     "statcheck_r_fulltext_raw": {
      "recall": 0.113,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_fulltext_repaired": {
      "recall": 0.443,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_passages": {
      "recall": 0.479,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_pdf": {
      "recall": 0.237,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     }
    }
@@ -599,30 +651,37 @@
    "systems": {
     "regex": {
      "recall": 0.498,
+     "recall_with_fragments": 0.498,
      "finds_in_papers_without_results": 2
     },
     "model": {
      "recall": 0.689,
+     "recall_with_fragments": 0.849,
      "finds_in_papers_without_results": 69
     },
     "cascade": {
      "recall": 0.723,
+     "recall_with_fragments": 0.866,
      "finds_in_papers_without_results": 69
     },
     "statcheck_r_fulltext_raw": {
      "recall": 0.113,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_fulltext_repaired": {
      "recall": 0.443,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_passages": {
      "recall": 0.479,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_pdf": {
      "recall": 0.237,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     }
    }
@@ -634,30 +693,79 @@
    "systems": {
     "regex": {
      "recall": 0.498,
+     "recall_with_fragments": 0.498,
      "finds_in_papers_without_results": 2
     },
     "model": {
      "recall": 0.689,
+     "recall_with_fragments": 0.849,
      "finds_in_papers_without_results": 69
     },
     "cascade": {
      "recall": 0.723,
+     "recall_with_fragments": 0.866,
      "finds_in_papers_without_results": 69
     },
     "statcheck_r_fulltext_raw": {
      "recall": 0.113,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_fulltext_repaired": {
      "recall": 0.443,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_passages": {
      "recall": 0.479,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     },
     "statcheck_r_pdf": {
      "recall": 0.237,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": 2
+    }
+   }
+  },
+  {
+   "label": "m2-close",
+   "date": "2026-10-04T18:59:36+00:00",
+   "git_sha": "204299899f164a29d9859be4cef3a3ef9d882a51",
+   "systems": {
+    "regex": {
+     "recall": 0.498,
+     "recall_with_fragments": 0.498,
+     "finds_in_papers_without_results": 2
+    },
+    "model": {
+     "recall": 0.689,
+     "recall_with_fragments": 0.849,
+     "finds_in_papers_without_results": 69
+    },
+    "cascade": {
+     "recall": 0.723,
+     "recall_with_fragments": 0.866,
+     "finds_in_papers_without_results": 69
+    },
+    "statcheck_r_fulltext_raw": {
+     "recall": 0.113,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": 2
+    },
+    "statcheck_r_fulltext_repaired": {
+     "recall": 0.443,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": 2
+    },
+    "statcheck_r_passages": {
+     "recall": 0.479,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": 2
+    },
+    "statcheck_r_pdf": {
+     "recall": 0.237,
+     "recall_with_fragments": null,
      "finds_in_papers_without_results": 2
     }
    }

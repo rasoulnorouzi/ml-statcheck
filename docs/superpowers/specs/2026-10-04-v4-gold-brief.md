@@ -141,6 +141,13 @@ control characters from 47.
   all three ports and in the parity cases. Fix it before M2 closes.
 - R CMD check did not run in M2.5. Run it before M2 closes.
 
+- M2b.4 was rejected twice and ended not accepted. The session then applied the
+  manager's own fix to `statcheck-ml/docs/report_template.md` by hand: the 30-word
+  sentence is now three sentences, and the two paragraphs the worker joined into long
+  lines (data, and parity) are rewrapped with every word kept. Checks: 126 placeholders
+  (HEAD 126); no line over 90 characters that HEAD did not already have; the 33 report
+  tests pass. Verify it and record M2b.4 as done by the session in the ledger.
+
 ## Limits for the team
 
 - Never delete a file that git does not track, unless the owner asks. Git cannot

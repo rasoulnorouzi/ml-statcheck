@@ -205,11 +205,11 @@ are reported apart, and also combined, never pooled.
 | M2 | 11 | The R port reads the new spec, the dedup rule and fragments; kit; testthat green | runtime-engineer | sonnet | done |
 | M2 | 12 | The web port reads the new spec, the dedup rule and fragments; kit; vitest green | runtime-engineer | sonnet | done |
 | M2 | 13 | After numbers: bronze, gold, the compare table, `results/ports.json`, the report | eval-engineer | sonnet | done |
-| M2b | 13.1 | `line` from the statistic position in Python and the parity cases; the import-path flake; a fragment parity case | runtime-engineer | sonnet | ready |
-| M2b | 13.2 | The R port: `line` rule, kit, testthat, `R CMD check`, the library reinstalled | runtime-engineer | sonnet | ready |
-| M2b | 13.3 | The web port: `line` rule, kit, vitest | runtime-engineer | sonnet | ready |
-| M2b | 13.4 | Stale sentences in the report template, `SAMPLING.md` and `dataset/README.md` | doc-writer | haiku | ready |
-| M2b | 13.5 | Close-out measurement: `recall_with_fragments` in the compare stage, the gold run `m2-close`, `ports.json`, the report | eval-engineer | sonnet | ready |
+| M2b | 13.1 | `line` from the statistic position in Python and the parity cases; the import-path flake; a fragment parity case | runtime-engineer | sonnet | done |
+| M2b | 13.2 | The R port: `line` rule, kit, testthat, `R CMD check`, the library reinstalled | runtime-engineer | sonnet | done |
+| M2b | 13.3 | The web port: `line` rule, kit, vitest | runtime-engineer | sonnet | done |
+| M2b | 13.4 | Stale sentences in the report template, `SAMPLING.md` and `dataset/README.md` | doc-writer | haiku | done |
+| M2b | 13.5 | Close-out measurement: `recall_with_fragments` in the compare stage, the gold run `m2-close`, `ports.json`, the report | eval-engineer | sonnet | done |
 | M3 | 14 | Guideline 3.0 for passages, the four-vote rule, agents and protocol updated | label-architect | opus | ready |
 | M3 | 15 | Passage sampler from gold-train papers, hard negatives, damaged papers; batches of ten | data-engineer | haiku | ready |
 | M4 | 16 | Every batch rated three times, blind | annotator-haiku, -sonnet, -opus | haiku, sonnet, opus | ready |

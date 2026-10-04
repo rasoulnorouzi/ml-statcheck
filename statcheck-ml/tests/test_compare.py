@@ -21,7 +21,8 @@ def write(path, obj):
 def setup(tmp_path):
     before = {t: {"papers": 3, "regex": sysrow(0.5, 4), "model": sysrow(0.8, 6), "old": sysrow(0.1, 0)}
               for t in ("gold_test", "gold_train")}
-    after = {t: {"papers": 3, "regex": sysrow(0.5, 4), "model": sysrow(0.85, 5), "new": sysrow(0.2, 1)}
+    after = {t: {"papers": 3, "regex": sysrow(0.5, 4), "model": dict(sysrow(0.85, 5), recall_with_fragments=0.9),
+                 "new": sysrow(0.2, 1)}
              for t in ("gold_test", "gold_train")}
     bb = {"systems": {"a": {"overall": {"p": 0.9, "r": 0.8, "f1": 0.85}},
                       "gone": {"overall": {"p": 0.1, "r": 0.1, "f1": 0.1}}}}
@@ -32,7 +33,7 @@ def setup(tmp_path):
          "gold_test_recall": {"model": 0.8}},
         {"date": "d2", "git_sha": "bbb", "label": "", "systems": ["model"], "gold_test_recall": {"model": 0.1}},
         {"date": "d3", "git_sha": "ccc", "label": "m2", "systems": ["model"],
-         "gold_test": {"model": sysrow(0.85, 5)}},
+         "gold_test": {"model": dict(sysrow(0.85, 5), recall_with_fragments=0.9)}},
     ]) + "\n")
     return [
         "--before-gold", write(tmp_path / "bg.json", before), "--after-gold", write(tmp_path / "ag.json", after),
@@ -75,3 +76,26 @@ def test_two_runs_same_bytes(tmp_path, monkeypatch):
     first = ((tmp_path / "o.json").read_bytes(), (tmp_path / "o.md").read_bytes())
     run(argv, monkeypatch)
     assert first == ((tmp_path / "o.json").read_bytes(), (tmp_path / "o.md").read_bytes())
+
+
+def test_fragment_recall_dash_when_a_side_lacks_it(tmp_path, monkeypatch):
+    run(setup(tmp_path), monkeypatch)
+    out = json.load(open(tmp_path / "o.json"))
+    by = {r["system"]: r for r in out["gold"]["gold_test"]["rows"]}
+    assert by["model"]["recall_with_fragments_before"] is None
+    assert by["model"]["recall_with_fragments_after"] == 0.9
+    md = (tmp_path / "o.md").read_text().splitlines()
+    gold = [x for x in md if x.startswith("| model |") and x.rstrip().endswith("\u2014 | 0.900 |")]
+    assert gold
+    regex = [x for x in md if x.startswith("| regex |") and x.rstrip().endswith("\u2014 | \u2014 |")]
+    assert regex
+
+
+def test_steps_table_dash_for_a_line_without_the_key(tmp_path, monkeypatch):
+    run(setup(tmp_path), monkeypatch)
+    steps = json.load(open(tmp_path / "o.json"))["steps"]
+    assert steps[0]["systems"]["model"]["recall_with_fragments"] is None
+    assert steps[1]["systems"]["model"]["recall_with_fragments"] == 0.9
+    md = (tmp_path / "o.md").read_text()
+    assert "| m1 | d1 | aaa | model | 0.800 | \u2014 |" in md
+    assert "| m2 | d3 | ccc | model | 0.850 | 0.900 | 5 |" in md

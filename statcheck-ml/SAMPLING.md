@@ -24,7 +24,7 @@ Each pool answers a different question. Do not merge them.
 
 | Pool | Source | Purpose | Measured yield |
 |---|---|---|---|
-| A | the pattern matched a complete result | check the silver labels | 100% |
+| A | the pattern matched a complete result | check the pattern's matches | 100% |
 | B1 | a p-value is present, no complete match | find prose and bare-statistic reports | 33% |
 | B2 | a test letter and digits, no p-value | find damaged operators | 60% |
 | C | the density filter rejected the line | measure what the filter drops | 0% |

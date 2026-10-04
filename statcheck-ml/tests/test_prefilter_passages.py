@@ -85,9 +85,9 @@ def test_run_text_returns_a_straddling_result_once_with_its_line():
     report = pipe.run_text(text)
     stats = [r["statistic"] for r in report["results"]]
     assert stats.count(2.31) == 1
-    # The line of a find is the first line of its unit, the key finds_for maps back to a range.
+    # The line of a find is the line of its statistic, which is line 8 here.
     unit = list(pipe.prefilter.units(text))[0]
-    assert report["results"][0]["line"] == unit.start_line
+    assert report["results"][0]["line"] == 8
     assert unit.start_line <= 8 and unit.end_line >= 9
     assert report["stages"]["prefilter"]["units_kept"] == 1
     assert report["stages"]["prefilter"]["windows_kept"] >= 2
