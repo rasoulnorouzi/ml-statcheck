@@ -136,7 +136,11 @@ def test_missing_run_stops_with_a_message(tmp_path):
     r = subprocess.run([sys.executable, str(ROOT / "pipeline/23_select_v4.py"), "--models", str(tmp_path),
                         "--out-dir", str(tmp_path / "out")], capture_output=True, text=True)
     assert r.returncode != 0
-    assert "23 of 23 runs are missing" in r.stderr and "gate-none" in r.stderr
+    assert "4 of 4 runs are missing" in r.stderr and "gate-none" in r.stderr
+    full = subprocess.run([sys.executable, str(ROOT / "pipeline/23_select_v4.py"), "--plan", "full",
+                           "--models", str(tmp_path), "--out-dir", str(tmp_path / "out")],
+                          capture_output=True, text=True)
+    assert "23 of 23 runs are missing" in full.stderr
     assert not (tmp_path / "out" / "selection.json").exists()
 
 
@@ -194,3 +198,29 @@ def test_dev_papers_lie_inside_gold_train():
     dev = set(json.loads((ROOT / "dataset/gold/dev.json").read_text())["dev"])
     split = json.loads((ROOT / "dataset/gold/split.json").read_text())
     assert dev <= set(split["gold_train"]) and not dev & set(split["gold_test"])
+
+
+def _m(r, fp=0):
+    return {"R_named": r, "FP": fp}
+
+
+def test_top3_rule2_picks_the_highest_and_breaks_a_tie_by_fp_then_size():
+
+    m = {"gate-none": _m(0.80), "gate-old+all": _m(0.84, 1),
+         "gru-softmax-all-s0": _m(0.835, 0), "lstm-softmax-all-s0": _m(0.79)}
+    params = {"gate-old+all": 467000, "gru-softmax-all-s0": 460000, "lstm-softmax-all-s0": 600000}
+    out = sel.select_top3(m, params, _m(0.809))
+    assert out["rule1"]["chosen"] == "all"
+    assert out["rule2"]["tied"] == ["gate-old+all", "gru-softmax-all-s0"]
+    assert out["chosen_run"] == "gru-softmax-all-s0"  # tied on R_named, lower FP
+    assert out["replaces_gru_crf_s0"] is True
+
+
+def test_top3_rule1_none_makes_gate_none_the_gru_crf_candidate():
+
+    m = {"gate-none": _m(0.85), "gate-old+all": _m(0.82),
+         "gru-softmax-all-s0": _m(0.80), "lstm-softmax-all-s0": _m(0.79)}
+    params = {"gate-none": 1, "gru-softmax-all-s0": 1, "lstm-softmax-all-s0": 1}
+    out = sel.select_top3(m, params, _m(0.86))
+    assert out["rule1"]["chosen"] == "none" and out["chosen_run"] == "gate-none"
+    assert out["replaces_gru_crf_s0"] is False

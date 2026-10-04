@@ -71,3 +71,27 @@ The rules read the shipped system, the cascade (pattern first, then the model), 
 reported beside it. When two means or two recalls are compared, a tie is a gap below
 0.01 from the highest value, computed on exact fractions. At the time of this note no
 version 4 run had a `report.json` and no dev score of a version 4 run existed.
+
+## Amendment, 2026-10-05, at the owner's request, before any run finished
+
+The owner asked to retrain only the top three version 2 configurations. The plan is
+reduced to four runs, all on the CPU of the development machine, seed 0 only:
+
+| Run | Configuration | Noise |
+|---|---|---|
+| `gate-old+all` | gru-crf | old default + all four new families |
+| `gru-softmax-all-s0` | gru-softmax | old default + all four new families |
+| `lstm-softmax-all-s0` | lstm-softmax | old default + all four new families |
+| `gate-none` | gru-crf | none (the control for rule 1) |
+
+The five single-family gate runs were stopped before they finished and are not
+reported. The seeds 1 and 2 are not trained.
+
+- Rule 1 applies as written, to `gate-none` against `gate-old+all`; it sets the gru-crf
+  candidate.
+- Rule 2 becomes: among the three candidates (the gru-crf run that rule 1 chose,
+  `gru-softmax-all-s0`, `lstm-softmax-all-s0`), take the highest R_named; a gap below
+  0.01 from the highest is a tie, broken by the lower FP, then by fewer parameters.
+- Rule 3 applies as written.
+
+At the time of this note no version 4 run had a `report.json`.
