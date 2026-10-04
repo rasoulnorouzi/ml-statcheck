@@ -1,70 +1,49 @@
-# Training on a GPU
+# Version 4 — training on a GPU
 
-Run these commands in a terminal on the machine with the GPU.
+The 23 pre-registered runs (`docs/v4/preregistration.md`) need a GPU. One epoch of one
+run takes 409 s on the 8-core development machine, so 23 runs of 30 epochs need about
+78 hours on its CPU.
 
-## 1. Get the branch
+## What to copy to the GPU machine
 
-```
-git clone <repository-url> ml-statcheck
-cd ml-statcheck
-git checkout v4-gold
-```
+`data/v4_gpu_kit.tar.gz` (3.3 MB, not in git). It holds `statcheck-ml/src`,
+`pipeline/22_train_v4.py`, `requirements.txt`, `pyproject.toml`,
+`dataset/train_v4.jsonl` and `dataset/splits_v4.json` from commit `e0d289f`.
 
-Or copy the whole `ml-statcheck` folder, including `statcheck-ml/dataset/`.
+## Commands on the GPU machine
 
-## 2. Install a CUDA build of torch
+1. Unpack the kit and go into it.
 
-`requirements.txt` pins `torch==2.14.0+cpu`. Install the same version with a CUDA build.
-Read the CUDA version in the first lines of `nvidia-smi`. Replace `cu126` with the matching tag.
+   ```
+   tar xzf v4_gpu_kit.tar.gz
+   cd statcheck-ml
+   ```
 
-```
-python -m venv .venv
-source .venv/bin/activate
-pip install -r statcheck-ml/requirements.txt
-pip install --force-reinstall --no-deps torch==2.14.0 --index-url https://download.pytorch.org/whl/cu126
-```
+2. Make sure that PyTorch sees the GPU. The second value must be `True`.
 
-## 3. Check that CUDA is visible
+   ```
+   python -c "import torch; print(torch.__version__, torch.cuda.is_available(), torch.cuda.get_device_name(0))"
+   ```
 
-```
-python -c "import torch; print(torch.__version__, torch.cuda.is_available(), torch.cuda.get_device_name(0))"
-```
+   If PyTorch is missing, install the CUDA build that matches `nvidia-smi`, for example
+   `pip install torch --index-url https://download.pytorch.org/whl/cu126`. Then install
+   `pip install numpy scipy`.
 
-The second value must be `True`. If it is `False`, do not continue.
+3. Train the 23 runs. Four runs share the GPU. A run that has `report.json` is skipped,
+   so the same command continues after an interruption.
 
-## 4. Train one configuration
+   ```
+   python pipeline/22_train_v4.py --device cuda --parallel 4 2>&1 | tee train_v4.out
+   ```
 
-```
-cd statcheck-ml
-PYTHONPATH=src python -u -m statcheck_ml.train --device cuda \
-  --data dataset/train.jsonl --splits dataset/splits.json \
-  --augment 2 --hard-negatives 400 --epochs 30 --unit lstm --crf --seed 0 \
-  --out models/lstm-crf-s0
-```
+4. Pack the results.
 
-Add `--no-default-families --families ocr,unicode,font_map` to choose the noise families.
-An unknown family name stops the run and prints the valid names.
+   ```
+   tar czf v4_models.tar.gz models/v4 train_v4.out
+   ```
 
-## 5. Train the grid
+## Bring the results back
 
-```
-cd statcheck-ml
-PYTHONPATH=src python pipeline/07_train.py --stage screen --device cuda --parallel 1
-PYTHONPATH=src python pipeline/07_train.py --stage seeds --device cuda --parallel 1
-```
-
-Use `--only lstm-crf,gru-crf` to run a subset. A run with a `report.json` is skipped,
-so you can restart a stopped grid.
-
-## 6. Bring the models back
-
-Each run writes `models/<run>/` with `model.pt`, `charmap.json` and `report.json`.
-Checkpoints hold CPU tensors, so they load on any machine. `report.json` records the
-device, the torch version and the seed.
-
-```
-cd statcheck-ml
-tar czf runs.tar.gz models/<run> models/runs.json models/<run>.log
-```
-
-Copy `runs.tar.gz` to the owner's machine and unpack it in `statcheck-ml/`.
+Copy `v4_models.tar.gz` to `data/v4_models.tar.gz` in this repository on the development
+machine. The session unpacks it into `statcheck-ml/models/v4/`, exports every run,
+scores the dev papers, and applies the pre-registered rule.
