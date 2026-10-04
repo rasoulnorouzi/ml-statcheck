@@ -59,46 +59,25 @@ Last update: 2026-10-04, M3 interim commit; M3.2b verified but not accepted; M3c
 
 ## Doing
 
-- Team run `wf_963324ab-ab1` stopped in M3 (a worker with no report). A resume began to
-  re-run M1 live and was stopped within two minutes; nothing changed on disk. The work
-  continues in a new run, `wf_1ad266e8-2f6`, from M3 (`docs/v4/team-workflow-continue.js`,
-  plan in `docs/v4/remaining-at-M3.json`).
+- [~] **M7 Training on the owner's A100** (Colab, `coab.ipynb`, kit 324bbced…, commit
+  `c201cee`): the 23 pre-registered runs, 12 at a time, batch 64; models saved to
+  `My Drive/statcheck_v4/`. The owner sends `v4_models.tar.gz` when it ends.
 
-- [~] **M3 Annotation design and sampling** — prompts in `docs/v4/prompts/M3.md`
-  - [x] M3.1 Guideline 3.0 for passages, the four-vote rule, the agents, PROTOCOL.md
-    version 3 — label-architect — opus. Accepted. Guideline sha256 961f3145…; embedding
-    test 5 of 5. Rules added for a missing test letter, tables, passage edges, and "ns".
-  - [x] M3.2 The gold-train dev split (15 % by paper) and the passage inventory of the
-    other gold-train papers — data-engineer — haiku. Dev split accepted (36 papers). The
-    first inventory was rejected. The retry fixed the script but left stale outputs and
-    returned no report, which stopped the team run. The session regenerated the inventory
-    with the fixed script. The manager verified it in the new run: 204 papers, 12592
-    pieces, 585 passages with an in-scope coder row, 80 hard negatives, coder rows placed
-    1725 of 1812, 0 span failures; rerun byte-identical (74d77061…). Ledger entry written.
-  - [~] M3.2b Fix the inventory: piece hash as `text_sha256`, `paper_text_sha256`, the
-    manifest, no `run_seconds` in the summary, dead code — data-engineer — haiku. The
-    inventory part is verified (rerun byte-identical, 8f112191…; manifest verifies; 437
-    tests pass) and committed. Rejected for the README paragraph and what-comments;
-    the fix is M3.2c. The run `wf_1ad266e8-2f6` ended there; M3.3 and M3.4 were skipped.
-  - [ ] M3.2c The README paragraph and the comments — data-engineer — haiku.
-  - [ ] M3.3 The passage sampler (caps 900 / 400 / 200 / 300 kept: 585 + 80 + 200 + 300
-    = 1165 passages); refuses a broken inventory — data-engineer — haiku. After M3.2c.
-  - [ ] M3.4 Batches of ten, unpadded names, 117 batches; the stages wired into
-    `reproduce.sh` and the pipeline README — data-engineer — haiku. After M3.3.
-    Prompts: `docs/v4/prompts/M3c.md`.
+## Done since the session took over (2026-10-04 22:45 – 2026-10-05 00:30)
+
+- [x] M3c sample and batches (`1097937`); M4 rating, 351 blind rater files, consensus
+  1945 kept and 145 disputes (`c836bea`); M5 adjudication, final labels (1994 results),
+  `train_v4.jsonl` (1927 bronze + 1165 passages) (`e0d289f`); pre-registration and its
+  dated notes; selection tooling (`ed0054d`); GPU kit, scenarios, CRF speed-up and the
+  progress table (`c201cee`).
 
 ## To do
 
-- [ ] M4 Rating: 117 batches x 3 raters (haiku, sonnet, opus) = 351 blind rater runs, as
-  general-purpose agents with guideline 3.0 in the prompt; collect with the guideline-hash
-  check; agreement; the four-vote consensus script. Six agents at a time.
-- [ ] M5 Consensus and dataset: disputes, adjudicator, merge, dataset, alignment gate
-- [ ] M6 Noise layer rebuilt and gated; the selection rule written before training
-- [ ] M7 Training: ten runs, zoo export, the rule applied
-- [ ] M8 Evaluation: gold test, bronze holdout, both combined; the original statcheck R
-  verdicts against reference verdicts from the coders' values; the report
-- [ ] M9 Ports: kits, R and web tests, Python package tests
-- [ ] M10 Documentation and the double reproduce
+- [ ] Unpack the models into `statcheck-ml/models/v4/`; `23_select_v4.py` (export, dev
+  scores, rules 1 to 3)
+- [ ] M8 One gold-test read and the bronze holdout; statcheck R verdicts against
+  reference verdicts from the coders' values; the report
+- [ ] M9 Ports: kits, R and web tests; M10 documentation and the double reproduce
 
 ## Gold discipline
 
