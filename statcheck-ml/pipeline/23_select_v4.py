@@ -233,7 +233,7 @@ def main():
     ap.add_argument("--out-dir", default="results/v4")
     ap.add_argument("--old-model", default=None, help="default: the packaged zoo model")
     ap.add_argument("--rule-system", default="cascade", choices=["model", "cascade"])
-    ap.add_argument("--plan", default="top3", choices=["top3", "full"],
+    ap.add_argument("--plan", default="full", choices=["top3", "full"],
                     help="top3: the four runs of the 2026-10-05 amendment; full: the 23 runs")
     ap.add_argument("--allow-partial", action="store_true",
                     help="testing only: skip missing runs and skip the rules that need them")

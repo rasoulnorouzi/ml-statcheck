@@ -136,11 +136,11 @@ def test_missing_run_stops_with_a_message(tmp_path):
     r = subprocess.run([sys.executable, str(ROOT / "pipeline/23_select_v4.py"), "--models", str(tmp_path),
                         "--out-dir", str(tmp_path / "out")], capture_output=True, text=True)
     assert r.returncode != 0
-    assert "4 of 4 runs are missing" in r.stderr and "gate-none" in r.stderr
-    full = subprocess.run([sys.executable, str(ROOT / "pipeline/23_select_v4.py"), "--plan", "full",
+    assert "23 of 23 runs are missing" in r.stderr and "gate-none" in r.stderr
+    top3 = subprocess.run([sys.executable, str(ROOT / "pipeline/23_select_v4.py"), "--plan", "top3",
                            "--models", str(tmp_path), "--out-dir", str(tmp_path / "out")],
                           capture_output=True, text=True)
-    assert "23 of 23 runs are missing" in full.stderr
+    assert "4 of 4 runs are missing" in top3.stderr
     assert not (tmp_path / "out" / "selection.json").exists()
 
 

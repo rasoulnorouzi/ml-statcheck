@@ -95,3 +95,11 @@ reported. The seeds 1 and 2 are not trained.
 - Rule 3 applies as written.
 
 At the time of this note no version 4 run had a `report.json`.
+
+## The amendment withdrawn, 2026-10-05, at the owner's request
+
+The owner then asked to keep all 23 runs and to train them on the owner's GPU. The
+amendment above no longer applies; the 23-run plan and rules 1 to 3 as first written
+(with the cascade clarification) stand. The four CPU runs of the amendment were stopped
+before any finished and were deleted; no version 4 run had a `report.json` and no dev
+score of a version 4 run existed.
