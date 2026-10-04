@@ -210,8 +210,8 @@ are reported apart, and also combined, never pooled.
 | M2b | 13.3 | The web port: `line` rule, kit, vitest | runtime-engineer | sonnet | done |
 | M2b | 13.4 | Stale sentences in the report template, `SAMPLING.md` and `dataset/README.md` | doc-writer | haiku | done |
 | M2b | 13.5 | Close-out measurement: `recall_with_fragments` in the compare stage, the gold run `m2-close`, `ports.json`, the report | eval-engineer | sonnet | done |
-| M3 | 14 | Guideline 3.0 for passages, the four-vote rule, agents and protocol updated | label-architect | opus | ready |
-| M3 | 15 | Passage sampler from gold-train papers, hard negatives, damaged papers; batches of ten | data-engineer | haiku | ready |
+| M3 | 14 | Guideline 3.0 for passages, the four-vote rule, agents and protocol updated | label-architect | opus | active |
+| M3 | 15 | Passage sampler from gold-train papers, hard negatives, damaged papers; batches of ten | data-engineer | haiku | active |
 | M4 | 16 | Every batch rated three times, blind | annotator-haiku, -sonnet, -opus | haiku, sonnet, opus | ready |
 | M4 | 17 | Collect, agreement, four-vote consensus | data-engineer, eval-engineer, label-architect | haiku, sonnet, opus | ready |
 | M5 | 18 | Disputes adjudicated blind, final labels, the passage dataset, splits, alignment gate | adjudicator, data-engineer, eval-engineer | opus, haiku, sonnet | ready |

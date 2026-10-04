@@ -15,26 +15,26 @@
   "python": {
    "engine": "pymupdf",
    "sample_results": 5,
-   "seconds_100_windows": 0.78,
+   "seconds_100_windows": 0.79,
    "seconds_sample_pdf": 0.017,
    "tests_failed": 0,
    "tests_passed": 247
   },
   "r": {
    "engine": "pdftools (poppler)",
-   "kit_mother_commit": "204299899f164a29d9859be4cef3a3ef9d882a51",
+   "kit_mother_commit": "dcb3a3badafc334886eb16aecbf76c055d733e14",
    "sample_results": 5,
-   "seconds_100_windows": 7.33,
-   "seconds_sample_pdf": 0.201,
+   "seconds_100_windows": 7.316,
+   "seconds_sample_pdf": 0.202,
    "tests_failed": 0,
    "tests_passed": 1280
   },
   "web": {
    "engine": "pdf.js",
-   "kit_mother_commit": "204299899f164a29d9859be4cef3a3ef9d882a51",
+   "kit_mother_commit": "dcb3a3badafc334886eb16aecbf76c055d733e14",
    "sample_results": 5,
-   "seconds_100_windows": 1.1,
-   "seconds_sample_pdf": 0.094,
+   "seconds_100_windows": 1.09,
+   "seconds_sample_pdf": 0.088,
    "tests_failed": 0,
    "tests_passed": 385
   }

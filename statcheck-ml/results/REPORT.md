@@ -1,6 +1,6 @@
 # statcheck-ml — results report
 
-Generated from commit 2042998 (2026-10-04T20:41:36+02:00). Every number in this
+Generated from commit dcb3a3b (2026-10-04T21:06:35+02:00). Every number in this
 report comes from a committed measurement file. `pipeline/11_report.py` fills this
 template. No number is typed by hand.
 
@@ -491,7 +491,7 @@ Spread 0.040 against a limit of 0.060, over 200 documents and 327 bronze results
 
 ## 11 Reproduction
 
-This report was generated from commit 2042998 (2026-10-04T20:41:36+02:00). The
+This report was generated from commit dcb3a3b (2026-10-04T21:06:35+02:00). The
 evaluation numbers in it come from `results/eval.json`, itself run at commit
 e51e0180abe8d034a082797cbbd859d074508bac, with R 4.6.1 and statcheck 1.5.0.
 
@@ -538,9 +538,9 @@ measured on the gold test before and after (results/v4/compare.md).
 
 | Port | PDF engine | Tests passed | Tests failed | Kit from commit | Sample PDF, s | Results | 100 windows, s |
 |---|---|---|---|---|---|---|---|
-| Python | pymupdf | 247 | 0 | - | 0.02 | 5 | 0.78 |
-| R | pdftools (poppler) | 1280 | 0 | 2042998 | 0.20 | 5 | 7.33 |
-| Web | pdf.js | 385 | 0 | 2042998 | 0.09 | 5 | 1.10 |
+| Python | pymupdf | 247 | 0 | - | 0.02 | 5 | 0.79 |
+| R | pdftools (poppler) | 1280 | 0 | dcb3a3b | 0.20 | 5 | 7.32 |
+| Web | pdf.js | 385 | 0 | dcb3a3b | 0.09 | 5 | 1.09 |
 
 Both timings are the second of two runs on one machine with the model loaded and
 one thread: the damaged sample PDF end to end, and one hundred windows of three

@@ -356,3 +356,15 @@ Removals in M2b: none. M2 is closed with M2b. Order of the close: the mother com
 with the five tasks and this ledger; both kits re-exported from that commit; the R and
 web suites rerun; each port committed; `13_ports.py` rerun so that `ports.json` names
 the clean export; the report regenerated; a second mother commit with the commit ids.
+
+Commit `dcb3a3b` on `v4-gold` holds the five tasks and the entries above. Both kits were
+re-exported from it (`mother_commit` dcb3a3b, `mother_dirty` false); the R suite rerun
+gave 270 tests, 1280 expectations, 0 failed, and the web suite 385 passed, 9 skipped;
+the ports were committed: R `1e4726d`, web `2ff741a`. `13_ports.py` then wrote
+`results/ports.json` with `kit_mother_commit` dcb3a3b (Python 247, R 1280, web 385
+passed, 0 failed), and `reproduce.sh --from report` regenerated `REPORT.md` with
+manifest ok; the only report changes are the commit id and two timings. The M3 prompts
+are in `docs/v4/prompts/M3.md`; its header records the manager's decisions (the rater
+schema unchanged, the coders as one vote of four, every passage label bronze, the dev
+papers frozen first, the inventory without text, the default caps 900 / 400 / 200 /
+300).
