@@ -9,6 +9,9 @@ statcheck-ml/data/
 # full text, not PDF, so the rules above do not catch them. Without this line
 # `git add -A` stages 3000 copyrighted articles.
 02_pdfs/
+# The owner's hand-made reference sheet. It quotes the articles, so it stays
+# local like the corpus it was made from.
+data/manual_references.xlsx
 
 # --- Derived dataset. This IS committed. ---
 # Short annotated excerpts and their labels. The rule above ignores the whole
