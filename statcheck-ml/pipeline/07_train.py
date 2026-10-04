@@ -46,7 +46,8 @@ def torch_version() -> str:
         return "unknown"
 
 
-def override_common(common: list, epochs=None, data=None, splits=None) -> list:
+def override_common(common: list, epochs=None, data=None, splits=None,
+                    device=None) -> list:
     out = list(common)
 
     def set_flag(flag, value):
@@ -61,6 +62,7 @@ def override_common(common: list, epochs=None, data=None, splits=None) -> list:
     set_flag("--epochs", epochs)
     set_flag("--data", data)
     set_flag("--splits", splits)
+    set_flag("--device", device)
     return out
 
 
@@ -97,21 +99,22 @@ def rank_configs(config_names, models_dir: Path) -> list:
 
 
 def stage_runs(stage: str, grid: dict, common: list, models_dir: Path, only) -> list:
+    """`only` is a set of configuration names, or empty for all of them."""
     if stage == "screen":
         return [make_run(cfg, args, 0, common) for cfg, args in grid["screen"].items()
-                if not only or cfg == only]
+                if not only or cfg in only]
     if stage == "seeds":
         top = rank_configs(grid["screen"].keys(), models_dir)[:grid["top_k"]]
         runs = []
         for cfg in top:
-            if only and cfg != only:
+            if only and cfg not in only:
                 continue
             for seed in grid["seeds"]:
                 runs.append(make_run(cfg, grid["screen"][cfg], seed, common))
         return runs
     if stage == "ablation":
         cfg = rank_configs(grid["screen"].keys(), models_dir)[0]
-        if only and cfg != only:
+        if only and cfg not in only and f"{cfg}-{grid['ablation']['suffix']}" not in only:
             return []
         new_common = drop_args(common, grid["ablation"]["drop"])
         suffix = grid["ablation"]["suffix"]
@@ -176,14 +179,22 @@ def main():
     ap.add_argument("--parallel", type=int, default=3)
     ap.add_argument("--threads", type=int, default=4)
     ap.add_argument("--models", default="models")
-    ap.add_argument("--only", default=None)
+    ap.add_argument("--only", default=None,
+                    help="comma-separated configuration names, for example lstm-crf,gru-crf")
     ap.add_argument("--epochs", type=int, default=None, help="override, for smoke tests")
     ap.add_argument("--data", default=None, help="override, for smoke tests")
     ap.add_argument("--splits", default=None, help="override, for smoke tests")
+    ap.add_argument("--device", choices=["auto", "cpu", "cuda"], default=None,
+                    help="passed to every run; omitted, each run uses its own default (auto)")
     args = ap.parse_args()
+    only = {n.strip() for n in (args.only or "").split(",") if n.strip()}
 
     grid = json.loads(Path(args.grid).read_text(encoding="utf-8"))
-    common = override_common(grid["common"], args.epochs, args.data, args.splits)
+    valid = set(grid["screen"]) | {f"{c}-{grid['ablation']['suffix']}" for c in grid["screen"]}
+    if only - valid:
+        raise SystemExit(f"unknown --only name {sorted(only - valid)}; valid: {sorted(grid['screen'])}")
+    common = override_common(grid["common"], args.epochs, args.data, args.splits,
+                             args.device)
 
     models_dir = Path(args.models)
     if not models_dir.is_absolute():
@@ -200,7 +211,7 @@ def main():
     py = sys.executable
     stages = ["screen", "seeds", "ablation"] if args.stage == "all" else [args.stage]
     for stage in stages:
-        runs = stage_runs(stage, grid, common, models_dir, args.only)
+        runs = stage_runs(stage, grid, common, models_dir, only)
         if not runs:
             print(f"{stage}: nothing to run")
             continue

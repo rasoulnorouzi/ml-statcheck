@@ -4,13 +4,17 @@ The model must not only read the damage that happens to appear in these 3100
 papers. A different PDF pipeline damages text differently, and a model that has
 only seen one pipeline learns that pipeline rather than the task.
 
-Four families, each independently switchable so that an ablation can show which
-one earned its place.
+Each family is independently switchable so that an ablation can show which one
+earned its place. The older families damage one character at random. The four
+paper families (`font_map`, `negative_damage`, `spaced_digits`, `operator_drop`)
+damage a whole example the same way, because a real font breaks a whole paper
+the same way. They are off by default.
 
 Every transform rewrites the text and the label offsets in one operation. A
 transform that shifts text without shifting its labels silently poisons
-training, so `apply` asserts that each label still covers the same characters
-and raises when it does not.
+training. The paper families describe their change as a list of edits, and
+`_assert_aligned` checks each label against those edits and raises
+`AlignmentError` when a label no longer covers its true value.
 
 The damage tables are taken from the corpus, not invented. The corpus shows
 control characters replacing operators, the fraction sign for the equals sign,
@@ -23,10 +27,14 @@ Usage:
 """
 from __future__ import annotations
 
+import json
 import random
 import re
+from collections import Counter
 from dataclasses import dataclass, field
-from typing import Callable, Dict, List, Sequence, Tuple
+from functools import lru_cache
+from pathlib import Path
+from typing import Callable, Dict, List, Sequence, Set, Tuple
 
 from .labels import spans_to_tags, tags_to_spans
 
@@ -78,6 +86,98 @@ ENGINE_ALPHABETS = {
 }
 
 
+# --- the paper families: one font, one damage, the whole example -------------
+# Rates measured on the bronze training windows (dataset/train.jsonl), never on
+# gold. In 337 pairs of a document and an operator, 335 use one damaged
+# character throughout, so a map is drawn once and applied everywhere.
+#
+# Of 527 damaged results that show both operators, the statistic operator is
+# damaged in 439 and the p operator in 425: each operator joins a map with share
+# 0.8. In quotes with a control character, 69 of 70 negative values lost the
+# minus sign to a control character, and 20 of 608 decimal values lost the
+# decimal point.
+MAP_OPERATOR_SHARE = 0.8
+MAP_MINUS_SHARE = 69 / 70
+MAP_DECIMAL_SHARE = 20 / 608
+#: Half the operator draws come from the font table, weighted by support. The
+#: other half come from OPERATOR_DAMAGE, which also holds the letter forms (b, N)
+#: that no table entry explains.
+MAP_TABLE_SHARE = 0.5
+CONTROL_SLOTS = [chr(c) for c in range(1, 9)]
+#: The share of augmented copies that each switched-on paper family damages.
+#: The originals stay clean, so this sets the clean-to-damaged ratio.
+PAPER_FAMILY_SHARE = 0.5
+#: Letter spacing, drawn once per example. Not measured: no bronze training
+#: window holds spaced digits, and gold is not read for augmentation. The real
+#: example "F1(1 , 7 3 ) = 3 .7 4" spaces three of its four digit gaps.
+SPACING_RATE = (0.5, 1.0)
+
+FONT_TABLE_PATH = Path(__file__).parent / "spec" / "font_table.json"
+
+# A minus sign, not a hyphen in a range ("10-20") or a word ("pre-1990").
+MINUS_SITE = re.compile(r"(?<![\w)\]])[-−–](?=\.?\d)")
+# A decimal point, not the end of an abbreviation ("pp.12").
+DECIMAL_SITE = re.compile(r"(?<![A-Za-z.])\.(?=\d)")
+NUMBER = re.compile(r"\.?\d(?:[\d.]*\d)?")
+# A window that a real font already damaged keeps its own map; a second map on
+# top would mix two fonts in one paper.
+ALREADY_DAMAGED = re.compile("[\x01-\x08¼]")
+
+
+class AlignmentError(AssertionError):
+    """A transform left a label that no longer covers its true value."""
+
+
+@lru_cache(maxsize=1)
+def font_glyphs() -> Dict[str, List[Tuple[str, int]]]:
+    """The damaged character for each operator in the font table, with support.
+
+    A font with no ToUnicode map passes the glyph code straight through, so the
+    extractor returns chr(code): 188 is the fraction sign, 92 the backslash.
+    """
+    entries = json.loads(FONT_TABLE_PATH.read_text(encoding="utf-8"))["entries"]
+    table: Dict[str, Counter] = {}
+    for entry in entries.values():
+        table.setdefault(entry["char"], Counter())[chr(entry["code"])] += entry["support"]
+    return {op: sorted(counts.items()) for op, counts in table.items()}
+
+
+Edit = Tuple[int, int, str]
+
+
+def _assert_aligned(old_text: str, old_spans, edits: Sequence[Edit],
+                    new_text: str, new_spans, family: str) -> None:
+    """Check every label against the edits that made `new_text`.
+
+    The expected content of a span is rebuilt from the old text and the edits
+    alone, independently of the offset arithmetic in `_replace`. A span whose
+    whole content was deleted must be gone; every other span must hold exactly
+    its old characters with its own edits applied, under the same label.
+    """
+    expected = []
+    for s, e, label in old_spans:
+        inside = []
+        for a, b, new in edits:
+            if a < b and (a < s < b or a < e < b):
+                raise AlignmentError(f"{family}: edit {a}-{b} cuts the {label} "
+                                     f"span {s}-{e} in {old_text!r}")
+            if (a < b and s <= a and b <= e) or (a == b and s < a < e):
+                inside.append((a, b, new))
+        pieces, pos = [], s
+        for a, b, new in sorted(inside):
+            pieces += [old_text[pos:a], new]
+            pos = b
+        pieces.append(old_text[pos:e])
+        content = "".join(pieces)
+        if content:
+            expected.append((label, content))
+    got = [(label, new_text[s:e]) for s, e, label in new_spans]
+    if got != expected:
+        raise AlignmentError(f"{family}: labels {got} where {expected} was expected; "
+                             f"{old_text!r} became {new_text!r}")
+
+
+
 @dataclass
 class Augmenter:
     """Generate perturbed copies of annotated windows."""
@@ -95,6 +195,17 @@ class Augmenter:
     #: together with `number_damage` only, so its own effect is not yet known.
     #: See `make_hard_negative`.
     extra_negatives: bool = False
+    #: One damage map per example, applied to every operator, minus sign and
+    #: decimal point in it. See `apply_font_map`.
+    font_map: bool = False
+    #: The font map damage on text that holds no result: windows with no label
+    #: and hard negatives. Damage alone must never signal a result.
+    negative_damage: bool = False
+    #: Spaces between the digits of every number, as PDF letter spacing writes
+    #: them. See `space_digits`.
+    spaced_digits: bool = False
+    #: Operators removed entirely, with their POP spans. See `drop_operators`.
+    operator_drop: bool = False
     rng: random.Random = field(init=False)
 
     def __post_init__(self):
@@ -292,6 +403,136 @@ class Augmenter:
             patterns = patterns + extra
         return rng.choice(patterns)
 
+    # -- the paper families ---------------------------------------------------
+
+    def _edit(self, text, spans, edits: Sequence[Edit], family: str):
+        """Apply non-overlapping edits from right to left, then check every label."""
+        new_text, new_spans = text, list(spans)
+        for start, end, new in sorted(edits, reverse=True):
+            new_text, new_spans = self._replace(new_text, new_spans, start, end, new)
+        _assert_aligned(text, spans, edits, new_text, new_spans, family)
+        return new_text, new_spans
+
+    def _draw_operators(self) -> List[str]:
+        ops = [op for op in "=<>" if self.rng.random() < MAP_OPERATOR_SHARE]
+        return ops or [self.rng.choice("=<>")]
+
+    def draw_font_map(self) -> Dict[str, str]:
+        """Draw what one symbol font does to each symbol it holds.
+
+        Keys are "=", "<", ">", "-" (any minus sign) and "." (a decimal point).
+        Two symbols never share a damaged character, because distinct glyphs in
+        one font have distinct codes.
+        """
+        rng = self.rng
+        glyphs = font_glyphs()
+        fmap: Dict[str, str] = {}
+        for op in self._draw_operators():
+            table = glyphs.get(op)
+            if table and rng.random() < MAP_TABLE_SHARE:
+                chars, weights = zip(*table)
+                pick = rng.choices(chars, weights)[0]
+            else:
+                pick = rng.choice(OPERATOR_DAMAGE[op])
+            if pick in fmap.values():
+                pick = rng.choice([c for c in CONTROL_SLOTS if c not in fmap.values()])
+            fmap[op] = pick
+        for symbol, share in (("-", MAP_MINUS_SHARE), (".", MAP_DECIMAL_SHARE)):
+            if rng.random() < share:
+                fmap[symbol] = rng.choice([c for c in CONTROL_SLOTS
+                                           if c not in fmap.values()])
+        return fmap
+
+    def apply_font_map(self, text, spans, fmap: Dict[str, str] | None = None):
+        """Damage every symbol of one font in the example, the same way.
+
+        Returns the text, the spans and the map. A window that a real font
+        already damaged is returned unchanged with an empty map.
+        """
+        if ALREADY_DAMAGED.search(text):
+            return text, spans, {}
+        if fmap is None:
+            fmap = self.draw_font_map()
+        edits = [(i, i + 1, fmap[ch]) for i, ch in enumerate(text)
+                 if ch in "=<>" and ch in fmap]
+        for symbol, site in (("-", MINUS_SITE), (".", DECIMAL_SITE)):
+            if symbol in fmap:
+                edits += [(m.start(), m.end(), fmap[symbol]) for m in site.finditer(text)]
+        text, spans = self._edit(text, spans, edits, "font_map")
+        return text, spans, fmap
+
+    def space_digits(self, text, spans, rate: float | None = None):
+        """Split the digits of every number with spaces, as letter spacing does.
+
+        "F(1, 73) = 3.74" becomes "F(1 , 7 3 ) = 3 .7 4". A space falls only
+        between two characters of a number, or between a number and the comma
+        or parenthesis after it, so a label widens to cover its spaced value and
+        the value itself does not change.
+        """
+        if rate is None:
+            rate = self.rng.uniform(*SPACING_RATE)
+        edits = []
+        for m in NUMBER.finditer(text):
+            gaps = list(range(m.start() + 1, m.end()))
+            if m.end() < len(text) and text[m.end()] in ",)":
+                gaps.append(m.end())
+            edits += [(k, k, " ") for k in gaps if self.rng.random() < rate]
+        return self._edit(text, spans, edits, "spaced_digits")
+
+    def drop_operators(self, text, spans, operators: str | None = None,
+                       collapse: bool | None = None):
+        """Remove operators entirely, the way a glyph with no code vanishes.
+
+        "z = 3.29, p = .01" becomes "z 3.29, p .01". The POP span of a removed
+        operator is removed; every other label is kept. With `collapse`, one of
+        the two spaces around a removed operator goes too.
+        """
+        if operators is None:
+            operators = "".join(self._draw_operators())
+        if collapse is None:
+            collapse = self.rng.random() < 0.5
+        edits = []
+        for i, ch in enumerate(text):
+            if ch not in operators:
+                continue
+            edits.append((i, i + 1, ""))
+            if collapse and 0 < i < len(text) - 1 and text[i - 1] == " " == text[i + 1]:
+                edits.append((i + 1, i + 2, ""))
+        return self._edit(text, spans, edits, "operator_drop")
+
+    def damage_paper(self, text, spans, always_map: bool = False):
+        """Apply the switched-on paper families to one example.
+
+        Each family fires with share PAPER_FAMILY_SHARE. With `always_map` the
+        font map always fires, which is how text with no result is damaged.
+        Returns the text, the spans and the names of the families that changed
+        the text.
+        """
+        fired: Set[str] = set()
+        if self.operator_drop and self.rng.random() < PAPER_FAMILY_SHARE:
+            new_text, spans = self.drop_operators(text, spans)
+            if new_text != text:
+                fired.add("operator_drop")
+            text = new_text
+        if always_map or (self.font_map and self.rng.random() < PAPER_FAMILY_SHARE):
+            new_text, spans, _ = self.apply_font_map(text, spans)
+            if new_text != text:
+                fired.add("font_map")
+            text = new_text
+        if self.spaced_digits and self.rng.random() < PAPER_FAMILY_SHARE:
+            new_text, spans = self.space_digits(text, spans)
+            if new_text != text:
+                fired.add("spaced_digits")
+            text = new_text
+        return text, spans, fired
+
+    def damage_negative(self, text: str) -> str:
+        """Damage text that holds no result exactly as a result would be damaged."""
+        damaged, spans, _ = self.damage_paper(text, [], always_map=True)
+        if spans:
+            raise AlignmentError(f"negative_damage: a label appeared in {damaged!r}")
+        return damaged
+
     # -- driver --------------------------------------------------------------
 
     def perturb(self, example: dict) -> dict | None:
@@ -299,12 +540,30 @@ class Augmenter:
         text = example["text"]
         spans = tags_to_spans(example["tags"])
         if not spans:
-            return None
+            if not self.negative_damage:
+                return None
+            damaged = self.damage_negative(text)
+            if damaged == text:
+                return None
+            return {
+                **example,
+                "window_id": example["window_id"] + "-aug",
+                "text": damaged,
+                "tags": ["O"] * len(damaged),
+                "augmented": True,
+            }
+
+        fired: Set[str] = set()
+        if self.font_map or self.spaced_digits or self.operator_drop:
+            text, spans, fired = self.damage_paper(text, spans)
+        # A second, random damage on an operator would break the one map the
+        # paper families drew.
+        one_font = bool(fired & {"font_map", "operator_drop"})
 
         steps: List[Callable] = []
-        if self.operator:
+        if self.operator and not one_font:
             steps.append(self.damage_operator)
-        if self.number_damage:
+        if self.number_damage and not one_font:
             steps.append(self.damage_number)
         if self.unicode:
             steps.append(self.vary_unicode)
@@ -347,6 +606,18 @@ class Augmenter:
                     "source_doc": None,
                     "augmented": True,
                 })
+                if self.negative_damage:
+                    damaged = self.damage_negative(text)
+                    if damaged != text:
+                        out.append({
+                            "window_id": f"hardneg-{self.seed}-{i}-aug",
+                            "text": damaged,
+                            "tags": ["O"] * len(damaged),
+                            "pool": "synthetic",
+                            "journal": None,
+                            "source_doc": None,
+                            "augmented": True,
+                        })
         return out
 
 

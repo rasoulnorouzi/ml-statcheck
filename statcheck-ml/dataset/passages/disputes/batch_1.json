@@ -1,0 +1,924 @@
+[
+ {
+  "dispute_id": "gp3cc7eca1:172:192-1",
+  "window_id": "gp3cc7eca1:172:192",
+  "text": "each participant, and one-sample t tests were conducted to deter-\nmine whether the regression weights for each sex were signifi-\ncantly different from 0 (a flat line).\nA one-sample t test revealed that, across all participants, the\nregression weight differed significantly from 0: mean \u0003 \u0001 \u0002.37,\nt(95) \u0001 \u00029.31, p \u0004 .001. The regression weight differed signifi-\ncantly from 0 for both men, mean \u0003 \u0001 \u0002.469, t(47) \u0001 \u00029.20, p \u0004\n.001, and women, mean \u0003 \u0001 \u0002.268, t(47) \u0001 \u00024.66, p \u0004 .001 (see\nFigure 1). An independent samples t test indicated that the differ-\nence between the regression weights for men and women was\nsignificant, t(94) = 2.61, p = .011, d \u0001 0.54.\nDiscussion\nThe results of Experiment 1 provide evidence of a sex difference\nin the SNARC effect. Both men and women showed a significant\nFigure 1.\nMean response time (RT) difference for each number for men\n(solid line) and women (dashed line) in Experiment 1. Bars show \u00051\nstandard error.\n182\nBULL, CLELAND, AND MITCHELL\nSNARC effect; however, the regression weight for male partici-",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "9.20",
+    "df1": "47",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(47) \u0001 \u00029.20, p \u0004 .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "9.20",
+    "df1": null,
+    "df2": "47",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "47) \u0001 \u00029.20, p \u0004\n.001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-9.20",
+    "df1": "47",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(47) \u0001 \u00029.20, p \u0004\n.001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-9.20",
+    "df1": "47",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(47) \u0001 \u00029.20, p \u0004\n.001",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3cc7eca1:172:192-2",
+  "window_id": "gp3cc7eca1:172:192",
+  "text": "each participant, and one-sample t tests were conducted to deter-\nmine whether the regression weights for each sex were signifi-\ncantly different from 0 (a flat line).\nA one-sample t test revealed that, across all participants, the\nregression weight differed significantly from 0: mean \u0003 \u0001 \u0002.37,\nt(95) \u0001 \u00029.31, p \u0004 .001. The regression weight differed signifi-\ncantly from 0 for both men, mean \u0003 \u0001 \u0002.469, t(47) \u0001 \u00029.20, p \u0004\n.001, and women, mean \u0003 \u0001 \u0002.268, t(47) \u0001 \u00024.66, p \u0004 .001 (see\nFigure 1). An independent samples t test indicated that the differ-\nence between the regression weights for men and women was\nsignificant, t(94) = 2.61, p = .011, d \u0001 0.54.\nDiscussion\nThe results of Experiment 1 provide evidence of a sex difference\nin the SNARC effect. Both men and women showed a significant\nFigure 1.\nMean response time (RT) difference for each number for men\n(solid line) and women (dashed line) in Experiment 1. Bars show \u00051\nstandard error.\n182\nBULL, CLELAND, AND MITCHELL\nSNARC effect; however, the regression weight for male partici-",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "4.66",
+    "df1": "47",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(47) \u0001 \u00024.66, p \u0004 .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-4.66",
+    "df1": "47",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(47) \u0001 \u00024.66, p \u0004 .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-4.66",
+    "df1": "47",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(47) \u0001 \u00024.66, p \u0004 .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "4.66",
+    "df1": null,
+    "df2": "47",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "47) \u0001 \u00024.66, p \u0004 .001",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp16647eaf:568:609-0",
+  "window_id": "gp16647eaf:568:609",
+  "text": "0.16, F(4, 71) = 3.32, p < .05, \bp\n2 \u0001 0.16. The separate\nunivariate ANCOVAs of the outcome variables revealed a\nsignificant effect for the PANSS Positive Scale, F(1, 78) \u0001 9.6,\np \u0002 .01; a trend for the PDI Preoccupation subscale, F(1, 78) =\n3.3, p = .072, and the Conviction subscale, F(1, 78) \u0001 2.9, p \u0001\nallocated to four-months of CBT-p (n = 40)\nallocated to four months of waiting (n = 40)\nNot meeting diagnostic inclusion \ncriteria (n = 6)\nparticipated in detailed assessment for eligibility \n(n = 86)\nrandomized to intervention groups\n(intention-to-treat-group) (n = 80)\nattended informal information session (N = 106)\nlost to post-assessment: n = 6 \ndrop-out in assessment phase: \nn = 2\ndiscontinuation of treatment: \nn = 4\nlost to post-assessment: n = 1\ncomplete post-wait-list data: n = 39 \nincluded in intent-to-treat-analysis: n = 40\ncomplete post-therapy data: n = 34 \nincluded in intent-to-treat-analysis: n = 40\ncomplete post-WL/therapy data: n = 34\nincluded in intent-to-treat-analysis: n = 40\nLost to post-treatment-\nassessment: n = 5 \ndrop-out before treatment: n = 1\ndrop-out in treatment: n =  4\nOne year after post-assessment:\ncomplete follow-up data from completers: n = 57\ncomplete follow-up data from dropouts: n = 3\npartial follow-up data from completers: n = 4 \npartial follow-up data from dropouts: n = 2\nno follow-up data: n = 14\nincluded in intent-to-treat-analysis: n = 80\nlost to one-year follow-up\nassessment: n = 7 \nreasons: low \nmotivation: n = 2; ",
+  "kind": "field_conflict",
+  "field": "p_operator",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "2.9",
+    "df1": "1",
+    "df2": "78",
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "F(1, 78) \u0001 2.9, p \u0001",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "F",
+    "statistic": "2.9",
+    "df1": "1",
+    "df2": "78",
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.093",
+    "quote": "1, 78) \u0001 2.9",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "2.9",
+    "df1": "1",
+    "df2": "78",
+    "n": null,
+    "p_operator": "=",
+    "p_value": null,
+    "quote": "F(1, 78) \u0001 2.9, p \u0001",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "F",
+    "statistic": "2.9",
+    "df1": "1",
+    "df2": "78",
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "F(1, 78) \u0001 2.9, p \u0001",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa816080e:431:433-0",
+  "window_id": "gpa816080e:431:433",
+  "text": "t(184.83) \u0001 \u00070.38, p \u0001 .703 were significant correlates of FMD.\nModel 4—Full Model Including Leisure Satisfaction,\nStress, and Depressive Symptoms",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "0.38",
+    "df1": null,
+    "df2": "184.83",
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".703",
+    "quote": "t(184.83) \u0001 \u00070.38, p \u0001 .703",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-0.38",
+    "df1": "184.83",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".703",
+    "quote": "t(184.83) \u0001 \u00070.38, p \u0001 .703",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-0.38",
+    "df1": "184.83",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".703",
+    "quote": "t(184.83) \u0001 \u00070.38, p \u0001 .703",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "0.38",
+    "df1": "184.83",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".703",
+    "quote": "t(184.83) \u0001 \u00070.38, p \u0001 .703",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpe91a1047:434:442-0",
+  "window_id": "gpe91a1047:434:442",
+  "text": "baseline epistemic beliefs. In computer science students, the ana-\nlyses revealed that elder students were more likely to belong to the\ndropout group (t47.56 ¼ 2.32; p < 0.05), but no signiﬁcant differ-\nences were found with regard to the other variables. Most impor-\ntantly, no signiﬁcant differences between dropouts and non-\ndropouts were found in epistemic beliefs for both computer sci-\nence and psychology students (0.43 \u0002 p = 0.84). We therefore\nconclude dropout to have occurred rather unsystematically in both\ngroups.",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "0.43",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.84",
+    "quote": "(0.43 \u0002 p = 0.84)",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp176028b7:775:805-0",
+  "window_id": "gp176028b7:775:805",
+  "text": "if you are having trouble choosing a physician, he would\nbe glad to choose one for you,” and were asked to indicate\nwhether they would want to 1) choose which of the physi-\ncians they would prefer and name who that was, or 2) ask\ntheir current physician to choose a new physician for them.\nAdditionally, participants rated how difficult the choice\nwas on a scale ranging from 1 ¼ very easy to 7 ¼ very dif-\nficult and how important the decision was on a scale from\n1 ¼ not at all important to 7 ¼ extremely important.\nResults\nManipulation Checks.\nAs intended, participants rated\nchoices to be more important when their choice was bind-\ning for a year and switching physicians would be difficult\nand costly (M ¼ 4.93, SD ¼ 1.29) than when their choice\nwas not binding and they could easily switch physicians\nwithout penalty (M ¼ 4.56, SD ¼ 1.34; F(1, 803) ¼ 15.41,\np < .001, g2\np ¼ .02). Neither the difficulty manipulation\n(F(1, 803) = .13, p = .72, g2\np < .001) nor the interaction\nbetween the difficulty and importance manipulations reli-\nably affected rated importance (F(1, 803) = 2.92, p = .09,\ng2\np ¼ .004). Also as intended, participants rated the choice\nto be more difficult when they had to choose between\nphysicians who were better on only one of the important\nattributes, meaning that they had to trade off the attributes\n(M ¼ 3.69, SD ¼ 1.65), than when one of the physicians\nwas better on both attributes (M ¼ 3.01, SD ¼ 1.60; F(1,\n803) = 34.93, p < .001, g2",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "15.41",
+    "df1": "1",
+    "df2": "803",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "1, 803) ¼ 15.41,\np < .001, g2\np ¼ .02",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "15.41",
+    "df1": "1",
+    "df2": "803",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "F(1, 803) ¼ 15.41,\np < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "15.41",
+    "df1": "1",
+    "df2": "803",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "F(1, 803) ¼ 15.41,\np < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "15.41",
+    "df1": "1",
+    "df2": "803",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "F(1, 803) ¼ 15.41, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:1223:1246-0",
+  "window_id": "gp47993ad6:1223:1246",
+  "text": "Results and Discussion\nWe combined perceptions of Habitat Haiti to form an index of\nattitude toward the organization (\u0005 \u0003 .92). We then ran a binary\nlogistic regression of choice to donate (1 \u0003 yes, 0 \u0003 no) on\nmotivational focus (1 \u0003 impact; 0 \u0003 signaling), distance (1 \u0003 far\naway; 0 \u0003 nearby), the interaction of motivational focus by\ndistance, and the following covariates: attitude toward Habitat and\nincome. We controlled for income because preliminary analyses\nrevealed an uneven distribution of income among the experimental\nconditions, \t2(8, N \u0003 323) \u0003 17.66, p \u0003 .024, which occurred\nrandomly. Specifically, the impact/nearby condition contained\nfewer high-income participants (income \b $80,000) than the\nimpact/far-away condition, \t2(1, N \u0003 31) \u0003 3.90, p \u0003 .048.\nFrom the binary logistic regression of choice to donate on\nmotivational focus, distance, their interaction, and the two cova-\nriates, the overall model was significant, \t2(12, N \u0003 323) \u0003 71.31,\np \u0004 .001. The results revealed the predicted interaction of moti-\nvational focus by distance on choice to donate (Wald \u0003 4.71, p \u0003\n.030). Additionally, the model revealed a main effect of attitude\ntoward Habitat Haiti (Wald \u0003 46.13, p \u0004 .001). We note that this\ninteraction did not reach significance when we removed both\ncovariates from the analysis, \t2(3, N \u0003 323) \u0003 2.45, p \u0003 .49;\nWald \u0003 2.14, p \u0003 .14, but reached marginal significance when\neither attitude alone, \t2(4, N \u0003 323) \u0003 60.10, p \u0004 .001; Wald \u0003",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "17.66",
+    "df1": "8",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".024",
+    "quote": "2(8, N \u0003 323) \u0003 17.66, p \u0003 .024",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "17.66",
+    "df1": "8",
+    "df2": null,
+    "n": "323",
+    "p_operator": "=",
+    "p_value": ".024",
+    "quote": "\t2(8, N \u0003 323) \u0003 17.66, p \u0003 .024",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "17.66",
+    "df1": "8",
+    "df2": null,
+    "n": "323",
+    "p_operator": "=",
+    "p_value": ".024",
+    "quote": "χ2(8, N = 323) = 17.66, p = .024",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "17.66",
+    "df1": "8",
+    "df2": null,
+    "n": "323",
+    "p_operator": "=",
+    "p_value": ".024",
+    "quote": "\t2(8, N \u0003 323) \u0003 17.66, p \u0003 .024",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:1223:1246-1",
+  "window_id": "gp47993ad6:1223:1246",
+  "text": "Results and Discussion\nWe combined perceptions of Habitat Haiti to form an index of\nattitude toward the organization (\u0005 \u0003 .92). We then ran a binary\nlogistic regression of choice to donate (1 \u0003 yes, 0 \u0003 no) on\nmotivational focus (1 \u0003 impact; 0 \u0003 signaling), distance (1 \u0003 far\naway; 0 \u0003 nearby), the interaction of motivational focus by\ndistance, and the following covariates: attitude toward Habitat and\nincome. We controlled for income because preliminary analyses\nrevealed an uneven distribution of income among the experimental\nconditions, \t2(8, N \u0003 323) \u0003 17.66, p \u0003 .024, which occurred\nrandomly. Specifically, the impact/nearby condition contained\nfewer high-income participants (income \b $80,000) than the\nimpact/far-away condition, \t2(1, N \u0003 31) \u0003 3.90, p \u0003 .048.\nFrom the binary logistic regression of choice to donate on\nmotivational focus, distance, their interaction, and the two cova-\nriates, the overall model was significant, \t2(12, N \u0003 323) \u0003 71.31,\np \u0004 .001. The results revealed the predicted interaction of moti-\nvational focus by distance on choice to donate (Wald \u0003 4.71, p \u0003\n.030). Additionally, the model revealed a main effect of attitude\ntoward Habitat Haiti (Wald \u0003 46.13, p \u0004 .001). We note that this\ninteraction did not reach significance when we removed both\ncovariates from the analysis, \t2(3, N \u0003 323) \u0003 2.45, p \u0003 .49;\nWald \u0003 2.14, p \u0003 .14, but reached marginal significance when\neither attitude alone, \t2(4, N \u0003 323) \u0003 60.10, p \u0004 .001; Wald \u0003",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "3.90",
+    "df1": "1",
+    "df2": null,
+    "n": "31",
+    "p_operator": "=",
+    "p_value": ".048",
+    "quote": "\t2(1, N \u0003 31) \u0003 3.90, p \u0003 .048",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "3.90",
+    "df1": "1",
+    "df2": null,
+    "n": "31",
+    "p_operator": "=",
+    "p_value": ".048",
+    "quote": "\t2(1, N \u0003 31) \u0003 3.90, p \u0003 .048",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "3.90",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".048",
+    "quote": "1, N \u0003 31) \u0003 3.90, p \u0003 .048.\nFrom the binary logistic regression of choice to donate on\nmotivational focus, distance, their interaction, and the two cova-\nriates, the overall model was significant, \t2",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "3.90",
+    "df1": "1",
+    "df2": null,
+    "n": "31",
+    "p_operator": "=",
+    "p_value": ".048",
+    "quote": "χ2(1, N = 31) = 3.90, p = .048",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:1223:1246-2",
+  "window_id": "gp47993ad6:1223:1246",
+  "text": "Results and Discussion\nWe combined perceptions of Habitat Haiti to form an index of\nattitude toward the organization (\u0005 \u0003 .92). We then ran a binary\nlogistic regression of choice to donate (1 \u0003 yes, 0 \u0003 no) on\nmotivational focus (1 \u0003 impact; 0 \u0003 signaling), distance (1 \u0003 far\naway; 0 \u0003 nearby), the interaction of motivational focus by\ndistance, and the following covariates: attitude toward Habitat and\nincome. We controlled for income because preliminary analyses\nrevealed an uneven distribution of income among the experimental\nconditions, \t2(8, N \u0003 323) \u0003 17.66, p \u0003 .024, which occurred\nrandomly. Specifically, the impact/nearby condition contained\nfewer high-income participants (income \b $80,000) than the\nimpact/far-away condition, \t2(1, N \u0003 31) \u0003 3.90, p \u0003 .048.\nFrom the binary logistic regression of choice to donate on\nmotivational focus, distance, their interaction, and the two cova-\nriates, the overall model was significant, \t2(12, N \u0003 323) \u0003 71.31,\np \u0004 .001. The results revealed the predicted interaction of moti-\nvational focus by distance on choice to donate (Wald \u0003 4.71, p \u0003\n.030). Additionally, the model revealed a main effect of attitude\ntoward Habitat Haiti (Wald \u0003 46.13, p \u0004 .001). We note that this\ninteraction did not reach significance when we removed both\ncovariates from the analysis, \t2(3, N \u0003 323) \u0003 2.45, p \u0003 .49;\nWald \u0003 2.14, p \u0003 .14, but reached marginal significance when\neither attitude alone, \t2(4, N \u0003 323) \u0003 60.10, p \u0004 .001; Wald \u0003",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "4.71",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".030",
+    "quote": "Wald \u0003 4.71, p \u0003\n.030",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": null,
+    "statistic": "4.71",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".030",
+    "quote": "Wald = 4.71, p = .030",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:1223:1246-3",
+  "window_id": "gp47993ad6:1223:1246",
+  "text": "Results and Discussion\nWe combined perceptions of Habitat Haiti to form an index of\nattitude toward the organization (\u0005 \u0003 .92). We then ran a binary\nlogistic regression of choice to donate (1 \u0003 yes, 0 \u0003 no) on\nmotivational focus (1 \u0003 impact; 0 \u0003 signaling), distance (1 \u0003 far\naway; 0 \u0003 nearby), the interaction of motivational focus by\ndistance, and the following covariates: attitude toward Habitat and\nincome. We controlled for income because preliminary analyses\nrevealed an uneven distribution of income among the experimental\nconditions, \t2(8, N \u0003 323) \u0003 17.66, p \u0003 .024, which occurred\nrandomly. Specifically, the impact/nearby condition contained\nfewer high-income participants (income \b $80,000) than the\nimpact/far-away condition, \t2(1, N \u0003 31) \u0003 3.90, p \u0003 .048.\nFrom the binary logistic regression of choice to donate on\nmotivational focus, distance, their interaction, and the two cova-\nriates, the overall model was significant, \t2(12, N \u0003 323) \u0003 71.31,\np \u0004 .001. The results revealed the predicted interaction of moti-\nvational focus by distance on choice to donate (Wald \u0003 4.71, p \u0003\n.030). Additionally, the model revealed a main effect of attitude\ntoward Habitat Haiti (Wald \u0003 46.13, p \u0004 .001). We note that this\ninteraction did not reach significance when we removed both\ncovariates from the analysis, \t2(3, N \u0003 323) \u0003 2.45, p \u0003 .49;\nWald \u0003 2.14, p \u0003 .14, but reached marginal significance when\neither attitude alone, \t2(4, N \u0003 323) \u0003 60.10, p \u0004 .001; Wald \u0003",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "46.13",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "Wald \u0003 46.13, p \u0004 .001",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": null,
+    "statistic": "46.13",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "Wald = 46.13, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:1223:1246-4",
+  "window_id": "gp47993ad6:1223:1246",
+  "text": "Results and Discussion\nWe combined perceptions of Habitat Haiti to form an index of\nattitude toward the organization (\u0005 \u0003 .92). We then ran a binary\nlogistic regression of choice to donate (1 \u0003 yes, 0 \u0003 no) on\nmotivational focus (1 \u0003 impact; 0 \u0003 signaling), distance (1 \u0003 far\naway; 0 \u0003 nearby), the interaction of motivational focus by\ndistance, and the following covariates: attitude toward Habitat and\nincome. We controlled for income because preliminary analyses\nrevealed an uneven distribution of income among the experimental\nconditions, \t2(8, N \u0003 323) \u0003 17.66, p \u0003 .024, which occurred\nrandomly. Specifically, the impact/nearby condition contained\nfewer high-income participants (income \b $80,000) than the\nimpact/far-away condition, \t2(1, N \u0003 31) \u0003 3.90, p \u0003 .048.\nFrom the binary logistic regression of choice to donate on\nmotivational focus, distance, their interaction, and the two cova-\nriates, the overall model was significant, \t2(12, N \u0003 323) \u0003 71.31,\np \u0004 .001. The results revealed the predicted interaction of moti-\nvational focus by distance on choice to donate (Wald \u0003 4.71, p \u0003\n.030). Additionally, the model revealed a main effect of attitude\ntoward Habitat Haiti (Wald \u0003 46.13, p \u0004 .001). We note that this\ninteraction did not reach significance when we removed both\ncovariates from the analysis, \t2(3, N \u0003 323) \u0003 2.45, p \u0003 .49;\nWald \u0003 2.14, p \u0003 .14, but reached marginal significance when\neither attitude alone, \t2(4, N \u0003 323) \u0003 60.10, p \u0004 .001; Wald \u0003",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "2.45",
+    "df1": "3",
+    "df2": null,
+    "n": "323",
+    "p_operator": "=",
+    "p_value": ".49",
+    "quote": "\t2(3, N \u0003 323) \u0003 2.45, p \u0003 .49",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "2.45",
+    "df1": "3",
+    "df2": null,
+    "n": "323",
+    "p_operator": "=",
+    "p_value": ".49",
+    "quote": "\t2(3, N \u0003 323) \u0003 2.45, p \u0003 .49",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "2.45",
+    "df1": "3",
+    "df2": null,
+    "n": "323",
+    "p_operator": "=",
+    "p_value": ".49",
+    "quote": "χ2(3, N = 323) = 2.45, p = .49",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "2.45",
+    "df1": "3",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".49",
+    "quote": "2(3, N \u0003 323) \u0003 2.45, p \u0003 .49",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:1223:1246-5",
+  "window_id": "gp47993ad6:1223:1246",
+  "text": "Results and Discussion\nWe combined perceptions of Habitat Haiti to form an index of\nattitude toward the organization (\u0005 \u0003 .92). We then ran a binary\nlogistic regression of choice to donate (1 \u0003 yes, 0 \u0003 no) on\nmotivational focus (1 \u0003 impact; 0 \u0003 signaling), distance (1 \u0003 far\naway; 0 \u0003 nearby), the interaction of motivational focus by\ndistance, and the following covariates: attitude toward Habitat and\nincome. We controlled for income because preliminary analyses\nrevealed an uneven distribution of income among the experimental\nconditions, \t2(8, N \u0003 323) \u0003 17.66, p \u0003 .024, which occurred\nrandomly. Specifically, the impact/nearby condition contained\nfewer high-income participants (income \b $80,000) than the\nimpact/far-away condition, \t2(1, N \u0003 31) \u0003 3.90, p \u0003 .048.\nFrom the binary logistic regression of choice to donate on\nmotivational focus, distance, their interaction, and the two cova-\nriates, the overall model was significant, \t2(12, N \u0003 323) \u0003 71.31,\np \u0004 .001. The results revealed the predicted interaction of moti-\nvational focus by distance on choice to donate (Wald \u0003 4.71, p \u0003\n.030). Additionally, the model revealed a main effect of attitude\ntoward Habitat Haiti (Wald \u0003 46.13, p \u0004 .001). We note that this\ninteraction did not reach significance when we removed both\ncovariates from the analysis, \t2(3, N \u0003 323) \u0003 2.45, p \u0003 .49;\nWald \u0003 2.14, p \u0003 .14, but reached marginal significance when\neither attitude alone, \t2(4, N \u0003 323) \u0003 60.10, p \u0004 .001; Wald \u0003",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "2.14",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".14",
+    "quote": "Wald = 2.14, p = .14",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": null,
+    "statistic": "2.14",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".14",
+    "quote": "Wald \u0003 2.14, p \u0003 .14",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpe50cec5c:924:946-0",
+  "window_id": "gpe50cec5c:924:946",
+  "text": "ability of the goal (“How likely are you able to correctly\nanswer all questions and get the bonus?”) ﬁrst showed a\nmain effect of progress level, F(1, 86) = 10.33, = = .01,\nsuggesting that the participants in high-progress conditions\nperceived that they were more likely to attain the goal (M\np 5.73), as compared with those in the low-progress con-\nditions (M p 4.87). This main effect was qualiﬁed by a\nprogress level # progress type interaction, F(1, 86) p 6.68,\np p .01. Speciﬁcally, for participants with only low progress\non the goal, those who believed that they had received the\nprogress for free perceived that they were more likely to\nattain the goal (M p 5.46), as compared with those who\nattributed their low progress to themselves and believed that\nthey had earned the progress (M p 4.19), t(43) = 3.01, =\n< .01. However, when progress on the goal was high, the\nperceived attainability of the goal did not differ between\nparticipants who thought that they had earned the progress\n(M p 5.83) or had received the progress for free (M p\n5.64), t(43) p \u0001.50, NS.\n\n650\nJOURNAL OF CONSUMER RESEARCH\nFIGURE 5",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "-.50",
+    "df1": "43",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(43) p \u0001.50, NS",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-.50",
+    "df1": "43",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(43) p \u0001.50, NS",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "t",
+    "statistic": ".50",
+    "df1": "43",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(43) p ¡.50, NS",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "t",
+    "statistic": ".50",
+    "df1": null,
+    "df2": "43",
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "43) p \u0001.50",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp64432b3d:462:484-0",
+  "window_id": "gp64432b3d:462:484",
+  "text": "niﬁcantly more harmful than the impure acts. This pattern of results is in-\nconsistent with the perceived harm account. Focusing on the initial acts,\nas in Study 2, we examined whether impure acts were seen as more\nharmful than harmful acts were seen as impure, using disgust as an indi-\ncator of impurity. Quite the opposite, harmful acts were judged as slightly\nmore disgusting (M = 4.27, SE = 2.16) than impure acts were judged as\nharmful (M = 3.63, SE = 2.20), t(195) = 2.20, p = 0.045, a result that no-\ntably goes in the opposite direction of the observed expectation asymme-\ntry, and thus, if anything, works against our hypothesis.\n4.2.3. Comparing initial and expected acts\nFig. 4 depicts difference scores for expected – initial acts, separately\nfor four DVs (harmful, disgusting, weird, wrong), and two types of initial\nacts (harmful vs. impure). Full statistics for each comparison are report-\ned in Table 2. In general, aggregating across DVs, agents were expected\nto perform acts that are less “intense” (i.e., harmful, disgusting, weird,\nand wrong) than their initial acts, F(1184) = 8.400, p = 0.004, η2\np =\n0.04.\nHowever, there was one exception to this general pattern. As can be\nseen in Fig. 4, under column I →H (i.e., contrasts of Impure initial actions\nwith expected Harmful actions), agents who originally committed im-\npure acts were expected to engage in harmful actions rated as signiﬁ-\ncantly more harmful than the original acts they performed. This was",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "8.400",
+    "df1": "1184",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.004",
+    "quote": "F(1184) = 8.400, p = 0.004",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "F",
+    "statistic": "8.400",
+    "df1": "1",
+    "df2": "184",
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.004",
+    "quote": "F(1184) = 8.400, p = 0.004",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "8.400",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.004",
+    "quote": "2. In general, aggregating across DVs, agents were expected\nto perform acts that are less “intense” (i.e., harmful, disgusting, weird,\nand wrong) than their initial acts, F(1184) = 8.400, p = 0.004, η2\np =\n0.04",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "8.400",
+    "df1": "1184",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": "0.004",
+    "quote": "F(1184) = 8.400, p = 0.004",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpb72cbbb8:1052:1060-0",
+  "window_id": "gpb72cbbb8:1052:1060",
+  "text": "SD and SR measures as well as on two manifest measures of aca-\ndemic achievement (GPA and VSOL), and we found acceptable\nstatistical ﬁt indices for the model: v2 (28) = 56.36, p = .01,\nRMSEA = .05, NFI = .97, RFI = .93, and CFI = .98. A graphic depiction\nof this this model is presented in Fig. 2, and the unstandardized\nand standardized parameter estimates and standard error for each\ndirect path are presented in Table 5.\nExamination of the standardized regression weights in Fig. 2\nshows that gender did not predict SD or SR latent factors signiﬁ-",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "56.36",
+    "df1": "28",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".01",
+    "quote": "v2 (28) = 56.36, p = .01",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "56.36",
+    "df1": "28",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".01",
+    "quote": "v2 (28) = 56.36, p = .01",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "56.36",
+    "df1": "28",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".01",
+    "quote": "2 (28) = 56.36, p = .01",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "56.36",
+    "df1": "28",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".01",
+    "quote": "v2 (28) = 56.36, p = .01",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa38c671a:312:330-0",
+  "window_id": "gpa38c671a:312:330",
+  "text": "location compared with when the actor had the true-belief\nthat the ball was not at this location (No Instructions,\nt(34) = 2.2, p < 0.05; Belief Tracking, t(27) = 5, p < 0.001;\nFig. 2). However, no such difference was observed for the\nFig. 1. Illustration of the False- and True-belief movie scenarios and group/task instruction manipulation.\n\n45\nlatter group (t < 1). In addition, there were no signiﬁcant\ndifferences at the face location between false- and true-\nbelief trials for any of the groups (ps > 0.15, mean No\nInstructions = 69%;\nBall\nTracking = 66%;\nBelief\nTrack-\ning = 59%). Collectively, when subjects were instructed to\nexplicitly judge the location of the ball at the end of each\ntrial they displayed no evidence of having implicitly\ntracked the belief states of the actor. This suggests that",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t < 1",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:748:763-0",
+  "window_id": "gp47993ad6:748:763",
+  "text": "variables as covariates: (a) age, (b) amount donated in the previous\nyear, (c) graduation year, and (d) whether their spouse was also an\nalumnus/alumnae of the school or university (unlike in Study 2, we\ndid not have an income proxy in our data set). This analysis\nsupported our hypothesis (Wald \u0003 8.61, p \u0003 .003): a greater\nproportion of alumni donated when their alma mater was framed as\nnearby (0.57%) than when it was framed as far away (0.33%; z \u0003\n3.1, p \u0003 .002; d \u0003 0.30). Removing all covariates from the\nThis document is copyrighted by the American Psychological Association or one of its allied publishers.\nThis article is intended solely for the personal use of the individual user and is not to be disseminated broadly.\n867\nTOO FAR TO HELP\nanalysis did not change this pattern of results (Wald \u0003 5.85, p \u0003\n.016).\nFor the second analysis, we ran a Poisson regression to model\ncount variables such as our willingness-to-donate measure. For this",
+  "kind": "field_conflict",
+  "field": "p_operator",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "8.61",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".003",
+    "quote": "Wald χ 8.61, p χ .003",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": null,
+    "statistic": "8.61",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".003",
+    "quote": "Wald \u0003 8.61, p \u0003 .003",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:748:763-1",
+  "window_id": "gp47993ad6:748:763",
+  "text": "variables as covariates: (a) age, (b) amount donated in the previous\nyear, (c) graduation year, and (d) whether their spouse was also an\nalumnus/alumnae of the school or university (unlike in Study 2, we\ndid not have an income proxy in our data set). This analysis\nsupported our hypothesis (Wald \u0003 8.61, p \u0003 .003): a greater\nproportion of alumni donated when their alma mater was framed as\nnearby (0.57%) than when it was framed as far away (0.33%; z \u0003\n3.1, p \u0003 .002; d \u0003 0.30). Removing all covariates from the\nThis document is copyrighted by the American Psychological Association or one of its allied publishers.\nThis article is intended solely for the personal use of the individual user and is not to be disseminated broadly.\n867\nTOO FAR TO HELP\nanalysis did not change this pattern of results (Wald \u0003 5.85, p \u0003\n.016).\nFor the second analysis, we ran a Poisson regression to model\ncount variables such as our willingness-to-donate measure. For this",
+  "kind": "field_conflict",
+  "field": "p_operator",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "5.85",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".016",
+    "quote": "Wald χ 5.85, p χ .016",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": null,
+    "statistic": "5.85",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".016",
+    "quote": "Wald \u0003 5.85, p \u0003\n.016",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp64454b18:719:730-0",
+  "window_id": "gp64454b18:719:730",
+  "text": "(2, 332) = 90.49, p < .001, η2 = .35. The means of each condition (ethical, morally-questionable, and Ethics-unknown respectively)\nsignificantly differed from one another (M = 4.08, 2.99, and 3.36, ps b .001).\n3.5.6.2. Analyses. First, hierarchical logistic regression analyses were conducted. Next, the model depicted in Fig. 1 was tested\nsimultaneously using Model 8 in PROCESS (Hayes, 2013). Sex and the five personality factors were entered as control variables. In\ntesting Hypothesis 4, the self-transcendence and openness to change congruence scores were entered simultaneously into the\nequations as competing mediators (PROCESS allows up to 10 mediators). Lastly, to test the incremental mediatory effects of perceived\nvalue congruence over organizational reputation, these variables were also simultaneously entered as competing mediators.\n3.6. Results and brief discussion\nTable 1 shows the means, standard deviations, and inter-correlations among the study variables. The results of the logistics\nregression analyses (see Table 3) showed that [Morally-questionable versus Ethical] was negatively related to job pursuit behavior\n(B = −1.47, p < .001). Similarly, the [Ethics-unknown versus Ethical] variable was negatively related to job pursuit behavior\n(B = −.70, p < .05). These results provide support for Hypothesis 1. In support of Hypothesis 2, bootstrapping analyses found",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "90.49",
+    "df1": "2",
+    "df2": "332",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "2, 332) = 90.49, p < .001, η2 = .35",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "90.49",
+    "df1": "2",
+    "df2": "332",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "(2, 332) = 90.49, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "90.49",
+    "df1": "2",
+    "df2": "332",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "(2, 332) = 90.49, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "90.49",
+    "df1": "2",
+    "df2": "332",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "(2, 332) = 90.49, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp33b4e1dc:2391:2408-0",
+  "window_id": "gp33b4e1dc:2391:2408",
+  "text": "15.63, p < 0.01, respectively). Participants observing\nthe chef throughout the process perceived more eﬀort\n(M \u0003 4.90, SD \u0003 1.26) and appreciated the provider\nmore (M \u0003 5.60, SD \u0003 1.12) than did participants who\nobserved the chef outside the process (M \u0003 4.32, SD \u0003\n1.24, t(159) = 2.96, p < 0.01 and M \u0003 4.56, SD \u0003 1.42,\nt(159) = 5.17, p < 0.01) and participants who saw nei-\nther the chef nor the process (M \u0003 4.14, SD \u0003 1.26,\nt(161) = 3.89, p < 0.01 and M \u0003 4.62, SD \u0003 1.47, t(161) =\n4.85, p < 0.01, respectively). Similar to perceived value,\nthere were no signiﬁcant diﬀerences in perceived eﬀort\nand appreciation between participants who observed\nthe chef outside the process and those who observed\nneither the chef nor the process (t(154) \u0003 0.92, p \u0003 NS;\nt(154) \u0003 0.23, P \u0003 NS, respectively). Consistent with\nthe results in Experiments 1 and 2, when employees\nengaged in labor are revealed to customers through\nprocess transparency, rather than only employee trans-",
+  "kind": "field_conflict",
+  "field": "test_type",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "15.63",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.01",
+    "quote": "15.63, p < 0.01",
+    "damaged": false,
+    "confidence": "low"
+   },
+   {
+    "test_type": "F",
+    "statistic": "15.63",
+    "df1": "2",
+    "df2": "237",
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.01",
+    "quote": "15.63, p < 0.01",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ }
+]

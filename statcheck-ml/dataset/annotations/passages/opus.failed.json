@@ -1,0 +1,9 @@
+[
+ {
+  "batch_id": "batch_75",
+  "errors": [
+   "record 6: window_id gp2601e492:1038:1050 != batch gpffa66a98:1158:1163",
+   "record 7: window_id gpffa66a98:1158:1163 != batch gp2601e492:1038:1050"
+  ]
+ }
+]

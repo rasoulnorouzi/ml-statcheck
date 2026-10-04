@@ -1,0 +1,552 @@
+[
+ {
+  "dispute_id": "gp33b4e1dc:2391:2408-1",
+  "window_id": "gp33b4e1dc:2391:2408",
+  "text": "15.63, p < 0.01, respectively). Participants observing\nthe chef throughout the process perceived more eﬀort\n(M \u0003 4.90, SD \u0003 1.26) and appreciated the provider\nmore (M \u0003 5.60, SD \u0003 1.12) than did participants who\nobserved the chef outside the process (M \u0003 4.32, SD \u0003\n1.24, t(159) = 2.96, p < 0.01 and M \u0003 4.56, SD \u0003 1.42,\nt(159) = 5.17, p < 0.01) and participants who saw nei-\nther the chef nor the process (M \u0003 4.14, SD \u0003 1.26,\nt(161) = 3.89, p < 0.01 and M \u0003 4.62, SD \u0003 1.47, t(161) =\n4.85, p < 0.01, respectively). Similar to perceived value,\nthere were no signiﬁcant diﬀerences in perceived eﬀort\nand appreciation between participants who observed\nthe chef outside the process and those who observed\nneither the chef nor the process (t(154) \u0003 0.92, p \u0003 NS;\nt(154) \u0003 0.23, P \u0003 NS, respectively). Consistent with\nthe results in Experiments 1 and 2, when employees\nengaged in labor are revealed to customers through\nprocess transparency, rather than only employee trans-",
+  "kind": "field_conflict",
+  "field": "df1",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "15.63",
+    "df1": "2",
+    "df2": "237",
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.01",
+    "quote": "15.63, p < 0.01",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": null,
+    "statistic": "15.63",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.01",
+    "quote": "15.63, p < 0.01",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp33b4e1dc:2391:2408-2",
+  "window_id": "gp33b4e1dc:2391:2408",
+  "text": "15.63, p < 0.01, respectively). Participants observing\nthe chef throughout the process perceived more eﬀort\n(M \u0003 4.90, SD \u0003 1.26) and appreciated the provider\nmore (M \u0003 5.60, SD \u0003 1.12) than did participants who\nobserved the chef outside the process (M \u0003 4.32, SD \u0003\n1.24, t(159) = 2.96, p < 0.01 and M \u0003 4.56, SD \u0003 1.42,\nt(159) = 5.17, p < 0.01) and participants who saw nei-\nther the chef nor the process (M \u0003 4.14, SD \u0003 1.26,\nt(161) = 3.89, p < 0.01 and M \u0003 4.62, SD \u0003 1.47, t(161) =\n4.85, p < 0.01, respectively). Similar to perceived value,\nthere were no signiﬁcant diﬀerences in perceived eﬀort\nand appreciation between participants who observed\nthe chef outside the process and those who observed\nneither the chef nor the process (t(154) \u0003 0.92, p \u0003 NS;\nt(154) \u0003 0.23, P \u0003 NS, respectively). Consistent with\nthe results in Experiments 1 and 2, when employees\nengaged in labor are revealed to customers through\nprocess transparency, rather than only employee trans-",
+  "kind": "field_conflict",
+  "field": "df2",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "15.63",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.01",
+    "quote": "15.63, p < 0.01",
+    "damaged": false,
+    "confidence": "low"
+   },
+   {
+    "test_type": "F",
+    "statistic": "15.63",
+    "df1": "2",
+    "df2": "237",
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.01",
+    "quote": "15.63, p < 0.01",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp58aee1ec:583:591-0",
+  "window_id": "gp58aee1ec:583:591",
+  "text": "3.2. Overall effect size and heterogeneity\nUsing the random-effects model, the average point estimate was\nfound to be r ¼ .46, indicating a large effect size (Cohen, 1992). Self-\nreported measures of proenvironmental behavior were, overall,\nstrongly correlated with objective measures (95% CI ¼ .28e0.60, Z-\nvalue ¼ 4.66, p < .001; Fig. 1).8 The coefﬁcient of determination\n(r2 ¼ .21) indicates that 21% of the variance in self-reports was\nlinearly associated with variance in objective measures.\nSigniﬁcant",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".46",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .46",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpad865319:508:529-0",
+  "window_id": "gpad865319:508:529",
+  "text": "condition received neither the digit-presentations nor the number-\nrecognition trials. Following the ﬁnal block of trials, all participants\nrated the difﬁculty of the task (1=not at all difﬁcult, 7=very difﬁcult).\nResults\nData from one participant were eliminated due to excessive errors\n(N50%) on the probe-recognition trials. No participant expressed any\nintention or awareness of having made inferences while reading the\nbehavior descriptions; thus, any inferences observed can be surmised\nto be both spontaneous and unconscious.\nCognitive load manipulation check\nAn initial 2 (probe relevance)×2 (cognitive load) ANOVA on the\ntask difﬁculty ratings revealed that participants in the cognitive load\ncondition (M=3.98, SD=1.08) perceived the task to be more difﬁcult\nthan did participants in the non-load condition (M=1.96, SD=1.07),\nF(1, 87)=78.77, p<.001. No other effects approached signiﬁcance\n(Fsb1). Further analyses of the number-recognition trials within the\ncognitive load condition showed that, on average, participants\nresponded correctly on 80% of the number-recognition trials, which\nis signiﬁcantly higher than the chance level of 50%, t(44)=14.73,\npb.001, and this did not differ as a function of probe relevance (Fb1).\nTaken together, these results indicate that participants attended to the\nsecondary digit-memorization task and that this increased attention",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fsb1",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpad865319:508:529-1",
+  "window_id": "gpad865319:508:529",
+  "text": "condition received neither the digit-presentations nor the number-\nrecognition trials. Following the ﬁnal block of trials, all participants\nrated the difﬁculty of the task (1=not at all difﬁcult, 7=very difﬁcult).\nResults\nData from one participant were eliminated due to excessive errors\n(N50%) on the probe-recognition trials. No participant expressed any\nintention or awareness of having made inferences while reading the\nbehavior descriptions; thus, any inferences observed can be surmised\nto be both spontaneous and unconscious.\nCognitive load manipulation check\nAn initial 2 (probe relevance)×2 (cognitive load) ANOVA on the\ntask difﬁculty ratings revealed that participants in the cognitive load\ncondition (M=3.98, SD=1.08) perceived the task to be more difﬁcult\nthan did participants in the non-load condition (M=1.96, SD=1.07),\nF(1, 87)=78.77, p<.001. No other effects approached signiﬁcance\n(Fsb1). Further analyses of the number-recognition trials within the\ncognitive load condition showed that, on average, participants\nresponded correctly on 80% of the number-recognition trials, which\nis signiﬁcantly higher than the chance level of 50%, t(44)=14.73,\npb.001, and this did not differ as a function of probe relevance (Fb1).\nTaken together, these results indicate that participants attended to the\nsecondary digit-memorization task and that this increased attention",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fb1",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:1032:1073-0",
+  "window_id": "gp3fbfd59c:1032:1073",
+  "text": "Number of words produced\nLI\nChronological age\n.31\n.09\n.39\n3.66\n<.001\nF(2,76) = 25.87, p < .001\n.40\nHandwriting ﬂuency\n.57\n.18\n.34\n3.24\n¼.002\nASD\nReceptive language\n.48\n.12\n.51\n4.06\n<.001\nF(1,49) = 16.46, p < .001\n.24\nCorrect word sequences\nLI\nSpelling\n.39\n.09\n.44\n4.20\n<.001\nF(3,76) = 28.49, p < .001\n.52\nHandwriting ﬂuency\n.40\n.16\n.27\n2.59\n¼.01\nFormulated sentences",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "3.66",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "Chronological age\n.31\n.09\n.39\n3.66\n<.001",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:1032:1073-1",
+  "window_id": "gp3fbfd59c:1032:1073",
+  "text": "Number of words produced\nLI\nChronological age\n.31\n.09\n.39\n3.66\n<.001\nF(2,76) = 25.87, p < .001\n.40\nHandwriting ﬂuency\n.57\n.18\n.34\n3.24\n¼.002\nASD\nReceptive language\n.48\n.12\n.51\n4.06\n<.001\nF(1,49) = 16.46, p < .001\n.24\nCorrect word sequences\nLI\nSpelling\n.39\n.09\n.44\n4.20\n<.001\nF(3,76) = 28.49, p < .001\n.52\nHandwriting ﬂuency\n.40\n.16\n.27\n2.59\n¼.01\nFormulated sentences",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "3.24",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".002",
+    "quote": "Handwriting ﬂuency\n.57\n.18\n.34\n3.24\n¼.002",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:1032:1073-2",
+  "window_id": "gp3fbfd59c:1032:1073",
+  "text": "Number of words produced\nLI\nChronological age\n.31\n.09\n.39\n3.66\n<.001\nF(2,76) = 25.87, p < .001\n.40\nHandwriting ﬂuency\n.57\n.18\n.34\n3.24\n¼.002\nASD\nReceptive language\n.48\n.12\n.51\n4.06\n<.001\nF(1,49) = 16.46, p < .001\n.24\nCorrect word sequences\nLI\nSpelling\n.39\n.09\n.44\n4.20\n<.001\nF(3,76) = 28.49, p < .001\n.52\nHandwriting ﬂuency\n.40\n.16\n.27\n2.59\n¼.01\nFormulated sentences",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "4.06",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "Receptive language\n.48\n.12\n.51\n4.06\n<.001",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:1032:1073-3",
+  "window_id": "gp3fbfd59c:1032:1073",
+  "text": "Number of words produced\nLI\nChronological age\n.31\n.09\n.39\n3.66\n<.001\nF(2,76) = 25.87, p < .001\n.40\nHandwriting ﬂuency\n.57\n.18\n.34\n3.24\n¼.002\nASD\nReceptive language\n.48\n.12\n.51\n4.06\n<.001\nF(1,49) = 16.46, p < .001\n.24\nCorrect word sequences\nLI\nSpelling\n.39\n.09\n.44\n4.20\n<.001\nF(3,76) = 28.49, p < .001\n.52\nHandwriting ﬂuency\n.40\n.16\n.27\n2.59\n¼.01\nFormulated sentences",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "4.20",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "Spelling\n.39\n.09\n.44\n4.20\n<.001",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:1032:1073-4",
+  "window_id": "gp3fbfd59c:1032:1073",
+  "text": "Number of words produced\nLI\nChronological age\n.31\n.09\n.39\n3.66\n<.001\nF(2,76) = 25.87, p < .001\n.40\nHandwriting ﬂuency\n.57\n.18\n.34\n3.24\n¼.002\nASD\nReceptive language\n.48\n.12\n.51\n4.06\n<.001\nF(1,49) = 16.46, p < .001\n.24\nCorrect word sequences\nLI\nSpelling\n.39\n.09\n.44\n4.20\n<.001\nF(3,76) = 28.49, p < .001\n.52\nHandwriting ﬂuency\n.40\n.16\n.27\n2.59\n¼.01\nFormulated sentences",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "2.59",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".01",
+    "quote": "Handwriting ﬂuency\n.40\n.16\n.27\n2.59\n¼.01",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp2601e492:838:846-0",
+  "window_id": "gp2601e492:838:846",
+  "text": "Decomposing this interaction revealed that women in the self-\nand-friend beneﬁt condition were more likely to report solving\nthe unsolvable word jumble (52%) than were women in the self-\nalone beneﬁt conditions, 18%, v2(1) = 9.48, p = .01. Men in the\nself-and-friend beneﬁt condition were not signiﬁcantly more likely\nto report solving the unsolvable word jumble 28%, v2(1) = .37,\np = .56\nthan\nwere",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": ".37",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".56",
+    "quote": "2(1) = .37,\np = .56",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa920dadf:728:754-0",
+  "window_id": "gpa920dadf:728:754",
+  "text": "potential confounding factors. First, the types of positive \nmemories participants recalled included pleasant memo-\nries with friends or family (37.7%), experiences in which \nparticipants felt loved by a romantic partner (19.7%), \nachievement of life goals (9.8%), and others (32.8%; e.g., \ngiving birth, a religious experience). This variable did not \ndiffer across the groups, χ2(6, N = 61) = 5.33, p = .50. \nContent analyses of participants’ essays on the basis of \nboth the coding data and the linguistic analysis index \nalso confirmed that participants recalled memories that \ndid not vary in their degree of positive emotional content \n(Fs < 1.88, ps > .16).\nNext, we analyzed whether baseline affect, task order, \nor participants’ gender influenced any of the outcome vari-\nables. Participants did not differ in their baseline affect \nacross the groups (F < 1, n.s.), and neither this variable nor \nthe order of the baseline EEG trials (eyes open first vs. \neyes closed first) interacted with group to predict any out-\ncome variable (Fs < 2.21, ps > .12). However, we found a \ntrend toward a gender effect on self-distancing, with \nfemales distancing more than males (females: 3.32; males: \n2.59), F(1, 59) = 3.61, p = .06, ηp\n2 = .06. Therefore, gender \nwas included as an additional covariate in the analysis \ninvolving self-distancing. There was no effect of gender on \nthe rest of the outcome variables (Fs < 2.15, ps > .14).\nWe also examined whether mood symptoms influ-",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1.88",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".16",
+    "quote": "Fs < 1.88, ps > .16",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa920dadf:728:754-1",
+  "window_id": "gpa920dadf:728:754",
+  "text": "potential confounding factors. First, the types of positive \nmemories participants recalled included pleasant memo-\nries with friends or family (37.7%), experiences in which \nparticipants felt loved by a romantic partner (19.7%), \nachievement of life goals (9.8%), and others (32.8%; e.g., \ngiving birth, a religious experience). This variable did not \ndiffer across the groups, χ2(6, N = 61) = 5.33, p = .50. \nContent analyses of participants’ essays on the basis of \nboth the coding data and the linguistic analysis index \nalso confirmed that participants recalled memories that \ndid not vary in their degree of positive emotional content \n(Fs < 1.88, ps > .16).\nNext, we analyzed whether baseline affect, task order, \nor participants’ gender influenced any of the outcome vari-\nables. Participants did not differ in their baseline affect \nacross the groups (F < 1, n.s.), and neither this variable nor \nthe order of the baseline EEG trials (eyes open first vs. \neyes closed first) interacted with group to predict any out-\ncome variable (Fs < 2.21, ps > .12). However, we found a \ntrend toward a gender effect on self-distancing, with \nfemales distancing more than males (females: 3.32; males: \n2.59), F(1, 59) = 3.61, p = .06, ηp\n2 = .06. Therefore, gender \nwas included as an additional covariate in the analysis \ninvolving self-distancing. There was no effect of gender on \nthe rest of the outcome variables (Fs < 2.15, ps > .14).\nWe also examined whether mood symptoms influ-",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "2.21",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".12",
+    "quote": "Fs < 2.21, ps > .12",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa920dadf:728:754-2",
+  "window_id": "gpa920dadf:728:754",
+  "text": "potential confounding factors. First, the types of positive \nmemories participants recalled included pleasant memo-\nries with friends or family (37.7%), experiences in which \nparticipants felt loved by a romantic partner (19.7%), \nachievement of life goals (9.8%), and others (32.8%; e.g., \ngiving birth, a religious experience). This variable did not \ndiffer across the groups, χ2(6, N = 61) = 5.33, p = .50. \nContent analyses of participants’ essays on the basis of \nboth the coding data and the linguistic analysis index \nalso confirmed that participants recalled memories that \ndid not vary in their degree of positive emotional content \n(Fs < 1.88, ps > .16).\nNext, we analyzed whether baseline affect, task order, \nor participants’ gender influenced any of the outcome vari-\nables. Participants did not differ in their baseline affect \nacross the groups (F < 1, n.s.), and neither this variable nor \nthe order of the baseline EEG trials (eyes open first vs. \neyes closed first) interacted with group to predict any out-\ncome variable (Fs < 2.21, ps > .12). However, we found a \ntrend toward a gender effect on self-distancing, with \nfemales distancing more than males (females: 3.32; males: \n2.59), F(1, 59) = 3.61, p = .06, ηp\n2 = .06. Therefore, gender \nwas included as an additional covariate in the analysis \ninvolving self-distancing. There was no effect of gender on \nthe rest of the outcome variables (Fs < 2.15, ps > .14).\nWe also examined whether mood symptoms influ-",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "2.15",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".14",
+    "quote": "Fs < 2.15, ps > .14",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpe50cec5c:1003:1028-0",
+  "window_id": "gpe50cec5c:1003:1028",
+  "text": "earned) negatively predicted the amount of time that par-\nticipants persisted in waiting for the question under annoying\nnoise, b p \u0001.32, t(43) p \u00012.18, p ! .05; indirectly, pro-\ngress type negatively predicted the perceived attainability\nof the goal, b p \u00011.27, t(43) p \u0001 3.01, p ! .01, and the\nperceived attainability positively predicted the amount of\ntime that they persisted in waiting, b p .52, t(43) p 4.00,\np ! .01. When controlling for perceived attainability of the\ngoal, the path between progress type and the time persisted\nin waiting became nonsigniﬁcant, b p \u0001.12, t(42) p \u0001.83,\nNS, whereas the perceived attainability of the goal remained\na signiﬁcant predictor, b p .47, t(42) = 3.28, = < .01 (see\nﬁg. 5).\nThe second mediation analysis was conducted on the par-\nticipants who had achieved high progress on the goal: di-\nrectly, progress type (endowed vs. earned) positively pre-\ndicted the amount of time that they persisted in waiting for\nthe question under noise, b p .30, t(43) = 2.04, = < .05;\nindirectly, progress type positively predicted the perceived\nimportance of the goal, b p .37, t(43) = 2.57, = < .05,\nand the importance of the goal in turn positively predicted\nthe amount of time that participants persisted, b p .43, t(43)\n= 3.16, = < .01. When controlling for the importance of\nthe goal, the path between progress type and the total per-\nsisted time became nonsigniﬁcant, b p .16, t(42) p 1.09,\nNS, whereas the importance of the goal remained signiﬁcant,",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "3.01",
+    "df1": null,
+    "df2": "43",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "1.27, t(43) p \u0001 3.01, p ! .01",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp4d09edc8:325:343-0",
+  "window_id": "gp4d09edc8:325:343",
+  "text": "We analyzed the difference in rated attractiveness of the\nfocal cartoon task and the interrupting 10-minute survey in\na 2 # 2 ANCOVA. We used the initial difference score\nfrom earlier ratings of the tasks as a covariate. We found a\nsigniﬁcant effect of the task attractiveness covariate (b p\n.527, F(1, 164) = 14.306, = = .000) and a main effect of\nprogress on a speciﬁc cartoon (F(1, 164) = 5.018, = =\n.026). We found no main effect of whether the interruption\ncame during the ﬁrst or second of the two cartoons in the\ncartoon task nor a two-way interaction (all F ! 1). Mean\ndifferences (attractiveness of interruption – attractiveness\nof continuing cartoon task) for the four interruption points\n(M25% ﬁrst cartoon p .725, M75% ﬁrst cartoon p \u0002.700, M25% second\ncartoon p .682, M75% second cartoon p \u0002.444) revealed no linear\n(F ! 1, p p .335) nor quadratic trend (F ! 1, p p .755)\nbut a cubic trend of overall progress on the task of com-\npleting two cartoons (F(1, 164) = 5.02, = = .045). This\nnonmonotonic pattern implies that the psychologically rel-\nevant aspect of the interruption was its nearness to com-",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "7.99",
+    "df1": "1",
+    "df2": "164",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "F(1, 164) = 7.99, p < .05",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp2450fe93:1898:1916-0",
+  "window_id": "gp2450fe93:1898:1916",
+  "text": "differ for participants in group and individual PCIT (Group PCIT\ncoaching in minutes M(SD) \u0002 18.98(9.75), individual PCIT coach-\ning in minutes M(SD) \u0002 19.91(9.00); t(603) = \t1.22, p > .05;\nCohen’s d \u0002 0.10). Fathers, however, received significantly less\ncoaching if they participated in individual PCIT, M(SD) \u0002\n15.52(5.81), rather than Group PCIT (M(SD) \u0002 18.69(8.24);\nt(268) = 3.69, p = .001; Cohen’s d \u0002 \t0.45).\nAttrition, Adherence, and Social Support\nAttrition.\nOf the 81 families allocated to an intervention, 77\nbegan treatment (see Figure 1). Fifty-seven of the 77 families\ncompleted treatment, for an overall intervention attrition rate of\n26%. Group PCIT had an attrition rate of 25.6% (n \u0002 10), while\nindividual PCIT had an attrition rate of 26.3% (n \u0002 10). The phi\ncoefficient testing the association between treatment condition and\nattrition was not significant (\u0011 \u0002 \t.01, p \u0003 .05).\nAdherence.\nFamilies’ adherence to treatment was assessed in\nthree ways: (a) number of sessions attended, (b) parent-reported",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "1.22",
+    "df1": null,
+    "df2": "603",
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "603) = \t1.22, p > .05",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-1.22",
+    "df1": "603",
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "t(603) = \t1.22, p > .05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "1.22",
+    "df1": "603",
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "t(603) = \t1.22, p > .05",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-1.22",
+    "df1": "603",
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "t(603) = \t1.22, p > .05",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp2450fe93:1898:1916-1",
+  "window_id": "gp2450fe93:1898:1916",
+  "text": "differ for participants in group and individual PCIT (Group PCIT\ncoaching in minutes M(SD) \u0002 18.98(9.75), individual PCIT coach-\ning in minutes M(SD) \u0002 19.91(9.00); t(603) = \t1.22, p > .05;\nCohen’s d \u0002 0.10). Fathers, however, received significantly less\ncoaching if they participated in individual PCIT, M(SD) \u0002\n15.52(5.81), rather than Group PCIT (M(SD) \u0002 18.69(8.24);\nt(268) = 3.69, p = .001; Cohen’s d \u0002 \t0.45).\nAttrition, Adherence, and Social Support\nAttrition.\nOf the 81 families allocated to an intervention, 77\nbegan treatment (see Figure 1). Fifty-seven of the 77 families\ncompleted treatment, for an overall intervention attrition rate of\n26%. Group PCIT had an attrition rate of 25.6% (n \u0002 10), while\nindividual PCIT had an attrition rate of 26.3% (n \u0002 10). The phi\ncoefficient testing the association between treatment condition and\nattrition was not significant (\u0011 \u0002 \t.01, p \u0003 .05).\nAdherence.\nFamilies’ adherence to treatment was assessed in\nthree ways: (a) number of sessions attended, (b) parent-reported",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "1.22",
+    "df1": null,
+    "df2": "603",
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "603) = \t1.22, p > .05",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-1.22",
+    "df1": "603",
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "t(603) = \t1.22, p > .05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-1.22",
+    "df1": "603",
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "t(603) = \t1.22, p > .05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "1.22",
+    "df1": "603",
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "t(603) = \t1.22, p > .05",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp2450fe93:1898:1916-2",
+  "window_id": "gp2450fe93:1898:1916",
+  "text": "differ for participants in group and individual PCIT (Group PCIT\ncoaching in minutes M(SD) \u0002 18.98(9.75), individual PCIT coach-\ning in minutes M(SD) \u0002 19.91(9.00); t(603) = \t1.22, p > .05;\nCohen’s d \u0002 0.10). Fathers, however, received significantly less\ncoaching if they participated in individual PCIT, M(SD) \u0002\n15.52(5.81), rather than Group PCIT (M(SD) \u0002 18.69(8.24);\nt(268) = 3.69, p = .001; Cohen’s d \u0002 \t0.45).\nAttrition, Adherence, and Social Support\nAttrition.\nOf the 81 families allocated to an intervention, 77\nbegan treatment (see Figure 1). Fifty-seven of the 77 families\ncompleted treatment, for an overall intervention attrition rate of\n26%. Group PCIT had an attrition rate of 25.6% (n \u0002 10), while\nindividual PCIT had an attrition rate of 26.3% (n \u0002 10). The phi\ncoefficient testing the association between treatment condition and\nattrition was not significant (\u0011 \u0002 \t.01, p \u0003 .05).\nAdherence.\nFamilies’ adherence to treatment was assessed in\nthree ways: (a) number of sessions attended, (b) parent-reported",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": ".01",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "\u0011 \u0002 \t.01, p \u0003 .05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": null,
+    "statistic": "-.01",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "\u0011 \u0002 \t.01, p \u0003 .05",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpe50cec5c:949:963-0",
+  "window_id": "gpe50cec5c:949:963",
+  "text": "Similarly, an ANOVA of participants’ perceived impor-\ntance of the goal yielded a goal progress # progress type\ninteraction, F(1, 86) = 6.83, = = .01. Among participants\nwhose progress on the task was low, the perceived impor-\ntance of the goal was not different between those who\nthought that they had earned the progress (M p 5.86) and\nthose who were endowed the progress (M p 6.29), t(43) p\n\u00011.19, NS. However, among those who had achieved high\nprogress on the task, participants who attributed the progress\nto themselves and thought that they had earned it perceived\nthe goal to be more important (M p 6.35) than did those\nwho thought that they were just endowed with the same\nlevel of progress (M p 5.50), t(43) p \u0001 2.57, p ! .05. No\nmain effect was found in this analysis.\nWe further regressed the amount of time that participants",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "\u00011.19",
+    "df1": "43",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(43) p \u00011.19, NS",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-1.19",
+    "df1": "43",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(43) p\n\u00011.19, NS",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "t",
+    "statistic": "1.19",
+    "df1": null,
+    "df2": "43",
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "43) p\n\u00011.19",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-1.19",
+    "df1": "43",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(43) p \u00011.19, NS",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ }
+]

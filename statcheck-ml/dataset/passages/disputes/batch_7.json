@@ -1,0 +1,213 @@
+[
+ {
+  "dispute_id": "gpcd2060fd:534:546-0",
+  "window_id": "gpcd2060fd:534:546",
+  "text": "More centrally, signiﬁcant main effects were obtained for plan elegance when examining the effects of the case (F(1, 325) = 5.03,\np ≤.05), schema (F(1, 325), p ≤.01), and mental model (F(1, 325) = 6.70, p ≤.01) manipulations. It was found that the most\nelegant leadership plans were obtained when people were presented with fewer (M = 2.95, SE = .062) as opposed to many\n(M = 2.75, SE = .064) cases, when people were presented with fewer (M = 3.03, SE = .064) as opposed to many (M = 2.68,\nSE = .063) schema, and when people were presented with simple (M = 2.97, SE = .063) as opposed to complex (M = 2.74,\nSE = .063) mental models thus providing additional support for Hypotheses 1, 2, and 3. This simpliﬁcation of information and mental\nmodels apparently contributes to the production of more elegant plans.\nA signiﬁcant (F(1, 325) = 11.10, p ≤.01) interaction was also obtained between the case and forecasting manipulation. Examina-\ntion of the cell means indicated that the most elegant plans were produced when people were asked to work with few cases and make\nnegative forecasts (M = 3.13, SE = .090) as compared to all other conditions (M = 2.76, SE = .090). Moreover, a signiﬁcant interac-\ntion (F(1, 325) = 7.95, p ≤.01) was obtained between the schema, cases, and forecasting manipulations. In keeping with our\nTable 1\nIntercorrelations among rating scales.",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": null,
+    "df1": "1",
+    "df2": "325",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "F(1, 325), p ≤.01",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3bdb0619:1382:1399-0",
+  "window_id": "gp3bdb0619:1382:1399",
+  "text": "(Cronbach’s\n); lo-to-hi participants reported being more sat-\na p 0.88\nisﬁed than hi-to-lo participants (\n,\n). As in the\nt(298) = 3.68 = < .0001\nprevious study, satisfaction was not correlated with price (\n, not\nr p \u0001.05\nsigniﬁcant).\n296\njournal of political economy\nFig. 5.—Timing of choices in car study II: time taken in seconds as a function of attribute.\nHi-to-lo participants advanced from right to left and lo-to-hi from left to right.\nIV.\nConclusion\nWe have examined the inﬂuence of attribute order on product custom-",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": null,
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".05",
+    "quote": "r p \u0001.05",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp961a094a:596:603-0",
+  "window_id": "gp961a094a:596:603",
+  "text": "3 Results were practically identical when splitting the sample only in two groups\n(above vs. below scale midpoint). In this case, those who perceive males as more\nagentic also position males predominantly to the left (M = 2.79), which differed\nsigniﬁcantly from chance, one-sample t(23) = 2.87, p = .009, whereas those perceiving\nfemales as more agentic, showed a tendency to position females to the left (M = 1.38),\none-sample t(15) = \u00021.84, p = .086.\nThere also was an effect for order of presentation with the ﬁrst mentioned group\nbeing placed to the left more often than would be expected by chance. However, since",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "-1.84",
+    "df1": "15",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".086",
+    "quote": "t(15) = \u00021.84, p = .086",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "1.84",
+    "df1": null,
+    "df2": "15",
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".086",
+    "quote": "15) = \u00021.84, p = .086",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-1.84",
+    "df1": "15",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".086",
+    "quote": "t(15) = \u00021.84, p = .086",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "\u00021.84",
+    "df1": "15",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".086",
+    "quote": "one-sample t(15) = \u00021.84, p = .086",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp961a094a:755:764-0",
+  "window_id": "gp961a094a:755:764",
+  "text": "scale midpoint of 0) indicated that the left positioning bias of Ital-\nians differed reliably from zero when the agentic group was men-\ntioned ﬁrst (M = .35), one-sample t(29) = 3.53, p < .001. Conversely,\nthe right-positioning bias in Arabs differed reliably from zero when\nthe agentic group was mentioned ﬁrst (M = \u0002.26), one-sample\nt(30) = \u00022.28, p < .05. When the less agentic group was mentioned\nﬁrst, means were no different from zero (Italians: M = \u0002.13, Arabs:\nM = .02), suggesting the absence of a spatial positioning bias.\nDiscussion\nThe third study demonstrates a systematic spatial agency bias",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "\u00022.28",
+    "df1": "30",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "one-sample t(30) = \u00022.28, p < .05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-2.28",
+    "df1": "30",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "t(30) = \u00022.28, p < .05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "2.28",
+    "df1": null,
+    "df2": "30",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "30) = \u00022.28, p < .05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-2.28",
+    "df1": "30",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "t(30) = \u00022.28, p < .05",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpe50cec5c:283:307-0",
+  "window_id": "gpe50cec5c:283:307",
+  "text": "gets a stamp) to redeem for a free sandwich. In the earned-\nprogress condition, participants read that they had collected\neither 3 stamps (low progress) or 9 stamps (high progress)\non the card by eating at the shop. In the endowed-progress\ncondition, in contrast, participants read that the sandwich\nshop offered customers a card that already had either 3\nstamps or 9 stamps on it as part of their promotion. Partic-\nipants then read that the shop had recently moved to a lo-\ncation farther off campus and that it would take about 10\nmore minutes to walk there. Participants were asked to in-\ndicate how likely they would be to still go to the sandwich\nshop for lunch (7-point scale; 1 p I deﬁnitely will not, 7\np I deﬁnitely will). Our results indicated that participants’\ninterest in returning to the same shop yielded a main effect\nof progress level, F(1, 127) = 6.36, = < .05, and the pre-\ndicted progress level # progress type interaction, F(1, 127)\n= 12.05, = < .01. For participants who had made low pro-\ngress on redeeming the loyalty card, those who had collected\nthe stamps by making purchases reported a lower interest\nin returning to the shop when it became inconvenient (M p\n2.74) than did those who had received the stamps for free\n(M p 3.75), t(67) p \u00013.03, p ! .01. In contrast, for par-\nticipants who had already made high progress toward card\nredemption, those who had made progress through purchases\nshowed a higher interest in going back to the shop (M p",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "3.03",
+    "df1": null,
+    "df2": "67",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "67) p \u00013.03, p ! .01",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-3.03",
+    "df1": "67",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "t(67) p \u00013.03, p ! .01",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-3.03",
+    "df1": "67",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "t(67) p \u00013.03, p ! .01",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "\u00013.03",
+    "df1": "67",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "t(67) p \u00013.03, p ! .01",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ }
+]

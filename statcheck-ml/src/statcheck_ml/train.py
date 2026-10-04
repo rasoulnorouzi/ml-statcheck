@@ -32,8 +32,47 @@ from .labels import ENTITIES, TAG_TO_ID, ID_TO_TAG, tags_to_spans
 from .model import CharTagger
 
 
+FAMILIES = ("ocr", "unicode", "operator", "number_damage", "extra_negatives",
+            "hard_negative", "font_map", "negative_damage", "spaced_digits",
+            "operator_drop")
+
+
+def resolve_device(name: str = "auto") -> torch.device:
+    if name == "auto":
+        name = "cuda" if torch.cuda.is_available() else "cpu"
+    if name == "cuda" and not torch.cuda.is_available():
+        raise SystemExit("--device cuda was given but torch.cuda.is_available() is False")
+    return torch.device(name)
+
+
+def parse_families(text: str | None) -> List[str]:
+    names = [n.strip() for n in (text or "").split(",") if n.strip()]
+    unknown = [n for n in names if n not in FAMILIES]
+    if unknown:
+        raise ValueError(f"unknown noise family {', '.join(unknown)}; "
+                         f"valid names: {', '.join(FAMILIES)}")
+    return names
+
+
+def make_augmenter(seed: int, families: Sequence[str] = (),
+                   no_default_families: bool = False):
+    from .augment import Augmenter
+    aug = Augmenter(seed=seed)
+    if no_default_families:
+        for name in FAMILIES:
+            if hasattr(aug, name):
+                setattr(aug, name, False)
+    for name in families:
+        # The four newest families may not exist in an older augment.py.
+        if hasattr(aug, name):
+            setattr(aug, name, True)
+        else:
+            print(f"warning: augment.py has no family {name!r}; ignored")
+    return aug
+
+
 def make_batches(examples: Sequence[dict], vocab: Dict[str, int],
-                 batch_size: int, shuffle: bool = True):
+                 batch_size: int, shuffle: bool = True, device=None):
     """Group examples of a similar length, then pad each group."""
     order = sorted(range(len(examples)), key=lambda i: len(examples[i]["text"]))
     groups = [order[i:i + batch_size] for i in range(0, len(order), batch_size)]
@@ -49,6 +88,8 @@ def make_batches(examples: Sequence[dict], vocab: Dict[str, int],
             ids[j, :len(seq)] = torch.tensor(seq, dtype=torch.long)
             tags[j, :len(seq)] = torch.tensor([TAG_TO_ID[t] for t in r["tags"]],
                                               dtype=torch.long)
+        if device is not None:
+            ids, tags = ids.to(device), tags.to(device)
         yield ids, tags, rows
 
 
@@ -57,8 +98,10 @@ def predict_spans(model: CharTagger, examples: Sequence[dict],
     """Return the spans the model predicts for each window."""
     model.eval()
     out: Dict[str, list] = {}
+    device = next(model.parameters()).device
     with torch.no_grad():
-        for ids, _, rows in make_batches(examples, vocab, batch_size, shuffle=False):
+        for ids, _, rows in make_batches(examples, vocab, batch_size,
+                                         shuffle=False, device=device):
             logits = model(ids)
             if model.crf is not None:
                 mask = (ids != 0).float()
@@ -111,9 +154,13 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
           batch_size: int = 16, lr: float = 2e-3, seed: int = 0,
           patience: int = 6, use_crf: bool = False, augment: int = 0,
           hard_negatives: int = 0, unit: str = "lstm",
-          splits_path: str | None = None) -> dict:
+          splits_path: str | None = None, device: str = "auto",
+          families: Sequence[str] = (), no_default_families: bool = False) -> dict:
     random.seed(seed)
     torch.manual_seed(seed)
+    dev = resolve_device(device)
+    families = parse_families(",".join(families))
+    print(f"device: {dev}, torch {torch.__version__}")
 
     paths: List[str] = []
     for pattern in data_globs:
@@ -136,8 +183,8 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
     # Augmentation is applied to the training part only. Perturbing the
     # development or test parts would measure the generator, not the model.
     if augment or hard_negatives:
-        from .augment import Augmenter, check_alignment
-        aug = Augmenter(seed=seed)
+        from .augment import check_alignment
+        aug = make_augmenter(seed, families, no_default_families)
         extra = aug.expand(train_set, per_example=augment, negatives=hard_negatives)
         broken = check_alignment(extra)
         if broken:
@@ -157,7 +204,8 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
 
     tag_list = list(TAG_TO_ID) if use_crf else None
     model = CharTagger(len(vocab), len(TAG_TO_ID), tags=tag_list, unit=unit)
-    weights = torch.tensor(class_weights(train_set), dtype=torch.float)
+    model.to(dev)
+    weights = torch.tensor(class_weights(train_set), dtype=torch.float, device=dev)
     loss_fn = nn.CrossEntropyLoss(weight=weights, ignore_index=-100)
     opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
     sched = torch.optim.lr_scheduler.ReduceLROnPlateau(opt, mode="max", factor=0.5, patience=2)
@@ -170,7 +218,7 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
     for epoch in range(1, epochs + 1):
         model.train()
         started, total, seen = time.time(), 0.0, 0
-        for ids, tags, _ in make_batches(train_set, vocab, batch_size):
+        for ids, tags, _ in make_batches(train_set, vocab, batch_size, device=dev):
             opt.zero_grad()
             logits = model(ids)
             if model.crf is not None:
@@ -196,7 +244,8 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
 
         if f1 > best_f1:
             best_f1, best_epoch, bad = f1, epoch, 0
-            torch.save({"state_dict": model.state_dict(), "vocab": vocab,
+            # Saved from CPU copies so the file loads on any machine.
+            torch.save({"state_dict": {k: v.cpu() for k, v in model.state_dict().items()}, "vocab": vocab,
                         "tags": list(TAG_TO_ID), "unit": unit,
                         "crf": bool(model.crf)}, out / "model.pt")
         else:
@@ -205,14 +254,16 @@ def train(data_globs: Sequence[str], out_dir: str, epochs: int = 30,
                 print(f"  no improvement for {patience} epochs; stopping")
                 break
 
-    best = torch.load(out / "model.pt", weights_only=False)
+    best = torch.load(out / "model.pt", weights_only=False, map_location=dev)
     model.load_state_dict(best["state_dict"])
     final = score(dev_set, predict_spans(model, dev_set, vocab))
 
     report = {"best_epoch": best_epoch, "crf": bool(model.crf),
               "augment": augment, "hard_negatives": hard_negatives, "unit": unit, "dev": final, "history": history,
               "vocab_size": len(vocab), "parameters": model.n_parameters(),
-              "train_windows": len(train_set), "dev_windows": len(dev_set)}
+              "train_windows": len(train_set), "dev_windows": len(dev_set),
+              "device": str(dev), "torch": torch.__version__, "seed": seed,
+              "families": families, "no_default_families": no_default_families}
     (out / "report.json").write_text(json.dumps(report, indent=1), encoding="utf-8")
 
     print(f"\nbest epoch {best_epoch}, dev F1 {final['overall']['f1']:.3f}")
@@ -238,12 +289,22 @@ def main():
     ap.add_argument("--unit", choices=["lstm", "gru", "cnn"], default="lstm")
     ap.add_argument("--splits", required=True,
                     help="dataset/splits.json with train/dev document split")
+    ap.add_argument("--device", choices=["auto", "cpu", "cuda"], default="auto")
+    ap.add_argument("--families", default="",
+                    help="comma-separated Augmenter flags to set True: " + ", ".join(FAMILIES))
+    ap.add_argument("--no-default-families", action="store_true",
+                    help="set every family False before --families applies")
     args = ap.parse_args()
+    try:
+        families = parse_families(args.families)
+    except ValueError as err:
+        ap.error(str(err))
     train(args.data, args.out, epochs=args.epochs, batch_size=args.batch_size,
           lr=args.lr, seed=args.seed,
           use_crf=args.crf, augment=args.augment,
           hard_negatives=args.hard_negatives, unit=args.unit,
-          splits_path=args.splits)
+          splits_path=args.splits, device=args.device, families=families,
+          no_default_families=args.no_default_families)
 
 
 if __name__ == "__main__":

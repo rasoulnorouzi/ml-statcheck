@@ -1,0 +1,674 @@
+[
+ {
+  "dispute_id": "gpad865319:584:590-2",
+  "window_id": "gpad865319:584:590",
+  "text": "13.92, p<.001. Importantly, none of the higher-order interactions\ninvolving probe relevance was signiﬁcant, Fs(5, 670)b1.46, psN.20.\nAn additional analysis in which we submitted the transformed\nprobe-recognition latencies to a 2 (probe relevance)×2 (cognitive\nload)×2 (probe type)×2 (probe order: ﬁrst vs. second) multilevel\nANOVA, with repeated measures on the last two factors, yielded the\nsame main effects of probe relevance, cognitive load, and probe type as",
+  "kind": "field_conflict",
+  "field": "df2",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "13.92",
+    "df1": "1",
+    "df2": "670",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "13.92, p<.001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": null,
+    "statistic": "13.92",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "13.92, p<.001",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp16647eaf:759:775-0",
+  "window_id": "gp16647eaf:759:775",
+  "text": "t(78) \u0001 0.8, ns\nGlobal Assessment of Functioning\n44.3 (13.6)\n46.4 (12.0)\nt(78) \u0001 \u00030.7, ns\nPatients with legal guardian\n14\n4\n\u00072(1) \u0001 6.9, p \u0002 .01\nPANSS–Positive score\n15.2 (4.4)\n14.7 (4.6)\nt(78) \u0001 0.5, ns\nPANSS–Negative score\n14.9 (4.6)\n13.4 (4.6)\nt(78) \u0001 1.4, ns",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "0.8",
+    "df1": null,
+    "df2": "78",
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "78) \u0001 0.8",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpe9df6d9c:688:716-0",
+  "window_id": "gpe9df6d9c:688:716",
+  "text": "for analyzing the data, single-common-method-factor approach is\nthe best method for checking CMV (Podsakoff, MacKenzie, Lee, &\nPodsakoff, 2003). This approach consists of comparing the ﬁt of\nthe measurement model with the ﬁt of the measurement model\nwith a method factor.1 CMV is not a threat if the measurement\nmodel is the more parsimonious.\nThe test was performed with the AMOS 19 program using the\ncovariance matrix with the maximum likelihood method of esti-\nmation. The baseline comparisons indicated that the measurement\nmodel (c2 ¼ 580.3, df ¼ 142, p < .001; CFI ¼ .95; NNFI ¼ .94;\nRMSEA ¼ .06), as well as the measurement model with the com-\nmon factor (c2 ¼ 580.0, df ¼ 140, p < .001; CFI ¼ .94; NNFI ¼ .93;\nRMSEA ¼ .07) have ﬁtted the data well. In addition, the Chi-square\ndifference\ntest (Bentler\n& Bonnett, 1980)\nis not signiﬁcant\n(Dc2 ¼ .3), suggesting that measurement models with(out) com-\n\nthe computation of the Akaike's Information Criterion (AIC) is also\nuseful for comparing models. Although the more parsimonious\nmodel should provide the lowest value (Hu & Bentler, 1995),\n\ndecision, the difference in AIC (DAIC) between the two models\nshould be higher than 2. Given that the measurement model yiel-\nded a smaller AIC (AIC ¼ 676.3) than measurement model with the\ncommon factor (AIC ¼ 680.0), and that DAIC ¼ 3.7, it can be inferred\nthat common variance bias was not a signiﬁcant issue.\nAs indicated above the measurement model provided a good ﬁt",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "580.3",
+    "df1": "142",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "c2 ¼ 580.3, df ¼ 142, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "580.3",
+    "df1": "142",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "2 ¼ 580.3, df ¼ 142, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "580.3",
+    "df1": "142",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "c2 = 580.3, df = 142, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "580.3",
+    "df1": "142",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "c2 ¼ 580.3, df ¼ 142, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpe9df6d9c:688:716-1",
+  "window_id": "gpe9df6d9c:688:716",
+  "text": "for analyzing the data, single-common-method-factor approach is\nthe best method for checking CMV (Podsakoff, MacKenzie, Lee, &\nPodsakoff, 2003). This approach consists of comparing the ﬁt of\nthe measurement model with the ﬁt of the measurement model\nwith a method factor.1 CMV is not a threat if the measurement\nmodel is the more parsimonious.\nThe test was performed with the AMOS 19 program using the\ncovariance matrix with the maximum likelihood method of esti-\nmation. The baseline comparisons indicated that the measurement\nmodel (c2 ¼ 580.3, df ¼ 142, p < .001; CFI ¼ .95; NNFI ¼ .94;\nRMSEA ¼ .06), as well as the measurement model with the com-\nmon factor (c2 ¼ 580.0, df ¼ 140, p < .001; CFI ¼ .94; NNFI ¼ .93;\nRMSEA ¼ .07) have ﬁtted the data well. In addition, the Chi-square\ndifference\ntest (Bentler\n& Bonnett, 1980)\nis not signiﬁcant\n(Dc2 ¼ .3), suggesting that measurement models with(out) com-\n\nthe computation of the Akaike's Information Criterion (AIC) is also\nuseful for comparing models. Although the more parsimonious\nmodel should provide the lowest value (Hu & Bentler, 1995),\n\ndecision, the difference in AIC (DAIC) between the two models\nshould be higher than 2. Given that the measurement model yiel-\nded a smaller AIC (AIC ¼ 676.3) than measurement model with the\ncommon factor (AIC ¼ 680.0), and that DAIC ¼ 3.7, it can be inferred\nthat common variance bias was not a signiﬁcant issue.\nAs indicated above the measurement model provided a good ﬁt",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "580.0",
+    "df1": "140",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "2 ¼ 580.0, df ¼ 140, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "580.0",
+    "df1": "140",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "c2 ¼ 580.0, df ¼ 140, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "580.0",
+    "df1": "140",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "c2 = 580.0, df = 140, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "580.0",
+    "df1": "140",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "c2 ¼ 580.0, df ¼ 140, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:402:415-0",
+  "window_id": "gp3fbfd59c:402:415",
+  "text": "to adult. High internal consistency is reported (r ¼ .88) indicating\ngood reliability; correlation with concepts and directions from\nCELF-3 (Semel, Wiig, & Secord, 2000) is r ¼ .53.\n2.2.3.3. Formulated sentences. In the formulated sentences subtest\nof the CELF-4 UK (Semel et al., 2006), students are asked to\nformulate a syntactically and semantically correct sentence in\nresponse to an orally presented target word or phrase, with a\nstimulus picture for reference. Internal consistency is r ¼ .75e.89\nand testeretest reliability r ¼ .86.\n2.2.4. Working memory\nIn the Automated Working Memory Assessment (AWMA;\nAlloway, 2007), students complete four subtests which examine\nverbal and visuospatial storage and processing: digit recall for-\nwards and backwards, spatial recall, and visuospatial STM. Digit",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".88",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .88",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:402:415-1",
+  "window_id": "gp3fbfd59c:402:415",
+  "text": "to adult. High internal consistency is reported (r ¼ .88) indicating\ngood reliability; correlation with concepts and directions from\nCELF-3 (Semel, Wiig, & Secord, 2000) is r ¼ .53.\n2.2.3.3. Formulated sentences. In the formulated sentences subtest\nof the CELF-4 UK (Semel et al., 2006), students are asked to\nformulate a syntactically and semantically correct sentence in\nresponse to an orally presented target word or phrase, with a\nstimulus picture for reference. Internal consistency is r ¼ .75e.89\nand testeretest reliability r ¼ .86.\n2.2.4. Working memory\nIn the Automated Working Memory Assessment (AWMA;\nAlloway, 2007), students complete four subtests which examine\nverbal and visuospatial storage and processing: digit recall for-\nwards and backwards, spatial recall, and visuospatial STM. Digit",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".53",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .53",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:402:415-2",
+  "window_id": "gp3fbfd59c:402:415",
+  "text": "to adult. High internal consistency is reported (r ¼ .88) indicating\ngood reliability; correlation with concepts and directions from\nCELF-3 (Semel, Wiig, & Secord, 2000) is r ¼ .53.\n2.2.3.3. Formulated sentences. In the formulated sentences subtest\nof the CELF-4 UK (Semel et al., 2006), students are asked to\nformulate a syntactically and semantically correct sentence in\nresponse to an orally presented target word or phrase, with a\nstimulus picture for reference. Internal consistency is r ¼ .75e.89\nand testeretest reliability r ¼ .86.\n2.2.4. Working memory\nIn the Automated Working Memory Assessment (AWMA;\nAlloway, 2007), students complete four subtests which examine\nverbal and visuospatial storage and processing: digit recall for-\nwards and backwards, spatial recall, and visuospatial STM. Digit",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".75e.89",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .75e.89",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:402:415-3",
+  "window_id": "gp3fbfd59c:402:415",
+  "text": "to adult. High internal consistency is reported (r ¼ .88) indicating\ngood reliability; correlation with concepts and directions from\nCELF-3 (Semel, Wiig, & Secord, 2000) is r ¼ .53.\n2.2.3.3. Formulated sentences. In the formulated sentences subtest\nof the CELF-4 UK (Semel et al., 2006), students are asked to\nformulate a syntactically and semantically correct sentence in\nresponse to an orally presented target word or phrase, with a\nstimulus picture for reference. Internal consistency is r ¼ .75e.89\nand testeretest reliability r ¼ .86.\n2.2.4. Working memory\nIn the Automated Working Memory Assessment (AWMA;\nAlloway, 2007), students complete four subtests which examine\nverbal and visuospatial storage and processing: digit recall for-\nwards and backwards, spatial recall, and visuospatial STM. Digit",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".86",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .86",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp67537f8f:509:512-0",
+  "window_id": "gp67537f8f:509:512",
+  "text": "1). This was the same across presentation modes and word sets (all\nFs \u0003 1). Hence, the results demonstrate that participants both in\nthe video and in the audio condition showed the expected facili-\ntation effect of context on their naming latencies to a similar",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fs \u0003 1",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:876:899-0",
+  "window_id": "gp47993ad6:876:899",
+  "text": "confirm our manipulation of physical distance does indeed alter\nperceptions of physical distance. The posttest employed the same\n2 (perceived distance: nearby vs. far away) between-subjects de-\nsign as the main study. Participants (N \u0003 110 mTurkers, Mage \u0003\n35.30) completed the same typing-task manipulation of physical\ndistance followed by the same charitable appeal as in the main\nstudy. We measured perceptions of spatial distance by asking\nparticipants to indicate how close or far away the Ivory Coast is\n(1 \u0003 Very close; 9 \u0003 Very far), how much time it would take to\nfly there (1 \u0003 A very short time; 9 \u0003 A very long time), and the\nextent to which the Ivory Coast seems nearby or far away (1 \u0003\nNearby; 9 \u0003 Far away). We averaged these three questions into a\nspatial distance index (\u0005 \u0003 .86). Results confirmed participants\nperceived Ivory Coast as farther away when they had previously\nretyped a passage about long distances (M \u0003 7.95, SD \u0003 1.16)\nthan when they had retyped a passage about shrinking distances\n(M \u0003 7.36, SD \u0003 1.31; t(108) = 2.48, p = .015; d \u0003 .48).\nResults and Discussion\nThe pattern of donation supported our hypothesis, \t2(1, N \u0003\n160) \u0003 4.82, p \u0003 .028. Specifically, more participants who read/\nwrote about shrinking distances chose to donate to the charity\n(48.72%) than did participants who read/wrote about long dis-\ntances (31.71%; z \u0003 2.2, p \u0003 .028, r \u0003 .17).\nThese results provide further evidence for our hypothesis about",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".17",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r \u0003 .17",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp67537f8f:1034:1057-0",
+  "window_id": "gp67537f8f:1034:1057",
+  "text": "to local positions in the narration where a coherence break oc-\ncurred.\nWe analyzed the summary scores in a 2 (coherence of\nnarration) \u0002 2 (presentation mode) ANOVA. The results show a\nsignificant effect of the coherence of narration, F(1, 56) \u0001 14.3,\nMSE \u0001 7.80, p \u0003 .01, \u0005p2 \u0001 .20. Both in the film and in the audio\ncondition, the versions with a coherent narration led to a more\ncomplete summary than the versions with an incoherent narration\n(M \u0001 5.53, SD \u0001 1.19 vs. M \u0001 3.67, SD \u0001 2.19 for the video\nconditions; M \u0001 5.40, SD \u0001 1.60 vs. M \u0001 4.00, SD \u0001 1.56 for the\naudio conditions). Neither the factor presentation mode nor its\ninteraction with coherence of narration was significant (with both\nFs \u0003 1). Thus, although the participants were able to compensate\nfor coherence breaks in the narration by attending to the accom-\npanying moving pictures on a local level, their overall compre-\nhension of the film was nevertheless disturbed.\nWe analyzed the three transfer test scores in separate 2 (coher-\nence of narration) \u0002 2 (presentation mode) ANOVAs. The first\ntransfer task asked the participants to describe the construction of\na cool bag. Here, a main effect of coherence of narration was\nfound, F(3, 56) = 4.68, MSE = 1.42, p < .05, \u0005p2 \u0001 .08. Again,\nboth in the film and in the audio condition, the version with a\ncoherent narration led to a more complete solution of the transfer\ntask than the version with an incoherent narration (M \u0001 2.93,",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fs \u0003 1",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp67537f8f:1034:1057-1",
+  "window_id": "gp67537f8f:1034:1057",
+  "text": "to local positions in the narration where a coherence break oc-\ncurred.\nWe analyzed the summary scores in a 2 (coherence of\nnarration) \u0002 2 (presentation mode) ANOVA. The results show a\nsignificant effect of the coherence of narration, F(1, 56) \u0001 14.3,\nMSE \u0001 7.80, p \u0003 .01, \u0005p2 \u0001 .20. Both in the film and in the audio\ncondition, the versions with a coherent narration led to a more\ncomplete summary than the versions with an incoherent narration\n(M \u0001 5.53, SD \u0001 1.19 vs. M \u0001 3.67, SD \u0001 2.19 for the video\nconditions; M \u0001 5.40, SD \u0001 1.60 vs. M \u0001 4.00, SD \u0001 1.56 for the\naudio conditions). Neither the factor presentation mode nor its\ninteraction with coherence of narration was significant (with both\nFs \u0003 1). Thus, although the participants were able to compensate\nfor coherence breaks in the narration by attending to the accom-\npanying moving pictures on a local level, their overall compre-\nhension of the film was nevertheless disturbed.\nWe analyzed the three transfer test scores in separate 2 (coher-\nence of narration) \u0002 2 (presentation mode) ANOVAs. The first\ntransfer task asked the participants to describe the construction of\na cool bag. Here, a main effect of coherence of narration was\nfound, F(3, 56) = 4.68, MSE = 1.42, p < .05, \u0005p2 \u0001 .08. Again,\nboth in the film and in the audio condition, the version with a\ncoherent narration led to a more complete solution of the transfer\ntask than the version with an incoherent narration (M \u0001 2.93,",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "8.07",
+    "df1": "1",
+    "df2": "56",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "F(1, 56) = 8.07, MSE = 1.00, p < .01",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp67537f8f:1034:1057-2",
+  "window_id": "gp67537f8f:1034:1057",
+  "text": "to local positions in the narration where a coherence break oc-\ncurred.\nWe analyzed the summary scores in a 2 (coherence of\nnarration) \u0002 2 (presentation mode) ANOVA. The results show a\nsignificant effect of the coherence of narration, F(1, 56) \u0001 14.3,\nMSE \u0001 7.80, p \u0003 .01, \u0005p2 \u0001 .20. Both in the film and in the audio\ncondition, the versions with a coherent narration led to a more\ncomplete summary than the versions with an incoherent narration\n(M \u0001 5.53, SD \u0001 1.19 vs. M \u0001 3.67, SD \u0001 2.19 for the video\nconditions; M \u0001 5.40, SD \u0001 1.60 vs. M \u0001 4.00, SD \u0001 1.56 for the\naudio conditions). Neither the factor presentation mode nor its\ninteraction with coherence of narration was significant (with both\nFs \u0003 1). Thus, although the participants were able to compensate\nfor coherence breaks in the narration by attending to the accom-\npanying moving pictures on a local level, their overall compre-\nhension of the film was nevertheless disturbed.\nWe analyzed the three transfer test scores in separate 2 (coher-\nence of narration) \u0002 2 (presentation mode) ANOVAs. The first\ntransfer task asked the participants to describe the construction of\na cool bag. Here, a main effect of coherence of narration was\nfound, F(3, 56) = 4.68, MSE = 1.42, p < .05, \u0005p2 \u0001 .08. Again,\nboth in the film and in the audio condition, the version with a\ncoherent narration led to a more complete solution of the transfer\ntask than the version with an incoherent narration (M \u0001 2.93,",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "4.27",
+    "df1": "1",
+    "df2": "56",
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".05",
+    "quote": "F(1, 56) = 4.27, MSE = 1.00, p = .05",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa920dadf:937:952-0",
+  "window_id": "gpa920dadf:937:952",
+  "text": "subjects factor, time of happiness measurement as a \nwithin-subjects factor, and memory age as a covariate. \nThis analysis revealed a significant main effect of time, \nF(1, 57) = 4.59, p < .05, ηp\n2 = .07. Participants felt happier \nafter recalling their positive memories (6.80) compared \nwith at baseline (6.32), which indicated that our affective \nmanipulation was successful. However, contrasting \nsharply with the neural data, results showed that there \nwas no significant effect of group or its interaction with \ntime (Fs < 1.39, ps > .25). Similarly, global positive affect \nand event-specific emotional reactivity did not differ \nacross the groups (Fs < 1, n.s.).\nSpontaneous self-distancing and \nemotional reactivity\nFinally, we conducted a series of regression analyses to ",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1.39",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".25",
+    "quote": "Fs < 1.39, ps > .25",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa920dadf:937:952-1",
+  "window_id": "gpa920dadf:937:952",
+  "text": "subjects factor, time of happiness measurement as a \nwithin-subjects factor, and memory age as a covariate. \nThis analysis revealed a significant main effect of time, \nF(1, 57) = 4.59, p < .05, ηp\n2 = .07. Participants felt happier \nafter recalling their positive memories (6.80) compared \nwith at baseline (6.32), which indicated that our affective \nmanipulation was successful. However, contrasting \nsharply with the neural data, results showed that there \nwas no significant effect of group or its interaction with \ntime (Fs < 1.39, ps > .25). Similarly, global positive affect \nand event-specific emotional reactivity did not differ \nacross the groups (Fs < 1, n.s.).\nSpontaneous self-distancing and \nemotional reactivity\nFinally, we conducted a series of regression analyses to ",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fs < 1, n.s.",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp24affa4d:459:478-0",
+  "window_id": "gp24affa4d:459:478",
+  "text": "331\nadministered a baseline survey to obtain background information on partici-\npating teachers. On average, teachers in our study had 14.34 years of total\nteaching experience, and 64% had earned a master’s degree. Although teach-\ners received their baccalaureate degrees from over 25 different undergraduate\ninstitutions, a plurality (42%) graduated from a California State University.\nThere was no statistically significant difference between Pathway teachers\nand control teachers in the total years of teaching experience (p = .54), the\npercentage who earned a master’s degree (p = .15), and the percentage\nwho graduated from a California State University (p = .82). These findings indi-\ncate that participants in both conditions were similar on observed teacher\ncharacteristics measured at baseline in fall 2007.\nDuring the 2007–2008 school year, California experienced a severe bud-\nget crisis, causing the district to lay off teachers included in this study. As\na result, we lost 18 treatment and 13 control teachers in 2008–2009 to attri-\ntion. Chi-square analyses revealed no significant difference in attrition rates\nby condition, x2(103) = 1.30, p = .26. Furthermore, we found no difference\nbetween Pathway teachers (M = 7.00, SD = .89) and control teachers (M =\n7.21, SD = .92) on a baseline measure of teacher self-efficacy (p = .29) and\nno difference in self-efficacy between teachers who remained in the study",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "1.30",
+    "df1": "103",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".26",
+    "quote": "x2(103) = 1.30, p = .26",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "1.30",
+    "df1": "103",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".26",
+    "quote": "x2(103) = 1.30, p = .26",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "1.30",
+    "df1": "103",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".26",
+    "quote": "x2(103) = 1.30, p = .26",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "1.30",
+    "df1": "103",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".26",
+    "quote": "2(103) = 1.30, p = .26",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp2601e492:667:680-0",
+  "window_id": "gp2601e492:667:680",
+  "text": "beneﬁt vs. self-and-friend beneﬁt vs. self-and-other beneﬁt vs.\nother-alone beneﬁt) on rates of over-reporting performance on this\nword jumble was marginally signiﬁcant, v2(4) = 8.60, p = .07. Par-\nticipants in the self-and-other beneﬁt condition were more likely\nto report solving the ninth word jumble (12%) than were partici-\npants in the self-alone high beneﬁt condition, 1%, v2(1) = 5.97,\np = .02. Participants in the self-and-friend beneﬁt condition were\nmarginally more likely to report solving the ninth word jumble\n(8%) than were participants in the self-alone high beneﬁt condi-\ntion, v2(1) = 3.13 p = .08.\nPerceived ethicality of over-reporting results\nI then tested Hypothesis 1, which holds that people view dis-\nhonest behavior as less unethical and less greedy when the bene-\nﬁts attributable to the dishonest behavior are split between the",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "8.60",
+    "df1": "4",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".07",
+    "quote": "2(4) = 8.60, p = .07",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "8.60",
+    "df1": "4",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".07",
+    "quote": "v2(4) = 8.60, p = .07",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "8.60",
+    "df1": "4",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".07",
+    "quote": "v2(4) = 8.60, p = .07",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "8.60",
+    "df1": "4",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".07",
+    "quote": "v2(4) = 8.60, p = .07",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp2601e492:667:680-1",
+  "window_id": "gp2601e492:667:680",
+  "text": "beneﬁt vs. self-and-friend beneﬁt vs. self-and-other beneﬁt vs.\nother-alone beneﬁt) on rates of over-reporting performance on this\nword jumble was marginally signiﬁcant, v2(4) = 8.60, p = .07. Par-\nticipants in the self-and-other beneﬁt condition were more likely\nto report solving the ninth word jumble (12%) than were partici-\npants in the self-alone high beneﬁt condition, 1%, v2(1) = 5.97,\np = .02. Participants in the self-and-friend beneﬁt condition were\nmarginally more likely to report solving the ninth word jumble\n(8%) than were participants in the self-alone high beneﬁt condi-\ntion, v2(1) = 3.13 p = .08.\nPerceived ethicality of over-reporting results\nI then tested Hypothesis 1, which holds that people view dis-\nhonest behavior as less unethical and less greedy when the bene-\nﬁts attributable to the dishonest behavior are split between the",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "5.97",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".02",
+    "quote": "v2(1) = 5.97,\np = .02",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "5.97",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".02",
+    "quote": "2(1) = 5.97,\np = .02",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "5.97",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".02",
+    "quote": "v2(1) = 5.97,\np = .02",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "5.97",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".02",
+    "quote": "v2(1) = 5.97,\np = .02",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp2601e492:667:680-2",
+  "window_id": "gp2601e492:667:680",
+  "text": "beneﬁt vs. self-and-friend beneﬁt vs. self-and-other beneﬁt vs.\nother-alone beneﬁt) on rates of over-reporting performance on this\nword jumble was marginally signiﬁcant, v2(4) = 8.60, p = .07. Par-\nticipants in the self-and-other beneﬁt condition were more likely\nto report solving the ninth word jumble (12%) than were partici-\npants in the self-alone high beneﬁt condition, 1%, v2(1) = 5.97,\np = .02. Participants in the self-and-friend beneﬁt condition were\nmarginally more likely to report solving the ninth word jumble\n(8%) than were participants in the self-alone high beneﬁt condi-\ntion, v2(1) = 3.13 p = .08.\nPerceived ethicality of over-reporting results\nI then tested Hypothesis 1, which holds that people view dis-\nhonest behavior as less unethical and less greedy when the bene-\nﬁts attributable to the dishonest behavior are split between the",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "3.13",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".08",
+    "quote": "v2(1) = 3.13 p = .08",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "3.13",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".08",
+    "quote": "v2(1) = 3.13 p = .08",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "3.13",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".08",
+    "quote": "2(1) = 3.13 p = .08",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "3.13",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".08",
+    "quote": "v2(1) = 3.13 p = .08",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp961a094a:699:714-0",
+  "window_id": "gp961a094a:699:714",
+  "text": "agentic than females and young people as more agentic than old\npeople. In line with the hypotheses, males were considered as\nmore agentic than females (relative ratings M = 3.92), compared\nto the neutral scale point of 3.5, one-sample t(60) = 6.77, p < .001,\nand young people as more agentic than old ones (M = 3.78), one-\nsample t(60) = 4.55, p < .001. Importantly, males were perceived\nas relatively more agentic by both Italian- (M = 3.98), t(29) = 5.00,\np < .001, and Arabic-speaking participants (M = 3.87, t(30) = 4.55,\np < .001), and there was no difference in the stereotypic perception\nbetween the two groups, t(59) = .88, n.s. Along the same line, young\npeople were perceived as relatively more agentic by both Italian-\n(M = 3.72), t(29) = 2.56, p < .05, and Arabic-speaking participants\n(M = 3.84), t(30) = 3.85, p < .001, with no reliable difference be-\ntween groups, t(59) = \u0002.97, n.s. Together, these results suggest that\nstereotypic perceptions were indeed as expected, with males being\nperceived as more agentic than females and young people as more",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "-.97",
+    "df1": "59",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(59) = \u0002.97, n.s.",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "t",
+    "statistic": ".97",
+    "df1": null,
+    "df2": "59",
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "59) = \u0002.97",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-.97",
+    "df1": "59",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(59) = \u0002.97, n.s.",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": ".97",
+    "df1": "59",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(59) = \u0002.97, n.s.",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ }
+]

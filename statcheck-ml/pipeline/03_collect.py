@@ -28,7 +28,8 @@ MODEL_IDS = {
 }
 
 
-def collect(batches_dir, outputs_dir, rater, agent_path, guideline_path, retries_file=None, agent_kind="agent"):
+def collect(batches_dir, outputs_dir, rater, agent_path, guideline_path, retries_file=None, agent_kind="agent",
+            model_id=None):
     """Collect and validate rater outputs.
 
     Returns (records, failures) where:
@@ -47,7 +48,8 @@ def collect(batches_dir, outputs_dir, rater, agent_path, guideline_path, retries
     # Get SHA256 hashes
     guideline_sha = sha256_file(guideline_path)
     agent_sha = sha256_file(agent_path)
-    model_id = MODEL_IDS.get(rater, rater)
+    # MODEL_IDS records the models of the version 2 raters; a later round names its own.
+    model_id = model_id or MODEL_IDS.get(rater, rater)
     collected_at = datetime.now(timezone.utc).isoformat()
 
     # Find all batch files
@@ -163,6 +165,7 @@ def main():
     parser.add_argument('--out', type=str, required=True, help='Output file for merged records')
     parser.add_argument('--retries', type=str, help='Retries JSON file')
     parser.add_argument('--agent-kind', type=str, default='agent', help='Agent kind')
+    parser.add_argument('--model-id', type=str, help='the model the rater ran on, when it is not the version 2 model')
 
     args = parser.parse_args()
 
@@ -173,7 +176,8 @@ def main():
         args.agent,
         args.guideline,
         retries_file=args.retries,
-        agent_kind=args.agent_kind
+        agent_kind=args.agent_kind,
+        model_id=args.model_id
     )
 
     if failures:

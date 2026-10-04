@@ -9,6 +9,7 @@ export const meta = {
 const ROOT = '/home/rass/Desktop/projects/ml-statcheck'
 const rater = args.rater
 const batches = Array.from({ length: args.n }, (_, i) => i).filter(i => !args.only || args.only.includes(i))
+if (args.reverse) batches.reverse()
 
 function prompt(i) {
   return `You are a rater. Your complete instructions are the text of the file ${ROOT}/.claude/agents/annotator-${rater}.md below its frontmatter (the block between the two --- lines). Read that file first and follow it exactly; it is your only source of instructions.

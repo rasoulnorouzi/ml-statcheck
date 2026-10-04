@@ -1,0 +1,550 @@
+[
+ {
+  "dispute_id": "gp2d80ea9f:620:642-0",
+  "window_id": "gp2d80ea9f:620:642",
+  "text": ".04\n5.85\n130\n.02*\nNotes: N = 167; gender: female = 0, male = 1; LOM: love of money; PSM: public \nservice motivation.\n* p < .05; ** p < .01.\nFigure 1 Interaction Effect between PSM and LOM on Job Satisfaction\nThe Case of Chinese Professionals in the Public Sector 723\nTable 3 shows the results of a moderated regression analysis. Partici-\npants’ demographic variables (gender, age, and organizational tenure) \nwere entered on step one as controls. Th e interaction eﬀ ect between \nLOM and PSM was signiﬁ cant (ΔR 2 = .04, ΔF (130) = 5.85, p = .02). \nWe identiﬁ ed high and low LOM groups (one standard deviation \nabove and below the mean) and computed one regression equation \nfor each. After centering PSM and LOM scores, the regression equa-\ntions for the high (M = 4.96) and the low LOM groups (M = 3.69) \nwere as follows: high: Y = .73 + 1.30 * PSM; low: Y = .55 + 1.03 * \nPSM. Th e diﬀ erence in slope between the high and low LOM groups \nwas signiﬁ cant (Δ slope = .27, p < .01) (see ﬁ gure 1), supporting \nhypothesis 2.\nDiscussion\nIn this study, public servants with higher ",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "5.85",
+    "df1": "130",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".02",
+    "quote": ".04\n5.85\n130\n.02*",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp33b4e1dc:2766:2793-0",
+  "window_id": "gp33b4e1dc:2766:2793",
+  "text": "reported feeling more appreciated than participants\nwho did not observe the customer (t(370) = 13.13, p <\n0.01 and t(375) = 12.90, p < 0.01, respectively).\nParticipants in the transparent conditions also\nreported feeling more monitored (M \u0003 3.52, SD \u0003 1.52)\nthan participants in the blind condition (M \u0003 2.60, SD \u0003\n1.46) (t(553) = 6.95, p < 0.01). Understandably, par-\nticipants who observed transparency throughout the\nservice delivery process felt signiﬁcantly more moni-\ntored (M \u0003 4.05, SD \u0003 1.36) than did participants who\nobserved transparency outside the process (M \u0003 3.02,\nSD \u0003 1.49) (t(362) = 6.92, p < 0.01), who in turn felt\nmore monitored than participants who did not observe\ntransparency (t(374) = 2.77, p < 0.01).\nPerceived impact followed a slightly diﬀerent pat-\ntern. Although participants in the transparent condi-\ntions felt their work was marginally more impactful\n(M \u0003 5.68, SD \u0003 1.04) than did participants in the blind\ncondition (M \u0003 5.49, SD \u0003 1.24) (t(555) = 1.93, p < 0.10),\nthe eﬀects were not consistent across conditions. In par-\nticular, relative to the participants who did not observe\ntransparency, participants who were able to view the\ncustomer throughout the process felt that their work\nwas more impactful (M \u0003 5.76, SD \u0003 1.00) (t(370) \u0003 2.27,\np < 0.05), whereas participants who viewed the cus-\ntomer outside the process did not (M \u0003 5.61, SD \u0003 1.07,\nt(375) \u0003 0.98, p \u0003 NS).\nThe intuition provided by the chefs in the ﬁeld and",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "2.27",
+    "df1": null,
+    "df2": "370",
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.05",
+    "quote": "370) \u0003 2.27,\np < 0.05",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "2.27",
+    "df1": "370",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.05",
+    "quote": "t(370) \u0003 2.27,\np < 0.05",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "2.27",
+    "df1": "370",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.05",
+    "quote": "t(370) = 2.27, p < 0.05",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "2.27",
+    "df1": "370",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.05",
+    "quote": "t(370) \u0003 2.27,\np < 0.05",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp33b4e1dc:2766:2793-1",
+  "window_id": "gp33b4e1dc:2766:2793",
+  "text": "reported feeling more appreciated than participants\nwho did not observe the customer (t(370) = 13.13, p <\n0.01 and t(375) = 12.90, p < 0.01, respectively).\nParticipants in the transparent conditions also\nreported feeling more monitored (M \u0003 3.52, SD \u0003 1.52)\nthan participants in the blind condition (M \u0003 2.60, SD \u0003\n1.46) (t(553) = 6.95, p < 0.01). Understandably, par-\nticipants who observed transparency throughout the\nservice delivery process felt signiﬁcantly more moni-\ntored (M \u0003 4.05, SD \u0003 1.36) than did participants who\nobserved transparency outside the process (M \u0003 3.02,\nSD \u0003 1.49) (t(362) = 6.92, p < 0.01), who in turn felt\nmore monitored than participants who did not observe\ntransparency (t(374) = 2.77, p < 0.01).\nPerceived impact followed a slightly diﬀerent pat-\ntern. Although participants in the transparent condi-\ntions felt their work was marginally more impactful\n(M \u0003 5.68, SD \u0003 1.04) than did participants in the blind\ncondition (M \u0003 5.49, SD \u0003 1.24) (t(555) = 1.93, p < 0.10),\nthe eﬀects were not consistent across conditions. In par-\nticular, relative to the participants who did not observe\ntransparency, participants who were able to view the\ncustomer throughout the process felt that their work\nwas more impactful (M \u0003 5.76, SD \u0003 1.00) (t(370) \u0003 2.27,\np < 0.05), whereas participants who viewed the cus-\ntomer outside the process did not (M \u0003 5.61, SD \u0003 1.07,\nt(375) \u0003 0.98, p \u0003 NS).\nThe intuition provided by the chefs in the ﬁeld and",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "0.98",
+    "df1": "375",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(375) = 0.98, p = NS",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "0.98",
+    "df1": "375",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(375) \u0003 0.98, p \u0003 NS",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "0.98",
+    "df1": "375",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t(375) \u0003 0.98, p \u0003 NS",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "0.98",
+    "df1": null,
+    "df2": "375",
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "375) \u0003 0.98",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpb3f352bb:622:640-0",
+  "window_id": "gpb3f352bb:622:640",
+  "text": "conducted on the six items with orthogonal rotation (varimax). The Kaiser-\nMeyer-Olkin (KMO) measure verified the sampling adequacy for the analysis,\nKMO = .84 (‘‘great’’ according to Field, 2009), and all KMO values for individ-\nual items were ..78 (above acceptable limit of .5 according to Field, 2009).\nBartlett’s test of sphericity, x2(15) = 8,261.23, p < .000, indicated sufficiently\nlarge interitem correlations for PCA. A single component had an eigenvalue\nabove Kaiser’s criterion of 1, that explained 56.33% of the variance (thus no\nrotation was obtained). The scree plot unambiguously indicated this single\ncomponent, Whanaungatanga. Internal consistency of these items as a scale\nwas strong, with a Cronbach’s a = .83, and the factor loadings for items were\nall sufficiently strong (ranging from .65 to .8; see Table 1).\nGiven the degree to which these items met conventional PCA criteria as\na scale, this analysis indicates that they can be used as a reliable measure of\nTe Kotahitanga’s theorized (and qualitatively validated; Bishop et al., 2007)\nconception of Whanaungatanga. Taken together as a simple summative\nscale (averaged), this measure obtained a reasonably normal distribution,\nwith a range from 1 to 5 and a mean of 3.65 (SD = .74, SE = .01). Table 2\npresents the measures of skew and kurtosis obtained indicated this roughly\nnormal distribution (both are very slightly negative).",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "8,261.23",
+    "df1": "15",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".000",
+    "quote": "x2(15) = 8,261.23, p < .000",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "261.23",
+    "df1": "15",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".000",
+    "quote": "2(15) = 8,261.23, p < .000",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "8,261.23",
+    "df1": "15",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".000",
+    "quote": "x2(15) = 8,261.23, p < .000",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "8,261.23",
+    "df1": "15",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".000",
+    "quote": "x2(15) = 8,261.23, p < .000",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:377:401-0",
+  "window_id": "gp3fbfd59c:377:401",
+  "text": "of social awareness, social cognition, social communication, social\nmotivation, and autism mannerisms. Norms are provided for in-\ndividuals aged 4e18 years. A high level of internal consistency was\nreported using Cronbach’s alpha values for teachers (male a ¼ .97\nand female a ¼ .96). Correlations between the teacher SRS and the\nsubscales from the ADI-R show high levels of validity (r ¼ .52 to\nr ¼ .70).\n2.2.2. Nonverbal ability\nIn the BAS-II (Elliott et al., 1997), Participants are presented with\nan incomplete pattern and are required to select the picture that\nwill complete the pattern from a set of six. The technical manual\nreports testeretest reliability (r ¼ .64) and the correlation (r ¼ .47)\nwith the performance IQ scale from the Wechsler Intelligence Scale\nfor Children 3rd edition (WISC; Wechsler, 1991).\n2.2.3. Oral language\n2.2.3.1. Receptive vocabulary. In the British Picture Vocabulary\nScale (BPVS-III; Dunn & Dunn, 2009), participants hear a word and\nselect a referent from four alternatives. The BPVS-III provides\nnorms for individuals aged 3e16 years. Reliability is reported as\n0.91 and validity with the WISC as r ¼ .76.\n2.2.3.2. Receptive grammar. In the Test for Reception of Grammar\n(TROG-E; Bishop, 2005), participants hear a series of sentences that\nincrease in grammatical complexity and select a target from one of\nfour alternatives. A computer is used to present items and record\nresponses. The TROG-E provides norms for individuals aged 4 years",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".52",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .52",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:377:401-1",
+  "window_id": "gp3fbfd59c:377:401",
+  "text": "of social awareness, social cognition, social communication, social\nmotivation, and autism mannerisms. Norms are provided for in-\ndividuals aged 4e18 years. A high level of internal consistency was\nreported using Cronbach’s alpha values for teachers (male a ¼ .97\nand female a ¼ .96). Correlations between the teacher SRS and the\nsubscales from the ADI-R show high levels of validity (r ¼ .52 to\nr ¼ .70).\n2.2.2. Nonverbal ability\nIn the BAS-II (Elliott et al., 1997), Participants are presented with\nan incomplete pattern and are required to select the picture that\nwill complete the pattern from a set of six. The technical manual\nreports testeretest reliability (r ¼ .64) and the correlation (r ¼ .47)\nwith the performance IQ scale from the Wechsler Intelligence Scale\nfor Children 3rd edition (WISC; Wechsler, 1991).\n2.2.3. Oral language\n2.2.3.1. Receptive vocabulary. In the British Picture Vocabulary\nScale (BPVS-III; Dunn & Dunn, 2009), participants hear a word and\nselect a referent from four alternatives. The BPVS-III provides\nnorms for individuals aged 3e16 years. Reliability is reported as\n0.91 and validity with the WISC as r ¼ .76.\n2.2.3.2. Receptive grammar. In the Test for Reception of Grammar\n(TROG-E; Bishop, 2005), participants hear a series of sentences that\nincrease in grammatical complexity and select a target from one of\nfour alternatives. A computer is used to present items and record\nresponses. The TROG-E provides norms for individuals aged 4 years",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".70",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .70",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:377:401-2",
+  "window_id": "gp3fbfd59c:377:401",
+  "text": "of social awareness, social cognition, social communication, social\nmotivation, and autism mannerisms. Norms are provided for in-\ndividuals aged 4e18 years. A high level of internal consistency was\nreported using Cronbach’s alpha values for teachers (male a ¼ .97\nand female a ¼ .96). Correlations between the teacher SRS and the\nsubscales from the ADI-R show high levels of validity (r ¼ .52 to\nr ¼ .70).\n2.2.2. Nonverbal ability\nIn the BAS-II (Elliott et al., 1997), Participants are presented with\nan incomplete pattern and are required to select the picture that\nwill complete the pattern from a set of six. The technical manual\nreports testeretest reliability (r ¼ .64) and the correlation (r ¼ .47)\nwith the performance IQ scale from the Wechsler Intelligence Scale\nfor Children 3rd edition (WISC; Wechsler, 1991).\n2.2.3. Oral language\n2.2.3.1. Receptive vocabulary. In the British Picture Vocabulary\nScale (BPVS-III; Dunn & Dunn, 2009), participants hear a word and\nselect a referent from four alternatives. The BPVS-III provides\nnorms for individuals aged 3e16 years. Reliability is reported as\n0.91 and validity with the WISC as r ¼ .76.\n2.2.3.2. Receptive grammar. In the Test for Reception of Grammar\n(TROG-E; Bishop, 2005), participants hear a series of sentences that\nincrease in grammatical complexity and select a target from one of\nfour alternatives. A computer is used to present items and record\nresponses. The TROG-E provides norms for individuals aged 4 years",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".64",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .64",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:377:401-3",
+  "window_id": "gp3fbfd59c:377:401",
+  "text": "of social awareness, social cognition, social communication, social\nmotivation, and autism mannerisms. Norms are provided for in-\ndividuals aged 4e18 years. A high level of internal consistency was\nreported using Cronbach’s alpha values for teachers (male a ¼ .97\nand female a ¼ .96). Correlations between the teacher SRS and the\nsubscales from the ADI-R show high levels of validity (r ¼ .52 to\nr ¼ .70).\n2.2.2. Nonverbal ability\nIn the BAS-II (Elliott et al., 1997), Participants are presented with\nan incomplete pattern and are required to select the picture that\nwill complete the pattern from a set of six. The technical manual\nreports testeretest reliability (r ¼ .64) and the correlation (r ¼ .47)\nwith the performance IQ scale from the Wechsler Intelligence Scale\nfor Children 3rd edition (WISC; Wechsler, 1991).\n2.2.3. Oral language\n2.2.3.1. Receptive vocabulary. In the British Picture Vocabulary\nScale (BPVS-III; Dunn & Dunn, 2009), participants hear a word and\nselect a referent from four alternatives. The BPVS-III provides\nnorms for individuals aged 3e16 years. Reliability is reported as\n0.91 and validity with the WISC as r ¼ .76.\n2.2.3.2. Receptive grammar. In the Test for Reception of Grammar\n(TROG-E; Bishop, 2005), participants hear a series of sentences that\nincrease in grammatical complexity and select a target from one of\nfour alternatives. A computer is used to present items and record\nresponses. The TROG-E provides norms for individuals aged 4 years",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".47",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .47",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:377:401-4",
+  "window_id": "gp3fbfd59c:377:401",
+  "text": "of social awareness, social cognition, social communication, social\nmotivation, and autism mannerisms. Norms are provided for in-\ndividuals aged 4e18 years. A high level of internal consistency was\nreported using Cronbach’s alpha values for teachers (male a ¼ .97\nand female a ¼ .96). Correlations between the teacher SRS and the\nsubscales from the ADI-R show high levels of validity (r ¼ .52 to\nr ¼ .70).\n2.2.2. Nonverbal ability\nIn the BAS-II (Elliott et al., 1997), Participants are presented with\nan incomplete pattern and are required to select the picture that\nwill complete the pattern from a set of six. The technical manual\nreports testeretest reliability (r ¼ .64) and the correlation (r ¼ .47)\nwith the performance IQ scale from the Wechsler Intelligence Scale\nfor Children 3rd edition (WISC; Wechsler, 1991).\n2.2.3. Oral language\n2.2.3.1. Receptive vocabulary. In the British Picture Vocabulary\nScale (BPVS-III; Dunn & Dunn, 2009), participants hear a word and\nselect a referent from four alternatives. The BPVS-III provides\nnorms for individuals aged 3e16 years. Reliability is reported as\n0.91 and validity with the WISC as r ¼ .76.\n2.2.3.2. Receptive grammar. In the Test for Reception of Grammar\n(TROG-E; Bishop, 2005), participants hear a series of sentences that\nincrease in grammatical complexity and select a target from one of\nfour alternatives. A computer is used to present items and record\nresponses. The TROG-E provides norms for individuals aged 4 years",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".76",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .76",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp2de99c02:996:1011-0",
+  "window_id": "gp2de99c02:996:1011",
+  "text": "Because of the large number of variables involved, and hence the\nlarge number of potential interdependencies, D8 was quite small,\nwith median value .0004 and a heavily right-skewed distribution.\nTherefore a logarithmic transformation was applied for statistical\ntesting, which produced an approximately normal distribution.\nFigure 7A shows untransformed means (i.e., emean(log(D8))) as a\nfunction of focus. As shown in Table 1, there was a strong effect\nof FOA (p < .01), with mean log(D8) being smaller for the\nexternal foci. The linear contrast was marginally significant (p =\n.07). There was no indication of an effect of session (p = .60; see\nTable 2), although there was marginal evidence for a session–focus\ninteraction, F(4.79, 67.12) = 2.03, GG ε \u0003 .40, p = .09, \b2 \u0003 .13.\nInspection of the data for separate sessions indicates strong effects\nof focus for Sessions 1, 2, and 4 and no effect in Session 3.\nThe next step was to investigate whether the stronger pattern of\ncorrelations found with external FOA is consistent with the dy-",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "2.03",
+    "df1": "4.79",
+    "df2": "67.12",
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".09",
+    "quote": "F(4.79, 67.12) = 2.03, GG ε \u0003 .40, p = .09",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "2.03",
+    "df1": "4.79",
+    "df2": "67.12",
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".09",
+    "quote": "2), although there was marginal evidence for a session–focus\ninteraction, F(4.79, 67.12) = 2.03, GG ε \u0003 .40, p = .09, \b2 \u0003 .13",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "2.03",
+    "df1": "4.79",
+    "df2": "67.12",
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".09",
+    "quote": "F(4.79, 67.12) = 2.03, GG ε \u0003 .40, p = .09",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "2.03",
+    "df1": "4.79",
+    "df2": "67.12",
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".09",
+    "quote": "F(4.79, 67.12) = 2.03, GG ε \u0003 .40, p = .09",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp67537f8f:1058:1081-0",
+  "window_id": "gp67537f8f:1058:1081",
+  "text": "SD \u0001 1.39 vs. M \u0001 2.13, SD \u0001 1.13 for the video conditions; M \u0001\n2.67, SD \u0001 1.12 vs. M \u0001 2.13, SD \u0001 1.13 for the audio condi-\ntions). Neither the factor presentation mode nor its interaction with\ncoherence of narration was significant (with both Fs \u0003 1). For the\nother transfer tasks, no significant effects were found (all Fs \u0003 1).\nCognitive load.\nTo analyze the effects of presentation mode\nand coherence of narration on participants’ experienced cognitive\nload measures (effort, confidence, stress), we conducted three 2 \u0002\n2 ANOVAs. Analyses revealed a significant effect for coherence\nof narration, F(3, 56) = 7.50, MSE = 0.14, p < .01, \u0005p2 \u0001 .12, and\nfor presentation mode, F(3, 56) = 5.74, MSE = 0.14, p < .05,\n\u0005p2 \u0001 .09, on the Effort scale. For the Confidence scale, we found\na significant effect for the factor presentation mode, F(3, 56) =\n9.74, MSE = 0.19, p < .01, \u0005p2 \u0001 .15 (all other Fs \u0003 1). For the\nStress scale, we found no significant effects (all Fs \u0003 1 except for\npresentation mode), F(3, 56) = 3.71, MSE = 0.22, p > .10, \u0005p2 \u0001\n.06. In other words, participants in the video condition invested\nmore effort (M \u0001 2.62, SD \u0001 .39 for video vs. M \u0001 2.38, SD \u0001\n.41 for audio) as well as participants in the incoherent condition\n(M \u0001 2.63, SD \u0001 .43 for incoherent vs. M \u0001 2.37, SD \u0001 .35 for\ncoherent). Participants in the audio condition, however, experi-\nenced more confidence (M \u0001 1.88, SD \u0001 .41 for audio vs. M \u0001\n1.53, SD \u0001 .45 for video).",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fs \u0003 1",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp67537f8f:1058:1081-1",
+  "window_id": "gp67537f8f:1058:1081",
+  "text": "SD \u0001 1.39 vs. M \u0001 2.13, SD \u0001 1.13 for the video conditions; M \u0001\n2.67, SD \u0001 1.12 vs. M \u0001 2.13, SD \u0001 1.13 for the audio condi-\ntions). Neither the factor presentation mode nor its interaction with\ncoherence of narration was significant (with both Fs \u0003 1). For the\nother transfer tasks, no significant effects were found (all Fs \u0003 1).\nCognitive load.\nTo analyze the effects of presentation mode\nand coherence of narration on participants’ experienced cognitive\nload measures (effort, confidence, stress), we conducted three 2 \u0002\n2 ANOVAs. Analyses revealed a significant effect for coherence\nof narration, F(3, 56) = 7.50, MSE = 0.14, p < .01, \u0005p2 \u0001 .12, and\nfor presentation mode, F(3, 56) = 5.74, MSE = 0.14, p < .05,\n\u0005p2 \u0001 .09, on the Effort scale. For the Confidence scale, we found\na significant effect for the factor presentation mode, F(3, 56) =\n9.74, MSE = 0.19, p < .01, \u0005p2 \u0001 .15 (all other Fs \u0003 1). For the\nStress scale, we found no significant effects (all Fs \u0003 1 except for\npresentation mode), F(3, 56) = 3.71, MSE = 0.22, p > .10, \u0005p2 \u0001\n.06. In other words, participants in the video condition invested\nmore effort (M \u0001 2.62, SD \u0001 .39 for video vs. M \u0001 2.38, SD \u0001\n.41 for audio) as well as participants in the incoherent condition\n(M \u0001 2.63, SD \u0001 .43 for incoherent vs. M \u0001 2.37, SD \u0001 .35 for\ncoherent). Participants in the audio condition, however, experi-\nenced more confidence (M \u0001 1.88, SD \u0001 .41 for audio vs. M \u0001\n1.53, SD \u0001 .45 for video).",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fs \u0003 1",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp67537f8f:1058:1081-2",
+  "window_id": "gp67537f8f:1058:1081",
+  "text": "SD \u0001 1.39 vs. M \u0001 2.13, SD \u0001 1.13 for the video conditions; M \u0001\n2.67, SD \u0001 1.12 vs. M \u0001 2.13, SD \u0001 1.13 for the audio condi-\ntions). Neither the factor presentation mode nor its interaction with\ncoherence of narration was significant (with both Fs \u0003 1). For the\nother transfer tasks, no significant effects were found (all Fs \u0003 1).\nCognitive load.\nTo analyze the effects of presentation mode\nand coherence of narration on participants’ experienced cognitive\nload measures (effort, confidence, stress), we conducted three 2 \u0002\n2 ANOVAs. Analyses revealed a significant effect for coherence\nof narration, F(3, 56) = 7.50, MSE = 0.14, p < .01, \u0005p2 \u0001 .12, and\nfor presentation mode, F(3, 56) = 5.74, MSE = 0.14, p < .05,\n\u0005p2 \u0001 .09, on the Effort scale. For the Confidence scale, we found\na significant effect for the factor presentation mode, F(3, 56) =\n9.74, MSE = 0.19, p < .01, \u0005p2 \u0001 .15 (all other Fs \u0003 1). For the\nStress scale, we found no significant effects (all Fs \u0003 1 except for\npresentation mode), F(3, 56) = 3.71, MSE = 0.22, p > .10, \u0005p2 \u0001\n.06. In other words, participants in the video condition invested\nmore effort (M \u0001 2.62, SD \u0001 .39 for video vs. M \u0001 2.38, SD \u0001\n.41 for audio) as well as participants in the incoherent condition\n(M \u0001 2.63, SD \u0001 .43 for incoherent vs. M \u0001 2.37, SD \u0001 .35 for\ncoherent). Participants in the audio condition, however, experi-\nenced more confidence (M \u0001 1.88, SD \u0001 .41 for audio vs. M \u0001\n1.53, SD \u0001 .45 for video).",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fs \u0003 1",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp67537f8f:1058:1081-3",
+  "window_id": "gp67537f8f:1058:1081",
+  "text": "SD \u0001 1.39 vs. M \u0001 2.13, SD \u0001 1.13 for the video conditions; M \u0001\n2.67, SD \u0001 1.12 vs. M \u0001 2.13, SD \u0001 1.13 for the audio condi-\ntions). Neither the factor presentation mode nor its interaction with\ncoherence of narration was significant (with both Fs \u0003 1). For the\nother transfer tasks, no significant effects were found (all Fs \u0003 1).\nCognitive load.\nTo analyze the effects of presentation mode\nand coherence of narration on participants’ experienced cognitive\nload measures (effort, confidence, stress), we conducted three 2 \u0002\n2 ANOVAs. Analyses revealed a significant effect for coherence\nof narration, F(3, 56) = 7.50, MSE = 0.14, p < .01, \u0005p2 \u0001 .12, and\nfor presentation mode, F(3, 56) = 5.74, MSE = 0.14, p < .05,\n\u0005p2 \u0001 .09, on the Effort scale. For the Confidence scale, we found\na significant effect for the factor presentation mode, F(3, 56) =\n9.74, MSE = 0.19, p < .01, \u0005p2 \u0001 .15 (all other Fs \u0003 1). For the\nStress scale, we found no significant effects (all Fs \u0003 1 except for\npresentation mode), F(3, 56) = 3.71, MSE = 0.22, p > .10, \u0005p2 \u0001\n.06. In other words, participants in the video condition invested\nmore effort (M \u0001 2.62, SD \u0001 .39 for video vs. M \u0001 2.38, SD \u0001\n.41 for audio) as well as participants in the incoherent condition\n(M \u0001 2.63, SD \u0001 .43 for incoherent vs. M \u0001 2.37, SD \u0001 .35 for\ncoherent). Participants in the audio condition, however, experi-\nenced more confidence (M \u0001 1.88, SD \u0001 .41 for audio vs. M \u0001\n1.53, SD \u0001 .45 for video).",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fs \u0003 1",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp58aee1ec:1060:1079-0",
+  "window_id": "gp58aee1ec:1060:1079",
+  "text": "data\na Grouped into domains of power conservation, PEB consumer behavior, garbage inhibition, and ecological automobile use.\nb A yes/no format was used (n ¼ 30) or responses were re-coded, collapsing “Never”, “Seldom”, and “Occasionally” to “No” and turning “Often” and “Always” to “Yes”\nresponses.\nc Assessed consumption, recycling, information seeking, and political actions.\nd The SR is 88.5% of the OB, and so participants over-reported their land conservation.\n\nmoderation no longer trends towards signiﬁcance, Qvalue (5) ¼ 5.50, p ¼ .36.\n12 The study conducted in Switzerland had the highest weighted correlation\n(r ¼ .81), followed by Canada (n ¼ 3; r ¼ .73), Bolivia (n ¼ 1; r ¼ .73), Taiwan (n ¼ 2;\nr ¼ .39), Mexico (n ¼ 6; r ¼ .33), The Netherlands (n ¼ 1; r ¼ .30), and the United\nStates (n ¼ 5; r ¼ .29).\n\n365\nvariety of social psychological phenomena and found that only 5%\nyielded an r value greater than .50, and also that none of the 18\nsocial psychological topic areas included in the analysis yielded a\nmean correlation coefﬁcient as high as .50. Thus, our observed\noverall effect size is both objectively large by deﬁnition and rela-\ntively unique in the size of its magnitude compared to the typical",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".81",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .81",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp58aee1ec:1060:1079-1",
+  "window_id": "gp58aee1ec:1060:1079",
+  "text": "data\na Grouped into domains of power conservation, PEB consumer behavior, garbage inhibition, and ecological automobile use.\nb A yes/no format was used (n ¼ 30) or responses were re-coded, collapsing “Never”, “Seldom”, and “Occasionally” to “No” and turning “Often” and “Always” to “Yes”\nresponses.\nc Assessed consumption, recycling, information seeking, and political actions.\nd The SR is 88.5% of the OB, and so participants over-reported their land conservation.\n\nmoderation no longer trends towards signiﬁcance, Qvalue (5) ¼ 5.50, p ¼ .36.\n12 The study conducted in Switzerland had the highest weighted correlation\n(r ¼ .81), followed by Canada (n ¼ 3; r ¼ .73), Bolivia (n ¼ 1; r ¼ .73), Taiwan (n ¼ 2;\nr ¼ .39), Mexico (n ¼ 6; r ¼ .33), The Netherlands (n ¼ 1; r ¼ .30), and the United\nStates (n ¼ 5; r ¼ .29).\n\n365\nvariety of social psychological phenomena and found that only 5%\nyielded an r value greater than .50, and also that none of the 18\nsocial psychological topic areas included in the analysis yielded a\nmean correlation coefﬁcient as high as .50. Thus, our observed\noverall effect size is both objectively large by deﬁnition and rela-\ntively unique in the size of its magnitude compared to the typical",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".73",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .73",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp58aee1ec:1060:1079-2",
+  "window_id": "gp58aee1ec:1060:1079",
+  "text": "data\na Grouped into domains of power conservation, PEB consumer behavior, garbage inhibition, and ecological automobile use.\nb A yes/no format was used (n ¼ 30) or responses were re-coded, collapsing “Never”, “Seldom”, and “Occasionally” to “No” and turning “Often” and “Always” to “Yes”\nresponses.\nc Assessed consumption, recycling, information seeking, and political actions.\nd The SR is 88.5% of the OB, and so participants over-reported their land conservation.\n\nmoderation no longer trends towards signiﬁcance, Qvalue (5) ¼ 5.50, p ¼ .36.\n12 The study conducted in Switzerland had the highest weighted correlation\n(r ¼ .81), followed by Canada (n ¼ 3; r ¼ .73), Bolivia (n ¼ 1; r ¼ .73), Taiwan (n ¼ 2;\nr ¼ .39), Mexico (n ¼ 6; r ¼ .33), The Netherlands (n ¼ 1; r ¼ .30), and the United\nStates (n ¼ 5; r ¼ .29).\n\n365\nvariety of social psychological phenomena and found that only 5%\nyielded an r value greater than .50, and also that none of the 18\nsocial psychological topic areas included in the analysis yielded a\nmean correlation coefﬁcient as high as .50. Thus, our observed\noverall effect size is both objectively large by deﬁnition and rela-\ntively unique in the size of its magnitude compared to the typical",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".73",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .73",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp58aee1ec:1060:1079-3",
+  "window_id": "gp58aee1ec:1060:1079",
+  "text": "data\na Grouped into domains of power conservation, PEB consumer behavior, garbage inhibition, and ecological automobile use.\nb A yes/no format was used (n ¼ 30) or responses were re-coded, collapsing “Never”, “Seldom”, and “Occasionally” to “No” and turning “Often” and “Always” to “Yes”\nresponses.\nc Assessed consumption, recycling, information seeking, and political actions.\nd The SR is 88.5% of the OB, and so participants over-reported their land conservation.\n\nmoderation no longer trends towards signiﬁcance, Qvalue (5) ¼ 5.50, p ¼ .36.\n12 The study conducted in Switzerland had the highest weighted correlation\n(r ¼ .81), followed by Canada (n ¼ 3; r ¼ .73), Bolivia (n ¼ 1; r ¼ .73), Taiwan (n ¼ 2;\nr ¼ .39), Mexico (n ¼ 6; r ¼ .33), The Netherlands (n ¼ 1; r ¼ .30), and the United\nStates (n ¼ 5; r ¼ .29).\n\n365\nvariety of social psychological phenomena and found that only 5%\nyielded an r value greater than .50, and also that none of the 18\nsocial psychological topic areas included in the analysis yielded a\nmean correlation coefﬁcient as high as .50. Thus, our observed\noverall effect size is both objectively large by deﬁnition and rela-\ntively unique in the size of its magnitude compared to the typical",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".39",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .39",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp58aee1ec:1060:1079-4",
+  "window_id": "gp58aee1ec:1060:1079",
+  "text": "data\na Grouped into domains of power conservation, PEB consumer behavior, garbage inhibition, and ecological automobile use.\nb A yes/no format was used (n ¼ 30) or responses were re-coded, collapsing “Never”, “Seldom”, and “Occasionally” to “No” and turning “Often” and “Always” to “Yes”\nresponses.\nc Assessed consumption, recycling, information seeking, and political actions.\nd The SR is 88.5% of the OB, and so participants over-reported their land conservation.\n\nmoderation no longer trends towards signiﬁcance, Qvalue (5) ¼ 5.50, p ¼ .36.\n12 The study conducted in Switzerland had the highest weighted correlation\n(r ¼ .81), followed by Canada (n ¼ 3; r ¼ .73), Bolivia (n ¼ 1; r ¼ .73), Taiwan (n ¼ 2;\nr ¼ .39), Mexico (n ¼ 6; r ¼ .33), The Netherlands (n ¼ 1; r ¼ .30), and the United\nStates (n ¼ 5; r ¼ .29).\n\n365\nvariety of social psychological phenomena and found that only 5%\nyielded an r value greater than .50, and also that none of the 18\nsocial psychological topic areas included in the analysis yielded a\nmean correlation coefﬁcient as high as .50. Thus, our observed\noverall effect size is both objectively large by deﬁnition and rela-\ntively unique in the size of its magnitude compared to the typical",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".33",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .33",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp58aee1ec:1060:1079-5",
+  "window_id": "gp58aee1ec:1060:1079",
+  "text": "data\na Grouped into domains of power conservation, PEB consumer behavior, garbage inhibition, and ecological automobile use.\nb A yes/no format was used (n ¼ 30) or responses were re-coded, collapsing “Never”, “Seldom”, and “Occasionally” to “No” and turning “Often” and “Always” to “Yes”\nresponses.\nc Assessed consumption, recycling, information seeking, and political actions.\nd The SR is 88.5% of the OB, and so participants over-reported their land conservation.\n\nmoderation no longer trends towards signiﬁcance, Qvalue (5) ¼ 5.50, p ¼ .36.\n12 The study conducted in Switzerland had the highest weighted correlation\n(r ¼ .81), followed by Canada (n ¼ 3; r ¼ .73), Bolivia (n ¼ 1; r ¼ .73), Taiwan (n ¼ 2;\nr ¼ .39), Mexico (n ¼ 6; r ¼ .33), The Netherlands (n ¼ 1; r ¼ .30), and the United\nStates (n ¼ 5; r ¼ .29).\n\n365\nvariety of social psychological phenomena and found that only 5%\nyielded an r value greater than .50, and also that none of the 18\nsocial psychological topic areas included in the analysis yielded a\nmean correlation coefﬁcient as high as .50. Thus, our observed\noverall effect size is both objectively large by deﬁnition and rela-\ntively unique in the size of its magnitude compared to the typical",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".30",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .30",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ }
+]

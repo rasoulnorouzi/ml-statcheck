@@ -1,0 +1,502 @@
+[
+ {
+  "dispute_id": "gp58aee1ec:1060:1079-6",
+  "window_id": "gp58aee1ec:1060:1079",
+  "text": "data\na Grouped into domains of power conservation, PEB consumer behavior, garbage inhibition, and ecological automobile use.\nb A yes/no format was used (n ¼ 30) or responses were re-coded, collapsing “Never”, “Seldom”, and “Occasionally” to “No” and turning “Often” and “Always” to “Yes”\nresponses.\nc Assessed consumption, recycling, information seeking, and political actions.\nd The SR is 88.5% of the OB, and so participants over-reported their land conservation.\n\nmoderation no longer trends towards signiﬁcance, Qvalue (5) ¼ 5.50, p ¼ .36.\n12 The study conducted in Switzerland had the highest weighted correlation\n(r ¼ .81), followed by Canada (n ¼ 3; r ¼ .73), Bolivia (n ¼ 1; r ¼ .73), Taiwan (n ¼ 2;\nr ¼ .39), Mexico (n ¼ 6; r ¼ .33), The Netherlands (n ¼ 1; r ¼ .30), and the United\nStates (n ¼ 5; r ¼ .29).\n\n365\nvariety of social psychological phenomena and found that only 5%\nyielded an r value greater than .50, and also that none of the 18\nsocial psychological topic areas included in the analysis yielded a\nmean correlation coefﬁcient as high as .50. Thus, our observed\noverall effect size is both objectively large by deﬁnition and rela-\ntively unique in the size of its magnitude compared to the typical",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".29",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .29",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa4431d31:1489:1496-0",
+  "window_id": "gpa4431d31:1489:1496",
+  "text": "Equation 1 indicated that, on average, individuals tended to report\nrelatively high levels of satisfaction initially (husbands’ intercept\nB \u0001 94.31, wives’ intercept B \u0001 94.53), which declined signifi-\ncantly over time, husbands’ slope B \u0001 \u00050.62, t(49) \u0001 \u00052.95, p \u0002\n.01, r \u0001 \u0005.39; wives’ slope B \u0001 \u00050.60, t(45) = 2.95, p < .01, r \u0001\n\u0005.39 (see footnote 3). Nevertheless, according to the standard\nTable 7\nDescriptive Statistics and Correlations Among Independent Variables in Study 4",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": "-.39",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r \u0001 \u0005.39",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa4431d31:1489:1496-1",
+  "window_id": "gpa4431d31:1489:1496",
+  "text": "Equation 1 indicated that, on average, individuals tended to report\nrelatively high levels of satisfaction initially (husbands’ intercept\nB \u0001 94.31, wives’ intercept B \u0001 94.53), which declined signifi-\ncantly over time, husbands’ slope B \u0001 \u00050.62, t(49) \u0001 \u00052.95, p \u0002\n.01, r \u0001 \u0005.39; wives’ slope B \u0001 \u00050.60, t(45) = 2.95, p < .01, r \u0001\n\u0005.39 (see footnote 3). Nevertheless, according to the standard\nTable 7\nDescriptive Statistics and Correlations Among Independent Variables in Study 4",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": "-.39",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r \u0001\n\u0005.39",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa920dadf:850:883-0",
+  "window_id": "gpa920dadf:850:883",
+  "text": "interaction, F(2, 50) = 5.52, p < .01, ηp\n2 = .18 (see Fig. \n2b). This interaction indicated that BD participants with-\nout a history of psychosis showed a significant reduction \nin their activity from the first reflection period (0.37) to \nthe second reflection period (–0.19), t(13) = 3.38, p < .01, \nr = .68, whereas those with a history of psychosis main-\ntained elevated activity and displayed no change from \nthe first reflection period (0.28) to the second reflection \nperiod (0.36), t(19) < 1, n.s. During the reflection period \noverall, healthy control participants remained consis-\ntently low in their activity (–0.02) compared with BD \nparticipants with a history of psychosis (0.33), F(1, 50) = \n4.89, p < .05, ηp\n2 = .09. BD participants without a history \nof psychosis fell in between the two groups (0.08), \nbut they did not significantly differ from the other two \n(Fs < 2.40, ps > .12).\nAdditional analyses confirmed that the group differ-\nences were evident in frontal sites (F7/F8), consistent \nwith results from prior work (e.g., Harmon-Jones & \nSigelman, 2001).4 There was no comparable effect of \nGroup × Phase interaction in the comparison regions C3/\nC4 and P3/P4, Fs < 1.50, ps > .18, which resulted in a \nsignificant Group × Phase × Region three-way interaction \neffect, F(12, 306) = 1.88, p < .05, ηp\n2 = .07.\nSubjective indices of emotional reactivity\nWe then examined the effect of group on three mea-\nsures of emotion. First, we performed a 3 (Group) × 2 \n0\n0.2\n0.4\n0.6",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "2.40",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".12",
+    "quote": "Fs < 2.40, ps > .12",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa920dadf:850:883-1",
+  "window_id": "gpa920dadf:850:883",
+  "text": "interaction, F(2, 50) = 5.52, p < .01, ηp\n2 = .18 (see Fig. \n2b). This interaction indicated that BD participants with-\nout a history of psychosis showed a significant reduction \nin their activity from the first reflection period (0.37) to \nthe second reflection period (–0.19), t(13) = 3.38, p < .01, \nr = .68, whereas those with a history of psychosis main-\ntained elevated activity and displayed no change from \nthe first reflection period (0.28) to the second reflection \nperiod (0.36), t(19) < 1, n.s. During the reflection period \noverall, healthy control participants remained consis-\ntently low in their activity (–0.02) compared with BD \nparticipants with a history of psychosis (0.33), F(1, 50) = \n4.89, p < .05, ηp\n2 = .09. BD participants without a history \nof psychosis fell in between the two groups (0.08), \nbut they did not significantly differ from the other two \n(Fs < 2.40, ps > .12).\nAdditional analyses confirmed that the group differ-\nences were evident in frontal sites (F7/F8), consistent \nwith results from prior work (e.g., Harmon-Jones & \nSigelman, 2001).4 There was no comparable effect of \nGroup × Phase interaction in the comparison regions C3/\nC4 and P3/P4, Fs < 1.50, ps > .18, which resulted in a \nsignificant Group × Phase × Region three-way interaction \neffect, F(12, 306) = 1.88, p < .05, ηp\n2 = .07.\nSubjective indices of emotional reactivity\nWe then examined the effect of group on three mea-\nsures of emotion. First, we performed a 3 (Group) × 2 \n0\n0.2\n0.4\n0.6",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1.50",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".18",
+    "quote": "Fs < 1.50, ps > .18",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp58aee1ec:889:914-0",
+  "window_id": "gp58aee1ec:889:914",
+  "text": "364\nThe type of behavior under study approached signiﬁcance as a\nmoderating effect, Qvalue (6) ¼ 12.26, p ¼ .06.11 The validity of self-\nreports was greatest for deforestation-related behavior (r ¼ .73),\nfollowed by energy usage (r ¼ .61), varied behaviors (r ¼ .55),\nfood (r ¼ .31), transportation (r ¼ .30), water usage (r ¼ .29), and\nwaste behavior (r ¼ .28). Year of study publication did not\nsigniﬁcantly moderate the association, Qmodel\n(1) ¼ 0.04, ns.\nFinally, the country of study location signiﬁcantly moderated the\nassociation between self-reports and objective measures, Qvalue\n(6) ¼ 32.18, p < .001.12 Across the 15 studies included in the\nanalysis, ﬁve studies are from Latin America (namely, Mexico and\nBolivia). Comparing the effect sizes between these two categories\nof countries reveals that the average of the 12 association values\nfrom non-Latin American countries (r ¼ .45) is higher than the\naverage of the seven association values from the Latin American\ncountries (r ¼ .36).\n3.4. Testing for systematic bias\nInspection of Table 1 reveals considerable variation in the ac-\ncuracy of reporting among these studies. The number of studies\nthat used categorical measures and presented cross-tabulation\nmatrices (k ¼ 3) was deemed insufﬁcient to warrant a chi-\nsquare analysis of\nthe number of\nparticipants",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".45",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .45",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp58aee1ec:889:914-1",
+  "window_id": "gp58aee1ec:889:914",
+  "text": "364\nThe type of behavior under study approached signiﬁcance as a\nmoderating effect, Qvalue (6) ¼ 12.26, p ¼ .06.11 The validity of self-\nreports was greatest for deforestation-related behavior (r ¼ .73),\nfollowed by energy usage (r ¼ .61), varied behaviors (r ¼ .55),\nfood (r ¼ .31), transportation (r ¼ .30), water usage (r ¼ .29), and\nwaste behavior (r ¼ .28). Year of study publication did not\nsigniﬁcantly moderate the association, Qmodel\n(1) ¼ 0.04, ns.\nFinally, the country of study location signiﬁcantly moderated the\nassociation between self-reports and objective measures, Qvalue\n(6) ¼ 32.18, p < .001.12 Across the 15 studies included in the\nanalysis, ﬁve studies are from Latin America (namely, Mexico and\nBolivia). Comparing the effect sizes between these two categories\nof countries reveals that the average of the 12 association values\nfrom non-Latin American countries (r ¼ .45) is higher than the\naverage of the seven association values from the Latin American\ncountries (r ¼ .36).\n3.4. Testing for systematic bias\nInspection of Table 1 reveals considerable variation in the ac-\ncuracy of reporting among these studies. The number of studies\nthat used categorical measures and presented cross-tabulation\nmatrices (k ¼ 3) was deemed insufﬁcient to warrant a chi-\nsquare analysis of\nthe number of\nparticipants",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".36",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r ¼ .36",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp961a094a:390:413-0",
+  "window_id": "gp961a094a:390:413",
+  "text": "the female) was rated most agentic for the Addams family\n(M = 2.90) and least for the Simpsons (M = 1.51), with the Flint-\nstones (M = 2.23) occupying an intermediate position. A pair-wise\ncomparison (Bonferroni corrected), showed that the Addams are\nrated more agentic than the other two families, ps < .05, with no\ndifference in agency ratings between Simpsons’ and Flintstones’\nagency ratings, p = .21. Comparing the means for each family with\nthe neutral scale midpoint (no difference in agency between male\nand female of each family), only in the case of the Addams family\nwas the male rated more agentic, one-sample t(12) = 2.88, p = .01,\nwhereas no difference emerged for the Flinstones, one-sample\nt(12) = \u0002.93, n.s., and a reversal was found for the Simpsons, one-\nsample t(12) = \u00025.00, p < .001. This suggests that a left positioning\nof the male should only be expected for the Addams family.\nMain study: spatial positioning\nFor each family, we then examined the ﬁrst 60 images in Google\nusing ‘‘the Simpsons”, ‘‘the Flintstones”, and ‘‘the Addams” as key\nwords. We simply recorded the number of times in which the male\nvs. the female of each couple occupied the left position (from the\nperspective of the observer).\nOverall, males were positioned to the left in 60% of all images,\nwhich deviates reliably from chance, binomial test p = .008, there-\nby conﬁrming our ﬁrst hypothesis. However, looking separately at\nthe families, this was entirely due to the Addams family where the",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "5.00",
+    "df1": null,
+    "df2": "12",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "12) = \u00025.00, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "\u00025.00",
+    "df1": "12",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(12) = \u00025.00, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-5.00",
+    "df1": "12",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "one-sample t(12) = \u00025.00, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-5.00",
+    "df1": "12",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(12) = \u00025.00, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp961a094a:390:413-1",
+  "window_id": "gp961a094a:390:413",
+  "text": "the female) was rated most agentic for the Addams family\n(M = 2.90) and least for the Simpsons (M = 1.51), with the Flint-\nstones (M = 2.23) occupying an intermediate position. A pair-wise\ncomparison (Bonferroni corrected), showed that the Addams are\nrated more agentic than the other two families, ps < .05, with no\ndifference in agency ratings between Simpsons’ and Flintstones’\nagency ratings, p = .21. Comparing the means for each family with\nthe neutral scale midpoint (no difference in agency between male\nand female of each family), only in the case of the Addams family\nwas the male rated more agentic, one-sample t(12) = 2.88, p = .01,\nwhereas no difference emerged for the Flinstones, one-sample\nt(12) = \u0002.93, n.s., and a reversal was found for the Simpsons, one-\nsample t(12) = \u00025.00, p < .001. This suggests that a left positioning\nof the male should only be expected for the Addams family.\nMain study: spatial positioning\nFor each family, we then examined the ﬁrst 60 images in Google\nusing ‘‘the Simpsons”, ‘‘the Flintstones”, and ‘‘the Addams” as key\nwords. We simply recorded the number of times in which the male\nvs. the female of each couple occupied the left position (from the\nperspective of the observer).\nOverall, males were positioned to the left in 60% of all images,\nwhich deviates reliably from chance, binomial test p = .008, there-\nby conﬁrming our ﬁrst hypothesis. However, looking separately at\nthe families, this was entirely due to the Addams family where the",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "-2.93",
+    "df1": "12",
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "one-sample t(12) = \u00022.93, n.s.",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp566edfa4:355:370-0",
+  "window_id": "gp566edfa4:355:370",
+  "text": "signiﬁcant\neffect\nfor\npre-interval\ntrial\ntype,\nF(1, 338) = 48.38, MSE = 16872.51, p < .001, an effect of\ninterval\nlength,\nF(15, 5070) = 15.44,\nMSE = 6769.64,\np < .001, and a pre-interval trial type by interval length\ninteraction, F(155, 070) = 15.45, MSE = 4882.88, p < .001.\nThe results are plotted in Fig. 1B. RTs following correct\nand incorrect NOGO trials were faster than the overall RT\nmean on the trial immediately following a prior NOGO trial",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "15.45",
+    "df1": "155",
+    "df2": "070",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "155, 070) = 15.45, MSE = 4882.88, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "F",
+    "statistic": "15.45",
+    "df1": "155",
+    "df2": "070",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "F(155, 070) = 15.45, MSE = 4882.88, p < .001",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "F",
+    "statistic": "15.45",
+    "df1": "155",
+    "df2": "070",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "F(155, 070) = 15.45, MSE = 4882.88, p < .001",
+    "damaged": false,
+    "confidence": "low"
+   },
+   {
+    "test_type": "F",
+    "statistic": "15.45",
+    "df1": "155",
+    "df2": "070",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "F(155, 070) = 15.45, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpb72cbbb8:738:763-0",
+  "window_id": "gpb72cbbb8:738:763",
+  "text": "of\nthe\nvariance,\nF(21,463) = 1.81, p < .16. Thus, neither background variable was\nrelated to students’ GPA signiﬁcantly. The third step, which tested\nthe SD composite alone, accounted for 34% of the variance,\nF(22,462) = 84.21, p < .01. During the fourth step when the SR com-\nposite is entered along with the SD composite, it accounted for 68%\nof the variance, F(23,461) = 261.56, p < .01. The change between\nthese two steps was a 34% improvement in prediction of students’\nGPA. Thus, the inclusion of the SR composite doubled the predic-\ntion of GPA when compared to the SD composite alone.\nDuring the model 2 analysis of GPA, the step one and step two\nregressions revealed identical non-signiﬁcant effects of back-\nground variables to model 1. The third step analysis, which tested\nthe SR composite alone, accounted for 64% of the variance in GPA,\nF(22,462) = 280.05, p < .01. The fourth step of the analysis (in\nwhich the SR composite was entered along with the SD composite)\naccounted for 69% of the variance in GPA, F(23,461) = 261.56,\np < .01. The change between these two steps was a 5% improve-\nment in prediction of GPA variance. Thus, the inclusion of the SD\ncomposite increased the size of the prediction by 5% when com-\npared to the SR composite alone.\nRegarding VSOL, the ﬁrst hierarchical regression tested model 1\n(in which the SD composite alone was entered in the third step).\nThe background variable of school accounted for 1% of the variance,",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "261.56",
+    "df1": "23",
+    "df2": "461",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "23,461) = 261.56,\np < .01",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpb72cbbb8:738:763-1",
+  "window_id": "gpb72cbbb8:738:763",
+  "text": "of\nthe\nvariance,\nF(21,463) = 1.81, p < .16. Thus, neither background variable was\nrelated to students’ GPA signiﬁcantly. The third step, which tested\nthe SD composite alone, accounted for 34% of the variance,\nF(22,462) = 84.21, p < .01. During the fourth step when the SR com-\nposite is entered along with the SD composite, it accounted for 68%\nof the variance, F(23,461) = 261.56, p < .01. The change between\nthese two steps was a 34% improvement in prediction of students’\nGPA. Thus, the inclusion of the SR composite doubled the predic-\ntion of GPA when compared to the SD composite alone.\nDuring the model 2 analysis of GPA, the step one and step two\nregressions revealed identical non-signiﬁcant effects of back-\nground variables to model 1. The third step analysis, which tested\nthe SR composite alone, accounted for 64% of the variance in GPA,\nF(22,462) = 280.05, p < .01. The fourth step of the analysis (in\nwhich the SR composite was entered along with the SD composite)\naccounted for 69% of the variance in GPA, F(23,461) = 261.56,\np < .01. The change between these two steps was a 5% improve-\nment in prediction of GPA variance. Thus, the inclusion of the SD\ncomposite increased the size of the prediction by 5% when com-\npared to the SR composite alone.\nRegarding VSOL, the ﬁrst hierarchical regression tested model 1\n(in which the SD composite alone was entered in the third step).\nThe background variable of school accounted for 1% of the variance,",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "261.56",
+    "df1": "23",
+    "df2": "461",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "23,461) = 261.56,\np < .01",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa920dadf:755:775-0",
+  "window_id": "gpa920dadf:755:775",
+  "text": "enced the BD subgroup differences we observed. The \ntwo subgroups did not differ on their manic symptoms \n(psychotic BD: ASRM = 4.41; nonpsychotic BD: ASRM = \n2.93), F(1, 35) = 1.58, p = .22, but BD participants with a \nhistory of psychosis were less depressed than those with-\nout a history of psychosis (psychotic BD: BDI = 7.71; non-\npsychotic BD: BDI = 13.47), F(1, 37) = 7.16, p < .05, ηp\n2 = \n.16. Neither depressive symptoms nor manic symptoms \npredicted any of our dependent variables (rs < –.21, ps > \n.10). In addition, controlling for depressive or manic \nsymptoms did not substantively alter any of the results \nwe report.\nFinally, the two BD subgroups did not differ on any of \ntheir clinical and health characteristics, including the \nnumber of medications (psychotic BD: 1.84; nonpsy-\nchotic BD: 2.19), F(1, 39) < 1, n.s., comorbidity, past or \ncurrent diagnoses of substance abuse or dependence, or \nsmoking status, χ2s(1, N = 39) < 1.12, ps > .28, and con-\ntrolling for these variables did not influence any sub-\ngroup differences we report later. Thus, we do not discuss ",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": "–.21",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": ">",
+    "p_value": ".10",
+    "quote": "rs < –.21, ps > \n.10",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:1033:1056-0",
+  "window_id": "gp47993ad6:1033:1056",
+  "text": "transformed these measures into binary variables indicating\nwhether participants expected a donation to the organization to\nhelp at least one person (0 \u0003 no one helped, 1 \u0003 one person or\nmore helped) and provide at least one toilet (0 \u0003 no toilet pro-\nvided, 1 \u0003 one toilet or more provided). The results, using these\ntransformed measures, were consistent with our hypothesis. For\nexpectations of helping at least one person, we found a significant\nrelationship with perceived distance, \t2(1, N \u0003 99) \u0003 4.85, p \u0003\n.028: a greater proportion of participants expected to help one\nperson or more when Haiti was framed as nearby (95.92%) than\nwhen Haiti was framed as far away (82.00%, z \u0003 2.2, p \u0003 .026;\nr \u0003 .22). For expectations of providing at least one toilet, we found\nonly a marginal relationship with distance, \t2(1, N \u0003 99) \u0003 2.83,\np \u0003 .092: a marginally greater proportion of participants expected\nto provide one toilet or more when Haiti was framed as nearby\n(77.55%) than when Haiti was framed as far away (62.00%, z \u0003\n1.7, p \u0003 .083; r \u0003 .17).\nCharitable action.\nNext, we looked at participants’ willing-\nness to donate to Action for Total Sanitation. This measure was\nalso skewed toward smaller values, with 69.70% of participants\nintending to donate $0, $5 or $10. When analyzed as a continuous\nvariable, this measure did not yield any significant results (Fs \u0004\n1). Thus, as in the previous analyses, we transformed this measure",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fs \u0004\n1",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp67537f8f:792:798-0",
+  "window_id": "gp67537f8f:792:798",
+  "text": "performed three one-factorial ANOVAs. The analyses revealed\nthat interest and age were equally distributed across the presenta-\ntion modes (all Fs \u0003 1). Topic-related knowledge, however, was\nnot distributed equally across presentation modes, F(2, 91) \u0001 3.65,\nMSE \u0001 342.70, p \u0003 .05, \u0005p2 \u0001 .07. Post hoc analyses with a\nBonferroni test revealed that participants in the audio condition\nhad significantly less topic-related knowledge than participants in",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fs \u0003 1",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:1115:1131-0",
+  "window_id": "gp3fbfd59c:1115:1131",
+  "text": "¼.05\nASD\nAge\n.02\n.01\n.49\n4.15\n<.001\nF(2,49) = 11.80, p < .001\n.31\nSocial Responsiveness Scale\n\u0002.01\n.01\n\u0002.30\n\u00022.65\n¼.01\nTable 6",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "4.15",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "Age\n.02\n.01\n.49\n4.15\n<.001",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3fbfd59c:1115:1131-1",
+  "window_id": "gp3fbfd59c:1115:1131",
+  "text": "¼.05\nASD\nAge\n.02\n.01\n.49\n4.15\n<.001\nF(2,49) = 11.80, p < .001\n.31\nSocial Responsiveness Scale\n\u0002.01\n.01\n\u0002.30\n\u00022.65\n¼.01\nTable 6",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "-2.65",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".01",
+    "quote": "Social Responsiveness Scale\n\u0002.01\n.01\n\u0002.30\n\u00022.65\n¼.01",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp2601e492:612:639-0",
+  "window_id": "gp2601e492:612:639",
+  "text": "(self-alone low beneﬁt vs. self-alone high beneﬁt vs. self-and-\nfriend beneﬁt vs. self-and-other beneﬁt vs. other-alone beneﬁt)\non rates of over-reporting performance was signiﬁcant, v2(4) = 12.76,\np = .02. Hypothesis 2 posited that people would act dishonestly\nmore frequently when the beneﬁts of doing so were split equally\nbetween themselves and another person than when they accrued\nall of the beneﬁts. Supporting this hypothesis, participants in the\nself-and-friend beneﬁt condition were twice as likely to report\nsolving the unsolvable word jumble (43%) than were participants\nin the self-alone high beneﬁt condition, 21%, v2(1) = 6.81, p = .01.\nParticipants in the self-and-other beneﬁt condition were also more\nlikely to report solving the unsolvable word jumble (37%) than\nwere participants in the self-alone high beneﬁt condition, 21%,\nv2(1) = 3.88, p = .05.\nResults supported the notion that participants would be most\nlikely to cheat when they had both a personal ﬁnancial stake in\nthe outcome and could beneﬁt someone else by overstating their\nperformance. Speciﬁcally, participants in the self-and-other high\nbeneﬁt condition cheated signiﬁcantly more often (37%) than did\nthose in the other-alone beneﬁts condition, 16%, v2(1) = 5.59,\n\nTable 2\nWord jumbles used in Studies 2 and 4.\nJumbles\nCorrect words\nUnhted\nHunted\nEoshu",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "3.88",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".05",
+    "quote": "2(1) = 3.88, p = .05",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpad865319:584:590-0",
+  "window_id": "gpad865319:584:590",
+  "text": "13.92, p<.001. Importantly, none of the higher-order interactions\ninvolving probe relevance was signiﬁcant, Fs(5, 670)b1.46, psN.20.\nAn additional analysis in which we submitted the transformed\nprobe-recognition latencies to a 2 (probe relevance)×2 (cognitive\nload)×2 (probe type)×2 (probe order: ﬁrst vs. second) multilevel\nANOVA, with repeated measures on the last two factors, yielded the\nsame main effects of probe relevance, cognitive load, and probe type as",
+  "kind": "field_conflict",
+  "field": "test_type",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "13.92",
+    "df1": "1",
+    "df2": "670",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "13.92, p<.001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": null,
+    "statistic": "13.92",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "13.92, p<.001",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpad865319:584:590-1",
+  "window_id": "gpad865319:584:590",
+  "text": "13.92, p<.001. Importantly, none of the higher-order interactions\ninvolving probe relevance was signiﬁcant, Fs(5, 670)b1.46, psN.20.\nAn additional analysis in which we submitted the transformed\nprobe-recognition latencies to a 2 (probe relevance)×2 (cognitive\nload)×2 (probe type)×2 (probe order: ﬁrst vs. second) multilevel\nANOVA, with repeated measures on the last two factors, yielded the\nsame main effects of probe relevance, cognitive load, and probe type as",
+  "kind": "field_conflict",
+  "field": "df1",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "13.92",
+    "df1": "1",
+    "df2": "670",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "13.92, p<.001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": null,
+    "statistic": "13.92",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "13.92, p<.001",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ }
+]

@@ -1,0 +1,874 @@
+[
+ {
+  "dispute_id": "gp6554fafe:1306:1327-0",
+  "window_id": "gp6554fafe:1306:1327",
+  "text": "guided near-doubles training was feasible. Mauchley’s test indicated that the\nassumptions of sphericity had been violated for the practiced and unprac-\nticed near-doubles, x2(2) = 24.11, p < .001 and x2(2) = 14.88, p = .001,\nrespectively. Therefore, degrees of freedom were corrected using the\nGreenhouse-Geisser estimates of sphericity (E = .75 and .82, respectively).\nMain effects of time indicated that children made significant improvements\nin their fluency with practiced near-doubles, F(1.50, 91.67) = 20.31, p \\\nFigure 5. Condition 3 Pretest Fluency interactions for practiced n 1 1/1 1 n\nitems.\nDiscovery Learning and Addition Fluency\n557\n.001, and unpracticed near-doubles, F(1.64, 100.03) = 8.50, p = .001.\nInteraction contrasts indicated marginally significantly greater gains for the\nintervention group than for the active-control group for the practiced near-\ndoubles, F(3.01, 91.67) = 1.66, p = .085, but not for unpracticed near-\ndoubles, F(3.28, 100.08) = .18, p = .462. As the control group was higher\non the practiced near-doubles at a marginally significant level at pretest,\nF(1, 62) = 2.84, p = .097 (two-tailed), the immediate and delayed posttest\ncomparisons were conducted controlling for initial pretest ability. Effect\nsize calculations for these analyses utilize adjusted means. Contrasts indi-\ncated that the intervention group outperformed the control group on imme-\ndiate posttest at a marginally significant level, F(1, 63) = 2.67, p = .054, d =",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "24.11",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "x2(2) = 24.11, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "24.11",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "2(2) = 24.11, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "24.11",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "x2(2) = 24.11, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "24.11",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "x2(2) = 24.11, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp6554fafe:1306:1327-1",
+  "window_id": "gp6554fafe:1306:1327",
+  "text": "guided near-doubles training was feasible. Mauchley’s test indicated that the\nassumptions of sphericity had been violated for the practiced and unprac-\nticed near-doubles, x2(2) = 24.11, p < .001 and x2(2) = 14.88, p = .001,\nrespectively. Therefore, degrees of freedom were corrected using the\nGreenhouse-Geisser estimates of sphericity (E = .75 and .82, respectively).\nMain effects of time indicated that children made significant improvements\nin their fluency with practiced near-doubles, F(1.50, 91.67) = 20.31, p \\\nFigure 5. Condition 3 Pretest Fluency interactions for practiced n 1 1/1 1 n\nitems.\nDiscovery Learning and Addition Fluency\n557\n.001, and unpracticed near-doubles, F(1.64, 100.03) = 8.50, p = .001.\nInteraction contrasts indicated marginally significantly greater gains for the\nintervention group than for the active-control group for the practiced near-\ndoubles, F(3.01, 91.67) = 1.66, p = .085, but not for unpracticed near-\ndoubles, F(3.28, 100.08) = .18, p = .462. As the control group was higher\non the practiced near-doubles at a marginally significant level at pretest,\nF(1, 62) = 2.84, p = .097 (two-tailed), the immediate and delayed posttest\ncomparisons were conducted controlling for initial pretest ability. Effect\nsize calculations for these analyses utilize adjusted means. Contrasts indi-\ncated that the intervention group outperformed the control group on imme-\ndiate posttest at a marginally significant level, F(1, 63) = 2.67, p = .054, d =",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "14.88",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".001",
+    "quote": "x2(2) = 14.88, p = .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "14.88",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".001",
+    "quote": "x2(2) = 14.88, p = .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "14.88",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".001",
+    "quote": "2(2) = 14.88, p = .001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "14.88",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".001",
+    "quote": "x2(2) = 14.88, p = .001",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:1057:1066-0",
+  "window_id": "gp47993ad6:1057:1066",
+  "text": "into a binary variable indicating participants’ willingness to donate\nmoney (0 \u0003 donate nothing or $0; 1 \u0003 donate something \b $0).\nThe results supported our hypothesis about the effect of distance\non social action (\t2 (1, N \u0003 99) \u0003 4.35, p \u0003 .037): a larger\nproportion of participants intended to donate something to the\norganization when Haiti was described as nearby (85.71%) than\nwhen Haiti was described as far away (68.00%, z \u0003 2.1, p \u0003 .034,\nr \u0003 .21).\nMediation analysis.\nWe predicted perceived distance would",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "z",
+    "statistic": "2.1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".034",
+    "quote": "z \u0003 2.1, p \u0003 .034",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "z",
+    "statistic": "2.1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".034",
+    "quote": "2.1, p \u0003 .034,\nr \u0003 .21",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "z",
+    "statistic": "2.1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".034",
+    "quote": "z \u0003 2.1, p \u0003 .034",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "z",
+    "statistic": "2.1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".034",
+    "quote": "z = 2.1, p = .034",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:1057:1066-1",
+  "window_id": "gp47993ad6:1057:1066",
+  "text": "into a binary variable indicating participants’ willingness to donate\nmoney (0 \u0003 donate nothing or $0; 1 \u0003 donate something \b $0).\nThe results supported our hypothesis about the effect of distance\non social action (\t2 (1, N \u0003 99) \u0003 4.35, p \u0003 .037): a larger\nproportion of participants intended to donate something to the\norganization when Haiti was described as nearby (85.71%) than\nwhen Haiti was described as far away (68.00%, z \u0003 2.1, p \u0003 .034,\nr \u0003 .21).\nMediation analysis.\nWe predicted perceived distance would",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".21",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r \u0003 .21",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "r",
+    "statistic": ".21",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r = .21",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpb0c0428e:809:832-0",
+  "window_id": "gpb0c0428e:809:832",
+  "text": "reaction times to neutral (baseline) words, demonstrating higher accessibility and\nthus attention residue, when Task A was prevention framed and Task B was\npromotion framed (t(21) = \u00033.74, p 6 0.001, Cohen d’s = 0.46). Differences within the\nother conditions of our formal hypothesis testing were not signiﬁcant.\n\n223\n5.1.6. Supplemental analysis\nAs described earlier, control conditions were included for Task A\nand Task B framing to provide further insights about the nature of\nthe results presented above. Therefore, we also subjected partici-\npants’ attention residue to a 3 (Task A frame) = 3 (Task B frame)\nANCOVA. As in the analysis reported above, reaction times to the\nneutral words were used as covariate to capture individual base\nrate in reaction times. Consistent with Hypothesis 1, and as\nreported in Table 3, the analysis of attention residue revealed a\nsigniﬁcant main effect of Task A framing (F(2,205) = 7.08, p < 0.01,\ng2 = 0.07). In particular, those assigned to Task A promotion fram-\ning exhibited less attention residue as compared to those assigned\nto Task A control framing (F(1,144) = 5.64, p < 0.05, g2 = 0.04), as\nshown in Table 2. By contrast, there was no signiﬁcant difference\nin attention residue between Task A prevention and Task A control\nframings (p = 0.77). This pattern of results suggests that the\ndifferences in attention residue between Task A promotion and\nTask A prevention framings results from a promotion focus reduc-",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "3.74",
+    "df1": null,
+    "df2": "21",
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.001",
+    "quote": "21) = \u00033.74, p 6 0.001, Cohen d’s = 0.46",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-3.74",
+    "df1": "21",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.001",
+    "quote": "t(21) = \u00033.74, p 6 0.001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-3.74",
+    "df1": "21",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.001",
+    "quote": "t(21) = \u00033.74, p 6 0.001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "3.74",
+    "df1": "21",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.001",
+    "quote": "t(21) = 3.74, p 6 0.001",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa920dadf:478:554-0",
+  "window_id": "gpa920dadf:478:554",
+  "text": "F(2, 54) = 5.79\n< .01\n  Mood based subgroups (n)\n \n    Euthymic\n11a\n7a\n20b\nχ2(2, N = 57) = 15.45\n< .001\n    Depressed\n2a\n6b\n0a\nχ2(2, N = 57) = 12.09\n< .01\n    Hypomanic/Manic\n8a\n1b\n0b\nχ2(2, N = 57) = 11.69\n< .01\n    Mixed\n1a\n1a\n0a\nχ2(2, N = 57) = 1.24\n.54\n    Missing\n3a\n1a\n0a\nχ2(2, N = 61) = 2.62\n.27\nClinical and health characteristics\n \n  Substance abuse/dependence (n)\n \n    Past diagnosis\n13a\n7a\n1b\nχ2(2, N = 59) = 12.58\n< .01\n    Current diagnosis\n6a\n6a\n0b\nχ2(2, N = 59) = 9.01\n< .05\n    Missing\n1a\n1a\n0a\nχ2(2, N = 61) = 1.16\n.56\n  Smoking status (n)\n \n    Smoker\n2a\n3a\n1a\nχ2(2, N = 59) = 2.26\n.32\n    Missing\n1a\n1a\n0a\nχ2(2, N = 61) = 1.16\n.56\n  Age at onset of BD\n17.32\n7.72\n18.13\n7.37\nNA\nF(1, 39) = .11",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "1.16",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".56",
+    "quote": "2(2, N = 61) = 1.16\n.56",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa920dadf:478:554-1",
+  "window_id": "gpa920dadf:478:554",
+  "text": "F(2, 54) = 5.79\n< .01\n  Mood based subgroups (n)\n \n    Euthymic\n11a\n7a\n20b\nχ2(2, N = 57) = 15.45\n< .001\n    Depressed\n2a\n6b\n0a\nχ2(2, N = 57) = 12.09\n< .01\n    Hypomanic/Manic\n8a\n1b\n0b\nχ2(2, N = 57) = 11.69\n< .01\n    Mixed\n1a\n1a\n0a\nχ2(2, N = 57) = 1.24\n.54\n    Missing\n3a\n1a\n0a\nχ2(2, N = 61) = 2.62\n.27\nClinical and health characteristics\n \n  Substance abuse/dependence (n)\n \n    Past diagnosis\n13a\n7a\n1b\nχ2(2, N = 59) = 12.58\n< .01\n    Current diagnosis\n6a\n6a\n0b\nχ2(2, N = 59) = 9.01\n< .05\n    Missing\n1a\n1a\n0a\nχ2(2, N = 61) = 1.16\n.56\n  Smoking status (n)\n \n    Smoker\n2a\n3a\n1a\nχ2(2, N = 59) = 2.26\n.32\n    Missing\n1a\n1a\n0a\nχ2(2, N = 61) = 1.16\n.56\n  Age at onset of BD\n17.32\n7.72\n18.13\n7.37\nNA\nF(1, 39) = .11",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "1.16",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".56",
+    "quote": "2(2, N = 61) = 1.16\n.56",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpf94cc8a1:786:807-0",
+  "window_id": "gpf94cc8a1:786:807",
+  "text": "This document is copyrighted by the American Psychological Association or one of its allied publishers.  \nThis article is intended solely for the personal use of the individual user and is not to be disseminated broadly.\np \u0004 .005. During the second phase, the main detection rates were\n71% and 69%, respectively. There was no significant effect of\ntypicality on target detection time within either the first phase or\nthe second phase of Experiment 2B. The accuracy on the target\nabsent trials during the first phase of the experiment was higher\nwhen the background shapes were extreme (93%), compared with\nwhen the background shapes were prototypical (88%; Wilcoxon\nmatched pairs test, N \u0003 24, p \u0004 .005). This effect was gone in the\nsecond phase, where the accuracies were 92% and 93%, respec-\ntively. The participants also responded more quickly when the\nbackground shapes were extreme (2,818 ms), compared with when\nthe background shapes were prototypical (3,152 ms), t(23) \u0003 3.24,\np \u0004 .005, during the first phase. This latter effect was still present,\nthough slightly less pronounced, throughout the second phase. The\naverage response time to a background with extreme shapes was\n2,689 ms and to a background with prototypical shapes was 2,814\nms, t(23) = 2.32, p < .05.\nDiscussion\nWe have shown that searching for the extreme shapes of a shape\nspace in a display containing prototypical distractors is easier than",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": null,
+    "df1": null,
+    "df2": null,
+    "n": "24",
+    "p_operator": "<",
+    "p_value": ".005",
+    "quote": "Wilcoxon matched pairs test, N \u0003 24, p \u0004 .005",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp4d09edc8:604:608-0",
+  "window_id": "gp4d09edc8:604:608",
+  "text": "3.42, = = .07, h2 p .089). There were no effects on expected\nspare time for the next 2 hours (Mgoal near p 2.00 vs. Mgoal far\np 1.68; F ! 1, NS).\nDiscussion\nGoal Proximity and Perceptions of Spare Time.",
+  "kind": "field_conflict",
+  "field": "test_type",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "3.42",
+    "df1": "1",
+    "df2": "35",
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".07",
+    "quote": "3.42, = = .07, h2 p .089",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": null,
+    "statistic": "3.42",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".07",
+    "quote": "3.42, = = .07",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp4d09edc8:604:608-1",
+  "window_id": "gp4d09edc8:604:608",
+  "text": "3.42, = = .07, h2 p .089). There were no effects on expected\nspare time for the next 2 hours (Mgoal near p 2.00 vs. Mgoal far\np 1.68; F ! 1, NS).\nDiscussion\nGoal Proximity and Perceptions of Spare Time.",
+  "kind": "field_conflict",
+  "field": "df1",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "3.42",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".07",
+    "quote": "3.42, = = .07",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "F",
+    "statistic": "3.42",
+    "df1": "1",
+    "df2": "35",
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".07",
+    "quote": "3.42, = = .07, h2 p .089",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp4d09edc8:604:608-2",
+  "window_id": "gp4d09edc8:604:608",
+  "text": "3.42, = = .07, h2 p .089). There were no effects on expected\nspare time for the next 2 hours (Mgoal near p 2.00 vs. Mgoal far\np 1.68; F ! 1, NS).\nDiscussion\nGoal Proximity and Perceptions of Spare Time.",
+  "kind": "field_conflict",
+  "field": "df2",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "3.42",
+    "df1": "1",
+    "df2": "35",
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".07",
+    "quote": "3.42, = = .07, h2 p .089",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": null,
+    "statistic": "3.42",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".07",
+    "quote": "3.42, = = .07",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp4d09edc8:604:608-3",
+  "window_id": "gp4d09edc8:604:608",
+  "text": "3.42, = = .07, h2 p .089). There were no effects on expected\nspare time for the next 2 hours (Mgoal near p 2.00 vs. Mgoal far\np 1.68; F ! 1, NS).\nDiscussion\nGoal Proximity and Perceptions of Spare Time.",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "3.42",
+    "df1": "1",
+    "df2": "35",
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".07",
+    "quote": "3.42, = = .07, h2 p .089",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": null,
+    "statistic": "3.42",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".07",
+    "quote": "3.42, = = .07",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp6554fafe:1365:1383-0",
+  "window_id": "gp6554fafe:1365:1383",
+  "text": "training. Mauchley’s test indicated that the assumption of sphericity was\nmet for practiced items but was marginally violated for unpracticed items,\nx2(2) = 5.95, p = .052. In the latter case, degrees of freedom were corrected\nusing Greenhouse-Geisser estimates of sphericity (E = .92). Main effects of\ntime indicated that children made significant improvements in their fluency\nwith practiced filler items, F(2, 122) = 21.08, p < .001, and unpracticed filler\nitems, F(1.84, 113.46) = 12.24, p < .001. Interaction contrasts indicated par-\nticipants who received add-1 training improved significantly more in their\nfluency than those in the control group on both, F(4, 120) = 2.04, p = .013\nand F(1.84, 113.46) = 2.04, p = .050. Although children did not perform sig-\nnificantly different on practiced filler items at pretest, F(1, 61) = .98, p = .327\n(two-tailed), participants who received add-1 training performed signifi-\ncantly better than those in the control group at the immediate posttest,\nF(1, 61) = 9.83, p = .002, d = 1.23, and the delayed posttest, F(1, 61) = 3.82,\np = .028, d = .87. Although there was not a significant difference at the pre-\ntest, F(0.92, 56.12) = 2.05, p = .157 (two-tailed), or at the immediate posttest,\nF(0.92, 56.12) = 1.26, p = .133, d = .63, add-1 participants performed signif-\nicantly better than control participants on unpracticed filler items at the de-\nlayed posttest, F(0.92, 56.12) = 4.70, p = .017, d = .94. All effects from these",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "5.95",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".052",
+    "quote": "2(2) = 5.95, p = .052",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "5.95",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".052",
+    "quote": "x2(2) = 5.95, p = .052",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "5.95",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".052",
+    "quote": "x2(2) = 5.95, p = .052",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "5.95",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".052",
+    "quote": "x2(2) = 5.95, p = .052",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpda1a2fa1:659:674-0",
+  "window_id": "gpda1a2fa1:659:674",
+  "text": "and choice type and compatibility and ratio, as well as\nthe three-way interaction between compatibility, choice\ntype, and ratio were not (all F0s < 1).\nImportantly, on free-choice trials masked primes not\nonly inﬂuenced response speed, but also systematically\nbiased which action participants chose (see Table 2). Partic-\nipants selected the prime-compatible response signiﬁ-\ncantly more often (54.9%) than would be expected by\nchance, t(15) = 4.88, p < .01. This bias was comparable for\nthe two ratios, t(15) = 1.37, p > .19.\n2.2.2. Sense of control\nFor each participant, median control ranks and mean\ncontrol ratings for each colour were computed as a func-\ntion of free/cued ratio (75/25 vs. 25/75) and prime-re-\nsponse compatibility (compatible, neutral, incompatible).\nControl judgements were collapsed across blocks with",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "F0s < 1",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpd7edb3b9:1637:1654-0",
+  "window_id": "gpd7edb3b9:1637:1654",
+  "text": "2000). In Extension 4, we tested additional paths between em-\nployee retention and revenue and employee satisfaction and\ncustomer loyalty, as suggested by high modiﬁcation indices\n(for a similar procedure, see Hong et al. 2013; Zablah et al.\n2012). Model ﬁt improved signiﬁcantly (Dc2(2) = -187.86, p <\n.01). Adding a direct path between employee retention and\nrevenue showed a positive link (b = .120, p < .01). Employee\nsatisfaction related negatively to customer loyalty (b = -.116,\np < .01), whereas the indirect effect of employee satisfaction on\ncustomer loyalty was positive (see Table 5), indicating com-\npetitive mediation (Zhao, Lynch, and Chen 2010). We also\ntested the mediation effects in the ﬁnal model extension. We\nfound only partial mediation, with varying strength, for the core\nconstructs of employee satisfaction, external service quality,\nand customer satisfaction (for the mediation results and total\neffects, see Table 5, Panels A and B).\nPost Hoc Analyses and Robustness Tests\nWe applied several robustness checks to determine whether",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "187.86",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "2(2) = -187.86, p <\n.01",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "-187.86",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "Dc2(2) = -187.86, p < .01",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "-187.86",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "Dc2(2) = -187.86, p <\n.01",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "-187.86",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "Dc2(2) = -187.86, p <\n.01",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp176028b7:980:1001-0",
+  "window_id": "gp176028b7:980:1001",
+  "text": "choosing or delegating indicated that participants were\nmore likely to delegate to a friend when that person was\nknowledgeable about the choice alternatives (68%) than\nwhen they were not (42%; Wald’s v2 ¼ 29.31, p < .001,\nodds ratio ¼ 3.23). Additionally, as predicted, participants\nwere more likely to delegate the choice to a friend in the\ndifficult condition (66%) than in the easy condition (44%;\nWald’s v2 ¼ 21.84, p < .001, odds ratio ¼ 2.75). However,\nthey did so regardless of the potential surrogate’s level of\nSTEFFEL AND WILLIAMS\n1023\n\nexpertise (Wald’s v2 ¼ .01, p ¼ .90, odds ratio ¼ .95): par-\nticipants were more likely to delegate the choice to a friend\nwhen the choice was difficult than when it was easy, both\nwhen that person had relevant expertise (79% vs. 57%;\nv2 ¼ (1, N ¼ 201) ¼ 11.37, p < .001, / ¼ .24) and when\nhe or she did not (54% vs. 30%; v2 ¼ (1, N ¼ 202) ¼\n11.07, p < .001, / ¼ .23).\nDiscussion\nPeople are more likely to delegate decisions to people\nwith knowledge of the decision options than those without.",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "29.31",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "2 ¼ 29.31, p < .001,\nodds ratio ¼ 3.23",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "29.31",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "v2 ¼ 29.31, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "29.31",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "v2 ¼ 29.31, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "29.31",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "Wald's v2 ¼ 29.31, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp176028b7:980:1001-1",
+  "window_id": "gp176028b7:980:1001",
+  "text": "choosing or delegating indicated that participants were\nmore likely to delegate to a friend when that person was\nknowledgeable about the choice alternatives (68%) than\nwhen they were not (42%; Wald’s v2 ¼ 29.31, p < .001,\nodds ratio ¼ 3.23). Additionally, as predicted, participants\nwere more likely to delegate the choice to a friend in the\ndifficult condition (66%) than in the easy condition (44%;\nWald’s v2 ¼ 21.84, p < .001, odds ratio ¼ 2.75). However,\nthey did so regardless of the potential surrogate’s level of\nSTEFFEL AND WILLIAMS\n1023\n\nexpertise (Wald’s v2 ¼ .01, p ¼ .90, odds ratio ¼ .95): par-\nticipants were more likely to delegate the choice to a friend\nwhen the choice was difficult than when it was easy, both\nwhen that person had relevant expertise (79% vs. 57%;\nv2 ¼ (1, N ¼ 201) ¼ 11.37, p < .001, / ¼ .24) and when\nhe or she did not (54% vs. 30%; v2 ¼ (1, N ¼ 202) ¼\n11.07, p < .001, / ¼ .23).\nDiscussion\nPeople are more likely to delegate decisions to people\nwith knowledge of the decision options than those without.",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "21.84",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "v2 ¼ 21.84, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "21.84",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "2 ¼ 21.84, p < .001, odds ratio ¼ 2.75",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "21.84",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "v2 ¼ 21.84, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "21.84",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "Wald's v2 ¼ 21.84, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp176028b7:980:1001-2",
+  "window_id": "gp176028b7:980:1001",
+  "text": "choosing or delegating indicated that participants were\nmore likely to delegate to a friend when that person was\nknowledgeable about the choice alternatives (68%) than\nwhen they were not (42%; Wald’s v2 ¼ 29.31, p < .001,\nodds ratio ¼ 3.23). Additionally, as predicted, participants\nwere more likely to delegate the choice to a friend in the\ndifficult condition (66%) than in the easy condition (44%;\nWald’s v2 ¼ 21.84, p < .001, odds ratio ¼ 2.75). However,\nthey did so regardless of the potential surrogate’s level of\nSTEFFEL AND WILLIAMS\n1023\n\nexpertise (Wald’s v2 ¼ .01, p ¼ .90, odds ratio ¼ .95): par-\nticipants were more likely to delegate the choice to a friend\nwhen the choice was difficult than when it was easy, both\nwhen that person had relevant expertise (79% vs. 57%;\nv2 ¼ (1, N ¼ 201) ¼ 11.37, p < .001, / ¼ .24) and when\nhe or she did not (54% vs. 30%; v2 ¼ (1, N ¼ 202) ¼\n11.07, p < .001, / ¼ .23).\nDiscussion\nPeople are more likely to delegate decisions to people\nwith knowledge of the decision options than those without.",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": ".01",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".90",
+    "quote": "v2 ¼ .01, p ¼ .90",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": ".01",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".90",
+    "quote": "v2 ¼ .01, p ¼ .90",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": ".01",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".90",
+    "quote": "Wald's v2 ¼ .01, p ¼ .90",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": ".01",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".90",
+    "quote": "2 ¼ .01, p ¼ .90, odds ratio ¼ .95",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp176028b7:980:1001-3",
+  "window_id": "gp176028b7:980:1001",
+  "text": "choosing or delegating indicated that participants were\nmore likely to delegate to a friend when that person was\nknowledgeable about the choice alternatives (68%) than\nwhen they were not (42%; Wald’s v2 ¼ 29.31, p < .001,\nodds ratio ¼ 3.23). Additionally, as predicted, participants\nwere more likely to delegate the choice to a friend in the\ndifficult condition (66%) than in the easy condition (44%;\nWald’s v2 ¼ 21.84, p < .001, odds ratio ¼ 2.75). However,\nthey did so regardless of the potential surrogate’s level of\nSTEFFEL AND WILLIAMS\n1023\n\nexpertise (Wald’s v2 ¼ .01, p ¼ .90, odds ratio ¼ .95): par-\nticipants were more likely to delegate the choice to a friend\nwhen the choice was difficult than when it was easy, both\nwhen that person had relevant expertise (79% vs. 57%;\nv2 ¼ (1, N ¼ 201) ¼ 11.37, p < .001, / ¼ .24) and when\nhe or she did not (54% vs. 30%; v2 ¼ (1, N ¼ 202) ¼\n11.07, p < .001, / ¼ .23).\nDiscussion\nPeople are more likely to delegate decisions to people\nwith knowledge of the decision options than those without.",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "11.37",
+    "df1": "1",
+    "df2": null,
+    "n": "201",
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "v2 ¼ (1, N ¼ 201) ¼ 11.37, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "11.37",
+    "df1": "1",
+    "df2": null,
+    "n": "201",
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "v2 ¼ (1, N ¼ 201) ¼ 11.37, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "11.37",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "2 ¼ (1, N ¼ 201) ¼ 11.37, p < .001, / ¼ .24",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "11.37",
+    "df1": "1",
+    "df2": null,
+    "n": "201",
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "v2 ¼ (1, N ¼ 201) ¼ 11.37, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp176028b7:980:1001-4",
+  "window_id": "gp176028b7:980:1001",
+  "text": "choosing or delegating indicated that participants were\nmore likely to delegate to a friend when that person was\nknowledgeable about the choice alternatives (68%) than\nwhen they were not (42%; Wald’s v2 ¼ 29.31, p < .001,\nodds ratio ¼ 3.23). Additionally, as predicted, participants\nwere more likely to delegate the choice to a friend in the\ndifficult condition (66%) than in the easy condition (44%;\nWald’s v2 ¼ 21.84, p < .001, odds ratio ¼ 2.75). However,\nthey did so regardless of the potential surrogate’s level of\nSTEFFEL AND WILLIAMS\n1023\n\nexpertise (Wald’s v2 ¼ .01, p ¼ .90, odds ratio ¼ .95): par-\nticipants were more likely to delegate the choice to a friend\nwhen the choice was difficult than when it was easy, both\nwhen that person had relevant expertise (79% vs. 57%;\nv2 ¼ (1, N ¼ 201) ¼ 11.37, p < .001, / ¼ .24) and when\nhe or she did not (54% vs. 30%; v2 ¼ (1, N ¼ 202) ¼\n11.07, p < .001, / ¼ .23).\nDiscussion\nPeople are more likely to delegate decisions to people\nwith knowledge of the decision options than those without.",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "11.07",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "2 ¼ (1, N ¼ 202) ¼\n11.07, p < .001, / ¼ .23",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "11.07",
+    "df1": "1",
+    "df2": null,
+    "n": "202",
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "v2 ¼ (1, N ¼ 202) ¼ 11.07, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "11.07",
+    "df1": "1",
+    "df2": null,
+    "n": "202",
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "v2 ¼ (1, N ¼ 202) ¼\n11.07, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "11.07",
+    "df1": "1",
+    "df2": null,
+    "n": "202",
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "v2 ¼ (1, N ¼ 202) ¼\n11.07, p < .001",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ }
+]

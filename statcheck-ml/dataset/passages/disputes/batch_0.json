@@ -1,0 +1,748 @@
+[
+ {
+  "dispute_id": "gp931d211b:392:415-0",
+  "window_id": "gp931d211b:392:415",
+  "text": "Do you consider yourself a member of a gang\n0 = no and 1 = yes\nApril 2016     201\nN = 1,751) = 503.28, p < .001, TLI = .94, CFI = . 96, RMSEA = \n.047 (90% confidence interval [CI] = .043, .052) and with the \nhigh school data, with χ2(102, N = 1,188) = 362.04, p < .001, TLI \n= .93, CFI = .95, RMSEA = .046 (90% CI = .041, .052). Next, we \ntested weak factorial invariance by constraining factor loadings to \nequality across waves. The resulting models did not differ signifi-\ncantly from the baseline, with rescaled dif χ2(8) = 4.09, p = .85, for \nthe middle school data and dif χ2(8) = 11.40, p = .18, for the high \nschools. Following this, we tested strong factorial invariance by \nconstraining the intercepts of factor indicators to equality across \nwaves. These models differed significantly from the previous mod-\nels, with rescaled dif χ2(12) = 323.47, p < .001, for the middle \nschool data and dif χ2(12) = 132.84, p < .001, for the high schools. \nTherefore, we assumed weak factorial invariance (no strong facto-\nrial invariance) and proceeded to test the structural models with \nequality imposed upon factor loadings across waves.\nThe initial autoregressive cross-lagged model with covariates fit \nfairly well with both the middle school data, χ2(278, N = 1,751) = \n1,323.03, p < .001, TLI = .93, CFI = .95, RMSEA = .046 (90% \nCI = .044, .049), and the high school data, χ2(278, N = 1,188) = \n987.73, p < .001, TLI = .92, CFI = .93, RMSEA = .046 (90% CI ",
+  "kind": "field_conflict",
+  "field": "df1",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "503.28",
+    "df1": null,
+    "df2": null,
+    "n": "1,751",
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "N = 1,751) = 503.28, p < .001",
+    "damaged": false,
+    "confidence": "low"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "503.28",
+    "df1": "102",
+    "df2": null,
+    "n": "1751",
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "χ2(102, N = 1,751) = 503.28, p < .001",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "503.28",
+    "df1": null,
+    "df2": null,
+    "n": "1,751",
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "N = 1,751) = 503.28, p < .001",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "503.28",
+    "df1": "102",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "1,751) = 503.28, p < .001, TLI = .94, CFI = . 96, RMSEA = \n.047 (90% confidence interval [CI] = .043, .052) and with the \nhigh school data, with χ2",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3bdb0619:1007:1015-0",
+  "window_id": "gp3bdb0619:1007:1015",
+  "text": "greater satisfaction in the lo-to-hi condition than in the hi-to-lo condition\n(\n,\n). It is noteworthy that there was no statistically\nt(298) = 5.12 = < .0001\nsigniﬁcant correlation between self-reported satisfaction and purchase\nprice (\n, not signiﬁcant).\nr p \u00010.02",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": "0.02",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r p \u00010.02",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp67537f8f:519:538-0",
+  "window_id": "gp67537f8f:519:538",
+  "text": "indication of a redundancy effect, neither in its positive formula-\ntion that redundant information fosters comprehension by dual\ncoding (Fox, 2004) nor in its negative formulation that redundant\ninformation hinders comprehension by an unnecessary increase in\nmental load (Sweller, 1999).\nCognitive load and naming task disruption.\nTo analyze the\neffects of presentation mode and word set on measures of partic-\nipants’ experienced cognitive load and participants’ experienced\noverall disruption of the naming task, we conducted two 2 (pre-\nsentation mode) \u0002 2 (word set) ANOVAS. Due to technical\nproblems, the measures of the first 14 participants were not re-\ncorded for these two variables. This affected all conditions com-\nparably. The total sample for these analyses was reduced to 49.\nAnalyses did not reveal any effects for presentation mode, nor for\nword set on all three cognitive load measures (all Fs \u0003 1).\nAnalyses did not reveal any effects for presentation mode, nor for\nword set on the overall disruption of the naming task (all Fs \u0003 1).\nHence, in line with the findings on naming latencies, no indication\nwas found that the pictorial information in films demands more",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fs \u0003 1",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp67537f8f:519:538-1",
+  "window_id": "gp67537f8f:519:538",
+  "text": "indication of a redundancy effect, neither in its positive formula-\ntion that redundant information fosters comprehension by dual\ncoding (Fox, 2004) nor in its negative formulation that redundant\ninformation hinders comprehension by an unnecessary increase in\nmental load (Sweller, 1999).\nCognitive load and naming task disruption.\nTo analyze the\neffects of presentation mode and word set on measures of partic-\nipants’ experienced cognitive load and participants’ experienced\noverall disruption of the naming task, we conducted two 2 (pre-\nsentation mode) \u0002 2 (word set) ANOVAS. Due to technical\nproblems, the measures of the first 14 participants were not re-\ncorded for these two variables. This affected all conditions com-\nparably. The total sample for these analyses was reduced to 49.\nAnalyses did not reveal any effects for presentation mode, nor for\nword set on all three cognitive load measures (all Fs \u0003 1).\nAnalyses did not reveal any effects for presentation mode, nor for\nword set on the overall disruption of the naming task (all Fs \u0003 1).\nHence, in line with the findings on naming latencies, no indication\nwas found that the pictorial information in films demands more",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "Fs \u0003 1",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:502:520-0",
+  "window_id": "gp47993ad6:502:520",
+  "text": "(metaphor-consistent/horizontal movement vs. metaphor-inconsis-\ntent/vertical movement) \u0002 distance (nearby vs. far away) within\nsubjects showed a main effect of distance, F(1, 192) = 8.17, p =\n.005, indicating a greater perceived impact for the nearby (vs.\nfaraway) country. Importantly, this analysis also revealed the\npredicted interaction of elicited physics knowledge \u0002 distance,\nF(1, 192) = 3.92, p = .049. Specifically, a within-subject test\nshowed that participants who were reminded that impact increases\nwith closeness in the physical domain (object moving horizontally)\nexpected a charitable donation to have more impact on the South\nAmerican location described as nearby (M \u0003 4.58, SD \u0003 2.22)\nthan on the one described as far away (M \u0003 4.30, SD \u0003 2.13, F(1,\n99) = 8.66, p = .004, d \u0003 .59). By contrast, we found no\ndifferences in judgments of impact on nearby versus faraway\nlocations for participants who were reminded that impact increases\nwith distance in the physical domain (object moving vertically\ndownward; Mnear \u0003 4.21, SDnear \u0003 2.33; Mfar \u0003 4.17, SDfar \u0003\n2.31, F \u0004 1).\nThese results support our first and second hypotheses that peo-",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "F \u0004 1",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:1247:1271-0",
+  "window_id": "gp47993ad6:1247:1271",
+  "text": "3.81, p \u0003 .051, or income alone, \t2(11, N \u0003 323) \u0003 10.69, p \u0003\n.47; Wald \u0003 2.84, p \u0003 .092, was included in the model as a single\ncovariate.\nA closer look at the interaction of motivational focus by distance\nshowed that when participants focus on showing their support\n(signaling), distance has no effect on the probability of making a\ndonation (nearby: 55.37% vs. far away: 60.13%; Wald \u0003 .94, p \u0003\n.33). However, when their motivational focus is on helping others\n(impact), the probability is greater that participants will donate\nwhen Haiti is described as nearby (62.14%) than when it is\ndescribed as far away (44.56%; Wald \u0003 4.28, p \u0003 .039; see Figure\n3). These results support the notion that people are more likely to\nengage in social actions for nearby (vs. faraway) causes because\nthey expect to make a greater impact.\nMeta-Analysis of Expected Impact\nIn Studies 4 and 6, we asked about expected impact after\nsoliciting prosocial behavior, and hence failed to observe a signif-\nicant effect of perceived distance on expected impact. Thus, to\nfurther confirm that our studies support our theoretical framework,\nwe conducted a meta-analysis of the main effect of distance on\nexpected impact across Studies 1 (unmoderated subset), 4, 5, and\n6 (unmoderated subset), using a statistical tool developed by\n\nConsistent with our hypothesis, the meta-analysis revealed that,\nacross all four studies, there is a significant difference in expected",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "3.81",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".051",
+    "quote": "3.81, p \u0003 .051",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp961a094a:298:337-0",
+  "window_id": "gp961a094a:298:337",
+  "text": "Materials were selected through a Google Images search using\n‘‘Adam and Eve” and ‘‘Eve and Adam” as key words (search done\nin January 2006, using the Italian version of Google). All 120\nimages appearing on the ﬁrst 3 pages of the two searches were in-\ncluded in the analyses. After exclusion of images that could not be\ncoded (such as abstract representations, animals, single individu-\nals), the ﬁnal material consisted of 90 representations of Adam\nand Eve of different nature, including paintings, frescos, photo-\ngraphs etc. We coded the relative position in which Adam and\nEve appeared in the composition, as seen from the observer’s\nperspective.\nResults\nIn line with our hypothesis, we found that Adam appeared to\nthe left of Eve in 62% (f = 56) of the images whereas Eve occu-\npied the left position only in 38% (f = 34) of the cases. A bi-var-\niate\nlog\nlinear\nanalysis\nshowed\nthat\nthis\ngender\neffect\nis\nstatistically signiﬁcant, v2 = 5.31, d.f. = 1, p = .02. There was no\ninteraction with word order, v2 = 1.34, d.f. = 1, p = .25. The posi-\ntioning\nbias\nemerged\nin\nboth\nkeyword-ordering\nconditions\nalthough it was slightly weaker when Eve preceded Adam. Using\nthe keywords ‘‘Adam and Eve”, Adam occurred on the left in 67%\n(f = 35) of the representations (vs. Eve’s 33%, f = 17), whereas\nusing the keywords ‘‘Eve and Adam”, Adam occurred on the left\nin 55% (f = 21) of the images (vs. Eve’s 45%, f = 17). Thus, there\nwas no evidence that the spatial bias would reverse when using",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "5.31",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".02",
+    "quote": "v2 = 5.31, d.f. = 1, p = .02",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "5.31",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".02",
+    "quote": "v2 = 5.31, d.f. = 1, p = .02",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "5.31",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".02",
+    "quote": "2 = 5.31, d.f. = 1, p = .02",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "5.31",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".02",
+    "quote": "v2 = 5.31, d.f. = 1, p = .02",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp961a094a:298:337-1",
+  "window_id": "gp961a094a:298:337",
+  "text": "Materials were selected through a Google Images search using\n‘‘Adam and Eve” and ‘‘Eve and Adam” as key words (search done\nin January 2006, using the Italian version of Google). All 120\nimages appearing on the ﬁrst 3 pages of the two searches were in-\ncluded in the analyses. After exclusion of images that could not be\ncoded (such as abstract representations, animals, single individu-\nals), the ﬁnal material consisted of 90 representations of Adam\nand Eve of different nature, including paintings, frescos, photo-\ngraphs etc. We coded the relative position in which Adam and\nEve appeared in the composition, as seen from the observer’s\nperspective.\nResults\nIn line with our hypothesis, we found that Adam appeared to\nthe left of Eve in 62% (f = 56) of the images whereas Eve occu-\npied the left position only in 38% (f = 34) of the cases. A bi-var-\niate\nlog\nlinear\nanalysis\nshowed\nthat\nthis\ngender\neffect\nis\nstatistically signiﬁcant, v2 = 5.31, d.f. = 1, p = .02. There was no\ninteraction with word order, v2 = 1.34, d.f. = 1, p = .25. The posi-\ntioning\nbias\nemerged\nin\nboth\nkeyword-ordering\nconditions\nalthough it was slightly weaker when Eve preceded Adam. Using\nthe keywords ‘‘Adam and Eve”, Adam occurred on the left in 67%\n(f = 35) of the representations (vs. Eve’s 33%, f = 17), whereas\nusing the keywords ‘‘Eve and Adam”, Adam occurred on the left\nin 55% (f = 21) of the images (vs. Eve’s 45%, f = 17). Thus, there\nwas no evidence that the spatial bias would reverse when using",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "1.34",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".25",
+    "quote": "v2 = 1.34, d.f. = 1, p = .25",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "1.34",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".25",
+    "quote": "v2 = 1.34, d.f. = 1, p = .25",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "1.34",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".25",
+    "quote": "v2 = 1.34, d.f. = 1, p = .25",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "1.34",
+    "df1": "1",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".25",
+    "quote": "2 = 1.34, d.f. = 1, p = .25",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp47993ad6:766:776-0",
+  "window_id": "gp47993ad6:766:776",
+  "text": "to obtain robust standard errors for the parameter estimates to\ncontrol for mild violation of underlying assumptions (Cameron &\nTrivedi, 2009). The results were consistent with the previous\nanalysis (Wald \u0003 7.06, p \u0003 .008). Giving amount increased as\nperceived distance decreased (B \u0003 1.76, SE \u0003 .66; z \u0003 2.66, p \u0003\n.008, r \u0003 .02). These results provide additional support for our\nhypothesis about the effect of perceived distance on social action\nin this applied setting.\nIn this study—as in Study 1—we manipulated perceived dis-\ntance by describing the location of the recipients as far/far away or\nclose/nearby throughout the charitable appeal. This direct ap-",
+  "kind": "field_conflict",
+  "field": "p_operator",
+  "candidates": [
+   {
+    "test_type": null,
+    "statistic": "7.06",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".008",
+    "quote": "Wald \u0003 7.06, p \u0003 .008",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": null,
+    "statistic": "7.06",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".008",
+    "quote": "Wald \u0003 7.06, p \u0003 .008",
+    "damaged": true,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp20a6c850:2257:2272-0",
+  "window_id": "gp20a6c850:2257:2272",
+  "text": "Are Interest Rates Higher?—In this section, I test whether borrowers in inflated \ntransactions are more likely to pay higher mortgage rates. The sample used consists \nof 57,788 mortgages in which lenders voluntarily report annualized percentage rates \n(APRs) post-2003.28\nThe tests of the relation between seller hints, foreclosure, and mortgage prices is \npresented in Table 5, columns 3, 6, and 7. Column 3 repeats the foreclosure likeli-\nhood tests (from columns 1 and 2) for the sample that is used to study interest rates. \nThe results show that the likelihood of foreclosure for highly leveraged borrow-\ners is statistically weak (t = 0.8 to 1.2) due to the small sample size; however, the \ncoefficients are large and economically significant (the likelihood of foreclosure is \nhigher by 1.3 percent (9.2 percent) for those who, with an LTV of 95–100 percent \n(> 100 percent), buy properties that include sellers’ hints relative to those who do \nnot). Columns 6 and 7 show that borrowers with LTV of 95–100 percent who buy \nproperties with sellers’ hints pay interest rates that are higher by 0.05–0.27 percent; \nfurther, these rates are not monotonic and therefore do not seem to reflect the risk \nthat increases with leverage.",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "0.8 to 1.2",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "t = 0.8 to 1.2",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp176028b7:637:663-0",
+  "window_id": "gp176028b7:637:663",
+  "text": "in either plain language (fluent condition) or medical jar-\ngon (disfluent condition). A SMOG analysis (McLaughlin\n1969) indicated that the plain language version of the sce-\nnario was written at an eighth-grade reading level, the\nmaximum reading level recommended by the International\n1020\nJOURNAL OF CONSUMER RESEARCH\n\nPatient Decision Aid Standards (Elwyn et al. 2006), and\nthe medical jargon version was written at a 13th-grade\nreading level, the typical reading level for health-related\nmaterials (Rudd, Moeykens, and Colton 1999). Pretest par-\nticipants from the same university (N ¼ 47) rated the sce-\nnario as easier to read when it was in plain language (M ¼\n2.09, SD ¼ 1.41) than when it was in medical jargon (M ¼\n5.23, SD ¼ 1.55; paired t(46) = 10.25, p < 001, d ¼ 2.12).\nAdditionally, most participants in another pretest at the\nsame university (N ¼ 127) answered three comprehension\nquestions correctly in both the medical jargon condition\n(86%) and plain language condition (91%; v2(1, N ¼ 127)\n¼ .63, p ¼ .43), suggesting that participants were equally\ncapable of understanding the scenario regardless of the lan-\nguage that was used. Participants indicated whether they\nwould want to 1) choose a treatment themselves and iden-\ntify which treatment they preferred, or 2) ask their doctor\nto choose a treatment for them. On the next page, partici-\npants responded to the same three multiple-choice ques-",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "10.25",
+    "df1": null,
+    "df2": "46",
+    "n": null,
+    "p_operator": "<",
+    "p_value": "0.001",
+    "quote": "46) = 10.25, p < 001, d ¼ 2.12",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "10.25",
+    "df1": "46",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "001",
+    "quote": "paired t(46) = 10.25, p < 001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "10.25",
+    "df1": "46",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "001",
+    "quote": "t(46) = 10.25, p < 001",
+    "damaged": true,
+    "confidence": "low"
+   },
+   {
+    "test_type": "t",
+    "statistic": "10.25",
+    "df1": "46",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": "001",
+    "quote": "t(46) = 10.25, p < 001",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa920dadf:322:350-0",
+  "window_id": "gpa920dadf:322:350",
+  "text": "number of medications, comorbidity, past or current diag-\nnoses of substance abuse/dependence, and smoking sta-\ntus (ps > .28), except that those individuals with a history \nof psychosis were less depressed (BDI = 7.71) than were \nthose without a history of psychosis (BDI = 13.47), F(1, \n37) = 7.16, p < .05, ηp\n2 = .16. The subgroups did not differ \nin their manic symptoms (psychotic BD: ASRM = 4.41; \nnonpsychotic BD: ASRM = 2.93), F(1, 35) = 1.58, p = .22. \nTable 1 illustrates demographic variables and clinical and \nhealth characteristics of the study participants.\nProcedure\nThe study proceeded in seven phases.\nPhase 1: Baseline affect.  First, participants rated how \nhappy they felt “right now” using the Valence subscale of \nthe Self-Assessment Manikin (Bradley & Lang, 1995). Par-\nticipants responded to the item using a scale from 1 (very \nunhappy) to 9 (very happy; M = 6.36, SD = 1.34).\nPhase 2: Baseline EEG.  Next, participants were told \nthat their brain activity would be noninvasively moni-\ntored using EEG. After the attachment of the electrodes, \nbaseline EEG was recorded during both an eyes-open \nand an eyes-closed resting period for 3 min each, with \nthe order of the two counterbalanced across participants \n(see Physiological Recording and Processing section for \nmore details on EEG recording).\nPhase 3: Positive memory reflection task.  After the \nbaseline EEG recording was obtained, participants com-\npleted a positive-memory-reflection task while we con-",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "7.16",
+    "df1": "1",
+    "df2": "37",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".05",
+    "quote": "1, \n37) = 7.16, p < .05, ηp\n2 = .16",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpa920dadf:322:350-1",
+  "window_id": "gpa920dadf:322:350",
+  "text": "number of medications, comorbidity, past or current diag-\nnoses of substance abuse/dependence, and smoking sta-\ntus (ps > .28), except that those individuals with a history \nof psychosis were less depressed (BDI = 7.71) than were \nthose without a history of psychosis (BDI = 13.47), F(1, \n37) = 7.16, p < .05, ηp\n2 = .16. The subgroups did not differ \nin their manic symptoms (psychotic BD: ASRM = 4.41; \nnonpsychotic BD: ASRM = 2.93), F(1, 35) = 1.58, p = .22. \nTable 1 illustrates demographic variables and clinical and \nhealth characteristics of the study participants.\nProcedure\nThe study proceeded in seven phases.\nPhase 1: Baseline affect.  First, participants rated how \nhappy they felt “right now” using the Valence subscale of \nthe Self-Assessment Manikin (Bradley & Lang, 1995). Par-\nticipants responded to the item using a scale from 1 (very \nunhappy) to 9 (very happy; M = 6.36, SD = 1.34).\nPhase 2: Baseline EEG.  Next, participants were told \nthat their brain activity would be noninvasively moni-\ntored using EEG. After the attachment of the electrodes, \nbaseline EEG was recorded during both an eyes-open \nand an eyes-closed resting period for 3 min each, with \nthe order of the two counterbalanced across participants \n(see Physiological Recording and Processing section for \nmore details on EEG recording).\nPhase 3: Positive memory reflection task.  After the \nbaseline EEG recording was obtained, participants com-\npleted a positive-memory-reflection task while we con-",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "F",
+    "statistic": "1.58",
+    "df1": "1",
+    "df2": "35",
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".22",
+    "quote": "1, 35) = 1.58, p = .22",
+    "damaged": false,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp52707aca:385:412-0",
+  "window_id": "gp52707aca:385:412",
+  "text": "Controlling for the three valid cues (eyebrow flashes,\nglances and attention) considerably reduced the relationship\nbetween perceived and self-reported SOI (from β=.49, p=.02\nto β=.21; p=.42), suggesting that they were at least partially\nresponsible for rater accuracy. In contrast, there was no\nreduction in the relationship between perceived and actual\nSOI when controlling for the five poor cues (β=.49, p=.03)\nor the four misleading cues (β=.76, p=.02).\n7.2. Characteristics of accurate perceivers\nWe anticipated that, on average, both males and females\nwould be able to detect female sociosexuality. Results\nindicated significant accuracy among female raters (r=.51,\np=.01); accuracy was only marginally significant among\nmale raters (r=.35, pb.10). To identify more clearly\nindividual differences that may have contributed to accurate\nperceptions, we calculated an accuracy score for each rater\nby computing the correlation between actual SOI scores and\nperceived SOI for each rater, across targets (see Luo &\nKlohnen, 2005). As in Study 1, there was substantial\nvariability in accuracy across raters: correlations ranged from\nr=−.09 to r=.65. With the use of individual raters' accuracy\nscores as the dependent variable, ANOVA revealed that\naccuracy scores were higher among female raters (mean\n\n\nperceived targets as being more unrestricted than women did\n[t(23)=4.58, p<.001].\nRater sociosexuality did not predict the accurate detec-",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": "−.09",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r=−.09",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp52707aca:385:412-1",
+  "window_id": "gp52707aca:385:412",
+  "text": "Controlling for the three valid cues (eyebrow flashes,\nglances and attention) considerably reduced the relationship\nbetween perceived and self-reported SOI (from β=.49, p=.02\nto β=.21; p=.42), suggesting that they were at least partially\nresponsible for rater accuracy. In contrast, there was no\nreduction in the relationship between perceived and actual\nSOI when controlling for the five poor cues (β=.49, p=.03)\nor the four misleading cues (β=.76, p=.02).\n7.2. Characteristics of accurate perceivers\nWe anticipated that, on average, both males and females\nwould be able to detect female sociosexuality. Results\nindicated significant accuracy among female raters (r=.51,\np=.01); accuracy was only marginally significant among\nmale raters (r=.35, pb.10). To identify more clearly\nindividual differences that may have contributed to accurate\nperceptions, we calculated an accuracy score for each rater\nby computing the correlation between actual SOI scores and\nperceived SOI for each rater, across targets (see Luo &\nKlohnen, 2005). As in Study 1, there was substantial\nvariability in accuracy across raters: correlations ranged from\nr=−.09 to r=.65. With the use of individual raters' accuracy\nscores as the dependent variable, ANOVA revealed that\naccuracy scores were higher among female raters (mean\n\n\nperceived targets as being more unrestricted than women did\n[t(23)=4.58, p<.001].\nRater sociosexuality did not predict the accurate detec-",
+  "kind": "singleton",
+  "candidates": [
+   {
+    "test_type": "r",
+    "statistic": ".65",
+    "df1": null,
+    "df2": null,
+    "n": null,
+    "p_operator": null,
+    "p_value": null,
+    "quote": "r=.65",
+    "damaged": false,
+    "confidence": "low"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpd7edb3b9:1614:1636-0",
+  "window_id": "gpd7edb3b9:1614:1636",
+  "text": "productivity, external service quality, and proﬁtability. The model\nﬁt improved signiﬁcantly compared with the baseline (Extension\n1: Dc2(4) = -335.55,p < .01). Not only did internal servicequality\nincrease employee satisfaction, it also enhanced employee pro-\nductivity(b = .194,p< .01).Yetthedirecteffectofinternalservice\nquality on employee retention was insigniﬁcant. For the external\npart of the chain, internal service quality increased external ser-\nvice quality (b = .185, p < .01) and proﬁtability (b = .101, p <\n.01). These results support H2b–H2d but fail to support H2a.\nWe next accounted for additional service encounter effects,\nwhich improved the model ﬁt signiﬁcantly compared with\nExtension 1 (Dc2(2) = -701.78, p < .01). Employee satisfaction\nwas directly linked, though weakly, to customer satisfaction\n(b = .081, p < .01), and employee productivity related directly\nand positively to customer loyalty (b = .290, p < .01). These\nresults support H3a and H3b. Extension 3 ﬁt the data better than\nExtension2 (Dc2(2) = -708.96,p < .01), so the ﬁndings support\nH4a and H4b. External service quality directly increased cus-\ntomer loyalty, beyond its effect on customer satisfaction (b =\n.365, p < .01). The negative link of external service quality and\nproﬁtability (b = -.194, p < .01) corroborated the notion that\nexternal service quality is costly to obtain and reduces ﬁrm\nproﬁtability if it fails to enhance customer loyalty (Zeithaml",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "-335.55",
+    "df1": "4",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "Dc2(4) = -335.55,p < .01",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "335.55",
+    "df1": "4",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "2(4) = -335.55,p < .01",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "-335.55",
+    "df1": "4",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "Dc2(4) = -335.55,p < .01",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "-335.55",
+    "df1": "4",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "Dc2(4) = -335.55,p < .01",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpd7edb3b9:1614:1636-1",
+  "window_id": "gpd7edb3b9:1614:1636",
+  "text": "productivity, external service quality, and proﬁtability. The model\nﬁt improved signiﬁcantly compared with the baseline (Extension\n1: Dc2(4) = -335.55,p < .01). Not only did internal servicequality\nincrease employee satisfaction, it also enhanced employee pro-\nductivity(b = .194,p< .01).Yetthedirecteffectofinternalservice\nquality on employee retention was insigniﬁcant. For the external\npart of the chain, internal service quality increased external ser-\nvice quality (b = .185, p < .01) and proﬁtability (b = .101, p <\n.01). These results support H2b–H2d but fail to support H2a.\nWe next accounted for additional service encounter effects,\nwhich improved the model ﬁt signiﬁcantly compared with\nExtension 1 (Dc2(2) = -701.78, p < .01). Employee satisfaction\nwas directly linked, though weakly, to customer satisfaction\n(b = .081, p < .01), and employee productivity related directly\nand positively to customer loyalty (b = .290, p < .01). These\nresults support H3a and H3b. Extension 3 ﬁt the data better than\nExtension2 (Dc2(2) = -708.96,p < .01), so the ﬁndings support\nH4a and H4b. External service quality directly increased cus-\ntomer loyalty, beyond its effect on customer satisfaction (b =\n.365, p < .01). The negative link of external service quality and\nproﬁtability (b = -.194, p < .01) corroborated the notion that\nexternal service quality is costly to obtain and reduces ﬁrm\nproﬁtability if it fails to enhance customer loyalty (Zeithaml",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "-701.78",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "Dc2(2) = -701.78, p < .01",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "-701.78",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "Dc2(2) = -701.78, p < .01",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "701.78",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "2(2) = -701.78, p < .01",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "-701.78",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "Dc2(2) = -701.78, p < .01",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gpd7edb3b9:1614:1636-2",
+  "window_id": "gpd7edb3b9:1614:1636",
+  "text": "productivity, external service quality, and proﬁtability. The model\nﬁt improved signiﬁcantly compared with the baseline (Extension\n1: Dc2(4) = -335.55,p < .01). Not only did internal servicequality\nincrease employee satisfaction, it also enhanced employee pro-\nductivity(b = .194,p< .01).Yetthedirecteffectofinternalservice\nquality on employee retention was insigniﬁcant. For the external\npart of the chain, internal service quality increased external ser-\nvice quality (b = .185, p < .01) and proﬁtability (b = .101, p <\n.01). These results support H2b–H2d but fail to support H2a.\nWe next accounted for additional service encounter effects,\nwhich improved the model ﬁt signiﬁcantly compared with\nExtension 1 (Dc2(2) = -701.78, p < .01). Employee satisfaction\nwas directly linked, though weakly, to customer satisfaction\n(b = .081, p < .01), and employee productivity related directly\nand positively to customer loyalty (b = .290, p < .01). These\nresults support H3a and H3b. Extension 3 ﬁt the data better than\nExtension2 (Dc2(2) = -708.96,p < .01), so the ﬁndings support\nH4a and H4b. External service quality directly increased cus-\ntomer loyalty, beyond its effect on customer satisfaction (b =\n.365, p < .01). The negative link of external service quality and\nproﬁtability (b = -.194, p < .01) corroborated the notion that\nexternal service quality is costly to obtain and reduces ﬁrm\nproﬁtability if it fails to enhance customer loyalty (Zeithaml",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "-708.96",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "Dc2(2) = -708.96,p < .01",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "708.96",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "2(2) = -708.96,p < .01",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "-708.96",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "Dc2(2) = -708.96,p < .01",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "-708.96",
+    "df1": "2",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".01",
+    "quote": "Dc2(2) = -708.96,p < .01",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp58aee1ec:1214:1227-0",
+  "window_id": "gp58aee1ec:1214:1227",
+  "text": "b Correlation calculated based on test of independence model: c2\n(6) = 1.9, p = .01.\nc Calculated based on 2 x 2 odds ratio matrix (congruence between the number of retroﬁt measures reportedly installed, or not, by households and those observed, or not, by\nutility companies).\nd Couples.\ne Given that the nature of this study (i.e., deforestation) differs substantively from that of the other studies included, the analyses were run with and without this study, but\nthe overall observed effect size remained largely unchanged. Moderator analyses conducted without this study are noted in the endnotes.\nStudy name\nStatistics for each study\nCorrelation and 95% CI\nLower Upper \nCorrelation limit\nlimit Z-Valuep-Value\n",
+  "kind": "field_conflict",
+  "field": "damaged",
+  "candidates": [
+   {
+    "test_type": "chi2",
+    "statistic": "1.9",
+    "df1": "6",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".01",
+    "quote": "2\n(6) = 1.9, p = .01",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "1.9",
+    "df1": "6",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".01",
+    "quote": "c2 (6) = 1.9, p = .01",
+    "damaged": false,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "1.9",
+    "df1": "6",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".01",
+    "quote": "c2\n(6) = 1.9, p = .01",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "chi2",
+    "statistic": "1.9",
+    "df1": "6",
+    "df2": null,
+    "n": null,
+    "p_operator": "=",
+    "p_value": ".01",
+    "quote": "c2\n(6) = 1.9, p = .01",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ },
+ {
+  "dispute_id": "gp3cc7eca1:172:192-0",
+  "window_id": "gp3cc7eca1:172:192",
+  "text": "each participant, and one-sample t tests were conducted to deter-\nmine whether the regression weights for each sex were signifi-\ncantly different from 0 (a flat line).\nA one-sample t test revealed that, across all participants, the\nregression weight differed significantly from 0: mean \u0003 \u0001 \u0002.37,\nt(95) \u0001 \u00029.31, p \u0004 .001. The regression weight differed signifi-\ncantly from 0 for both men, mean \u0003 \u0001 \u0002.469, t(47) \u0001 \u00029.20, p \u0004\n.001, and women, mean \u0003 \u0001 \u0002.268, t(47) \u0001 \u00024.66, p \u0004 .001 (see\nFigure 1). An independent samples t test indicated that the differ-\nence between the regression weights for men and women was\nsignificant, t(94) = 2.61, p = .011, d \u0001 0.54.\nDiscussion\nThe results of Experiment 1 provide evidence of a sex difference\nin the SNARC effect. Both men and women showed a significant\nFigure 1.\nMean response time (RT) difference for each number for men\n(solid line) and women (dashed line) in Experiment 1. Bars show \u00051\nstandard error.\n182\nBULL, CLELAND, AND MITCHELL\nSNARC effect; however, the regression weight for male partici-",
+  "kind": "field_conflict",
+  "field": "statistic",
+  "candidates": [
+   {
+    "test_type": "t",
+    "statistic": "9.31",
+    "df1": "95",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(95) \u0001 \u00029.31, p \u0004 .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "9.31",
+    "df1": null,
+    "df2": "95",
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "95) \u0001 \u00029.31, p \u0004 .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-9.31",
+    "df1": "95",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(95) \u0001 \u00029.31, p \u0004 .001",
+    "damaged": true,
+    "confidence": "high"
+   },
+   {
+    "test_type": "t",
+    "statistic": "-9.31",
+    "df1": "95",
+    "df2": null,
+    "n": null,
+    "p_operator": "<",
+    "p_value": ".001",
+    "quote": "t(95) \u0001 \u00029.31, p \u0004 .001",
+    "damaged": true,
+    "confidence": "high"
+   }
+  ]
+ }
+]
