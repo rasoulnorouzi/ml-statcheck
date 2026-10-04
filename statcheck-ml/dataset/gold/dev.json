@@ -1,0 +1,57 @@
+{
+ "counts": {
+  "dev": {
+   "located_in_scope_results": 278,
+   "papers": 36,
+   "papers_with_results": 20,
+   "papers_without_results": 16
+  },
+  "rest": {
+   "located_in_scope_results": 1729,
+   "papers": 204,
+   "papers_with_results": 116,
+   "papers_without_results": 88
+  }
+ },
+ "dev": [
+  "American Economic Journal_ Applied Economics/Lazear_AmEcoJourn_2012_RqZv.txt",
+  "American Journal of Political Science/Blair_AmJourPoliSci_2014_5X43.txt",
+  "American Journal of Sociology/Walder_AmJournSocio_2009_qxe7.txt",
+  "American Political Science Review/JESSEE_AmPoliSciRev_2009_mG1L.txt",
+  "American Sociological Review/Terriquez_AmSocioRev_2011_E09Z.txt",
+  "British Journal of Political Science/Black_BritJournPoliSci_2016_xggW.txt",
+  "Cognition/Rinaldi_Cognition_2016_Kj9d.txt",
+  "Computers & Education/Savi_CompEdu_2018_eD1p.txt",
+  "Contemporary Educational Psychology/Rich_ContEduPsych_2012_7Ox9.txt",
+  "Educational Researcher/Henry_EduRes_2011_g00Q.txt",
+  "Experimental Economics/Banerjee_ExpEco_2016_J4W9.txt",
+  "Health Psychology/Doane_HealthPsych_2010_2kpO.txt",
+  "Health Psychology/Peng_HealthPsych_2015_WZ7V.txt",
+  "Journal of Applied Psychology/van Dijke_JournAppPsych_2018_rO4R.txt",
+  "Journal of Business Research/Gelbrich_JournBusRes_2016_x3Wk.txt",
+  "Journal of Consulting and Clinical Psychology/Chaffin_JournConsClinPsy_2011_m44m.txt",
+  "Journal of Consulting and Clinical Psychology/DiLillo_JournConsClinPsy_2009_ez87.txt",
+  "Journal of Consumer Research/Nelson_JournConsRes_2009_eg1q.txt",
+  "Journal of Consumer Research/Tuan Pham_JournConsRes_2010_ld8V.txt",
+  "Journal of Environmental Psychology/Poortinga_JournEnvPsych_2013_b40J.txt",
+  "Journal of Experimental Political Science/Kingsley_JournExpPoliSci_2018_kNrP.txt",
+  "Journal of Experimental Psychology_ General/Brown-Iannuzzi_JournExPsychGen_2018_8PNe.txt",
+  "Journal of Experimental Social Psychology/Hansen_JournExpSocPsych_2014_EAa.txt",
+  "Journal of Marriage and Family/Frisco_JournMarFam_2013_22x5.txt",
+  "Learning and Instruction/Kramarski_LearnInst_2010_lVO2.txt",
+  "Learning and Instruction/Obersteiner_LearnInst_2013_85GX.txt",
+  "Organization Science/Dokko_OrgSci_2009_Q0qq.txt",
+  "Psychological Science/Gaskell_PsychologSci_2014_OJzm.txt",
+  "Public Administration Review/Kim_PubAdminRev_2011_gLYQ.txt",
+  "Social Forces/Hipp_SocialForces_2013_l0kv.txt",
+  "Social Science and Medicine/Mair_SocSciMed_2010_qD5b.txt",
+  "The Journal of Finance/MCLEAN_JournFinance_2016_lrOy.txt",
+  "The Leadership Quarterly/Kalmanovich-Cohen_LeadQuart_2018_Jbey.txt",
+  "The Leadership Quarterly/Neves_LeadQuart_2012_Pxmz.txt",
+  "The Quarterly Journal of Economics/Dal B\u00f3_QuartJournEco_2013_X43Q.txt",
+  "World Politics/Maxwell_WorldPolitics_2013_7QYp.txt"
+ ],
+ "fraction": 0.15,
+ "rule": "Papers in gold_train are grouped by has_results. Within each group, papers are sorted by doc name, shuffled with the given seed, and the first round(fraction * n) papers are selected as the development set.",
+ "seed": 0
+}

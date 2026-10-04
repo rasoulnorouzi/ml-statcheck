@@ -125,14 +125,33 @@ function promptFor(t, i, extra) {
     (extra ? `\n\nTHE MANAGER RETURNED YOUR FIRST ATTEMPT. Fix this:\n${extra}` : '')
 }
 
-function work(t, i, label, extra) {
-  const opts = { label, phase: 'Milestones', agentType: t.agentType, schema: WORK }
-  if (t.model && t.model !== 'default') opts.model = t.model
-  return agent(promptFor(t, i, extra), opts)
+async function agent_or_null(prompt, opts) {
+  try { return await agent(prompt, opts) } catch (e) { log(`${opts.label}: no structured result (${String(e).slice(0, 120)})`); return null }
 }
 
+// A worker that ends without its structured report must not end the whole run (M3.2
+// fix, 2026-10-04): it becomes a failed attempt that the manager reviews.
+async function work(t, i, label, extra) {
+  const opts = { label, phase: 'Milestones', agentType: t.agentType, schema: WORK }
+  if (t.model && t.model !== 'default') opts.model = t.model
+  try {
+    return await agent(promptFor(t, i, extra), opts)
+  } catch (e) {
+    return { status: 'failed', summary: `the agent returned no report: ${String(e).slice(0, 300)}`, evidence: [], files_changed: [] }
+  }
+}
+
+// Milestones closed before the gate existed replay as recorded, so their cached agent
+// calls still match; from M3 on, a task whose dependency was not accepted is skipped.
+const UNGATED = ['M1', 'M2', 'M2b']
+
 async function runTask(t, ms, done) {
-  await Promise.all((t.deps || []).map(d => done.get(d) || Promise.resolve(null)))
+  const deps = await Promise.all((t.deps || []).map(d => done.get(d) || Promise.resolve(null)))
+  const refused = deps.filter(d => d && !d.accepted).map(d => d.id)
+  if (refused.length && !UNGATED.includes(ms.id)) {
+    log(`${t.id} skipped: dependency not accepted (${refused.join(', ')})`)
+    return { id: t.id, title: t.title, agentType: t.agentType, model: t.model, accepted: false, skipped: true, reason: `dependency not accepted: ${refused.join(', ')}` }
+  }
   const n = Math.max(1, t.repeat || 1)
   const results = await parallel(Array.from({ length: n }, (_, i) => () =>
     work(t, i, n > 1 ? `${t.id}[${i}] ${t.agentType}` : `${t.id} ${t.agentType}`)))
@@ -141,7 +160,7 @@ async function runTask(t, ms, done) {
   let report = results[0]
   let verdict = null
   for (let attempt = 0; attempt < 2; attempt++) {
-    verdict = await agent(`${MANAGER_ROLE}
+    verdict = await agent_or_null(`${MANAGER_ROLE}
 
 Review task ${t.id} (${t.title}) of milestone ${ms.id}. Verify the evidence yourself: open the files, rerun a cheap check, compare numbers. Do not accept a claim you did not verify.
 
@@ -169,7 +188,7 @@ for (let round = 0; round < 14 && remaining.length; round++) {
   const done = new Map()
   for (const t of ms.tasks) done.set(t.id, runTask(t, ms, done))
   const outcomes = await Promise.all(ms.tasks.map(t => done.get(t.id)))
-  const review = await agent(`${MANAGER_ROLE}
+  const review = await agent_or_null(`${MANAGER_ROLE}
 
 Milestone ${ms.id} (${ms.title}) has run. Goal: ${ms.goal}
 

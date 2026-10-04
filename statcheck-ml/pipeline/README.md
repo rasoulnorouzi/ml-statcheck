@@ -28,7 +28,9 @@ with a manifest of hashes.
 | 13 | `13_ports.py` | the two port repositories under `ports/` | `results/ports.json` | R, node |
 | 14 | `14_gold.py` | the owner's sheet, clean text | `dataset/gold/gold.jsonl` | corpus, the sheet |
 | 14 | `14_gold_split.py` | `gold.jsonl` | `dataset/gold/split.json` | — |
+| 14 | `14_gold_dev_split.py` | `gold.jsonl`, `split.json` | `dataset/gold/dev.json` | — |
 | 14 | `14_gold_eval.py` | `gold.jsonl`, `split.json`, `eval.json`, `dataset/baseline/gold/*`, the zoo | `results/gold_eval.json`, `results/gold_eval_log.jsonl` | corpus |
+| 17 | `17_passage_inventory.py` | clean text, `gold.jsonl`, `split.json`, `dev.json` | `dataset/passages/inventory.jsonl`, `dataset/passages/inventory_summary.json` | corpus |
 | 16 | `16_compare.py` | `results/v4/before/*.json`, current `eval.json` and `gold_eval.json`, the gold log | `results/v4/compare.json`, `results/v4/compare.md` | — |
 | 15 | `15_statcheck_gold.py` | gold papers, the clean text, the PDF archive | `dataset/baseline/gold/*.csv`, `versions.json` | R, statcheck, pdftools, corpus |
 

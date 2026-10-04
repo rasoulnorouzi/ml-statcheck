@@ -4,7 +4,9 @@ This document describes the schema that `src/statcheck_ml/labels.py` implements.
 code is the authority. Change the code and this document together.
 
 Two formats exist. Do not confuse them. A rater agent writes the first. The model
-trains on the second. A script converts the first into the second.
+trains on the second. A script converts the first into the second. The passage dataset
+of version 4 uses the same two formats as the window dataset, with `window_id` naming
+the passage.
 
 A language model counts characters unreliably. A model that reports a start offset
 and an end offset returns numbers that are close and wrong. So a rater reports values
@@ -151,7 +153,7 @@ Each result holds:
 
 | Key | Meaning |
 |---|---|
-| `test_type` | `t`, `F`, `r`, `z`, `chi2`, or `Q` |
+| `test_type` | `t`, `F`, `r`, `z`, `chi2`, `Q`, or `null` |
 | `statistic` | the value of the test statistic, as written |
 | `df1` | the first degrees of freedom, or `null` |
 | `df2` | the second degrees of freedom, or `null` |
@@ -180,6 +182,13 @@ p-value. It is a real reported statistic. No script can recompute it.
 
 Report the two counts apart. A model that raises detection but not checkable
 detection has not improved the tool.
+
+### A result with no test name
+
+A result with no test letter keeps the name that words or its shape give, which
+supervises name recovery from context. When neither gives a name, `test_type` is
+`null` and the result stays marked, because an unmarked result teaches the model to
+skip that text.
 
 ### Alignment
 

@@ -6,7 +6,7 @@ Branch `v4-gold`. Team run `wf_963324ab-ab1`. Plan:
 
 `[x]` done · `[~]` doing · `[ ]` to do
 
-Last update: 2026-10-04, M2b accepted and committed; M2 closed; M3 prompts written.
+Last update: 2026-10-04, M3 interim commit; M3.2b verified but not accepted; M3c prompts written.
 
 ## Done
 
@@ -44,47 +44,59 @@ Last update: 2026-10-04, M2b accepted and committed; M2 closed; M3 prompts writt
 
   Bronze holdout, unchanged: cascade P 0.949, R 0.870, F1 0.908.
 
+- [x] **M2 Fixes without training** — seven tasks — commits `d446a67`, `2042998`; ports R
+  `33faa2e`, web `32a74f4`. Dedup by statistic position; nameless finds become fragments;
+  merged passages as the unit (spec version 2, 0.57x the text read); both ports follow.
+- [x] **M2b Close-out of M2** — five tasks — commits `dcb3a3b`, `003a3ce`; ports R `1e4726d`,
+  web `2ff741a`. `line` from the statistic position in all three ports; the import-path
+  flake fixed; R CMD check OK; stale sentences (M2b.4 finished by the session after two
+  rejections of the doc-writer, haiku); both recalls in the compare stage.
+  Gold test after M2: cascade recall 0.866 with fragments, 0.723 named; finds in the 120
+  no-result papers 155 → 69. Bronze holdout unchanged. Python 419, R 1280, web 385 passed.
+  Detail per task: `docs/v4/LEDGER.md`.
+- [x] **Session: pandoc 3.12** in `~/.local/bin`; R CMD check with the vignette built:
+  Status OK.
+
 ## Doing
 
-- [x] **M2 Fixes without training** — prompts in `docs/v4/prompts/M2.md`. All seven tasks accepted and committed; the ledger holds one entry each. M2 closes when M2b lands (the brief's session notes).
-  - [x] M2.1 Measurement scaffold: the before snapshot, the gold log, the compare stage — eval-engineer — sonnet. Accepted. Before snapshot at `e51e018` in `results/v4/before/`; `16_compare.py`; tests 387 passed.
-  - [x] M2.2 Duplicate-statistic fault: dedup by position — runtime-engineer — sonnet. Accepted.
-    Gold test recall before → after: cascade 0.851 → 0.866 [0.802–0.920]; model 0.836 → 0.849; regex 0.489 → 0.498. Finds in no-result papers: cascade 155 → 157. Parity cases 238 (pipeline section 4 → 6). Tests 394 passed, 6 skipped.
-  - [x] M2.3 Finds with no test name reported as fragments — runtime-engineer — sonnet. Accepted.
-    Gold test, cascade: finds in no-result papers 157 → 73 (84 more are now fragments). Recall of named results 0.866 → 0.723; recall with fragments counted stays 0.866. So about 14 points of gold results are found with no test name. Tests 403 passed, 6 skipped.
-  - [x] M2.4 Merged passages as the unit, `prefilter.json` version 2 — regex-porter — sonnet. Accepted.
-    Gold test: recall unchanged (cascade 0.723 named, 0.866 with fragments); finds in no-result papers 73 → 69; characters the model reads 11.4 M → 6.5 M (0.57×). Parity version 3, 243 cases. Tests 412 passed, 6 skipped.
-  - [x] M2.5 R port reads the new spec; kit; testthat green — runtime-engineer — sonnet. Accepted.
-    testthat: 268 tests, 1259 expectations, 0 failed. Sample PDF: 5 results, 4 consistent, 1 decision error. R CMD check not run. Regression found: `line` is now the first line of the passage (0 for all five sample rows, was 2, 2, 2, 2, 4).
-  - [x] M2.6 Web port reads the new spec; kit; vitest green — runtime-engineer — sonnet. Accepted.
-    vitest before: 6 failed, 364 passed (all 6 pipeline parity cases). After: 381 passed, 9 skipped (the browser test needs Chromium, not installed). Fragments in Markdown, JSON and the demo page, not in the CSV. Kit re-exported; rebuild it after the mother commit.
-  - [x] M2.7 After numbers: bronze, gold, the compare table, the report — eval-engineer — sonnet. Accepted.
-    Bronze: no number moved (the bronze scorer does not call run_text). Gold test, cascade: named recall 0.851 → 0.723, recall with fragments 0.851 → 0.866; no-result papers 155 finds → 69 finds + 82 fragments. Ports: Python 246, R 1259, web 381 parity checks, 0 failed.
+- Team run `wf_963324ab-ab1` stopped in M3 (a worker with no report). A resume began to
+  re-run M1 live and was stopped within two minutes; nothing changed on disk. The work
+  continues in a new run, `wf_1ad266e8-2f6`, from M3 (`docs/v4/team-workflow-continue.js`,
+  plan in `docs/v4/remaining-at-M3.json`).
 
-- [x] **M2b Close-out of M2** — prompts in `docs/v4/prompts/M2b.md`. All five tasks
-  closed; the ledger holds one entry each. Suite at close: 419 passed, 6 skipped. M2 is closed.
-  - [x] M2b.1 (accepted: sample paper lines 11 for all → 14, 15, 17, 20–24, 18; flake reproduced and fixed; 417 passed) `line` from the statistic position (Python, parity `line_rule`), the
-    import-path flake, a parity case with a real fragment — runtime-engineer — sonnet
-  - [x] M2b.2 (accepted: testthat 270 tests, 1280 expectations, 0 failed; R CMD check Status OK with vignettes skipped, no pandoc; sample lines 0,0,0,0,0 → 2,3,4,5,6) R port: `line` rule, kit, testthat, `R CMD check`, library reinstalled — runtime-engineer — sonnet
-  - [x] M2b.3 (accepted: vitest 385 passed, 0 failed) Web port: `line` rule, kit, vitest — runtime-engineer — sonnet
-  - [x] M2b.4 (rejected twice; the session applied the manager's fix by hand: 126 placeholders, no new long line, report tests pass) Stale sentences: report template lines 25, 352, 355, 362; `SAMPLING.md`
-    line 27; `dataset/README.md` on the `raw` field — doc-writer — haiku
-  - [x] M2b.5 (accepted: gold run m2-close identical to m2-after; both recalls in compare.md; Python 419, R 1280, web 385 passed; compare output reproduces byte for byte) `recall_with_fragments` in `16_compare.py`; gold run `m2-close` (every
-    number must equal `m2-after`); `ports.json`; report — eval-engineer — sonnet
+- [~] **M3 Annotation design and sampling** — prompts in `docs/v4/prompts/M3.md`
+  - [x] M3.1 Guideline 3.0 for passages, the four-vote rule, the agents, PROTOCOL.md
+    version 3 — label-architect — opus. Accepted. Guideline sha256 961f3145…; embedding
+    test 5 of 5. Rules added for a missing test letter, tables, passage edges, and "ns".
+  - [x] M3.2 The gold-train dev split (15 % by paper) and the passage inventory of the
+    other gold-train papers — data-engineer — haiku. Dev split accepted (36 papers). The
+    first inventory was rejected. The retry fixed the script but left stale outputs and
+    returned no report, which stopped the team run. The session regenerated the inventory
+    with the fixed script. The manager verified it in the new run: 204 papers, 12592
+    pieces, 585 passages with an in-scope coder row, 80 hard negatives, coder rows placed
+    1725 of 1812, 0 span failures; rerun byte-identical (74d77061…). Ledger entry written.
+  - [~] M3.2b Fix the inventory: piece hash as `text_sha256`, `paper_text_sha256`, the
+    manifest, no `run_seconds` in the summary, dead code — data-engineer — haiku. The
+    inventory part is verified (rerun byte-identical, 8f112191…; manifest verifies; 437
+    tests pass) and committed. Rejected for the README paragraph and what-comments;
+    the fix is M3.2c. The run `wf_1ad266e8-2f6` ended there; M3.3 and M3.4 were skipped.
+  - [ ] M3.2c The README paragraph and the comments — data-engineer — haiku.
+  - [ ] M3.3 The passage sampler (caps 900 / 400 / 200 / 300 kept: 585 + 80 + 200 + 300
+    = 1165 passages); refuses a broken inventory — data-engineer — haiku. After M3.2c.
+  - [ ] M3.4 Batches of ten, unpadded names, 117 batches; the stages wired into
+    `reproduce.sh` and the pipeline README — data-engineer — haiku. After M3.3.
+    Prompts: `docs/v4/prompts/M3c.md`.
 
 ## To do
 
-- [~] M3 Annotation design and sampling — prompts in `docs/v4/prompts/M3.md`.
-  - [ ] M3.1 Guideline 3.0 for passages, the four-vote rule, the agents and
-    PROTOCOL.md version 3 — label-architect — opus
-  - [ ] M3.2 The gold-train dev split (`dataset/gold/dev.json`) and the passage
-    inventory of the other gold-train papers — data-engineer — haiku
-  - [ ] M3.3 The passage sampler and the batches of ten — data-engineer — haiku
-- [ ] M4 Rating: three blind raters per batch, collect, agreement, four-vote consensus
+- [ ] M4 Rating: 117 batches x 3 raters (haiku, sonnet, opus) = 351 blind rater runs, as
+  general-purpose agents with guideline 3.0 in the prompt; collect with the guideline-hash
+  check; agreement; the four-vote consensus script. Six agents at a time.
 - [ ] M5 Consensus and dataset: disputes, adjudicator, merge, dataset, alignment gate
 - [ ] M6 Noise layer rebuilt and gated; the selection rule written before training
 - [ ] M7 Training: ten runs, zoo export, the rule applied
-- [ ] M8 Evaluation: gold test, bronze holdout, both combined; the report
+- [ ] M8 Evaluation: gold test, bronze holdout, both combined; the original statcheck R
+  verdicts against reference verdicts from the coders' values; the report
 - [ ] M9 Ports: kits, R and web tests, Python package tests
 - [ ] M10 Documentation and the double reproduce
 

@@ -92,11 +92,16 @@ if [ $start_idx -le 5 ]; then
   echo "Running: gold stage..."
   echo "$PY pipeline/14_gold_split.py --seed 0"
   $PY pipeline/14_gold_split.py --seed 0
+  echo "$PY pipeline/14_gold_dev_split.py --seed 0"
+  $PY pipeline/14_gold_dev_split.py --seed 0
   if [ -f data/clean/manifest.jsonl ]; then
+    echo "$PY pipeline/17_passage_inventory.py data/clean/ --seed 0"
+    $PY pipeline/17_passage_inventory.py data/clean/ --seed 0
     echo "$PY pipeline/14_gold_eval.py --resamples 2000 --seed 0 --label reproduce"
     $PY pipeline/14_gold_eval.py --resamples 2000 --seed 0 --label reproduce
   else
     echo "gold evaluation skipped: needs the corpus; the committed results/gold_eval.json stands"
+    echo "passage inventory skipped: needs the corpus"
   fi
 fi
 
@@ -125,4 +130,4 @@ fi
 echo "Verifying the dataset manifest (regenerated files must match the committed hashes)..."
 $PY -c "import sys; sys.path.insert(0, 'src'); from statcheck_ml.provenance import verify_manifest; bad = verify_manifest('dataset/MANIFEST.json'); print('manifest: ok' if not bad else 'manifest: MISMATCH ' + ', '.join(bad)); sys.exit(1 if bad else 0)"
 echo "Verifying artifacts..."
-sha256sum results/eval.json results/gold_eval.json results/v4/compare.json dataset/gold/split.json results/REPORT.md results/readme_block.md results/figures/*.png
+sha256sum results/eval.json results/gold_eval.json results/v4/compare.json dataset/gold/split.json dataset/gold/dev.json dataset/passages/inventory.jsonl dataset/passages/inventory_summary.json results/REPORT.md results/readme_block.md results/figures/*.png

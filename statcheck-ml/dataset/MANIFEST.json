@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-04T16:51:25.827671+00:00",
+ "generated_at": "2026-10-04T20:08:57.456893+00:00",
  "command": "python pipeline/02_chunk.py --manifest-root dataset",
  "files": {
   "agreement/holdout.json": "1b09e9aad96deeca9fff8e0b171d24d2604e4540a1296782c61619f2e6a63b0e",
@@ -26,9 +26,12 @@
   "baseline/statcheck_repaired.csv": "146ad80858c29d066609749af9cd5fab1696d37227774ed955ed62279c2cb8a1",
   "baseline/versions.json": "983c812f5d7683eb5bdbe9fb095aeb7e81a5b9a7e2bd5de023adce74c4c59c77",
   "baseline/windows_repaired.json": "c354bb17dd40884edca80de08488121282c51fb49bb24f69a1cf3d2aad7fb468",
+  "gold/dev.json": "695928c6f6df7896632ef70e848849e0e961a94ba73e653748fb8cff509568f0",
   "gold/gold.jsonl": "d8f6a4449c809826204883c1970a817df8820580329906118e233b34deda00d2",
   "gold/split.json": "fbb0214f17e33aa1053015d1410a7a23f5fe269e551e9097463f3949c740c9d2",
   "holdout.jsonl": "3168319e4173d2be10d95df5ae180b57922fdfec7a40a0d2aa121f375ead6b66",
+  "passages/inventory.jsonl": "8f1121911fbcc9ca999577c31953431bd4db669e749710c20ffdd4c9ce76a33b",
+  "passages/inventory_summary.json": "87ea5e5db760626e10194eb3c37499df012b82eab710b9d6a2e455fd93681158",
   "splits.json": "837137707b433b7c339b7116f5fcfc33c7402c06707cbb00f62bc4ac9432fdbb",
   "train.jsonl": "ff66d0b2d6a7e896046ef834150fc88d2b6bff3ff547f53d6463c14d15b600a8",
   "windows/holdout.json": "c35278bbfd1b66e58945ffc8c488dab1f71f66b4f6b4ed5f955ad9ca8c20db1d",

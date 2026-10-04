@@ -148,6 +148,41 @@ control characters from 47.
   (HEAD 126); no line over 90 characters that HEAD did not already have; the 33 report
   tests pass. Verify it and record M2b.4 as done by the session in the ledger.
 
+- The owner asked for the original statcheck check in R, not only its extraction. M8
+  therefore also compares verdicts. Run the original statcheck R package's own
+  consistency check on the values the coders typed for each gold result (test, df,
+  statistic, p operator, p). That gives a reference verdict (consistent, inconsistent,
+  decision error) per gold result from statcheck itself. Score every system's verdicts
+  against it on the results that system found: statcheck R in its four forms, the
+  regex port, the old model, and the version 4 model. Report agreement and the
+  inconsistencies each system finds and misses. Our own p-value code is not changed.
+- pandoc 3.12 is installed in `~/.local/bin` (2026-10-04). `R CMD check` of the R port
+  with the vignette built gives Status: OK. Later port tasks build vignettes.
+
+- M3.1 changed the guideline inside `annotator-haiku`, `annotator-sonnet`,
+  `annotator-opus` and `adjudicator`. This session loaded the agent definitions when it
+  started, before that change (CONTEXT.md, known problem 3). A rater dispatched by agent
+  type may therefore still carry guideline 2.0. For M4 and M5, run each rater and the
+  adjudicator as agent type `general-purpose` with the model set explicitly (haiku,
+  sonnet, opus; the adjudicator's own model) and the guideline 3.0 text placed verbatim
+  in the prompt, as version 2 did. The prompt stays blind: the guideline, the batch file,
+  the output file, nothing else. Each rater output records the guideline sha256 it was
+  given, and the collect step rejects a file whose hash is not the 3.0 hash.
+- M3.2's first attempt ran on haiku and reported a cascade that never ran and positions
+  that missed 1715 of 1732 coder rows. M3.3 must refuse an inventory whose summary
+  shows zero cascade fires or more than a few span-check failures.
+
+- The M3.2 retry fixed `17_passage_inventory.py` but left the output files from before
+  its last edit, and then ended without its structured report, which stopped the
+  workflow. The session regenerated `dataset/passages/` with the fixed script (twice,
+  identical sha256 74d77061…): coder rows located 1725 of 1812 (80 outside any unit,
+  7 on a blanked line, 32 unlocated), span-check failures 0, cascade fires in 866
+  passages, hard negatives 80, Park_ClinPsychSci 43 results and 16 fragments. MANIFEST.json
+  is not yet regenerated. The field `text_sha256` holds the hash of the whole paper
+  text, not of the passage; either rename it or add a passage hash.
+- The workflow script now turns a worker with no report into a failed attempt, and from
+  M3 on it skips a task whose dependency was not accepted (the session, 2026-10-04).
+
 ## Limits for the team
 
 - Never delete a file that git does not track, unless the owner asks. Git cannot

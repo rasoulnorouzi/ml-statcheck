@@ -52,11 +52,9 @@ Apply the guideline exactly. A damaged operator is still an operator. A quote is
 copied character for character from the passage, and a damaged character is never
 repaired.
 
-## Guideline — docs/GUIDELINE.md, version 2.0, verbatim
+## Guideline — docs/GUIDELINE.md, version 3.0, verbatim
 
-# Annotation guideline — reported statistical test results
-
-Guideline version: 2.0 (2026-09-19)
+# Annotation guideline — reported statistical test results, version 3.0 (2026-10-04)
 
 This guideline is the written artifact of the annotation protocol. Each rater agent
 embeds this text verbatim. A collection script records the sha256 of this file on
@@ -64,8 +62,12 @@ every annotation record. Change the version number when you change the text.
 
 ## The task
 
-You read short passages of text. The passages come from academic articles. You mark
-each reported statistical hypothesis test result in each passage.
+You read passages of text. The passages come from academic articles. You mark each
+reported statistical hypothesis test result in each passage.
+
+A passage is a run of lines from one article. It holds up to 1500 characters. It
+often holds several sentences, or several rows of a table. One passage can hold many
+results. Mark each one.
 
 A statistical hypothesis test result reports a test statistic together with the
 values that belong to it. A complete report has a test name, a test statistic value,
@@ -114,7 +116,7 @@ For each result, record these parts when they are present:
 
 | Part | Meaning |
 |---|---|
-| `test_type` | the test name: t, F, r, z, chi2, or Q |
+| `test_type` | the test name: t, F, r, z, chi2, or Q; `null` when no rule below gives a name |
 | `statistic` | the value of the test statistic |
 | `df1` | the first degrees of freedom |
 | `df2` | the second degrees of freedom, if the test has one |
@@ -123,7 +125,34 @@ For each result, record these parts when they are present:
 | `p_value` | the reported p-value |
 
 A part that is absent is `null`. Never supply a value that is not written. Never
-calculate a missing value.
+calculate a missing value. The test name is the one exception, and the next section
+gives its rules.
+
+## When the test letter is missing
+
+Sometimes a passage holds a result but not its test letter. The conversion can delete
+the letter. The author can also name the test in words. Apply these rules in order,
+and stop at the first rule that gives a name.
+
+1. **Words name the test.** The sentence that holds the result names the test in
+   words. Or the header of the table column or row names it. Write that test.
+   Examples: `t test` gives `t`, `chi-square test` gives `chi2`, `analysis of
+   variance` or `ANOVA` gives `F`, `correlation` gives `r`.
+2. **The shape names the test.** Write the test that the shape identifies.
+   - Two degrees of freedom with a statistic value, such as `(2, 89) = 6.14, p < .01`,
+     give `F`. A p-value can follow or not.
+   - A sample size inside the parentheses, such as `(1, N = 223) = 8.69`, gives `chi2`.
+3. **Nothing names the test.** Write `test_type` as `null`. Mark the result all the
+   same, with every other part that the passage holds. Example: `(48) = 2.31, p = .02`
+   with no test named in the sentence.
+
+Never take a name from the size of a value or from the topic of the article.
+
+A test letter that is missing directly before the parentheses or the value is a
+damaged symbol. Set `damaged` to `true`. A test that the author named only in words is
+not damaged.
+
+A name in a table header stays outside `quote`. The quote holds the row.
 
 ## What is a result, and what is not
 
@@ -131,16 +160,20 @@ calculate a missing value.
 
 - Any of t, F, r, z, chi-square or Q with a value, whether or not a p-value follows.
 - A test named in words: "the chi-square statistic ... is 32.9182, p = 0.3261".
-- A result reported in a table row.
-- A result split by a line break. The statistic can end one line and the p-value
-  begin the next. It is one result.
+- A result reported in a table row. Mark every row of the table that reports a result.
+- A result split by a line break inside the passage. The statistic can end one line
+  and the p-value begin the next. It is one result.
 - A test statistic with no degrees of freedom, such as `t = 7.70, p < .0001`.
 - A result whose operator is a damaged character. This is the most valuable case.
+- A result whose test letter is missing. The section "When the test letter is
+  missing" says what to write in `test_type`.
 - A chi-square written as `2`, `c2`, `v2`, `X2`, or `χ2` before the parentheses.
 - A chi-square that carries a sample size inside the parentheses, such as
   `chi2(1, N = 223) = 8.69`.
 - A negative statistic, including one whose minus sign became a damaged character.
-- Each result of a series, even when the results repeat one shape.
+- Each member of a series, even when the members repeat one shape.
+- A statistic at the end of the passage whose p-value lies after the passage. Record
+  the parts that the passage holds.
 
 **Do not mark these:**
 
@@ -155,20 +188,39 @@ calculate a missing value.
   `RMSEA`, `CFI`, or Cronbach `α`.
 - A sample size on its own, such as `N = 223` outside the parentheses of a test.
 - A degrees of freedom value with no statistic value.
-- A p-value whose statistic lies outside the passage. The window cut the result, so
-  the passage does not hold it.
+- A p-value at the start of a passage whose statistic lies before the passage. The
+  passage does not hold that result.
 
 ## Several results in one passage
 
-A passage often holds several results. Keep the parts of each result together, and
-never mix parts from two different results. Mark every one, not only the first.
+A passage often holds several results. A table of twenty result rows gives twenty
+results. Keep the parts of each result together, and never mix parts from two
+different results. Mark every one, not only the first.
 
 Order the results as the passage writes them, from the first character to the last.
+
+A result can appear twice in one passage, for example once in the text and once in a
+table. Mark two results, one for each place. The quote of each result holds the text
+of its own place.
+
+## Tables
+
+Mark every row of a table that reports a result. Each such row is one result.
+
+The statistic and the p-value of one row can stand far apart, with other columns
+between them. Mark one result. Copy the whole row into `quote`, with every column
+between the statistic and the p-value.
+
+The conversion can break a table, so that a p-value no longer stands on the line of
+its statistic. Pair a statistic with a p-value only when the passage shows that they
+belong together. When you cannot pair them, mark the statistic alone. Set `p_operator`
+and `p_value` to `null` and `confidence` to `low`.
 
 ## Output
 
 Write a JSON array. One object for each passage, in the order given. The array must
-have exactly as many objects as the input has passages.
+have exactly as many objects as the input has passages. The key `window_id` names the
+passage. Copy it exactly from the input.
 
 ```json
 [
@@ -204,6 +256,10 @@ passage, including any line break or damaged character inside it.
 - `confidence` is `high` or `low`, and nothing else. Use no other word.
 - `p_operator` is `=`, `<`, or `>`, and nothing else. Write `<` for `≤` and `>` for
   `≥`. Write the operator you infer for a damaged character, never the character.
+- `ns` or `n.s.` in the place of a p-value is not a p-value. Write `p_operator` and
+  `p_value` as `null`.
+- `test_type` is `t`, `F`, `r`, `z`, `chi2`, `Q`, or `null`. Write `null` only when
+  the section "When the test letter is missing" gives no name.
 - Use `low` confidence when a passage is ambiguous. Do not guess silently.
 - `damaged` is `true` or `false`. Set it to `true` when any operator or symbol of the
   result is not the character you expect.
@@ -220,8 +276,11 @@ These cases return in almost every batch. Decide them the same way every time.
 | A correlation `r` with no degrees of freedom, such as `r = .73, p < .01` | Mark it. Set `df1` and `df2` to `null`. | A reported statistic stays a result. A script decides later whether it is checkable. |
 | A chi-square with a sample size inside the parentheses, such as `c2(1, N = 96) = 4.2` | Mark it. Put `1` in `df1` and `96` in `n`. | The sample size is a part of the report, not a second degrees of freedom. |
 | A table row with the statistic in one column and the p-value in another column | Mark one result that holds both. Copy the whole row into `quote`. | The columns report one result. The layout split it. |
-| A p-value at the start of a window, with its statistic cut off before the window | Mark nothing. Set `contains_result` to `false`. | The passage does not hold the result. Never guess a statistic you cannot see. |
+| A p-value at the start of a passage, with its statistic before the passage | Do not mark it. Mark the other results of the passage as usual. | The passage does not hold the result. Never guess a statistic you cannot see. |
 | A test name in any other spelling, such as `X2`, `chi-square`, or `χ2` | Write `test_type` as exactly one of `t`, `F`, `r`, `z`, `chi2`, `Q`. | One spelling per test keeps the field comparable between raters. |
+| A result with no test letter, such as `(2, 89) = 6.14, p < .01` or `(48) = 2.31, p = .02` | Mark it. Write the test that words in the sentence or a table header name. Else write the test that the shape names: two degrees of freedom give `F`, and `N` inside the parentheses gives `chi2`. Else write `null`. | The name that the text implies is part of the report. A `null` name keeps a result that the passage does not name. |
+| A table row whose statistic column and p-value column stand far apart, with other columns between them | Mark one result. Copy the whole row into `quote`, with every column between them. Pair a statistic and a p-value only when the passage shows that they belong together. | The row reports one result. A wrong pair is worse than a missing p-value. |
+| The same result twice in one passage, such as once in the text and once in a table | Mark two results, one for each place. Each quote holds the text of its own place. | Each place reports the result. Mark text, not facts. |
 
 ## Your output contract
 

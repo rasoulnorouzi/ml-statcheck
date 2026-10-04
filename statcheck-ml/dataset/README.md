@@ -22,6 +22,9 @@ The papers themselves are not here. Papers are copyrighted and large, so they re
 | `holdout.jsonl` | Processed dataset for final evaluation |
 | `gold/gold.jsonl` | The owner's hand-coded results, one line per paper, with offsets and numbers |
 | `gold/split.json` | Which gold papers form `gold_test` and which form `gold_train` |
+| `gold/dev.json` | Development split: which `gold_train` papers form the dev set |
+| `passages/inventory.jsonl` | Passages from `gold_train` papers excluding dev, one per line |
+| `passages/inventory_summary.json` | Summary statistics of the passage inventory |
 | `MANIFEST.json` | SHA256 hashes of all files for integrity checking |
 
 ## Gold
@@ -29,6 +32,8 @@ The papers themselves are not here. Papers are copyrighted and large, so they re
 Gold is the owner's hand-coded set. The owner coded every reported result in 409 papers by hand. `gold/gold.jsonl` holds character offsets, line numbers, and the coded numbers for each result. It does not hold the paper text. Each result carries the coder's transcribed quote in the `raw` field. A person with the corpus rebuilds the text with `pipeline/14_gold.py`.
 
 `gold/split.json` divides the papers in two. No stage trains on a `gold_test` paper. `gold_train` papers may feed training in a later version. Gold labels are human labels. The bronze labels in the other files are not.
+
+`gold/dev.json` holds 36 gold-train dev papers; they exclude from training, rater samples, and gate the noise families. The inventory lists passage pieces from the 204 other gold-train papers with coordinates, piece hash, coder rows, and cascade counts. The inventory is the sampling frame for passage annotation, not the training file; the sample contains texts.
 
 ## Row structure
 

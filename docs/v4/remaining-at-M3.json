@@ -1,0 +1,441 @@
+[
+ {
+  "id": "M3",
+  "title": "Annotation design and sampling: guideline 3.0 for passages, the gold-train dev split, the passage inventory, the sampler and batches of ten",
+  "goal": "The guideline reaches version 3.0 for passage-level annotation with its sha256 recorded, the three rater agents and the adjudicator embed it verbatim (a test enforces it), and PROTOCOL.md version 3 describes the four-vote consensus with the coders as the fourth vote (a coder row outside the six test names does not vote; every tier stays bronze). The gold-train dev papers (15 percent by paper, seed 0, stratified by has_results) are frozen in dataset/gold/dev.json and never enter the rater sample. 17_passage_inventory.py builds the inventory of the remaining gold-train papers: every Prefilter.unit of the repaired text as run_text hands it to the model, split at line ends into pieces of at most 1500 characters, with the coder rows inside it as result objects in the rater schema (quote = raw, span located in the piece when possible), the paper flags, and whether the shipped cascade finds a result or a fragment there; no text, only sha256. 18_sample_passages.py draws with a seed from four disjoint strata (gold, hard negatives, damaged papers, clean negatives round-robin over journals), calls assert_not_gold_test, rebuilds the texts and checks their sha256; 02_chunk.py --unpadded writes batches of ten (batch_0.json \u2026) with a manifest. The batch count sets the repeat counts of M4; the manager fixes the caps at the close and may order one re-draw.",
+  "tasks": [
+   {
+    "id": "M3.1",
+    "title": "Guideline 3.0 for passages, the four-vote rule, the agents and PROTOCOL.md version 3",
+    "agentType": "label-architect",
+    "model": "default",
+    "deps": [],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Repository: /home/rass/Desktop/projects/ml-statcheck, branch v4-gold. The Python project is /home/rass/Desktop/projects/ml-statcheck/statcheck-ml; run every script from that directory with /home/rass/Desktop/projects/ml-statcheck/.venv/bin/python. Use absolute paths in every command, because the working directory resets between shell calls.\n\nRules:\n- Read /home/rass/Desktop/projects/ml-statcheck/CLAUDE.md first and keep its rules. Prose you write follows ASD-STE100: active voice, articles kept, one meaning per word, procedural sentences under 20 words, descriptive sentences under 25 words. No machine-written texture: no \"In this section\", no \"It's important to note\", no selling adjectives, no summary that repeats a section.\n- Do not run rm, mv, cp, or any git command that changes state. Delete, move, or copy a file from inside Python. Never delete a file that git does not track. The manager commits.\n- Never read a gold paper and never read dataset/gold/gold.jsonl beyond the first record. The guideline is written from the corpus facts already in docs/GUIDELINE.md and in CONTEXT.md, not from the gold labels.\n- Do not edit a file that this task does not name as yours.\n- Report every command you ran with its real output, every file you changed, and every number you measured. Do not report a number you did not measure.\n\nBackground. Version 2 annotated windows of about 284 characters under docs/GUIDELINE.md version 2.0 (sha256 a5c42b43\u2026), embedded verbatim in the three rater agents .claude/agents/annotator-haiku.md, annotator-sonnet.md, annotator-opus.md and in .claude/agents/adjudicator.md, under the heading \"## Guideline \u2014 docs/GUIDELINE.md, version 2.0, verbatim\". docs/PROTOCOL.md (version 2) describes the frozen windows, the three blind raters, batches of 20, collection and provenance, agreement, the consensus rule (a result stays with two raters of three; a singleton or a three-way field conflict goes to the blind adjudicator), the tiers (unanimous, majority, adjudicated; all bronze) and the limit of a model annotator. Version 4 changes the unit and adds a vote. The unit is now the merged passage: a run of lines of one paper that the prefilter keeps (spec/prefilter.json version 2, \"unit\": \"passage\"), split at line ends into pieces of at most 1500 characters. A passage is longer than a window, often holds several sentences or table rows, and can hold many results. The fourth vote is the owner's three human coders (MS, ME, MN), who coded the same papers by hand. Their rows will be matched to the rater results by a script (M4.6) and vote with the same weight as one rater. Their scope differs from the guideline: they skip a correlation without degrees of freedom, and they code CI, Wald and b rows that the guideline excludes; a coder row whose test type is outside the six names (t, F, r, z, chi2, Q) therefore does not vote and is not a candidate. The coders are not always right (the owner says so; 135 of 2704 rows hold a typed value that is not in the quote). Raters never learn any of this: a rater sees the passage and the guideline only. The rater output schema does not change: each result object holds the ten keys test_type, statistic, df1, df2, n, p_operator, p_value, quote, damaged, confidence, and the passage identifier keeps the key name window_id, because pipeline/03_collect.py, validate_batch in src/statcheck_ml/provenance.py and align_quote in src/statcheck_ml/align.py read those names. validate_batch accepts a null test_type. The model side: a find with no test name is a fragment (M2.3); recovering the test name is a main target of the new training data, so the guideline must say exactly what a rater writes when the test letter is missing from the text. Read docs/GUIDELINE.md, docs/PROTOCOL.md, docs/SCHEMA.md, the four agent files, pipeline/03_collect.py, pipeline/05_adjudicate.py, src/statcheck_ml/provenance.py (validate_batch, normalise_test_type), tests/test_collect.py, the \"Annotation moves to the passage\" section of docs/superpowers/plans/2026-10-04-v4-gold.md and the \"Label tiers\" section of PLAN.md before you start.\n\nYOUR TASK:\n1. docs/GUIDELINE.md version 3.0 (2026-10-04). Keep every rule of 2.0 that still holds, and keep the real damaged examples. Change what the passage changes: the unit is a passage of up to 1500 characters from one article, with several sentences or table rows; it can hold many results, and each one is marked, including every row of a table and every member of a series; a result split across a line break inside the passage is one result; a p-value at the start of a passage whose statistic lies before the passage is not a result; `window_id` names the passage. Decide and state, in the body and in one decision-table row each: (a) what a rater writes for test_type when the test letter is absent from the text but the sentence names the test in words, or the shape identifies it (two degrees of freedom and a p-value is an F; \"(N = \u2026)\" inside the parentheses is a chi-square), and when neither holds (state whether test_type is then null and the result still marked, or the result not marked; pick the rule that gives the model supervision for recovering a name from context, and say why in docs/SCHEMA.md in two sentences); (b) a table whose statistic column and p-value column are far apart on one row; (c) a result repeated in the text and in a table within one passage (two results, one each). Keep the output example, the ten keys, and the rule list. Put the version and the date in the header line and nowhere else.\n2. The four agent files. Replace the embedded guideline with the 3.0 text verbatim, under the heading \"## Guideline \u2014 docs/GUIDELINE.md, version 3.0, verbatim\". Change nothing else in the agent bodies except the word \"window\" where it names the unit (\"passage\"); keep the frontmatter, the tools and the models. Run `node /home/rass/Desktop/projects/ml-statcheck/scripts/list-extensions.js` and record its exit code. Add a test (tests/test_guideline_embedding.py, or extend tests/test_collect.py if it already checks this; say which) that reads docs/GUIDELINE.md and asserts that each of the four agent files holds its full text verbatim after that heading. Record the sha256 of the new docs/GUIDELINE.md with `python -c \"import hashlib;print(hashlib.sha256(open('docs/GUIDELINE.md','rb').read()).hexdigest())\"`.\n3. docs/PROTOCOL.md version 3. Keep the version 2 sections as the record of the bronze set and mark them so (one sentence each). Add the version 4 sections: the passage as the unit and how the inventory and the sampler define it (one paragraph; the stages are 17_passage_inventory.py and 18_sample_passages.py, written by M3.2 and M3.3; dataset/passages/ holds inventory.jsonl, sample.json, key.json and batches/batch_<i>.json with unpadded names, in batches of ten; say why ten: a passage is up to five times a window); the gold-train dev papers (dataset/gold/dev.json, 15 % by paper, seed 0, stratified by has_results, never in a rater sample or a training set; the gate set of the noise families); the four-vote consensus, written precisely enough that M4.6 can implement it with a test: the voters (three raters and the coders), which coder rows vote (test type among the six names; a row located in the passage votes by span, a row not located votes by statistic value only), when two results are the same (span overlap of 50 % or more, as in version 2), when a result stays (two votes of four), what is a singleton (one vote, whichever voter), how a field takes its value (majority among the voters that found the result; the coders vote on test_type, statistic, df1, df2, p_operator, p_value and damaged, never on n, quote or confidence; the final quote comes from the raters), what is a field conflict (no majority, which with four voters includes a two-two split), what the adjudicator sees (candidates with no voter names; a coder candidate is shown with the passage text at its span as its quote, never the coder's transcription, so that the adjudicator cannot tell it apart), the tiers (name them; every tier is bronze; every result records which of the four voters found it, so that the share with a coder vote is a number in the report), and the dispute batches of 20. State the limit: the coders are one voice, so a coder error that two raters repeat survives, and the arithmetic check remains the only independent signal. Keep the \"limit of the blindness\" and \"limit of a model annotator\" sections and point them at the passages too.\n4. docs/SCHEMA.md: the two sentences of step 1(a), and one sentence that the passage dataset uses the same two formats as the window dataset.\n\nReport: the sha256 of docs/GUIDELINE.md before and after; the exit code of list-extensions.js; the pytest output of the new or extended test and of `pytest tests/test_collect.py -q`; the full decision-table rows you added; the four-vote rule as one paragraph, verbatim from PROTOCOL.md; `git status --short`. Files you own: docs/GUIDELINE.md, docs/PROTOCOL.md, docs/SCHEMA.md, the four agent files under .claude/agents/, tests/test_guideline_embedding.py (new) or tests/test_collect.py (extended). Do not touch pipeline scripts, the spec files, the dataset or any result file.",
+    "acceptance": "GUIDELINE.md header says version 3.0 (2026-10-04) and its sha256 differs from a5c42b43\u2026; a script comparison by the manager shows each of the four agent files holds the new text verbatim after the 3.0 heading, and the new test passes; `node scripts/list-extensions.js` exits 0; the guideline states the passage unit, the three decision-table rows (missing test letter, far-apart table columns, text-and-table repeat), the ten keys and window_id unchanged; PROTOCOL.md version 3 holds the four-vote rule with every element the prompt lists (voters, coder eligibility, span overlap 50 %, two of four, singleton, field majority with the coder's seven fields, two-two split as a conflict, blind candidates with the passage text as quote, tiers all bronze with the voter record, dispute batches of 20) and the dev papers; SCHEMA.md holds the two sentences; full suite passes; only the owned files changed."
+   },
+   {
+    "id": "M3.2",
+    "title": "The gold-train dev split and the passage inventory of the other gold-train papers",
+    "agentType": "data-engineer",
+    "model": "default",
+    "deps": [],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Repository: /home/rass/Desktop/projects/ml-statcheck, branch v4-gold. The Python project is /home/rass/Desktop/projects/ml-statcheck/statcheck-ml; run every script from that directory with /home/rass/Desktop/projects/ml-statcheck/.venv/bin/python. The corpus text is /home/rass/Desktop/projects/ml-statcheck/statcheck-ml/data/clean/<doc> (gitignored). Use absolute paths in every command, because the working directory resets between shell calls.\n\nRules:\n- Read /home/rass/Desktop/projects/ml-statcheck/CLAUDE.md first and keep its rules. Prose you write follows ASD-STE100: active voice, articles kept, short sentences. No machine-written texture: comments say why, not what; no docstring that restates a signature.\n- Do not run rm, mv, cp, or any git command that changes state. Delete, move, or copy a file from inside Python (os.remove, shutil). Never delete a file that git does not track. The manager commits.\n- Never train on, tune on, or sample from a gold test paper. The scripts you write read dataset/gold/gold.jsonl, which holds every gold paper; they must select gold_train papers through dataset/gold/split.json and call statcheck_ml.gold.assert_not_gold_test on the list of papers they keep, before they read any text. Do not run pipeline/14_gold_eval.py.\n- Do not edit a file that this task does not name as yours.\n- Report every command you ran with its real output, every file you changed, and every number you measured. Do not report a number you did not measure.\n\nBackground. dataset/gold/gold.jsonl holds one line per paper: doc (the path under data/clean/), text_sha256, bronze_set, has_results, results. Each result holds row, raw (the coder's transcribed quote), test_type_coded, test_type (one of t, F, r, z, chi2, Q, \"other\" or null), stat, df1, df2, p_operator (the coder's: \"=\", \"<\", \">\", \"\u2264\", \"ns\", null and a few other strings), p, damaged, page, coder, located, span, anchor, line. Coordinates: pipeline/14_gold.py builds the text with normalize() from statcheck_ml.normalize and then repair_validated() from statcheck_ml.repair_validated, and records span and anchor as character offsets into that repaired text and line as text.count(\"\\n\", 0, anchor[0]). dataset/gold/split.json holds gold_test and gold_train as lists of doc paths (240 gold_train papers, 136 with results). The pipeline's unit: Pipeline.run_text in src/statcheck_ml/pipeline.py normalises, repairs with the same repair_validated, then calls self.prefilter.units(fixed); Prefilter.units in src/statcheck_ml/prefilter.py yields Window(text, line, start_line, end_line, char_start) where text is \"\\n\".join(lines[start_line:end_line + 1]) over the reference-blanked line split, a blanked reference line keeps its newline, and char_start is counted over the blanked lines. run_text returns {\"results\", \"fragments\", \"stages\", \"seconds\"}; each result and fragment carries line (the 0-based line of its statistic, the line rule) and statistic_span. The shipped model loads by default (Pipeline()). pipeline/14_gold_split.py is the template for a frozen split file; src/statcheck_ml/gold.py holds load_split and assert_not_gold_test; statcheck_ml.provenance holds write_manifest and verify_manifest; dataset/MANIFEST.json is regenerated with `python pipeline/02_chunk.py --manifest-root dataset`. Read all of these, and tests/test_gold_split.py, before you start.\n\nYOUR TASK:\n1. pipeline/14_gold_dev_split.py. Arguments: --gold dataset/gold/gold.jsonl, --split dataset/gold/split.json, --fraction 0.15, --seed 0, --out dataset/gold/dev.json. Rule, applied to the gold_train papers only: group by has_results; inside each group sort the docs, shuffle with random.Random(seed), and take the first round(fraction * n) as dev. Write {\"seed\", \"fraction\", \"rule\" (one paragraph), \"dev\": sorted list of docs, \"counts\": {\"dev\": {papers, papers_with_results, papers_without_results, located_in_scope_results}, \"rest\": the same}}. Expected: about 36 dev papers (about 20 with results, about 16 without). Tests in tests/test_gold_dev_split.py: two runs give the same bytes; every dev paper is in gold_train; no dev paper is in gold_test; the counts match the list. Add the stage to reproduce.sh directly after the 14_gold_split.py line (same pattern) and dataset/gold/split.json's hash line gains a line for dev.json.\n2. pipeline/17_passage_inventory.py. Arguments: clean_text_dir (positional), --gold, --split, --dev, --max-chars 1500, --seed 0 (unused; say so in the help text, as 14_gold.py does), --out dataset/passages/inventory.jsonl, --summary dataset/passages/inventory_summary.json. Papers: gold_train minus dev; call assert_not_gold_test on that list first. For each paper, in sorted doc order: read the text, apply normalize() then repair_validated() (the same two calls as 14_gold.py), build the units with Prefilter().units(fixed), and run Pipeline().run_text(raw text) once to get the results and fragments. Split a unit longer than max_chars into pieces at line ends: walk its lines, start a new piece when adding the next line would exceed max_chars; a single line longer than max_chars is a piece on its own. One record per piece, with these fields: passage_id (\"gp\" + the first 8 hex of sha1 of doc + \":\" + start_line + \":\" + end_line), doc, journal (the first path component of doc), paper_has_results, paper_damaged (the paper has at least one gold result with damaged true), start_line, end_line, char_start (the unit's char_start plus the offset of the piece inside the unit), n_chars, n_lines, text_sha256, piece, pieces (the index and count within the parent unit), coder_results, cascade {\"results\": n, \"fragments\": n}, flags {\"has_gold\": bool, \"has_gold_in_scope\": bool, \"gold_damaged\": bool, \"cascade_fires\": bool}. A gold result belongs to the piece whose [start_line, end_line] holds its line. Convert it into coder_results as a result object in the rater schema plus provenance: {\"test_type\": the gold test_type when it is one of the six names, else null, \"test_type_coded\": as in gold, \"in_scope\": bool (test_type among the six), \"statistic\": the repaired text at anchor (the printed form) when located, else str(stat), \"df1\", \"df2\": the coder's values as strings with a trailing \".0\" removed, or null, \"n\": null (the coders did not code it), \"p_operator\": \"=\", \"<\" or \">\" when the coder's is one of them or \"\u2264\" (as \"<\") or \"\u2265\" (as \">\"), else null, \"p_value\": str(p) or null, \"quote\": raw, \"damaged\": bool(damaged), \"confidence\": \"high\", \"coder\": coder, \"row\": row, \"located\": located, \"span_in_passage\": [s, e) in the piece text or null, \"statistic_span_in_passage\": the anchor in the piece text or null}. The position in the piece text: with offsets[k] the start offset of line k in the repaired text (sum of len(line) + 1 over the earlier lines of the raw split), the position of a repaired-text offset x on line k inside a piece that starts at line p is sum(len(piece_line) + 1 for the piece lines before line k) + (x - offsets[k]); a blanked reference line inside the piece has length 0, which this sum handles, and a result on a blanked line is not located (set the spans null and count it). Check each located span: the numbers in piece_text[anchor_s:anchor_e] must equal the numbers in text[anchor]; count the failures and set the spans null when the check fails. The cascade counts: a result or fragment belongs to the piece whose line range holds its line. The summary: papers, pieces, units split (count and the largest unit length), passages by flag (has_gold, has_gold_in_scope, gold_damaged, cascade_fires), hard negatives (paper_has_results false and cascade_fires true), passages of damaged papers with no gold result, clean negatives (no gold, cascade does not fire) by journal, coder rows (total, in scope, located in passage, span check failures, on a blanked line, not inside any unit, i.e. the prefilter dropped them), and run seconds. Print the summary. Use a ProcessPoolExecutor with 4 workers over papers, as 14_gold.py does, and keep the output order sorted by doc, then start_line, then piece.\n3. Tests in tests/test_passage_inventory.py with a synthetic three-paper corpus written to tmp_path, a synthetic gold.jsonl and split (one gold_test paper, one dev paper, one kept paper): the gold_test paper is never read (monkeypatch open or check the output has only the kept paper); the dev paper is absent; every unit of the kept paper is covered by its pieces with no gap and no overlap, and a unit over max_chars is split at a line end; a gold result on line k lands in the piece that holds line k and piece_text[span_in_passage] holds its numbers; the record order is deterministic; a result with test_type \"other\" has in_scope false. Build the pieces through the same function the script uses (import it from the script by path, as tests/test_gold.py does).\n4. Run both stages for real: the dev split, then the inventory on the 204 remaining papers. Record the summary verbatim. Regenerate dataset/MANIFEST.json with `python pipeline/02_chunk.py --manifest-root dataset` and confirm verify_manifest returns []. Add two rows to pipeline/README.md (stages 14 dev split and 17) and one paragraph under \"Gold\" in dataset/README.md on dev.json and the passages directory (no text in the inventory; the sample holds texts). Run the whole suite.\n\nReport: the dev.json counts; the inventory summary verbatim; the sha256 of dev.json, inventory.jsonl and inventory_summary.json from two runs each (they must be equal; the inventory run is slow, so run the second one with --out into the scratchpad and compare); the pytest counts; `git status --short`. Files you own: pipeline/14_gold_dev_split.py, pipeline/17_passage_inventory.py, tests/test_gold_dev_split.py, tests/test_passage_inventory.py, dataset/gold/dev.json, dataset/passages/inventory.jsonl, dataset/passages/inventory_summary.json, dataset/MANIFEST.json, reproduce.sh (two lines), pipeline/README.md (two rows), dataset/README.md (one paragraph). Do not touch src/, the spec files, gold.jsonl, split.json or any result file.",
+    "acceptance": "dev.json holds about 36 gold_train papers (about 20 with results, 16 without), none in gold_test, and a rerun with --seed 0 into scratch gives the same sha256; inventory.jsonl covers exactly the 204 gold_train papers outside dev (the manager checks the doc set against split.json and dev.json), holds no text field, and every record's n_chars is at most 1500 unless it is a single line; the manager recomputes, on three randomly chosen papers, the units with Prefilter().units(repair_validated(normalize(text))) and finds every unit covered by its pieces with no gap; for ten located coder rows the piece text at statistic_span_in_passage holds the same number as the gold anchor; the summary reports the counts the prompt lists, and the manager recounts has_gold_in_scope and hard negatives from inventory.jsonl; two inventory runs give equal sha256; verify_manifest returns []; the new tests and the full suite pass; reproduce.sh carries the dev split line; only the owned files changed."
+   },
+   {
+    "id": "M3.3",
+    "title": "The passage sampler and the batches of ten",
+    "agentType": "data-engineer",
+    "model": "default",
+    "deps": [
+     "M3.1",
+     "M3.2"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Repository: /home/rass/Desktop/projects/ml-statcheck, branch v4-gold. The Python project is /home/rass/Desktop/projects/ml-statcheck/statcheck-ml; run every script from that directory with /home/rass/Desktop/projects/ml-statcheck/.venv/bin/python. The corpus text is /home/rass/Desktop/projects/ml-statcheck/statcheck-ml/data/clean/<doc> (gitignored). Use absolute paths in every command, because the working directory resets between shell calls.\n\nRules:\n- Read /home/rass/Desktop/projects/ml-statcheck/CLAUDE.md first and keep its rules. Prose you write follows ASD-STE100: active voice, articles kept, short sentences. No machine-written texture: comments say why, not what.\n- Do not run rm, mv, cp, or any git command that changes state. Delete, move, or copy a file from inside Python. Never delete a file that git does not track. The manager commits.\n- Never sample from a gold test paper or a dev paper. The sampler reads the inventory, which holds neither, and still calls statcheck_ml.gold.assert_not_gold_test on the papers it draws from, before it reads any text. Do not run pipeline/14_gold_eval.py.\n- Do not edit a file that this task does not name as yours.\n- Report every command you ran with its real output, every file you changed, and every number you measured. Do not report a number you did not measure.\n\nBackground. M3.2 wrote dataset/passages/inventory.jsonl: one record per passage piece of the gold-train papers outside the dev set, with passage_id, doc, journal, paper_has_results, paper_damaged, start_line, end_line, char_start, n_chars, piece, pieces, text_sha256, coder_results, cascade and flags (has_gold, has_gold_in_scope, gold_damaged, cascade_fires); it holds no text. dataset/passages/inventory_summary.json holds the counts. pipeline/17_passage_inventory.py holds the function that builds the pieces of a paper from its text (read it; reuse that function to recover a drawn passage's text, and check the sha256 against the inventory). M3.1 fixed the batch format: a batch is a JSON list of {\"window_id\": passage_id, \"text\": passage text}, the same shape as the version 2 batches that pipeline/02_chunk.py writes, because the raters' output contract and pipeline/03_collect.py read window_id. The version 2 sample files are the model for yours: dataset/windows/train.json is a list of {\"window_id\", \"text\"}, and dataset/windows/key.json holds everything a rater must not see. Read pipeline/01_sample_windows.py (the journal stratification), pipeline/02_chunk.py, src/statcheck_ml/provenance.py (write_manifest) and src/statcheck_ml/gold.py before you start.\n\nYOUR TASK:\n1. pipeline/18_sample_passages.py. Arguments: clean_text_dir (positional), --inventory, --split dataset/gold/split.json, --seed 0, --cap-gold 900, --cap-hard 400, --cap-damaged 200, --cap-clean 300, --out dataset/passages/sample.json, --key dataset/passages/key.json. Strata, assigned in this order so that no passage is in two: \"gold\" = has_gold_in_scope true; \"hard\" = paper_has_results false and cascade_fires true; \"damaged\" = paper_damaged true, has_gold false, taken cascade_fires first and then the rest; \"clean\" = has_gold false and cascade_fires false, drawn round-robin over journals (journals sorted; inside each journal the passages sorted by passage_id and shuffled with random.Random(seed)) so that no journal dominates. Inside gold, hard and damaged: sort by passage_id, shuffle with random.Random(seed), take up to the cap. Then call assert_not_gold_test on the docs of the drawn passages, rebuild each drawn paper's pieces once with the function from 17_passage_inventory.py, take the piece with the same start_line, end_line and piece, and assert its sha256 equals text_sha256. Output order: shuffle the drawn passages once with random.Random(seed), so that a batch mixes strata and a rater cannot read the stratum from the position. sample.json: a list of {\"window_id\", \"text\"}. key.json: a list of {\"window_id\", \"stratum\", \"doc\", \"journal\", \"start_line\", \"end_line\", \"piece\", \"pieces\", \"n_chars\", \"flags\", \"n_coder_results\", \"cascade\"}; the coder rows stay in the inventory, not in the key. Print the counts per stratum, the cap hits, and the number of papers drawn.\n2. pipeline/02_chunk.py: add --unpadded (the batch name becomes batch_<i>.json with no zero padding; the default stays batch_NNN.json so that the version 2 names do not change). Write the batches with `python pipeline/02_chunk.py --windows dataset/passages/sample.json --out dataset/passages/batches --size 10 --unpadded`, and a manifest dataset/passages/batches/MANIFEST.json through write_manifest with the command and the seed. Say why ten in a one-line comment in the script's help: a passage is up to five times a window, and a long output loses records (PROTOCOL.md, \"Batches of 20 windows\").\n3. Tests in tests/test_sample_passages.py with a synthetic inventory in tmp_path: the strata are disjoint and assigned in the stated order; a cap is respected; the clean stratum round-robins over journals (three journals, cap 4: no journal gives more than two); two runs give the same bytes; a passage whose rebuilt sha256 differs raises; the key holds every window_id of the sample and the sample holds no key field. One test for --unpadded in tests/test_chunk.py (extend if it exists, else create): size 10, 23 records give batch_0.json, batch_1.json, batch_2.json with 10, 10, 3 records.\n4. Run the sampler for real with the default caps, then the chunking, then regenerate dataset/MANIFEST.json with `python pipeline/02_chunk.py --manifest-root dataset` and confirm verify_manifest returns []. Add the stage rows (18, and the 02 call) to pipeline/README.md. Run the whole suite.\n\nReport: the counts per stratum and the cap hits; the number of passages, papers, journals and batches; the sha256 of sample.json and key.json from two runs (equal); the first batch's window_ids; the pytest counts; `git status --short`. Files you own: pipeline/18_sample_passages.py, pipeline/02_chunk.py, tests/test_sample_passages.py, tests/test_chunk.py, dataset/passages/sample.json, dataset/passages/key.json, dataset/passages/batches/ (new), dataset/MANIFEST.json, pipeline/README.md (rows). Do not touch src/, the inventory, the spec files or any result file.",
+    "acceptance": "sample.json and key.json exist with equal window_id sets; the manager recounts the strata from key.json and the flags in inventory.jsonl (gold = has_gold_in_scope, hard = no-result paper and cascade fires, damaged and clean as defined, disjoint, caps 900/400/200/300 respected); no doc in key.json is in gold_test or dev.json; for ten sampled passages the sha256 of the sample text equals the inventory's text_sha256; the batches directory holds ceil(n/10) files named batch_0.json \u2026 with ten records each but the last, in the sample order, and a MANIFEST.json; no batch record holds any key other than window_id and text; two sampler runs give equal sha256; verify_manifest returns []; the new tests and the full suite pass; only the owned files changed. The manager then fixes the final caps from the inventory summary and either accepts this draw or orders one re-draw."
+   }
+  ]
+ },
+ {
+  "id": "M4",
+  "title": "Rating: three blind raters per batch, collect, agreement, the four-vote consensus script",
+  "goal": "Every batch of M3.3 is rated three times, blind, by annotator-haiku, annotator-sonnet and annotator-opus (repeat = the batch count, set by the manager at the M3 close; each prompt names only the batch file, the output file and the guideline; no review per batch, the aggregate is reviewed in M4.4); the outputs are validated, stamped with provenance and merged by 03_collect.py (extended for passages if needed, with the retry list for rejected batches); agreement is computed per label type with bootstrap intervals by 04_agree.py on the passages; the four-vote consensus script exists with tests, reads the three rater files and the inventory's coder rows, applies the PROTOCOL.md version 3 rule and writes the disputes.",
+  "tasks": [
+   {
+    "id": "M4.1",
+    "title": "Rater haiku, one batch per run",
+    "agentType": "annotator-haiku",
+    "model": "default",
+    "deps": [],
+    "repeat": 1,
+    "review": false,
+    "prompt": "Outline; the manager writes the final prompt at the M3 close and sets repeat to the batch count. Shape: Read exactly one file, /home/rass/Desktop/projects/ml-statcheck/statcheck-ml/dataset/passages/batches/batch_{i}.json. Mark every reported statistical test result in each passage under the guideline embedded in your definition. Write exactly one file, /home/rass/Desktop/projects/ml-statcheck/statcheck-ml/data/annotation/passages/annotator-haiku/batch_{i}.json, a JSON array with one object per passage in the order of the input. Read nothing else and write nothing else.",
+    "acceptance": "Reviewed in aggregate by M4.4: every batch file parses, holds as many records as the batch, window_ids in order, ten keys per result, quotes align; rejected batches are listed for one re-dispatch."
+   },
+   {
+    "id": "M4.2",
+    "title": "Rater sonnet, one batch per run",
+    "agentType": "annotator-sonnet",
+    "model": "default",
+    "deps": [],
+    "repeat": 1,
+    "review": false,
+    "prompt": "Outline; the manager writes the final prompt at the M3 close and sets repeat to the batch count. Same shape as M4.1 with the output directory data/annotation/passages/annotator-sonnet/.",
+    "acceptance": "As M4.1, reviewed in aggregate by M4.4."
+   },
+   {
+    "id": "M4.3",
+    "title": "Rater opus, one batch per run",
+    "agentType": "annotator-opus",
+    "model": "default",
+    "deps": [],
+    "repeat": 1,
+    "review": false,
+    "prompt": "Outline; the manager writes the final prompt at the M3 close and sets repeat to the batch count. Same shape as M4.1 with the output directory data/annotation/passages/annotator-opus/.",
+    "acceptance": "As M4.1, reviewed in aggregate by M4.4."
+   },
+   {
+    "id": "M4.4",
+    "title": "Collect and stamp the three rater files; the retry list",
+    "agentType": "data-engineer",
+    "model": "default",
+    "deps": [
+     "M4.1",
+     "M4.2",
+     "M4.3"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M3 close. Run 03_collect.py for each rater over dataset/passages/batches and data/annotation/passages/<rater>, with the agent file and docs/GUIDELINE.md (3.0), into dataset/annotations/passages/<rater>.json; extend the script only where a passage differs from a window (say where); write the retry list of rejected batches; report counts per rater (records, results, rejected batches with reasons); regenerate the dataset manifest.",
+    "acceptance": "Three stamped rater files with guideline_sha equal to the 3.0 hash and agent_sha equal to the current agent files; record count per rater equals the sample size after retries; rejected batches listed; manifest ok; suite passes."
+   },
+   {
+    "id": "M4.5",
+    "title": "Agreement on the passages",
+    "agentType": "eval-engineer",
+    "model": "default",
+    "deps": [
+     "M4.4"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M3 close. Run 04_agree.py on the three passage rater files into dataset/agreement/passages.json with bootstrap intervals (1000 resamples, seed 0), per label type; extend the script only where the passage differs; compare with the window agreement of version 2 in a short table; state the blindness limit.",
+    "acceptance": "dataset/agreement/passages.json with \u03ba, \u03b1 and span F1 per label type and intervals, reproducible byte for byte on a rerun; the comparison table; suite passes."
+   },
+   {
+    "id": "M4.6",
+    "title": "The four-vote consensus script with the coders",
+    "agentType": "label-architect",
+    "model": "default",
+    "deps": [
+     "M4.4"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M3 close. Write pipeline/19_consensus.py implementing the PROTOCOL.md version 3 rule verbatim: three rater files plus the inventory's coder_results as the fourth voter (in_scope rows only; located rows match by span overlap of 50 %, unlocated rows by statistic value), a result stays with two votes of four, singletons and field conflicts (including two-two splits) become disputes in blind batches of 20 where a coder candidate shows the passage text at its span as its quote; every kept result records its voters and a tier; tests with hand-built votes for each branch; run it and report the counts (kept, singletons by voter kind, field conflicts, dispute batches).",
+    "acceptance": "Tests cover every branch of the rule; the dispute files hold no voter name, no vote count and no coder transcription; the counts are reported and the dispute batch count sets the repeat of M5.2; a rerun reproduces the bytes; suite passes."
+   }
+  ]
+ },
+ {
+  "id": "M5",
+  "title": "Consensus and dataset: disputes adjudicated blind, final labels, the passage dataset, splits, alignment gate",
+  "goal": "Disputes are adjudicated by the blind adjudicator in batches of twenty (repeat set at the M4 close); the merged final labels carry a tier and the voter record per result; the passage dataset is built together with the bronze training windows (1962 windows) into one training file with document-level splits, the gold-train dev papers excluded by paper, the gold guard called; the alignment gate passes and the dataset summary reports bronze windows and passage labels apart and combined.",
+  "tasks": [
+   {
+    "id": "M5.1",
+    "title": "Dispute batches from the four-vote consensus",
+    "agentType": "data-engineer",
+    "model": "default",
+    "deps": [],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M4 close. Run 19_consensus.py to write dataset/passages/disputes/batch_<i>.json (unpadded, 20 disputes each) and a manifest; verify blindness mechanically (no rater or coder field in any dispute file); report the counts.",
+    "acceptance": "Dispute files present, blind by a scripted check, counts equal the M4.6 report, manifest ok."
+   },
+   {
+    "id": "M5.2",
+    "title": "Adjudicator, one dispute batch per run",
+    "agentType": "adjudicator",
+    "model": "default",
+    "deps": [
+     "M5.1"
+    ],
+    "repeat": 1,
+    "review": false,
+    "prompt": "Outline; written at the M4 close with repeat = the dispute batch count. Shape: Read exactly one file, dataset/passages/disputes/batch_{i}.json. Judge each dispute by the guideline embedded in your definition and the passage. Write exactly one file, data/annotation/passages/adjudicator/batch_{i}.json. Read nothing else and write nothing else.",
+    "acceptance": "Reviewed in aggregate by M5.3: every output parses, one object per dispute with dispute_id, keep, result, reason."
+   },
+   {
+    "id": "M5.3",
+    "title": "Merge the adjudication into final labels",
+    "agentType": "data-engineer",
+    "model": "default",
+    "deps": [
+     "M5.2"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M4 close. Collect and stamp the adjudicator outputs, merge them into dataset/annotations/passages/final.json with a tier and the voter record per result; report the tier counts and the share of results with a coder vote; regenerate the manifest.",
+    "acceptance": "final.json with every kept result carrying tier and voters; tier counts reported and recounted by the manager; manifest ok; suite passes."
+   },
+   {
+    "id": "M5.4",
+    "title": "The passage dataset and the splits with the gold guard",
+    "agentType": "data-engineer",
+    "model": "default",
+    "deps": [
+     "M5.3"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M4 close. Extend 06_dataset.py (or add 20_dataset_v4.py) to build dataset/train_v4.jsonl from the 1962 bronze training windows plus the passage labels, with part_spans located by a program, document-level splits (train/dev) that keep every paper on one side, dev.json papers excluded by paper, assert_not_gold_test called on every doc; a source field (bronze_window or passage) on every row.",
+    "acceptance": "train_v4.jsonl row count = 1962 + passages; no gold_test or dev paper in it (manager check against split.json and dev.json); splits by document; the guard called in code and tested; a rerun reproduces the bytes; suite passes."
+   },
+   {
+    "id": "M5.5",
+    "title": "The alignment gate and the dataset summary",
+    "agentType": "eval-engineer",
+    "model": "default",
+    "deps": [
+     "M5.4"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M4 close. Run the alignment gate over train_v4.jsonl (every part span holds the value it names, no overlaps), write dataset/passages/summary.json with counts by source, tier, test type and damage, bronze windows and passages apart and combined; a figure-ready table.",
+    "acceptance": "Gate passes with zero misaligned spans (or the failures listed and fixed upstream); summary reproducible; suite passes."
+   }
+  ]
+ },
+ {
+  "id": "M6",
+  "title": "Noise layer rebuilt and gated on the gold-train dev papers; the pre-registered selection rule",
+  "goal": "augment.py gains the families the brief asks for: one consistent font map per paper taken from the real damaged copies (minus sign and decimal point included), the same damage applied to non-result text, spaced digits with the label kept on the true value, and the operator removed; each family is a flag, seeded, alignment-asserted; 14_gold_eval.py gains --papers to score a listed set of papers so the dev papers (dataset/gold/dev.json) are a gate without touching the gold test; each family is gated by short gru-crf runs on the dev papers; the manager writes docs/v4/preregistration.md before any final run.",
+  "tasks": [
+   {
+    "id": "M6.1",
+    "title": "The noise families rebuilt",
+    "agentType": "adversarial-engineer",
+    "model": "default",
+    "deps": [],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M5 close. Rebuild src/statcheck_ml/augment.py: per-paper font maps drawn from spec/font_table.json and the real damaged copies, applied consistently to a whole paper including non-result text; spaced digits with the label on the true value; operator removal; each family a seeded flag with an alignment assertion and tests.",
+    "acceptance": "Each family on and off changes only the intended characters, labels stay aligned (tests), seeds reproduce; no gold test paper read."
+   },
+   {
+    "id": "M6.2",
+    "title": "Gate runs on the gold-train dev papers",
+    "agentType": "ml-trainer",
+    "model": "default",
+    "deps": [
+     "M6.1"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M5 close. Add --papers to 14_gold_eval.py (scores the listed papers only, never appends to the gold test log when the list is not the gold test), then run short gru-crf seed-0 schedules with each family on and off on train_v4, scoring on dev.json papers; run in the background with checkpoints; report seconds per epoch first.",
+    "acceptance": "One scored run per family on/off with recall by damage type and finds in no-result dev papers; the gold test log unchanged; runtimes recorded."
+   },
+   {
+    "id": "M6.3",
+    "title": "The gate report and the family decision table",
+    "agentType": "eval-engineer",
+    "model": "default",
+    "deps": [
+     "M6.2"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M5 close. Write results/v4/noise_gate.json and .md from the gate runs with the keep/drop decision per family by the brief's rule (raises recall on its own damage type and does not raise finds in no-result papers).",
+    "acceptance": "Decision table reproducible from committed run files; the manager then writes docs/v4/preregistration.md."
+   }
+  ]
+ },
+ {
+  "id": "M7",
+  "title": "Training: ten runs, zoo export, the rule applied",
+  "goal": "gru-crf, gru-softmax and lstm-softmax train with seeds 0 to 2 on train_v4 with the kept families, plus gru-crf seed 0 without noise; runs resume from checkpoints and finish within the 12-hour CPU budget or the owner receives exact GPU commands; the zoo is exported into models/zoo/ with parity to the trained model; the shipped model is chosen by the pre-registered rule.",
+  "tasks": [
+   {
+    "id": "M7.1",
+    "title": "Time estimate and the grid file",
+    "agentType": "ml-trainer",
+    "model": "default",
+    "deps": [],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M6 close. Measure seconds per epoch on train_v4 for one gru-crf run; write pipeline/grid_v4.json for the ten runs; project wall time at three parallel runs on eight cores; halt the manager if above 12 hours.",
+    "acceptance": "Measured seconds per epoch and a projection; grid file committed."
+   },
+   {
+    "id": "M7.2",
+    "title": "The grid in the background",
+    "agentType": "ml-trainer",
+    "model": "default",
+    "deps": [
+     "M7.1"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M6 close. Run 07_train.py on grid_v4.json into models/v4/ in the background with checkpoints and resume; report models/v4/runs.json.",
+    "acceptance": "Ten finished runs with dev metrics in runs.json; no gold test paper read."
+   },
+   {
+    "id": "M7.3",
+    "title": "Export the zoo with parity",
+    "agentType": "onnx-engineer",
+    "model": "default",
+    "deps": [
+     "M7.2"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M6 close. Export the v4 runs with 08_export.py into models/zoo/ with weights.json and the numpy parity check at 1e-3; rebuild the parity cases.",
+    "acceptance": "Parity within tolerance for every exported model; export.json reproducible."
+   },
+   {
+    "id": "M7.4",
+    "title": "The pre-registered rule applied",
+    "agentType": "eval-engineer",
+    "model": "default",
+    "deps": [
+     "M7.3"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M6 close. Apply docs/v4/preregistration.md to the dev metrics and write results/v4/selection.json naming the shipped model and every candidate.",
+    "acceptance": "The choice follows the written rule exactly; every candidate listed."
+   }
+  ]
+ },
+ {
+  "id": "M8",
+  "title": "Evaluation: gold test, bronze holdout, both combined; against statcheck R and the old model; the report",
+  "goal": "The new zoo and the old shipped model are evaluated on the bronze holdout (09_evaluate.py) and on the gold test (14_gold_eval.py, one logged run per model), reporting recall of named results and recall with fragments side by side and how much of the 0.143 gap the new model closes; a combined table with paper-level bootstrap and paired tests is produced by a script; the four original statcheck R forms stand beside them; figures and the report template are updated and the report regenerated; the manager writes the prose.",
+  "tasks": [
+   {
+    "id": "M8.1",
+    "title": "Bronze holdout evaluation of the version 4 zoo and the old model",
+    "agentType": "eval-engineer",
+    "model": "default",
+    "deps": [],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M7 close.",
+    "acceptance": "results/eval.json with the v4 systems beside the old ones; reproducible."
+   },
+   {
+    "id": "M8.2",
+    "title": "Gold test evaluation and the combined table",
+    "agentType": "eval-engineer",
+    "model": "default",
+    "deps": [
+     "M8.1"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M7 close. One logged gold run per model (labels v4-<model>); a combined script with paper-level bootstrap and paired tests; statcheck R forms beside.",
+    "acceptance": "Gold log lines labelled; combined table reproducible; bronze and gold apart and combined, never pooled."
+   },
+   {
+    "id": "M8.3",
+    "title": "Figures",
+    "agentType": "eval-engineer",
+    "model": "default",
+    "deps": [
+     "M8.2"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M7 close.",
+    "acceptance": "Figures regenerate byte for byte."
+   },
+   {
+    "id": "M8.4",
+    "title": "Report template placeholders and the generated report",
+    "agentType": "eval-engineer",
+    "model": "default",
+    "deps": [
+     "M8.3"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M7 close.",
+    "acceptance": "REPORT.md regenerated through reproduce.sh; manifest ok; the manager writes the prose."
+   }
+  ]
+ },
+ {
+  "id": "M9",
+  "title": "Ports: kits re-exported, R and web tests green, Python package tests green",
+  "goal": "Both kits carry the shipped version 4 model, the version 2 prefilter spec and the rebuilt parity cases; the R and web test suites pass; the Python package tests pass; results/ports.json is regenerated with the Python test count parsed, not assumed; the manager commits the kits inside the port repositories.",
+  "tasks": [
+   {
+    "id": "M9.1",
+    "title": "Kit and the R port",
+    "agentType": "runtime-engineer",
+    "model": "default",
+    "deps": [],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M8 close. Note: the vignette stays unchecked unless pandoc is installed; say so in the report.",
+    "acceptance": "testthat green against the new kit; R CMD check status OK."
+   },
+   {
+    "id": "M9.2",
+    "title": "Kit and the web port",
+    "agentType": "runtime-engineer",
+    "model": "default",
+    "deps": [],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M8 close.",
+    "acceptance": "vitest green against the new kit."
+   },
+   {
+    "id": "M9.3",
+    "title": "The ports stage and the Python package tests; 13_ports.py parses the Python count",
+    "agentType": "runtime-engineer",
+    "model": "default",
+    "deps": [
+     "M9.1",
+     "M9.2"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M8 close. Also fix the two M2b.5 quirks: 13_ports.py parses the Python passed and failed counts instead of hard-coding tests_failed 0, and states which Python suite it runs.",
+    "acceptance": "ports.json regenerated with parsed counts; package tests pass."
+   }
+  ]
+ },
+ {
+  "id": "M10",
+  "title": "Documentation and the double reproduce",
+  "goal": "PLAN.md shows the version 4 table with final statuses; CONTEXT.md records the decisions and findings of version 4; the README numbers come from the regenerated readme block; PROTOCOL.md, SAMPLING.md, dataset/README.md and the pipeline README are current; reproduce.sh runs twice from the committed files and the hashes match.",
+  "tasks": [
+   {
+    "id": "M10.1",
+    "title": "Mechanical documentation updates",
+    "agentType": "doc-writer",
+    "model": "default",
+    "deps": [],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M9 close. Includes the place() docstring nit from M2b.1 if still present.",
+    "acceptance": "Every sentence changed listed old and new; sentence-length rule kept."
+   },
+   {
+    "id": "M10.2",
+    "title": "CONTEXT.md decisions and findings of version 4",
+    "agentType": "general-purpose",
+    "model": "fable",
+    "deps": [
+     "M10.1"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; the manager writes this prose at the M9 close.",
+    "acceptance": "Every number traceable to a result file."
+   },
+   {
+    "id": "M10.3",
+    "title": "reproduce.sh twice, hashes compared",
+    "agentType": "runtime-engineer",
+    "model": "default",
+    "deps": [
+     "M10.2"
+    ],
+    "repeat": 1,
+    "review": true,
+    "prompt": "Outline; written at the M9 close.",
+    "acceptance": "Two runs print identical hashes for every result file."
+   }
+  ]
+ }
+]
