@@ -70,3 +70,5 @@ statcheck-ml/models/*-s[0-9]/model.pt
 ports/
 build/
 dist/
+data/v4_gpu_kit.tar.gz
+data/v4_models.tar.gz
