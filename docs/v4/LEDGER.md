@@ -253,9 +253,10 @@ score for these rule changes, and every report says so. Template sentences made 
 
 ### M2 interim close — manager, fable
 
-Removals in M2: none. Commit on `v4-gold` with the seven tasks; then the kits
-re-exported from the committed tree and each port committed, so the kit manifests name
-a commit and `mother_dirty` is false. `results/ports.json` still names the dirty export
+Removals in M2: none. Commit `d446a67` on `v4-gold` with the seven tasks; then both
+kits re-exported from that tree (`mother_commit` d446a67, `mother_dirty` false), the R
+suite rerun (268 tests, 1259 expectations, 0 failed) and the web suite rerun (381
+passed, 9 skipped), and each port committed: R `33faa2e`, web `32a74f4`. `results/ports.json` still names the dirty export
 and is regenerated in M2b.5. The flaky-test cause is known (the unresolved
 `sys.path.insert` of `14_gold_eval.py` makes `statcheck_ml.__file__` differ when
 `test_gold` imports it first); its fix is M2b.1.
