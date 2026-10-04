@@ -12,7 +12,7 @@ often). Version 1 used this same function to produce `windows_repaired2.json`
 and `statcheck_repaired2.csv` (commit fe05255: "on the holdout the real
 statcheck goes from 60 results to 159 once the text is repaired"; 159 matches
 the row count of `statcheck_repaired2.csv`). The simpler, unvalidated
-`repair.py::repair_document` produced version 1's plain `windows_repaired.json`
+`repair.py::repair_document` (removed in version 4) produced version 1's plain `windows_repaired.json`
 / `statcheck_repaired.csv`, which this script does not reproduce. Version 2
 keeps only the validated repair and drops the "2" suffix, because
 `pipeline.py` (the reproducible cascade) already names `repair_validated` as

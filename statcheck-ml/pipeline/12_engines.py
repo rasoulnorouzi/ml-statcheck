@@ -232,7 +232,7 @@ def main(argv=None):
         if (n + 1) % 25 == 0:
             print(f"{n + 1}/{len(docs)} documents", flush=True)
 
-    print(f"\n{len(docs)} documents, {total} gold results\n")
+    print(f"\n{len(docs)} documents, {total} bronze results\n")
     print(f"{'engine':<12}{'in text':>10}{'after prefilter':>18}"
           f"{'not read':>10}")
     print("-" * 50)
@@ -251,7 +251,7 @@ def main(argv=None):
     if args.out:
         command = " ".join([sys.executable, str(Path(__file__).resolve())] + (argv if argv is not None else sys.argv[1:]))
         Path(args.out).write_text(json.dumps(
-            {"documents": len(docs), "gold": total, "recall": rates,
+            {"documents": len(docs), "bronze": total, "recall": rates,
              "in_text": {e: found[e] / max(total - missing[e], 1)
                          for e in engines},
              "spread": spread, "limit": args.max_spread,

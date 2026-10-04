@@ -6,7 +6,6 @@ the annotation.
 | Task | Cost for the whole corpus | Decision |
 |---|---|---|
 | Convert the PDF files | 53 seconds on 14 cores | convert all 3100 |
-| Apply the regex to make silver labels | a few minutes | label all 3100 |
 | Annotate with a language model | many hours and a large token cost | sample |
 | Annotate by hand | many days | sample a small set |
 

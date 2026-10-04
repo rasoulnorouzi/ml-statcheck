@@ -128,6 +128,7 @@ def main():
     ap.add_argument("clean_dir")
     ap.add_argument("--key", default="dataset/windows/key.json")
     ap.add_argument("--out", default="dataset/gold/gold.jsonl")
+    ap.add_argument("--seed", type=int, default=0, help="unused: this stage does not sample")
     ap.add_argument("--workers", type=int, default=os.cpu_count() or 4)
     args = ap.parse_args()
 

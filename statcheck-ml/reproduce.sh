@@ -4,7 +4,9 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 # The interpreter: the sibling virtual environment by default, or PY=<path>.
-PY="${PY:-../.venv/Scripts/python.exe}"
+if [ -z "${PY:-}" ]; then
+  if [ -f ../.venv/bin/python ]; then PY=../.venv/bin/python; else PY=../.venv/Scripts/python.exe; fi
+fi
 export PYTHONIOENCODING=utf-8
 
 # Parse command-line arguments
@@ -29,7 +31,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Define stages
-stages=("agree" "dataset" "train" "export" "evaluate" "figures" "report")
+stages=("agree" "dataset" "train" "export" "evaluate" "gold" "figures" "report")
 
 # Determine starting index
 start_idx=0
@@ -85,15 +87,28 @@ if [ $start_idx -le 4 ]; then
   $PY pipeline/09_evaluate.py --windows dataset/holdout.jsonl --statcheck dataset/baseline/statcheck_r.csv --repaired dataset/baseline/statcheck_repaired.csv --runs models/runs.json --zoo models/zoo --export models/export.json --out results/eval.json --resamples 2000 --seed 0
 fi
 
-# figures stage
+# gold stage
 if [ $start_idx -le 5 ]; then
+  echo "Running: gold stage..."
+  echo "$PY pipeline/14_gold_split.py --seed 0"
+  $PY pipeline/14_gold_split.py --seed 0
+  if [ -f data/clean/manifest.jsonl ]; then
+    echo "$PY pipeline/14_gold_eval.py --resamples 2000 --seed 0"
+    $PY pipeline/14_gold_eval.py --resamples 2000 --seed 0
+  else
+    echo "gold evaluation skipped: needs the corpus; the committed results/gold_eval.json stands"
+  fi
+fi
+
+# figures stage
+if [ $start_idx -le 6 ]; then
   echo "Running: figures stage..."
   echo "$PY pipeline/10_figures.py --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --out results/figures"
   $PY pipeline/10_figures.py --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --out results/figures
 fi
 
 # report stage
-if [ $start_idx -le 6 ]; then
+if [ $start_idx -le 7 ]; then
   echo "Running: report stage..."
   echo "$PY pipeline/11_report.py --template docs/report_template.md --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --engines results/engines.json --out results/REPORT.md --readme-block results/readme_block.md"
   $PY pipeline/11_report.py --template docs/report_template.md --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --engines results/engines.json --out results/REPORT.md --readme-block results/readme_block.md
@@ -103,4 +118,4 @@ fi
 echo "Verifying the dataset manifest (regenerated files must match the committed hashes)..."
 $PY -c "import sys; sys.path.insert(0, 'src'); from statcheck_ml.provenance import verify_manifest; bad = verify_manifest('dataset/MANIFEST.json'); print('manifest: ok' if not bad else 'manifest: MISMATCH ' + ', '.join(bad)); sys.exit(1 if bad else 0)"
 echo "Verifying artifacts..."
-sha256sum results/eval.json results/REPORT.md results/readme_block.md results/figures/*.png
+sha256sum results/eval.json results/gold_eval.json dataset/gold/split.json results/REPORT.md results/readme_block.md results/figures/*.png

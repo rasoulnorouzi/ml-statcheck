@@ -20,7 +20,15 @@ The papers themselves are not here. Papers are copyrighted and large, so they re
 | `splits.json` | Document-level split: which documents go to train and dev |
 | `train.jsonl` | Processed dataset with aligned spans, ready for training |
 | `holdout.jsonl` | Processed dataset for final evaluation |
+| `gold/gold.jsonl` | The owner's hand-coded results, one line per paper, with offsets and numbers |
+| `gold/split.json` | Which gold papers form `gold_test` and which form `gold_train` |
 | `MANIFEST.json` | SHA256 hashes of all files for integrity checking |
+
+## Gold
+
+Gold is the owner's hand-coded set. The owner coded every reported result in 409 papers by hand. `gold/gold.jsonl` holds character offsets, line numbers, and the coded numbers for each result. It does not hold the paper text or the quotes, because the papers are copyrighted. A person with the corpus rebuilds the text with `pipeline/14_gold.py`.
+
+`gold/split.json` divides the papers in two. No stage trains on a `gold_test` paper. `gold_train` papers may feed training in a later version. Gold labels are human labels. The bronze labels in the other files are not.
 
 ## Row structure
 

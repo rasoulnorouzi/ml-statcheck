@@ -2,7 +2,7 @@
 the cascade that follows statcheck with a model.
 
 This is the measurement the project exists to produce, and it runs once
-against a gold-discipline holdout: log the run, do not tune against it and
+against a holdout under gold discipline: log the run, do not tune against it and
 run again pretending the first run did not happen.
 
 Systems scored:
@@ -85,37 +85,37 @@ def top3_seed0(records: list) -> list:
 # --------------------------------------------------------------- scoring --
 
 def build_system_report(found_by_window, window_ids, doc_ids, doc_to_windows,
-                        gold_by_window, gold_meta, resamples, seed,
-                        block_spans_by_window=None, gold_spans_by_window=None) -> dict:
-    report = ev.score_system(found_by_window, gold_by_window, gold_meta, window_ids)
+                        bronze_by_window, bronze_meta, resamples, seed,
+                        block_spans_by_window=None, bronze_spans_by_window=None) -> dict:
+    report = ev.score_system(found_by_window, bronze_by_window, bronze_meta, window_ids)
     report["bootstrap"] = ev.bootstrap_prf(doc_ids, doc_to_windows, found_by_window,
-                                           gold_by_window, gold_meta, n=resamples, seed=seed)
+                                           bronze_by_window, bronze_meta, n=resamples, seed=seed)
     if block_spans_by_window is not None:
         report["span_strict"] = ev.score_span_strict(block_spans_by_window,
-                                                      gold_spans_by_window, window_ids)
+                                                      bronze_spans_by_window, window_ids)
     return report
 
 
-def f1_stat(found_by_window, gold_by_window, gold_meta, doc_to_windows, bucket="overall"):
+def f1_stat(found_by_window, bronze_by_window, bronze_meta, doc_to_windows, bucket="overall"):
     def stat(doc_sample):
         window_ids = [wid for d in doc_sample for wid in doc_to_windows.get(d, [])]
-        scored = ev.score_system(found_by_window, gold_by_window, gold_meta, window_ids)
+        scored = ev.score_system(found_by_window, bronze_by_window, bronze_meta, window_ids)
         return scored.get(bucket, {}).get("f1", 0.0)
     return stat
 
 
-def paired_entry(name_a, found_a, name_b, found_b, gold_by_window, gold_meta,
+def paired_entry(name_a, found_a, name_b, found_b, bronze_by_window, bronze_meta,
                  doc_ids, doc_to_windows, resamples, seed) -> dict:
     diff, (lo, hi), p = paired_bootstrap(
         doc_ids,
-        f1_stat(found_a, gold_by_window, gold_meta, doc_to_windows),
-        f1_stat(found_b, gold_by_window, gold_meta, doc_to_windows),
+        f1_stat(found_a, bronze_by_window, bronze_meta, doc_to_windows),
+        f1_stat(found_b, bronze_by_window, bronze_meta, doc_to_windows),
         n=resamples, seed=seed)
     return {"a": name_a, "b": name_b, "diff": diff, "ci": [lo, hi], "p": p}
 
 
-def mcnemar_entry(name_a, found_a, name_b, found_b, gold_by_window) -> dict:
-    b, c = ev.mcnemar_pair(found_a, found_b, gold_by_window)
+def mcnemar_entry(name_a, found_a, name_b, found_b, bronze_by_window) -> dict:
+    b, c = ev.mcnemar_pair(found_a, found_b, bronze_by_window)
     return {"a": name_a, "b_only_a": b, "b_only_b": c, "p": mcnemar_exact(b, c)}
 
 
@@ -142,12 +142,12 @@ def main():
     windows_path = resolve(args.windows)
     windows = ev.read_jsonl(windows_path)
     window_ids = [w["window_id"] for w in windows]
-    gold_by_window, gold_meta, gold_spans_by_window, doc_to_windows, gold_unparseable = \
-        ev.extract_gold(windows)
+    bronze_by_window, bronze_meta, bronze_spans_by_window, doc_to_windows, bronze_unparseable = \
+        ev.extract_bronze(windows)
     doc_ids = sorted(doc_to_windows)
-    n_gold = sum(len(v) for v in gold_by_window.values())
-    n_damaged = sum(1 for m in gold_meta.values() if m["damaged"])
-    n_checkable = sum(1 for m in gold_meta.values() if m["checkable"])
+    n_bronze = sum(len(v) for v in bronze_by_window.values())
+    n_damaged = sum(1 for m in bronze_meta.values() if m["damaged"])
+    n_checkable = sum(1 for m in bronze_meta.values() if m["checkable"])
 
     notes: list = []
     systems: dict = {}
@@ -156,8 +156,8 @@ def main():
 
     def add_system(name, found, block_spans=None):
         systems[name] = build_system_report(
-            found, window_ids, doc_ids, doc_to_windows, gold_by_window, gold_meta,
-            args.resamples, args.seed, block_spans, gold_spans_by_window)
+            found, window_ids, doc_ids, doc_to_windows, bronze_by_window, bronze_meta,
+            args.resamples, args.seed, block_spans, bronze_spans_by_window)
         found_by_system[name] = found
 
     # --- statcheck, raw and repaired ---
@@ -253,61 +253,60 @@ def main():
         names = [r["name"] for r in ranked]
         paired["top1_vs_top2"] = paired_entry(
             names[0], found_by_system[names[0]], names[1], found_by_system[names[1]],
-            gold_by_window, gold_meta, doc_ids, doc_to_windows, args.resamples, args.seed)
+            bronze_by_window, bronze_meta, doc_ids, doc_to_windows, args.resamples, args.seed)
         if len(names) >= 3:
             paired["top1_vs_top3"] = paired_entry(
                 names[0], found_by_system[names[0]], names[2], found_by_system[names[2]],
-                gold_by_window, gold_meta, doc_ids, doc_to_windows, args.resamples, args.seed)
+                bronze_by_window, bronze_meta, doc_ids, doc_to_windows, args.resamples, args.seed)
 
     if cascade_name and "statcheck_repaired" in found_by_system:
         paired["cascade_vs_statcheck_repaired"] = paired_entry(
             cascade_name, found_by_system[cascade_name],
             "statcheck_repaired", found_by_system["statcheck_repaired"],
-            gold_by_window, gold_meta, doc_ids, doc_to_windows, args.resamples, args.seed)
+            bronze_by_window, bronze_meta, doc_ids, doc_to_windows, args.resamples, args.seed)
         mcnemar["cascade_vs_statcheck_repaired"] = mcnemar_entry(
             cascade_name, found_by_system[cascade_name],
-            "statcheck_repaired", found_by_system["statcheck_repaired"], gold_by_window)
+            "statcheck_repaired", found_by_system["statcheck_repaired"], bronze_by_window)
 
     if best_record and "statcheck_repaired" in found_by_system:
         paired["best_model_vs_statcheck_repaired"] = paired_entry(
             best_record["name"], found_by_system[best_record["name"]],
             "statcheck_repaired", found_by_system["statcheck_repaired"],
-            gold_by_window, gold_meta, doc_ids, doc_to_windows, args.resamples, args.seed)
+            bronze_by_window, bronze_meta, doc_ids, doc_to_windows, args.resamples, args.seed)
         mcnemar["best_model_vs_statcheck_repaired"] = mcnemar_entry(
             best_record["name"], found_by_system[best_record["name"]],
-            "statcheck_repaired", found_by_system["statcheck_repaired"], gold_by_window)
+            "statcheck_repaired", found_by_system["statcheck_repaired"], bronze_by_window)
 
     # --- family recall ---
     family = {}
     if "statcheck_repaired" in found_by_system:
         family["statcheck_repaired"] = ev.family_recall(
-            found_by_system["statcheck_repaired"], gold_by_window, gold_meta)
+            found_by_system["statcheck_repaired"], bronze_by_window, bronze_meta)
     if best_record:
         family["best_model"] = ev.family_recall(
-            found_by_system[best_record["name"]], gold_by_window, gold_meta)
+            found_by_system[best_record["name"]], bronze_by_window, bronze_meta)
     if cascade_name:
         family["cascade"] = ev.family_recall(
-            found_by_system[cascade_name], gold_by_window, gold_meta)
+            found_by_system[cascade_name], bronze_by_window, bronze_meta)
 
     # --- provenance ---
     provenance = {
-        "date": None,        # filled by the caller's log, not guessed here
         "git_sha": ev.git_sha(REPO),
         "seed": args.seed,
         "resamples": args.resamples,
         "systems": sorted(systems),
-        "inputs": {str(p.relative_to(REPO)) if p.is_relative_to(REPO) else str(p):
+        "inputs": {(p.relative_to(REPO) if p.is_relative_to(REPO) else p).as_posix():
                   ev.sha256_file(p) for p in input_files},
-        # Gold results `align.as_number` cannot parse at all, so they never
+        # Bronze results `align.as_number` cannot parse at all, so they never
         # enter value matching: no system can find them, and none is blamed
         # for missing them. See `align.as_number` for what it does and does
         # not repair.
-        "gold_unparseable": {"count": len(gold_unparseable), "items": gold_unparseable},
+        "bronze_unparseable": {"count": len(bronze_unparseable), "items": bronze_unparseable},
     }
 
     report = {
         "provenance": provenance,
-        "gold": {"windows": len(window_ids), "results": n_gold,
+        "bronze": {"windows": len(window_ids), "results": n_bronze,
                 "damaged": n_damaged, "checkable": n_checkable},
         "systems": systems,
         "seeds": seeds_report,
@@ -324,7 +323,7 @@ def main():
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(report, indent=1, sort_keys=True), encoding="utf-8")
 
-    print(f"{len(window_ids)} windows, {n_gold} gold results "
+    print(f"{len(window_ids)} windows, {n_bronze} bronze results "
           f"({n_damaged} damaged, {n_checkable} checkable)\n")
     print(f"{'system':28s} {'P':>7s} {'R':>7s} {'F1':>7s} {'F1 95% CI':>17s} {'dmgR':>7s}")
     for name, s in systems.items():

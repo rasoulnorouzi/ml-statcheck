@@ -121,6 +121,17 @@ class Prefilter:
             lo, hi = self._span(lines, i)
             yield Window("\n".join(lines[lo:hi]), i, lo, hi - 1)
 
+    @staticmethod
+    def passages(windows) -> List[List[int]]:
+        """Merge windows that overlap or touch into [first_line, last_line] runs."""
+        out: List[List[int]] = []
+        for w in sorted(windows, key=lambda w: w.start_line):
+            if out and w.start_line <= out[-1][1] + 1:
+                out[-1][1] = max(out[-1][1], w.end_line)
+            else:
+                out.append([w.start_line, w.end_line])
+        return out
+
     def _span(self, lines: List[str], i: int) -> tuple:
         """Choose how many lines of context this window needs.
 

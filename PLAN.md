@@ -98,9 +98,10 @@ resumes.
 | Bronze | three rater agents, majority vote, scripted adjudication | training, development, and the holdout |
 | Gold | human labels, supplied by the project owner | held-out test only, when it exists |
 
-There is no human gold set today. Every reported number is measured against bronze
-labels, and the report says so. Annotations produced by a language model are never
-reported as gold.
+The owner supplied the human gold set on 2026-10-04 (409 papers, `dataset/gold/`).
+It is split by paper into a frozen gold test and a gold-train part; the gold test is
+never trained on, and `results/gold_eval.json` measures it apart from the bronze
+holdout. Annotations produced by a language model are never reported as gold.
 
 The silver tier of version 1 is retired. The regex has recall near 0.2, so a window it
 labels holds about four unlabeled true results for each labeled one. That is label
@@ -132,13 +133,13 @@ Status values: `blocked`, `ready`, `active`, `done`.
 | M2 | 6 | Annotate every window three times, blind | annotator-haiku, -sonnet, -opus | haiku, sonnet, opus | done |
 | M2 | 7 | Collect, agreement report, adjudicate disputes, final labels | data-engineer, adjudicator | haiku, opus | done |
 | M2 | 8 | Dataset, splits, alignment gate | data-engineer | haiku | done |
-| M3 | 9 | Train the grid: 6 screens, 3 × 3 seeds, 1 ablation | ml-trainer | sonnet | done |
-| M3 | 10 | Export the zoo, parity, size, latency, quantisation delta | ml-trainer | sonnet | done |
-| M4 | 11 | Evaluate on the holdout: systems, subsets, bootstrap, paired tests, McNemar | eval-engineer | sonnet | done |
-| M4 | 12 | R baseline regenerated, engine gate, JS and R parity tests green | regex-porter | sonnet | done |
-| M4 | 13 | Figures | eval-engineer | sonnet | done |
-| M4 | 14 | Report template and generated report, README, PROTOCOL, CONTEXT | doc-writer | haiku | done |
-| M4 | 15 | Final review: reproduce.sh from clean checkout, hashes match | manager | fable | done |
+| M3 | 11 | Train the grid: 6 screens, 3 × 3 seeds, 1 ablation | ml-trainer | sonnet | done |
+| M3 | 12 | Export the zoo, parity, size, latency, quantisation delta | ml-trainer | sonnet | done |
+| M4 | 13 | Evaluate on the holdout: systems, subsets, bootstrap, paired tests, McNemar | eval-engineer | sonnet | done |
+| M4 | 14 | R baseline regenerated, engine gate, JS and R parity tests green | regex-porter | sonnet | done |
+| M4 | 15 | Figures | eval-engineer | sonnet | done |
+| M4 | 16 | Report template and generated report, README, PROTOCOL, CONTEXT | doc-writer | haiku | done |
+| M4 | 17 | Final review: reproduce.sh from clean checkout, hashes match | manager | fable | done |
 
 All fifteen phases are done (2026-09-20). A clean clone reproduced `results/eval.json`,
 every figure, and `results/REPORT.md` byte for byte, apart from the commit id the
@@ -179,7 +180,44 @@ accepts on evidence.
 | D | D3 | Push the three repositories, CI green, repository metadata, Pages | manager | fable | done |
 | D | D4 | Tutorials for Python, R and the web, from executed examples | runtime-engineer | sonnet | done |
 
+## Phases, version 4 — the gold set
+
+Decided 2026-10-04. Brief: `docs/superpowers/specs/2026-10-04-v4-gold-brief.md`.
+Plan: `docs/superpowers/plans/2026-10-04-v4-gold.md`. Prompts: `docs/v4/prompts/`.
+Ledger: `docs/v4/LEDGER.md`. Branch `v4-gold`; development and testing only, no push.
+
+The owner supplied the human gold set: 409 papers coded by hand, 2704 results. It is a
+test set, split by paper into a frozen gold test and a gold-train part. Bronze and gold
+are reported apart, and also combined, never pooled.
+
+| M | # | Phase | Agent | Model | Status |
+|---|---|---|---|---|---|
+| M1 | 1 | Audit: dead code and files removed, each with its reason | runtime-engineer | sonnet | done |
+| M1 | 2 | The bronze holdout named `bronze` in `eval.json` and its generator; OS-independent provenance | eval-engineer | sonnet | done |
+| M1 | 3 | Gold split by paper: `14_gold_split.py`, `dataset/gold/split.json`, the guard | eval-engineer | sonnet | done |
+| M1 | 4 | Gold stages proper: evaluation by split, tests, README, `reproduce.sh`, manifest, run log | eval-engineer | sonnet | done |
+| M1 | 5 | The original statcheck (R) on the gold papers: full text, repaired, passages, PDF | regex-porter | sonnet | done |
+| M1 | 6 | statcheck scored on gold beside the regex port, the model and the cascade | eval-engineer | sonnet | done |
+| M2 | 7 | Measurement scaffold: the before snapshot, the labelled gold log, `16_compare.py` | eval-engineer | sonnet | ready |
+| M2 | 8 | Duplicate-statistic fault in `Pipeline.run_text`: dedup by position, measured on gold | runtime-engineer | sonnet | ready |
+| M2 | 9 | Finds with no test name reported as fragments, measured on gold | runtime-engineer | sonnet | ready |
+| M2 | 10 | Merged passages as the processing unit: `prefilter.json` version 2, measured on gold | regex-porter | sonnet | ready |
+| M2 | 11 | The R port reads the new spec, the dedup rule and fragments; kit; testthat green | runtime-engineer | sonnet | ready |
+| M2 | 12 | The web port reads the new spec, the dedup rule and fragments; kit; vitest green | runtime-engineer | sonnet | ready |
+| M2 | 13 | After numbers: bronze, gold, the compare table, `results/ports.json`, the report | eval-engineer | sonnet | ready |
+| M3 | 14 | Guideline 3.0 for passages, the four-vote rule, agents and protocol updated | label-architect | opus | ready |
+| M3 | 15 | Passage sampler from gold-train papers, hard negatives, damaged papers; batches of ten | data-engineer | haiku | ready |
+| M4 | 16 | Every batch rated three times, blind | annotator-haiku, -sonnet, -opus | haiku, sonnet, opus | ready |
+| M4 | 17 | Collect, agreement, four-vote consensus | data-engineer, eval-engineer, label-architect | haiku, sonnet, opus | ready |
+| M5 | 18 | Disputes adjudicated blind, final labels, the passage dataset, splits, alignment gate | adjudicator, data-engineer, eval-engineer | opus, haiku, sonnet | ready |
+| M6 | 19 | Noise layer rebuilt: per-paper font maps, damaged non-result text, spaced digits, missing operator; each family gated | adversarial-engineer, ml-trainer, eval-engineer | opus, sonnet, sonnet | ready |
+| M6 | 20 | Pre-registered selection rule written before training | manager | fable | ready |
+| M7 | 21 | Training: gru-crf, gru-softmax, lstm-softmax, seeds 0 to 2, the no-noise ablation; zoo export; the rule applied | ml-trainer, onnx-engineer, eval-engineer | sonnet | ready |
+| M8 | 22 | Evaluation: gold test, bronze holdout, both combined; paper bootstrap; paired tests against statcheck R and the old model; report | eval-engineer, manager | sonnet, fable | ready |
+| M9 | 23 | Ports: kits re-exported, R and web tests green, Python package tests green | runtime-engineer | sonnet | ready |
+| M10 | 24 | Documentation: PLAN, CONTEXT, README, PROTOCOL, pipeline README; `reproduce.sh` twice | doc-writer, manager | haiku, fable | ready |
+
 ## Waiting on the owner
 
-- The human-labeled gold set, whenever it is ready.
-- Nothing. The three repositories are pushed and their workflows are green.
+- The decision to publish version 4, after the gold test, the bronze holdout and the
+  combined results are in. Until then: no push, no release.

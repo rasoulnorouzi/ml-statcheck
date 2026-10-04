@@ -108,6 +108,10 @@ control characters from 47.
 3. Annotation moves to a larger unit: the merged passage, at about paragraph level.
 4. The coders act as a fourth vote beside the three LLM raters. Their labels are not
    treated as always right.
+4a. The training set is a mix: the existing bronze training windows (1962 windows,
+   1517 results) stay in it, and the new passages from gold-train papers join them.
+   The bronze windows agreed with the coders on 191 of 200 shared results. The gold
+   test and the gold-train dev papers are never in it.
 5. Rebuild the noise layer: damage a whole paper with one consistent font map, apply
    the same damage to text that holds no result, add spaced digits and a missing
    operator, and keep a family only when gold shows it helps.
@@ -122,7 +126,15 @@ control characters from 47.
 
 ## Limits for the team
 
-- At most ten agents run at the same time.
+- Never delete a file that git does not track, unless the owner asks. Git cannot
+  restore it. Task M1.1 deleted the owner's untracked notebook on 2026-10-04. The
+  owner did not need it, but the rule stands: a removal applies to tracked files only,
+  and each one is listed in the ledger.
+
+- At most twenty agents run at the same time (the owner raised the limit from ten on
+  2026-10-04). One workflow runs at most six agents on this 8-CPU machine. Work that
+  waits on the API and not on the CPU, such as the M4 rater batches, may run as up to
+  three workflows side by side. Plan M4 so that its batches can be split that way.
 - The manager runs on fable and chooses the agent and the model for each task. The
   model in an agent's frontmatter is the cost decision of CLAUDE.md. Do not raise it
   because a task feels hard. Split the task.

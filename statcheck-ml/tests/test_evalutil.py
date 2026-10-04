@@ -1,19 +1,19 @@
 import math
 
-from statcheck_ml.evalutil import (build_result, damage_family, extract_gold, family_recall,
+from statcheck_ml.evalutil import (build_result, damage_family, extract_bronze, family_recall,
                                    group_spans, mcnemar_pair, prf, score_span_strict,
                                    score_system, verdict_agreement)
 
 
-def test_extract_gold_reports_unparseable_statistics():
+def test_extract_bronze_reports_unparseable_statistics():
     windows = [
         {"window_id": "w1", "source_doc": "d1", "results": [
             {"statistic": "1.48", "block_span": [0, 5]},
             {"statistic": "0\x0592", "block_span": [10, 15]},
         ]},
     ]
-    gold_by_window, gold_meta, _, doc_to_windows, unparseable = extract_gold(windows)
-    assert gold_by_window["w1"] == {1.48}
+    bronze_by_window, bronze_meta, _, doc_to_windows, unparseable = extract_bronze(windows)
+    assert bronze_by_window["w1"] == {1.48}
     assert unparseable == [{"window_id": "w1", "statistic": "0\x0592"}]
     assert doc_to_windows["d1"] == ["w1"]
 
@@ -70,14 +70,14 @@ def test_prf_known_values():
 
 
 def test_score_system_counts_and_buckets():
-    gold_by_window = {"w1": {1.0, 2.0}, "w2": {3.0}}
-    gold_meta = {
+    bronze_by_window = {"w1": {1.0, 2.0}, "w2": {3.0}}
+    bronze_meta = {
         ("w1", 1.0): {"damaged": True, "test_type": "t", "checkable": True, "family": "control character"},
         ("w1", 2.0): {"damaged": False, "test_type": "f", "checkable": False, "family": None},
         ("w2", 3.0): {"damaged": False, "test_type": "t", "checkable": True, "family": None},
     }
     found_by_window = {"w1": {1.0, 9.0}, "w2": set()}
-    out = score_system(found_by_window, gold_by_window, gold_meta, ["w1", "w2"])
+    out = score_system(found_by_window, bronze_by_window, bronze_meta, ["w1", "w2"])
     assert out["overall"]["tp"] == 1
     assert out["overall"]["fp"] == 1
     assert out["overall"]["fn"] == 2
@@ -88,28 +88,28 @@ def test_score_system_counts_and_buckets():
 
 
 def test_score_span_strict():
-    gold_spans = {"w1": {(0, 5)}}
+    bronze_spans = {"w1": {(0, 5)}}
     found_spans = {"w1": {(0, 5), (10, 15)}}
-    out = score_span_strict(found_spans, gold_spans, ["w1"])
+    out = score_span_strict(found_spans, bronze_spans, ["w1"])
     assert out["tp"] == 1 and out["fp"] == 1 and out["fn"] == 0
 
 
 def test_mcnemar_pair_counts():
-    gold_by_window = {"w1": {1.0}, "w2": {2.0}, "w3": {3.0}}
+    bronze_by_window = {"w1": {1.0}, "w2": {2.0}, "w3": {3.0}}
     found_a = {"w1": {1.0}, "w2": set(), "w3": {3.0}}
     found_b = {"w1": set(), "w2": {2.0}, "w3": {3.0}}
-    b, c = mcnemar_pair(found_a, found_b, gold_by_window)
+    b, c = mcnemar_pair(found_a, found_b, bronze_by_window)
     assert b == 1 and c == 1
 
 
 def test_family_recall_basic():
-    gold_by_window = {"w1": {1.0}, "w2": {2.0}}
-    gold_meta = {
+    bronze_by_window = {"w1": {1.0}, "w2": {2.0}}
+    bronze_meta = {
         ("w1", 1.0): {"family": "control character"},
         ("w2", 2.0): {"family": "control character"},
     }
     found_by_window = {"w1": {1.0}, "w2": set()}
-    out = family_recall(found_by_window, gold_by_window, gold_meta)
+    out = family_recall(found_by_window, bronze_by_window, bronze_meta)
     fam = out["control character"]
     assert fam["k"] == 1 and fam["n"] == 2
     assert math.isclose(fam["r"], 0.5)

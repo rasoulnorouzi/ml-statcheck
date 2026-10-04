@@ -1,5 +1,11 @@
 {
  "best_model": "gru-crf-s0",
+ "bronze": {
+  "checkable": 202,
+  "damaged": 166,
+  "results": 323,
+  "windows": 576
+ },
  "cascade_name": "cascade_gru-crf-s0",
  "family_recall": {
   "best_model": {
@@ -225,12 +231,6 @@
    }
   }
  },
- "gold": {
-  "checkable": 202,
-  "damaged": 166,
-  "results": 323,
-  "windows": 576
- },
  "mcnemar": {
   "best_model_vs_statcheck_repaired": {
    "a": "gru-crf-s0",
@@ -289,9 +289,7 @@
   }
  },
  "provenance": {
-  "date": null,
-  "git_sha": "07d94add9c3b207e0f2be5927dcd0e994d64a5be",
-  "gold_unparseable": {
+  "bronze_unparseable": {
    "count": 2,
    "items": [
     {
@@ -304,11 +302,12 @@
     }
    ]
   },
+  "git_sha": "54fc781e84becb9f277cd09eaef811649373b121",
   "inputs": {
-   "dataset\\baseline\\statcheck_r.csv": "6598663c0bc2ac28a9ed750e9badaee89c25279e14b786d676dacdcefb04226e",
-   "dataset\\baseline\\statcheck_repaired.csv": "f0421d2f626bf3594e7d1cafb452dec917e56f49473dfd9ecd21221cd702cdc5",
-   "dataset\\holdout.jsonl": "d7db058d30a401cd253bc9a878fb6728531ba8da5e80de22ee98ea5e75a43055",
-   "models\\runs.json": "a180a0396182dc3a5cb053f001f6f373d01a4ea93e882192749025eab3613301"
+   "dataset/baseline/statcheck_r.csv": "f38a755b7398854a0fc78ee64ae47392be4c485f7f6e924829fbb60e7316bde8",
+   "dataset/baseline/statcheck_repaired.csv": "146ad80858c29d066609749af9cd5fab1696d37227774ed955ed62279c2cb8a1",
+   "dataset/holdout.jsonl": "3168319e4173d2be10d95df5ae180b57922fdfec7a40a0d2aa121f375ead6b66",
+   "models/runs.json": "cdd5ed05aa5b424a52c8c6f9689ade0ec2e1365d66d97567b959e31095e397b2"
   },
   "resamples": 2000,
   "seed": 0,

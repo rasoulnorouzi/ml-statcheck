@@ -99,7 +99,7 @@ def test_rater_yield_on_synthetic_input():
 
 def test_engines_table_on_synthetic_input():
     engines = {"recall": {"pymupdf": 0.93, "poppler": 0.88}, "in_text": {"pymupdf": 0.93,
-              "poppler": 0.88}, "spread": 0.05, "limit": 0.06, "documents": 10, "gold": 20}
+              "poppler": 0.88}, "spread": 0.05, "limit": 0.06, "documents": 10, "bronze": 20}
     table = engines_table(engines)
     assert "| pymupdf | 0.930 | 0.930 |" in table
     assert "Spread 0.050" in table

@@ -57,6 +57,21 @@ Do not raise an agent's model because a task feels hard. Split the task instead.
 - **The ported regex keeps its faults.** It is the baseline improvement is measured
   against, so it must stay faithful rather than better.
 
+## Progress reports to the owner
+
+The owner asked for this rule. It applies to every session that runs project work,
+and to the manager of an agent team.
+
+- Report progress as a task list, in three groups: done, doing, to do.
+- Mark a finished task `[x]`, a running task `[~]`, and a waiting task `[ ]`.
+- Give every task its id, its agent, and its model.
+- Under each done task, state the result with real numbers, the files it changed,
+  and the commit. Under each running task, state what it does now.
+- Report when a task starts and when it finishes, without waiting to be asked.
+- Report a failed, returned, or blocked task at once, with the cause and the next step.
+- Keep the same list in `docs/v4/STATUS.md` for the current version of the work, and
+  update it at each report.
+
 ## Prose style
 
 Documentation and prose in this repository follow ASD-STE100 Simplified Technical

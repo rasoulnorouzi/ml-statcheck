@@ -236,7 +236,7 @@ def build_values(dataset_dir: Path, agreement: dict, runs, export, engines, eval
 
     provenance = (eval_data or {}).get("provenance", {})
     values["git_sha"] = provenance.get("git_sha")
-    values["gold_unparseable"] = (provenance.get("gold_unparseable") or {}).get("count")
+    values["bronze_unparseable"] = (provenance.get("bronze_unparseable") or {}).get("count")
 
     # The report's own header names the commit and date it was generated at,
     # from HEAD, never from `datetime.now()`: two runs at the same commit
@@ -297,10 +297,10 @@ def build_values(dataset_dir: Path, agreement: dict, runs, export, engines, eval
         if runs else None)
 
     # --- values the interpretation sentences need, all from the same files ---
-    gold = (eval_data or {}).get("gold", {})
-    values["eval_gold_results"] = gold.get("results")
-    values["eval_gold_damaged"] = gold.get("damaged")
-    values["eval_gold_checkable"] = gold.get("checkable")
+    bronze = (eval_data or {}).get("bronze", {})
+    values["eval_bronze_results"] = bronze.get("results")
+    values["eval_bronze_damaged"] = bronze.get("damaged")
+    values["eval_bronze_checkable"] = bronze.get("checkable")
 
     verdicts = (eval_data or {}).get("verdicts") or {}
     values["verdict_agree"] = verdicts.get("agree")

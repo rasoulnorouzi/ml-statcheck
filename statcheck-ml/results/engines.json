@@ -1,6 +1,6 @@
 {
   "documents": 200,
-  "gold": 327,
+  "bronze": 327,
   "recall": {
     "pymupdf": 0.9113149847094801,
     "pdfium": 0.9021406727828746,

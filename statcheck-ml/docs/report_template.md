@@ -202,7 +202,7 @@ whose recomputed p-value agrees with the reported one. Each model run is one ONN
 export, decoded with its own CRF decoder when it has one. The cascade runs
 `statcheck_repaired` first and adds only what the model finds beyond it.
 
-A predicted result matches a gold result when both sit in the same window and their
+A predicted result matches a bronze result when both sit in the same window and their
 normalised statistic values are equal. This is the version 1 rule, kept so that the
 numbers stay comparable. The subsets are: results with a damaged operator and without;
 each test type; each damage family, named from the damaged character; and checkable
@@ -212,9 +212,9 @@ results, which carry a statistic, a first degrees of freedom, and a p-value.
 raw text and {{statcheck_repaired_f1|3}} (recall {{statcheck_repaired_r|3}}) after
 operator repair. The cascade reaches {{cascade_f1|3}} {{cascade_ci|ci}}.
 The match key is the pair of window and statistic value. The holdout holds
-{{n_results_holdout|int}} results; {{gold_unparseable|int}} gold statistics could not be
-parsed as a number, and the rest collapse to {{eval_gold_results|int}} distinct keys
-({{eval_gold_damaged|int}} damaged, {{eval_gold_checkable|int}} checkable), because two
+{{n_results_holdout|int}} results; {{bronze_unparseable|int}} bronze statistics could not be
+parsed as a number, and the rest collapse to {{eval_bronze_results|int}} distinct keys
+({{eval_bronze_damaged|int}} damaged, {{eval_bronze_checkable|int}} checkable), because two
 results in one window can carry the same value. Unparseable results are excluded from
 every match in this section, in both directions.
 
@@ -239,7 +239,7 @@ from two thousand resamples with seed 0. The document is the unit because window
 one document share a font, a conversion, and a writing style, so they are not
 independent. A paired bootstrap on the same document resamples gives the interval and
 the p-value of the F1 difference between two systems. McNemar's exact test counts, per
-gold result, the discordant pairs: found by one system and missed by the other. The
+bronze result, the discordant pairs: found by one system and missed by the other. The
 seed tables give the mean and the standard deviation of holdout F1 over three seeds.
 The per-family recall carries a Wilson interval, because several families hold few
 results. None of these tests can find a mistake that the raters made every time; they
@@ -292,7 +292,7 @@ thread, and the size and dev F1 change of the int8 dynamically quantised graph.
 ## 9 PDF engines
 
 Each port reads the PDF with a different engine, and the engines do not return the
-same text. The gate measures, on the holdout documents, the share of gold results that
+same text. The gate measures, on the holdout documents, the share of bronze results that
 each engine's text still holds, and the spread between the best and the worst engine.
 The ports must not ship while the spread is above the limit.
 
@@ -303,7 +303,7 @@ gate of {{engine_limit|3}}.
 
 ## 10 Limitations
 
-- There is no human gold set. Every number in this report is measured against bronze
+- The human gold set is measured apart, in results/gold_eval.json. Every number in this report is measured against bronze
   labels that rater agents wrote.
 - The raters, the adjudicator, and the models could share blind spots. Agreement
   between raters of one model family cannot reveal them.

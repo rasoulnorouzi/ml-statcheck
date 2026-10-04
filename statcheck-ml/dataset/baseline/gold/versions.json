@@ -1,0 +1,74 @@
+{
+ "r_version": "4.5.0",
+ "statcheck_version": "1.5.0",
+ "jsonlite_version": "2.0.0",
+ "pdftools_version": "3.9.1",
+ "git_sha": "54fc781e84becb9f277cd09eaef811649373b121",
+ "command": "python pipeline/15_statcheck_gold.py --gold dataset/gold/gold.jsonl --clean-dir data/clean --pdf-zip ../data/02_pdfs.zip --out-dir dataset/baseline/gold --rscript Rscript --seed 0 --timeout 120 --jobs 4",
+ "sha256": {
+  "fulltext_raw": "54631ec77dad698319ae13f432087095610f567953adfe18a5149a386692d263",
+  "fulltext_repaired": "49143f709f5de90c8e3c773ecb6ab722f7b7ba1c9f9e488d983818831a1a46eb",
+  "passages": "35fb0bbd086ff7c695e87c99459fa98437fa390e31dcc4855f50891164329e0b",
+  "pdf": "6467d2e731a969f9e37be61930ee55fc2b2e3d09a84a63e280af691f36ee6214"
+ },
+ "rows": {
+  "fulltext_raw": 681,
+  "fulltext_repaired": 1305,
+  "passages": 1422,
+  "pdf": 822
+ },
+ "units": {
+  "fulltext_raw": 409,
+  "fulltext_repaired": 409,
+  "passages": 23763,
+  "pdf": 409
+ },
+ "units_with_results": {
+  "fulltext_raw": 57,
+  "fulltext_repaired": 107,
+  "passages": 469,
+  "pdf": 60
+ },
+ "unparsed_units": {
+  "fulltext_raw": 352,
+  "fulltext_repaired": 302,
+  "passages": 23294,
+  "pdf": 7
+ },
+ "wall_seconds": {
+  "fulltext_raw": 13.0,
+  "fulltext_repaired": 15.2,
+  "passages": 23.3,
+  "pdf": 81.3
+ },
+ "pdf_failures": [
+  {
+   "doc": "American Economic Journal_ Applied Economics/Lazear_AmEcoJourn_2012_RqZv.txt",
+   "reason": "checkPDF error: the condition has length > 1 "
+  },
+  {
+   "doc": "European Journal of Personality/Wetzel_EurJournPersonality_2016_Ovkm.txt",
+   "reason": "checkPDF error: the condition has length > 1 "
+  },
+  {
+   "doc": "Journal of Business Research/Chebat_JournBusRes_2010_eQVm.txt",
+   "reason": "checkPDF error: the condition has length > 1 "
+  },
+  {
+   "doc": "Journal of Business Research/Lee_JournBusRes_2012_LxK2.txt",
+   "reason": "checkPDF error: the condition has length > 1 "
+  },
+  {
+   "doc": "Journal of the Academy of Marketing Science/Albrecht_JournAcaMarkSci_2017_Q11m.txt",
+   "reason": "checkPDF error: missing value where TRUE/FALSE needed "
+  },
+  {
+   "doc": "Organizational Behavior and Human Decision Processes/Tang_OrgBehavior_2017_9X0l.txt",
+   "reason": "checkPDF error: the condition has length > 1 "
+  },
+  {
+   "doc": "Psychological Science/Gold_PsychologSci_2014_bgzk.txt",
+   "reason": "checkPDF error: missing value where TRUE/FALSE needed "
+  }
+ ]
+}

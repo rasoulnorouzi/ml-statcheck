@@ -39,7 +39,6 @@ node_modules/
 .RData
 
 # Virtual environment
-.venv/
 *.egg-info/
 
 # Trained models are rebuilt from the dataset, but keep the zoo and manifests

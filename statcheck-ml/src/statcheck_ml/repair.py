@@ -33,8 +33,6 @@ from typing import Dict, Tuple
 # the corpus shows them, but a letter is only ever repaired in a position where
 # a letter cannot belong.
 CONTROL = r"\x00-\x08\x0b\x0c\x0e-\x1f"
-SUSPECT = re.compile(f"[{CONTROL}¼\\\\!]")
-SUSPECT_LETTER = re.compile(r"[bNp]")
 
 # A suspect character between the closing bracket of the degrees of freedom and
 # a number. Only an equals sign belongs here.
@@ -114,18 +112,3 @@ def repair(text: str) -> Tuple[str, Dict[str, str], int]:
     out = ANCHOR_P.sub(fix_p, out)
     return out, mapping, replaced
 
-
-def repair_document(text: str) -> str:
-    """Repair a whole document, and return only the text."""
-    return repair(text)[0]
-
-
-def report(text: str) -> dict:
-    """Describe what a repair would do, without hiding the detail."""
-    fixed, mapping, n = repair(text)
-    return {
-        "mapping": {repr(k): v for k, v in mapping.items()},
-        "replacements": n,
-        "suspects_before": len(SUSPECT.findall(text)),
-        "suspects_after": len(SUSPECT.findall(fixed)),
-    }

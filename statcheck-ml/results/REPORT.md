@@ -1,6 +1,6 @@
 # statcheck-ml — results report
 
-Generated from commit 513efd9 (2026-09-20T17:00:15+02:00). Every number in this
+Generated from commit 54fc781 (2026-10-04T18:07:19+02:00). Every number in this
 report comes from a committed measurement file. `pipeline/11_report.py` fills this
 template. No number is typed by hand.
 
@@ -291,7 +291,7 @@ whose recomputed p-value agrees with the reported one. Each model run is one ONN
 export, decoded with its own CRF decoder when it has one. The cascade runs
 `statcheck_repaired` first and adds only what the model finds beyond it.
 
-A predicted result matches a gold result when both sit in the same window and their
+A predicted result matches a bronze result when both sit in the same window and their
 normalised statistic values are equal. This is the version 1 rule, kept so that the
 numbers stay comparable. The subsets are: results with a damaged operator and without;
 each test type; each damage family, named from the damaged character; and checkable
@@ -301,7 +301,7 @@ results, which carry a statistic, a first degrees of freedom, and a p-value.
 raw text and 0.636 (recall 0.467) after
 operator repair. The cascade reaches 0.908 [0.875, 0.937].
 The match key is the pair of window and statistic value. The holdout holds
-327 results; 2 gold statistics could not be
+327 results; 2 bronze statistics could not be
 parsed as a number, and the rest collapse to 323 distinct keys
 (166 damaged, 202 checkable), because two
 results in one window can carry the same value. Unparseable results are excluded from
@@ -375,7 +375,7 @@ from two thousand resamples with seed 0. The document is the unit because window
 one document share a font, a conversion, and a writing style, so they are not
 independent. A paired bootstrap on the same document resamples gives the interval and
 the p-value of the F1 difference between two systems. McNemar's exact test counts, per
-gold result, the discordant pairs: found by one system and missed by the other. The
+bronze result, the discordant pairs: found by one system and missed by the other. The
 seed tables give the mean and the standard deviation of holdout F1 over three seeds.
 The per-family recall carries a Wilson interval, because several families hold few
 results. None of these tests can find a mistake that the raters made every time; they
@@ -449,7 +449,7 @@ thread, and the size and dev F1 change of the int8 dynamically quantised graph.
 ## 9 PDF engines
 
 Each port reads the PDF with a different engine, and the engines do not return the
-same text. The gate measures, on the holdout documents, the share of gold results that
+same text. The gate measures, on the holdout documents, the share of bronze results that
 each engine's text still holds, and the spread between the best and the worst engine.
 The ports must not ship while the spread is above the limit.
 
@@ -462,11 +462,11 @@ gate of 0.060.
 | pdfium | 0.902 | 0.905 |
 | poppler | 0.872 | 0.872 |
 
-Spread 0.040 against a limit of 0.060, over 200 documents and 327 gold results.
+Spread 0.040 against a limit of 0.060, over 200 documents and 327 bronze results.
 
 ## 10 Limitations
 
-- There is no human gold set. Every number in this report is measured against bronze
+- The human gold set is measured apart, in results/gold_eval.json. Every number in this report is measured against bronze
   labels that rater agents wrote.
 - The raters, the adjudicator, and the models could share blind spots. Agreement
   between raters of one model family cannot reveal them.
@@ -489,9 +489,9 @@ Spread 0.040 against a limit of 0.060, over 200 documents and 327 gold results.
 
 ## 11 Reproduction
 
-This report was generated from commit 513efd9 (2026-09-20T17:00:15+02:00). The
+This report was generated from commit 54fc781 (2026-10-04T18:07:19+02:00). The
 evaluation numbers in it come from `results/eval.json`, itself run at commit
-07d94add9c3b207e0f2be5927dcd0e994d64a5be, with R 4.6.1 and statcheck 1.5.0.
+54fc781e84becb9f277cd09eaef811649373b121, with R 4.6.1 and statcheck 1.5.0.
 
 `reproduce.sh` runs the offline stages from committed files: agreement, dataset,
 evaluation, figures, and this report. `reproduce.sh --train` adds the training grid
@@ -510,7 +510,7 @@ repositories and read one kit that this repository writes: the five spec files, 
 shipped model, the parity cases, and a manifest with a hash per file that the port
 verifies when it loads. A port never restates a rule.
 
-Parity is one file, 232 cases in 9 sections,
+Parity is one file, 236 cases in 9 sections,
 one per stage: normalise, repair, prefilter, extract, model tags, model logits,
 grouping, p-value (73 rows), and the whole pipeline on four
 documents. The Python reference produces every expected value; each port reproduces

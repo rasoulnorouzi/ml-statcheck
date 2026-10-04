@@ -437,7 +437,7 @@ def engines_table(engines: Optional[dict]) -> str:
     table = md_table(headers, body)
     return table + (f"\n\nSpread {_f(engines.get('spread'))} against a limit of "
                     f"{_f(engines.get('limit'))}, over {engines.get('documents', '-')} "
-                    f"documents and {engines.get('gold', '-')} gold results.")
+                    f"documents and {engines.get('bronze', '-')} bronze results.")
 
 
 def readme_block(values: dict, systems_table_md: str) -> str:

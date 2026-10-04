@@ -88,20 +88,20 @@ def damage_family(quote: str) -> str:
     return "other damage"
 
 
-# -------------------------------------------------------------- gold ------
+# -------------------------------------------------------------- bronze ------
 
-def extract_gold(windows: Sequence[dict]):
-    """From the holdout rows: gold values per window, their metadata, gold
-    block spans per window, windows grouped by document, and the gold
+def extract_bronze(windows: Sequence[dict]):
+    """From the holdout rows: bronze values per window, their metadata, bronze
+    block spans per window, windows grouped by document, and the bronze
     results `as_number` could not parse at all (excluded from value matching
     entirely, so a system can neither find them nor be blamed for missing
     them).
     """
-    gold_by_window: Dict[str, set] = defaultdict(set)
-    gold_meta: Dict[Tuple[str, float], dict] = {}
-    gold_spans_by_window: Dict[str, set] = defaultdict(set)
+    bronze_by_window: Dict[str, set] = defaultdict(set)
+    bronze_meta: Dict[Tuple[str, float], dict] = {}
+    bronze_spans_by_window: Dict[str, set] = defaultdict(set)
     doc_to_windows: Dict[str, list] = defaultdict(list)
-    gold_unparseable: List[dict] = []
+    bronze_unparseable: List[dict] = []
 
     for w in windows:
         wid = w["window_id"]
@@ -109,14 +109,14 @@ def extract_gold(windows: Sequence[dict]):
         for res in w.get("results") or []:
             v = as_number(res.get("statistic"))
             if v is None:
-                gold_unparseable.append({"window_id": wid, "statistic": res.get("statistic")})
+                bronze_unparseable.append({"window_id": wid, "statistic": res.get("statistic")})
                 continue
-            gold_by_window[wid].add(v)
+            bronze_by_window[wid].add(v)
             block_span = tuple(res["block_span"]) if res.get("block_span") else None
             if block_span:
-                gold_spans_by_window[wid].add(block_span)
+                bronze_spans_by_window[wid].add(block_span)
             fam = damage_family(res.get("quote") or "") if res.get("damaged") else None
-            gold_meta.setdefault((wid, v), {
+            bronze_meta.setdefault((wid, v), {
                 "damaged": bool(res.get("damaged")),
                 "test_type": (res.get("test_type") or "").lower(),
                 "checkable": bool(res.get("checkable")),
@@ -124,8 +124,8 @@ def extract_gold(windows: Sequence[dict]):
                 "tier": res.get("tier"),
                 "block_span": block_span,
             })
-    return (dict(gold_by_window), gold_meta, dict(gold_spans_by_window), dict(doc_to_windows),
-           gold_unparseable)
+    return (dict(bronze_by_window), bronze_meta, dict(bronze_spans_by_window), dict(doc_to_windows),
+           bronze_unparseable)
 
 
 # ---------------------------------------------------------- statcheck -----
@@ -286,15 +286,15 @@ def prf(tp: int, fp: int, fn: int) -> dict:
     return {"tp": tp, "fp": fp, "fn": fn, "p": p, "r": r, "f1": f1}
 
 
-def score_system(found_by_window: Dict[str, set], gold_by_window: Dict[str, set],
-                 gold_meta: dict, window_ids: Sequence[str]) -> Dict[str, dict]:
+def score_system(found_by_window: Dict[str, set], bronze_by_window: Dict[str, set],
+                 bronze_meta: dict, window_ids: Sequence[str]) -> Dict[str, dict]:
     """Score one system, overall and by subset, matching on statistic value."""
     buckets: Dict[str, list] = defaultdict(lambda: [0, 0, 0])
     for wid in window_ids:
-        gold = gold_by_window.get(wid, set())
+        bronze = bronze_by_window.get(wid, set())
         got = found_by_window.get(wid, set())
-        for v in got & gold:
-            meta = gold_meta.get((wid, v), {})
+        for v in got & bronze:
+            meta = bronze_meta.get((wid, v), {})
             buckets["overall"][0] += 1
             buckets["damaged" if meta.get("damaged") else "undamaged"][0] += 1
             buckets[f"test:{meta.get('test_type') or 'unknown'}"][0] += 1
@@ -302,10 +302,10 @@ def score_system(found_by_window: Dict[str, set], gold_by_window: Dict[str, set]
                 buckets[f"damage:{meta['family']}"][0] += 1
             if meta.get("checkable"):
                 buckets["checkable"][0] += 1
-        for _ in got - gold:
+        for _ in got - bronze:
             buckets["overall"][1] += 1
-        for v in gold - got:
-            meta = gold_meta.get((wid, v), {})
+        for v in bronze - got:
+            meta = bronze_meta.get((wid, v), {})
             buckets["overall"][2] += 1
             buckets["damaged" if meta.get("damaged") else "undamaged"][2] += 1
             buckets[f"test:{meta.get('test_type') or 'unknown'}"][2] += 1
@@ -317,24 +317,24 @@ def score_system(found_by_window: Dict[str, set], gold_by_window: Dict[str, set]
 
 
 def score_span_strict(found_spans_by_window: Dict[str, set],
-                      gold_spans_by_window: Dict[str, set],
+                      bronze_spans_by_window: Dict[str, set],
                       window_ids: Sequence[str]) -> dict:
-    """Predicted block span equal to the gold block span, exactly."""
+    """Predicted block span equal to the bronze block span, exactly."""
     tp = fp = fn = 0
     for wid in window_ids:
-        gold = gold_spans_by_window.get(wid, set())
+        bronze = bronze_spans_by_window.get(wid, set())
         got = found_spans_by_window.get(wid, set())
-        tp += len(got & gold)
-        fp += len(got - gold)
-        fn += len(gold - got)
+        tp += len(got & bronze)
+        fp += len(got - bronze)
+        fn += len(bronze - got)
     return prf(tp, fp, fn)
 
 
 # ----------------------------------------------------------- bootstrap ----
 
 def bootstrap_prf(doc_ids: Sequence[str], doc_to_windows: Dict[str, list],
-                  found_by_window: Dict[str, set], gold_by_window: Dict[str, set],
-                  gold_meta: dict, n: int = 2000, seed: int = 0,
+                  found_by_window: Dict[str, set], bronze_by_window: Dict[str, set],
+                  bronze_meta: dict, n: int = 2000, seed: int = 0,
                   buckets: Sequence[str] = ("overall", "damaged")) -> dict:
     """95% percentile CI for p, r, f1, resampling whole documents.
 
@@ -353,7 +353,7 @@ def bootstrap_prf(doc_ids: Sequence[str], doc_to_windows: Dict[str, list],
     for _ in range(n):
         idx = rng.integers(0, m, size=m)
         window_ids = [wid for j in idx for wid in doc_to_windows.get(docs[j], [])]
-        scored = score_system(found_by_window, gold_by_window, gold_meta, window_ids)
+        scored = score_system(found_by_window, bronze_by_window, bronze_meta, window_ids)
         for b in buckets:
             s = scored.get(b, {"p": 0.0, "r": 0.0, "f1": 0.0})
             samples[b]["p"].append(s["p"])
@@ -366,10 +366,10 @@ def bootstrap_prf(doc_ids: Sequence[str], doc_to_windows: Dict[str, list],
 
 # ---------------------------------------------------------- mcnemar -------
 
-def hit_map(found_by_window: Dict[str, set], gold_by_window: Dict[str, set]) -> dict:
-    """{(window_id, value): True/False} — whether a system found each gold result."""
+def hit_map(found_by_window: Dict[str, set], bronze_by_window: Dict[str, set]) -> dict:
+    """{(window_id, value): True/False} — whether a system found each bronze result."""
     out = {}
-    for wid, values in gold_by_window.items():
+    for wid, values in bronze_by_window.items():
         got = found_by_window.get(wid, set())
         for v in values:
             out[(wid, v)] = v in got
@@ -377,10 +377,10 @@ def hit_map(found_by_window: Dict[str, set], gold_by_window: Dict[str, set]) -> 
 
 
 def mcnemar_pair(found_a: Dict[str, set], found_b: Dict[str, set],
-                 gold_by_window: Dict[str, set]) -> Tuple[int, int]:
-    """b = gold results only A found, c = gold results only B found."""
-    ha = hit_map(found_a, gold_by_window)
-    hb = hit_map(found_b, gold_by_window)
+                 bronze_by_window: Dict[str, set]) -> Tuple[int, int]:
+    """b = bronze results only A found, c = bronze results only B found."""
+    ha = hit_map(found_a, bronze_by_window)
+    hb = hit_map(found_b, bronze_by_window)
     b = sum(1 for k in ha if ha[k] and not hb[k])
     c = sum(1 for k in ha if hb[k] and not ha[k])
     return b, c
@@ -388,14 +388,14 @@ def mcnemar_pair(found_a: Dict[str, set], found_b: Dict[str, set],
 
 # ------------------------------------------------------ family recall -----
 
-def family_recall(found_by_window: Dict[str, set], gold_by_window: Dict[str, set],
-                  gold_meta: dict) -> dict:
+def family_recall(found_by_window: Dict[str, set], bronze_by_window: Dict[str, set],
+                  bronze_meta: dict) -> dict:
     n = Counter()
     k = Counter()
-    for wid, values in gold_by_window.items():
+    for wid, values in bronze_by_window.items():
         got = found_by_window.get(wid, set())
         for v in values:
-            fam = gold_meta.get((wid, v), {}).get("family")
+            fam = bronze_meta.get((wid, v), {}).get("family")
             if not fam:
                 continue
             n[fam] += 1
