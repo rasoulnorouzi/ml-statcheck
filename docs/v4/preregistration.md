@@ -103,3 +103,13 @@ amendment above no longer applies; the 23-run plan and rules 1 to 3 as first wri
 (with the cascade clarification) stand. The four CPU runs of the amendment were stopped
 before any finished and were deleted; no version 4 run had a `report.json` and no dev
 score of a version 4 run existed.
+
+## Exploratory runs, 2026-10-05, before any run
+
+The owner has GPU time to spare. `pipeline/22_train_v4.py --plan extended` trains 63
+runs: the three configurations, seeds 0 to 2, and seven noise settings (none, the old
+default, the old default with each new family alone, and the old default with all four).
+The 23 runs above are part of it under the same names and the same arguments; a check
+in the script enforces this. Rules 1 to 3 read only the 23 runs. The other 40 runs are
+exploratory: they are reported in their own table, marked as such, and never change the
+choice.

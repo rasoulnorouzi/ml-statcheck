@@ -46,6 +46,30 @@ def runs():
     return out
 
 
+NOISE = {"none": NONE, "old": OLD,
+         **{f"old+{fam}": OLD + ["--families", fam] for fam in NEW},
+         "all": OLD + ["--families", ",".join(NEW)]}
+
+
+def extended_runs():
+    """Every configuration, seed and noise setting: 3 x 3 x 7 = 63 runs.
+
+    Exploratory. The pre-registered rules read only the runs of runs(), which this
+    plan contains under the same names, so the extra runs can never pick the model.
+    """
+    out = {}
+    for cfg, unit in UNITS.items():
+        for seed in (0, 1, 2):
+            for noise, flags in NOISE.items():
+                if cfg == "gru-crf" and seed == 0:
+                    name = "gate-old+all" if noise == "all" else f"gate-{noise}"
+                else:
+                    name = f"{cfg}-{noise}-s{seed}"
+                out[name] = unit + flags + ["--seed", str(seed)]
+    assert set(runs()) <= set(out) and all(out[n] == runs()[n] for n in runs())
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--device", default="auto", choices=["auto", "cpu", "cuda"])
@@ -57,9 +81,11 @@ def main():
     ap.add_argument("--parallel", type=int, default=1, help="runs that train at the same time")
     ap.add_argument("--threads", type=int, default=None, help="CPU threads per run (OMP_NUM_THREADS)")
     ap.add_argument("--list", action="store_true", help="print the run names and stop")
+    ap.add_argument("--plan", default="prereg", choices=["prereg", "extended"],
+                    help="prereg: the 23 runs the rules read; extended: 63 runs, exploratory")
     args = ap.parse_args()
 
-    plan = runs()
+    plan = runs() if args.plan == "prereg" else extended_runs()
     if args.list:
         print("\n".join(plan))
         print(f"{len(plan)} runs")
