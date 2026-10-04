@@ -6,10 +6,13 @@ The two are reported apart and never pooled.
 
 Systems:
   regex           the ported statcheck pattern, after operator repair
-  model           the shipped model alone, on the prefilter windows
+  model           the shipped model alone, on the prefilter units
   cascade         the shipped pipeline: pattern first, the model adds
-  model_passages  the model alone, on overlapping windows merged into one
-                  passage, so each character is read once
+
+The prefilter unit is the merged passage (spec "unit"), so the model reads each
+character once. The old system model_passages is the same as model since
+prefilter.json version 2; it is removed here, and the M1 lines in the log keep
+it as history.
 
 The original R statcheck is scored in four forms, from the CSVs that
 15_statcheck_gold.py wrote (--baseline-dir):
@@ -56,8 +59,9 @@ from concurrent.futures import ProcessPoolExecutor
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
+REPO_ROOT = os.path.realpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 IN_SCOPE = {"t", "F", "r", "z", "chi2", "Q"}
-LOCAL = ["regex", "model", "cascade", "model_passages"]
+LOCAL = ["regex", "model", "cascade"]
 STATCHECK = {"statcheck_r_fulltext_raw": "statcheck_fulltext_raw.csv",
              "statcheck_r_fulltext_repaired": "statcheck_fulltext_repaired.csv",
              "statcheck_r_passages": "statcheck_passages.csv",
@@ -103,23 +107,34 @@ def match_statcheck(gold, finds):
     return hits, left
 
 
-def finds_for(system, pipe, text, windows, lines):
-    """Every find as (first line, last line, statistic, test type)."""
-    if system == "model_passages":
-        out = []
-        for lo, hi in pipe.prefilter.passages(windows):
-            for f in pipe.find_with_model("\n".join(lines[lo:hi + 1]), lo):
-                if f.statistic is not None:
-                    out.append((lo, hi, round(abs(f.statistic), 4), f.test_type))
-        return out
-    span = {w.line: (w.start_line, w.end_line) for w in windows}
-    out = []
-    for r in pipe.run_text(text)["results"]:
-        if r["statistic"] is None:
-            continue
-        lo, hi = span.get(r["line"], (r["line"], r["line"]))
-        out.append((lo, hi, round(abs(r["statistic"]), 4), r["test_type"]))
-    return out
+def finds_for(pipe, text, units):
+    """Every find as (first line, last line, statistic, test type), in two lists.
+
+    The first list holds the finds with a test name. The second holds the
+    fragments, the finds with none. Recall counts the first list only.
+    """
+    named, fragments = [], []
+    span = {u.line: (u.start_line, u.end_line) for u in units}
+    report = pipe.run_text(text)
+    for key, rows in (("results", named), ("fragments", fragments)):
+        for r in report[key]:
+            if r["statistic"] is None:
+                continue
+            lo, hi = span.get(r["line"], (r["line"], r["line"]))
+            rows.append((lo, hi, round(abs(r["statistic"]), 4), r["test_type"]))
+    return named, fragments
+
+
+def match_local(gold, finds):
+    """Hit per gold row, consuming finds in place. Each find serves one row."""
+    hits = []
+    for g in gold:
+        match = next((f for f in finds if not f[4] and f[2] in (g["stat"], g["anchor_value"])
+                      and f[0] <= g["line"] <= f[1]), None)
+        if match:
+            match[4] = True
+        hits.append(match is not None)
+    return hits
 
 
 def make_pipes(systems, model_path):
@@ -127,8 +142,7 @@ def make_pipes(systems, model_path):
 
     build = {"regex": lambda: Pipeline(model_path=None),
              "model": lambda: Pipeline(model_path=model_path, use_pattern=False),
-             "cascade": lambda: Pipeline(model_path=model_path),
-             "model_passages": lambda: Pipeline(model_path=model_path, use_pattern=False)}
+             "cascade": lambda: Pipeline(model_path=model_path)}
     return {s: build[s]() for s in systems if s in build}
 
 
@@ -147,7 +161,10 @@ def score_paper(job):
     starts = [0]
     for ln in lines:
         starts.append(starts[-1] + len(ln) + 1)
+    # The windows cover the same lines as the units, so prefilter_keeps is
+    # the same for both and is computed from the windows.
     windows = list(base.prefilter.windows(fixed))
+    units = list(base.prefilter.units(fixed))
     ranges = [(starts[w.start_line], starts[w.end_line + 1]) for w in windows]
 
     gold = [g for g in paper["results"] if g["located"]]
@@ -165,21 +182,27 @@ def score_paper(job):
             hits[system], left = match_statcheck(gold, sc_finds.get(system, []))
             out["unmatched"][system] = left
             continue
-        finds = [list(f) + [False] for f in finds_for(system, pipes[system], raw, windows, lines)]
-        hits[system] = []
-        for g in gold:
-            match = next((f for f in finds if not f[4] and f[2] in (g["stat"], g["anchor_value"])
-                          and f[0] <= g["line"] <= f[1]), None)
-            if match:
-                match[4] = True
-            hits[system].append(match is not None)
-        # One result is seen by several overlapping windows; count it once.
-        left = {(f[2], f[3], f[0] // 5) for f in finds if not f[4]}
-        out["unmatched"][system] = collections.Counter(
-            "nameless" if not t else ("r" if t == "r" else "named") for _, t, _ in left)
+        named, fragments = finds_for(pipes[system], raw, units)
+        named = [list(f) + [False] for f in named]
+        hits[system] = match_local(gold, named)
+        # The same matching again with the fragments added after the named
+        # finds, so a fragment only serves a row that no named find served.
+        # Fresh copies, because matching consumes finds.
+        fragments = [list(f) + [False] for f in fragments]
+        with_fragments = [[*f[:4], False] for f in named] + fragments
+        hits[system + "_with_fragments"] = match_local(gold, with_fragments)
+        # Units do not overlap and run_text deduplicates by position, so each
+        # unmatched find counts once. The key keeps equal finds in separate
+        # units apart.
+        left = {(f[2], f[3], f[0]) for f in named if not f[4]}
+        left_nameless = {(f[2], f[0]) for f in with_fragments[len(named):] if not f[4]}
+        counts = collections.Counter("r" if t == "r" else "named" for _, t, _ in left)
+        if left_nameless:
+            counts["nameless"] = len(left_nameless)
+        out["unmatched"][system] = counts
     for i, g in enumerate(gold):
         out["gold"].append({"test_type": g["test_type"], "damaged": g["damaged"], "kept": g["kept"],
-                            **{s: hits[s][i] for s in systems}})
+                            **{s: hits[s][i] for s in hits}})
     return out
 
 
@@ -218,6 +241,9 @@ def summarise(papers, resamples, seed, systems=SYSTEMS):
         row["recall"] = round(k / n, 3) if n else None
         row["recall_ci"] = bootstrap(papers, system, in_scope, resamples, seed) if n else None
         row["found"] = k
+        if system in LOCAL:
+            k2, n2 = recall(papers, system + "_with_fragments", in_scope)
+            row["recall_with_fragments"] = round(k2 / n2, 3) if n2 else None
         k, n = recall(papers, system, lambda g: in_scope(g) and g["damaged"])
         row["recall_damaged"] = round(k / n, 3) if n else None
         row["damaged_n"] = n
@@ -227,7 +253,12 @@ def summarise(papers, resamples, seed, systems=SYSTEMS):
             if n:
                 row["recall_by_test"][t] = {"k": k, "n": n, "r": round(k / n, 3)}
         neg = [p for p in papers if not p["has_results"]]
-        row["finds_in_papers_without_results"] = sum(sum(p["unmatched"][system].values()) for p in neg)
+        # A fragment is not reported as a result, so it stays out of this
+        # count and gets its own beside it.
+        row["finds_in_papers_without_results"] = sum(
+            v for p in neg for k, v in p["unmatched"][system].items() if k != "nameless")
+        row["fragments_in_papers_without_results"] = sum(
+            p["unmatched"][system].get("nameless", 0) for p in neg)
         pos = [p for p in papers if p["has_results"]]
         row["finds_not_in_gold"] = {kind: sum(p["unmatched"][system].get(kind, 0) for p in pos)
                                     for kind in ("named", "r", "nameless")}
@@ -266,6 +297,8 @@ def main():
     ap.add_argument("--systems", nargs="+", choices=SYSTEMS, default=SYSTEMS)
     ap.add_argument("--resamples", type=int, default=2000)
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--label", default="",
+                    help="names the state that was measured, for example m2-dedup")
     ap.add_argument("--workers", type=int, default=os.cpu_count() or 4)
     args = ap.parse_args()
 
@@ -318,20 +351,29 @@ def main():
                                for name, s in bronze["systems"].items()}},
         "provenance": {
             "git_sha": git_sha(),
-            "date": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "label": args.label,
             "command": " ".join(sys.argv),
             "seed": args.seed,
             "resamples": args.resamples,
             "systems": args.systems,
-            "model": model,
+            "model": os.path.relpath(model, REPO_ROOT),
             "inputs": {os.path.relpath(f): sha256(f) for f in inputs},
         },
     }
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
     json.dump(report, open(args.out, "w"), indent=1)
-    line = {"date": report["provenance"]["date"], "git_sha": report["provenance"]["git_sha"],
+    # The date lives in the log only, so the result file is byte-stable.
+    line = {"date": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "git_sha": report["provenance"]["git_sha"], "label": args.label,
             "model": model, "systems": args.systems,
-            "gold_test_recall": {s: gold_test[s]["recall"] for s in args.systems}}
+            "gold_test_recall": {s: gold_test[s]["recall"] for s in args.systems},
+            "gold_test_papers": gold_test["papers"],
+            "gold_in_scope": gold_test["gold_in_scope"],
+            "prefilter_keeps": gold_test["prefilter_keeps"],
+            "gold_test": {s: {k: gold_test[s][k] for k in (
+                "recall", "recall_ci", "recall_damaged", "finds_in_papers_without_results")
+                          + (("recall_with_fragments",) if s in LOCAL else ())}
+                for s in args.systems}}
     with open(args.log, "a", encoding="utf-8") as fh:
         fh.write(json.dumps(line) + "\n")
     print(json.dumps({k: report[k] for k in ("gold_test",)}, indent=1)[:3000])

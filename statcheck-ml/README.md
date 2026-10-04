@@ -28,5 +28,11 @@ print(summarise(report))
 `Pipeline()` uses the model packaged with the install, so there is no path to
 set and no checkout to make.
 
+The report holds two lists. `results` holds the finds with a test name, each
+with a verdict. `fragments` holds the finds with no test name: a statistic and
+sometimes a p-value, but nothing to recompute a p-value from. A fragment has
+the keys of a result without `verdict`, `computed_p`, `reason` and `missing`.
+The command line prints the fragments after the results.
+
 Full method and setup: [root README](https://github.com/rasoulnorouzi/ml-statcheck#readme).
 Every number: [results/REPORT.md](https://github.com/rasoulnorouzi/ml-statcheck/blob/main/statcheck-ml/results/REPORT.md).

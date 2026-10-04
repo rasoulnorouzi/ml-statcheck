@@ -1,0 +1,2331 @@
+{
+ "note": "Gold is the owner's hand-coded sheet: whole papers, statcheck scope. gold_test is the frozen test part. Bronze is the three-rater consensus on sampled windows, a language-model annotation. They are never pooled.",
+ "gold_test": {
+  "papers": 169,
+  "papers_with_results": 49,
+  "gold_in_scope": 476,
+  "prefilter_keeps": 0.992,
+  "regex": {
+   "recall": 0.489,
+   "recall_ci": [
+    0.292,
+    0.64
+   ],
+   "found": 233,
+   "recall_damaged": 0.578,
+   "damaged_n": 109,
+   "recall_by_test": {
+    "F": {
+     "k": 147,
+     "n": 202,
+     "r": 0.728
+    },
+    "Q": {
+     "k": 0,
+     "n": 12,
+     "r": 0.0
+    },
+    "chi2": {
+     "k": 6,
+     "n": 81,
+     "r": 0.074
+    },
+    "r": {
+     "k": 0,
+     "n": 4,
+     "r": 0.0
+    },
+    "t": {
+     "k": 69,
+     "n": 141,
+     "r": 0.489
+    },
+    "z": {
+     "k": 11,
+     "n": 36,
+     "r": 0.306
+    }
+   },
+   "finds_in_papers_without_results": 2,
+   "finds_not_in_gold": {
+    "named": 10,
+    "r": 0,
+    "nameless": 0
+   }
+  },
+  "model": {
+   "recall": 0.836,
+   "recall_ci": [
+    0.773,
+    0.893
+   ],
+   "found": 398,
+   "recall_damaged": 0.807,
+   "damaged_n": 109,
+   "recall_by_test": {
+    "F": {
+     "k": 194,
+     "n": 202,
+     "r": 0.96
+    },
+    "Q": {
+     "k": 7,
+     "n": 12,
+     "r": 0.583
+    },
+    "chi2": {
+     "k": 72,
+     "n": 81,
+     "r": 0.889
+    },
+    "r": {
+     "k": 4,
+     "n": 4,
+     "r": 1.0
+    },
+    "t": {
+     "k": 113,
+     "n": 141,
+     "r": 0.801
+    },
+    "z": {
+     "k": 8,
+     "n": 36,
+     "r": 0.222
+    }
+   },
+   "finds_in_papers_without_results": 155,
+   "finds_not_in_gold": {
+    "named": 35,
+    "r": 108,
+    "nameless": 50
+   }
+  },
+  "cascade": {
+   "recall": 0.851,
+   "recall_ci": [
+    0.787,
+    0.908
+   ],
+   "found": 405,
+   "recall_damaged": 0.817,
+   "damaged_n": 109,
+   "recall_by_test": {
+    "F": {
+     "k": 195,
+     "n": 202,
+     "r": 0.965
+    },
+    "Q": {
+     "k": 7,
+     "n": 12,
+     "r": 0.583
+    },
+    "chi2": {
+     "k": 72,
+     "n": 81,
+     "r": 0.889
+    },
+    "r": {
+     "k": 4,
+     "n": 4,
+     "r": 1.0
+    },
+    "t": {
+     "k": 113,
+     "n": 141,
+     "r": 0.801
+    },
+    "z": {
+     "k": 14,
+     "n": 36,
+     "r": 0.389
+    }
+   },
+   "finds_in_papers_without_results": 155,
+   "finds_not_in_gold": {
+    "named": 35,
+    "r": 108,
+    "nameless": 50
+   }
+  },
+  "model_passages": {
+   "recall": 0.849,
+   "recall_ci": [
+    0.787,
+    0.907
+   ],
+   "found": 404,
+   "recall_damaged": 0.807,
+   "damaged_n": 109,
+   "recall_by_test": {
+    "F": {
+     "k": 196,
+     "n": 202,
+     "r": 0.97
+    },
+    "Q": {
+     "k": 8,
+     "n": 12,
+     "r": 0.667
+    },
+    "chi2": {
+     "k": 73,
+     "n": 81,
+     "r": 0.901
+    },
+    "r": {
+     "k": 4,
+     "n": 4,
+     "r": 1.0
+    },
+    "t": {
+     "k": 115,
+     "n": 141,
+     "r": 0.816
+    },
+    "z": {
+     "k": 8,
+     "n": 36,
+     "r": 0.222
+    }
+   },
+   "finds_in_papers_without_results": 150,
+   "finds_not_in_gold": {
+    "named": 36,
+    "r": 127,
+    "nameless": 55
+   }
+  },
+  "statcheck_r_fulltext_raw": {
+   "recall": 0.113,
+   "recall_ci": [
+    0.036,
+    0.257
+   ],
+   "found": 54,
+   "recall_damaged": 0.0,
+   "damaged_n": 109,
+   "recall_by_test": {
+    "F": {
+     "k": 25,
+     "n": 202,
+     "r": 0.124
+    },
+    "Q": {
+     "k": 0,
+     "n": 12,
+     "r": 0.0
+    },
+    "chi2": {
+     "k": 11,
+     "n": 81,
+     "r": 0.136
+    },
+    "r": {
+     "k": 0,
+     "n": 4,
+     "r": 0.0
+    },
+    "t": {
+     "k": 12,
+     "n": 141,
+     "r": 0.085
+    },
+    "z": {
+     "k": 6,
+     "n": 36,
+     "r": 0.167
+    }
+   },
+   "finds_in_papers_without_results": 2,
+   "finds_not_in_gold": {
+    "named": 0,
+    "r": 0,
+    "nameless": 0
+   }
+  },
+  "statcheck_r_fulltext_repaired": {
+   "recall": 0.443,
+   "recall_ci": [
+    0.238,
+    0.646
+   ],
+   "found": 211,
+   "recall_damaged": 0.606,
+   "damaged_n": 109,
+   "recall_by_test": {
+    "F": {
+     "k": 149,
+     "n": 202,
+     "r": 0.738
+    },
+    "Q": {
+     "k": 0,
+     "n": 12,
+     "r": 0.0
+    },
+    "chi2": {
+     "k": 16,
+     "n": 81,
+     "r": 0.198
+    },
+    "r": {
+     "k": 0,
+     "n": 4,
+     "r": 0.0
+    },
+    "t": {
+     "k": 40,
+     "n": 141,
+     "r": 0.284
+    },
+    "z": {
+     "k": 6,
+     "n": 36,
+     "r": 0.167
+    }
+   },
+   "finds_in_papers_without_results": 2,
+   "finds_not_in_gold": {
+    "named": 10,
+    "r": 0,
+    "nameless": 0
+   }
+  },
+  "statcheck_r_passages": {
+   "recall": 0.479,
+   "recall_ci": [
+    0.293,
+    0.654
+   ],
+   "found": 228,
+   "recall_damaged": 0.606,
+   "damaged_n": 109,
+   "recall_by_test": {
+    "F": {
+     "k": 148,
+     "n": 202,
+     "r": 0.733
+    },
+    "Q": {
+     "k": 0,
+     "n": 12,
+     "r": 0.0
+    },
+    "chi2": {
+     "k": 16,
+     "n": 81,
+     "r": 0.198
+    },
+    "r": {
+     "k": 0,
+     "n": 4,
+     "r": 0.0
+    },
+    "t": {
+     "k": 52,
+     "n": 141,
+     "r": 0.369
+    },
+    "z": {
+     "k": 12,
+     "n": 36,
+     "r": 0.333
+    }
+   },
+   "finds_in_papers_without_results": 2,
+   "finds_not_in_gold": {
+    "named": 14,
+    "r": 0,
+    "nameless": 0
+   }
+  },
+  "statcheck_r_pdf": {
+   "recall": 0.237,
+   "recall_ci": [
+    0.055,
+    0.493
+   ],
+   "found": 113,
+   "recall_damaged": 0.0,
+   "damaged_n": 109,
+   "recall_by_test": {
+    "F": {
+     "k": 27,
+     "n": 202,
+     "r": 0.134
+    },
+    "Q": {
+     "k": 0,
+     "n": 12,
+     "r": 0.0
+    },
+    "chi2": {
+     "k": 11,
+     "n": 81,
+     "r": 0.136
+    },
+    "r": {
+     "k": 0,
+     "n": 4,
+     "r": 0.0
+    },
+    "t": {
+     "k": 63,
+     "n": 141,
+     "r": 0.447
+    },
+    "z": {
+     "k": 12,
+     "n": 36,
+     "r": 0.333
+    }
+   },
+   "finds_in_papers_without_results": 2,
+   "finds_not_in_gold": {
+    "named": 4,
+    "r": 0,
+    "nameless": 0
+   }
+  },
+  "by_bronze_set": {
+   "holdout": {
+    "papers": 49,
+    "papers_with_results": 23,
+    "gold_in_scope": 351,
+    "prefilter_keeps": 0.994,
+    "regex": {
+     "recall": 0.607,
+     "recall_ci": [
+      0.398,
+      0.768
+     ],
+     "found": 213,
+     "recall_damaged": 0.667,
+     "damaged_n": 90,
+     "recall_by_test": {
+      "F": {
+       "k": 135,
+       "n": 159,
+       "r": 0.849
+      },
+      "chi2": {
+       "k": 6,
+       "n": 48,
+       "r": 0.125
+      },
+      "r": {
+       "k": 0,
+       "n": 4,
+       "r": 0.0
+      },
+      "t": {
+       "k": 61,
+       "n": 108,
+       "r": 0.565
+      },
+      "z": {
+       "k": 11,
+       "n": 32,
+       "r": 0.344
+      }
+     },
+     "finds_in_papers_without_results": 0,
+     "finds_not_in_gold": {
+      "named": 9,
+      "r": 0,
+      "nameless": 0
+     }
+    },
+    "model": {
+     "recall": 0.855,
+     "recall_ci": [
+      0.773,
+      0.934
+     ],
+     "found": 300,
+     "recall_damaged": 0.844,
+     "damaged_n": 90,
+     "recall_by_test": {
+      "F": {
+       "k": 155,
+       "n": 159,
+       "r": 0.975
+      },
+      "chi2": {
+       "k": 46,
+       "n": 48,
+       "r": 0.958
+      },
+      "r": {
+       "k": 4,
+       "n": 4,
+       "r": 1.0
+      },
+      "t": {
+       "k": 88,
+       "n": 108,
+       "r": 0.815
+      },
+      "z": {
+       "k": 7,
+       "n": 32,
+       "r": 0.219
+      }
+     },
+     "finds_in_papers_without_results": 33,
+     "finds_not_in_gold": {
+      "named": 30,
+      "r": 42,
+      "nameless": 8
+     }
+    },
+    "cascade": {
+     "recall": 0.875,
+     "recall_ci": [
+      0.789,
+      0.952
+     ],
+     "found": 307,
+     "recall_damaged": 0.856,
+     "damaged_n": 90,
+     "recall_by_test": {
+      "F": {
+       "k": 156,
+       "n": 159,
+       "r": 0.981
+      },
+      "chi2": {
+       "k": 46,
+       "n": 48,
+       "r": 0.958
+      },
+      "r": {
+       "k": 4,
+       "n": 4,
+       "r": 1.0
+      },
+      "t": {
+       "k": 88,
+       "n": 108,
+       "r": 0.815
+      },
+      "z": {
+       "k": 13,
+       "n": 32,
+       "r": 0.406
+      }
+     },
+     "finds_in_papers_without_results": 33,
+     "finds_not_in_gold": {
+      "named": 30,
+      "r": 42,
+      "nameless": 8
+     }
+    },
+    "model_passages": {
+     "recall": 0.869,
+     "recall_ci": [
+      0.787,
+      0.953
+     ],
+     "found": 305,
+     "recall_damaged": 0.844,
+     "damaged_n": 90,
+     "recall_by_test": {
+      "F": {
+       "k": 157,
+       "n": 159,
+       "r": 0.987
+      },
+      "chi2": {
+       "k": 47,
+       "n": 48,
+       "r": 0.979
+      },
+      "r": {
+       "k": 4,
+       "n": 4,
+       "r": 1.0
+      },
+      "t": {
+       "k": 90,
+       "n": 108,
+       "r": 0.833
+      },
+      "z": {
+       "k": 7,
+       "n": 32,
+       "r": 0.219
+      }
+     },
+     "finds_in_papers_without_results": 32,
+     "finds_not_in_gold": {
+      "named": 31,
+      "r": 44,
+      "nameless": 11
+     }
+    },
+    "statcheck_r_fulltext_raw": {
+     "recall": 0.128,
+     "recall_ci": [
+      0.033,
+      0.357
+     ],
+     "found": 45,
+     "recall_damaged": 0.0,
+     "damaged_n": 90,
+     "recall_by_test": {
+      "F": {
+       "k": 21,
+       "n": 159,
+       "r": 0.132
+      },
+      "chi2": {
+       "k": 11,
+       "n": 48,
+       "r": 0.229
+      },
+      "r": {
+       "k": 0,
+       "n": 4,
+       "r": 0.0
+      },
+      "t": {
+       "k": 7,
+       "n": 108,
+       "r": 0.065
+      },
+      "z": {
+       "k": 6,
+       "n": 32,
+       "r": 0.188
+      }
+     },
+     "finds_in_papers_without_results": 0,
+     "finds_not_in_gold": {
+      "named": 0,
+      "r": 0,
+      "nameless": 0
+     }
+    },
+    "statcheck_r_fulltext_repaired": {
+     "recall": 0.538,
+     "recall_ci": [
+      0.277,
+      0.817
+     ],
+     "found": 189,
+     "recall_damaged": 0.678,
+     "damaged_n": 90,
+     "recall_by_test": {
+      "F": {
+       "k": 137,
+       "n": 159,
+       "r": 0.862
+      },
+      "chi2": {
+       "k": 14,
+       "n": 48,
+       "r": 0.292
+      },
+      "r": {
+       "k": 0,
+       "n": 4,
+       "r": 0.0
+      },
+      "t": {
+       "k": 32,
+       "n": 108,
+       "r": 0.296
+      },
+      "z": {
+       "k": 6,
+       "n": 32,
+       "r": 0.188
+      }
+     },
+     "finds_in_papers_without_results": 0,
+     "finds_not_in_gold": {
+      "named": 7,
+      "r": 0,
+      "nameless": 0
+     }
+    },
+    "statcheck_r_passages": {
+     "recall": 0.587,
+     "recall_ci": [
+      0.379,
+      0.817
+     ],
+     "found": 206,
+     "recall_damaged": 0.678,
+     "damaged_n": 90,
+     "recall_by_test": {
+      "F": {
+       "k": 136,
+       "n": 159,
+       "r": 0.855
+      },
+      "chi2": {
+       "k": 14,
+       "n": 48,
+       "r": 0.292
+      },
+      "r": {
+       "k": 0,
+       "n": 4,
+       "r": 0.0
+      },
+      "t": {
+       "k": 44,
+       "n": 108,
+       "r": 0.407
+      },
+      "z": {
+       "k": 12,
+       "n": 32,
+       "r": 0.375
+      }
+     },
+     "finds_in_papers_without_results": 0,
+     "finds_not_in_gold": {
+      "named": 11,
+      "r": 0,
+      "nameless": 0
+     }
+    },
+    "statcheck_r_pdf": {
+     "recall": 0.296,
+     "recall_ci": [
+      0.059,
+      0.653
+     ],
+     "found": 104,
+     "recall_damaged": 0.0,
+     "damaged_n": 90,
+     "recall_by_test": {
+      "F": {
+       "k": 23,
+       "n": 159,
+       "r": 0.145
+      },
+      "chi2": {
+       "k": 11,
+       "n": 48,
+       "r": 0.229
+      },
+      "r": {
+       "k": 0,
+       "n": 4,
+       "r": 0.0
+      },
+      "t": {
+       "k": 58,
+       "n": 108,
+       "r": 0.537
+      },
+      "z": {
+       "k": 12,
+       "n": 32,
+       "r": 0.375
+      }
+     },
+     "finds_in_papers_without_results": 0,
+     "finds_not_in_gold": {
+      "named": 4,
+      "r": 0,
+      "nameless": 0
+     }
+    }
+   },
+   "none": {
+    "papers": 120,
+    "papers_with_results": 26,
+    "gold_in_scope": 125,
+    "prefilter_keeps": 0.984,
+    "regex": {
+     "recall": 0.16,
+     "recall_ci": [
+      0.026,
+      0.418
+     ],
+     "found": 20,
+     "recall_damaged": 0.158,
+     "damaged_n": 19,
+     "recall_by_test": {
+      "F": {
+       "k": 12,
+       "n": 43,
+       "r": 0.279
+      },
+      "Q": {
+       "k": 0,
+       "n": 12,
+       "r": 0.0
+      },
+      "chi2": {
+       "k": 0,
+       "n": 33,
+       "r": 0.0
+      },
+      "t": {
+       "k": 8,
+       "n": 33,
+       "r": 0.242
+      },
+      "z": {
+       "k": 0,
+       "n": 4,
+       "r": 0.0
+      }
+     },
+     "finds_in_papers_without_results": 2,
+     "finds_not_in_gold": {
+      "named": 1,
+      "r": 0,
+      "nameless": 0
+     }
+    },
+    "model": {
+     "recall": 0.784,
+     "recall_ci": [
+      0.633,
+      0.883
+     ],
+     "found": 98,
+     "recall_damaged": 0.632,
+     "damaged_n": 19,
+     "recall_by_test": {
+      "F": {
+       "k": 39,
+       "n": 43,
+       "r": 0.907
+      },
+      "Q": {
+       "k": 7,
+       "n": 12,
+       "r": 0.583
+      },
+      "chi2": {
+       "k": 26,
+       "n": 33,
+       "r": 0.788
+      },
+      "t": {
+       "k": 25,
+       "n": 33,
+       "r": 0.758
+      },
+      "z": {
+       "k": 1,
+       "n": 4,
+       "r": 0.25
+      }
+     },
+     "finds_in_papers_without_results": 122,
+     "finds_not_in_gold": {
+      "named": 5,
+      "r": 66,
+      "nameless": 42
+     }
+    },
+    "cascade": {
+     "recall": 0.784,
+     "recall_ci": [
+      0.633,
+      0.883
+     ],
+     "found": 98,
+     "recall_damaged": 0.632,
+     "damaged_n": 19,
+     "recall_by_test": {
+      "F": {
+       "k": 39,
+       "n": 43,
+       "r": 0.907
+      },
+      "Q": {
+       "k": 7,
+       "n": 12,
+       "r": 0.583
+      },
+      "chi2": {
+       "k": 26,
+       "n": 33,
+       "r": 0.788
+      },
+      "t": {
+       "k": 25,
+       "n": 33,
+       "r": 0.758
+      },
+      "z": {
+       "k": 1,
+       "n": 4,
+       "r": 0.25
+      }
+     },
+     "finds_in_papers_without_results": 122,
+     "finds_not_in_gold": {
+      "named": 5,
+      "r": 66,
+      "nameless": 42
+     }
+    },
+    "model_passages": {
+     "recall": 0.792,
+     "recall_ci": [
+      0.649,
+      0.884
+     ],
+     "found": 99,
+     "recall_damaged": 0.632,
+     "damaged_n": 19,
+     "recall_by_test": {
+      "F": {
+       "k": 39,
+       "n": 43,
+       "r": 0.907
+      },
+      "Q": {
+       "k": 8,
+       "n": 12,
+       "r": 0.667
+      },
+      "chi2": {
+       "k": 26,
+       "n": 33,
+       "r": 0.788
+      },
+      "t": {
+       "k": 25,
+       "n": 33,
+       "r": 0.758
+      },
+      "z": {
+       "k": 1,
+       "n": 4,
+       "r": 0.25
+      }
+     },
+     "finds_in_papers_without_results": 118,
+     "finds_not_in_gold": {
+      "named": 5,
+      "r": 83,
+      "nameless": 44
+     }
+    },
+    "statcheck_r_fulltext_raw": {
+     "recall": 0.072,
+     "recall_ci": [
+      0.0,
+      0.281
+     ],
+     "found": 9,
+     "recall_damaged": 0.0,
+     "damaged_n": 19,
+     "recall_by_test": {
+      "F": {
+       "k": 4,
+       "n": 43,
+       "r": 0.093
+      },
+      "Q": {
+       "k": 0,
+       "n": 12,
+       "r": 0.0
+      },
+      "chi2": {
+       "k": 0,
+       "n": 33,
+       "r": 0.0
+      },
+      "t": {
+       "k": 5,
+       "n": 33,
+       "r": 0.152
+      },
+      "z": {
+       "k": 0,
+       "n": 4,
+       "r": 0.0
+      }
+     },
+     "finds_in_papers_without_results": 2,
+     "finds_not_in_gold": {
+      "named": 0,
+      "r": 0,
+      "nameless": 0
+     }
+    },
+    "statcheck_r_fulltext_repaired": {
+     "recall": 0.176,
+     "recall_ci": [
+      0.042,
+      0.451
+     ],
+     "found": 22,
+     "recall_damaged": 0.263,
+     "damaged_n": 19,
+     "recall_by_test": {
+      "F": {
+       "k": 12,
+       "n": 43,
+       "r": 0.279
+      },
+      "Q": {
+       "k": 0,
+       "n": 12,
+       "r": 0.0
+      },
+      "chi2": {
+       "k": 2,
+       "n": 33,
+       "r": 0.061
+      },
+      "t": {
+       "k": 8,
+       "n": 33,
+       "r": 0.242
+      },
+      "z": {
+       "k": 0,
+       "n": 4,
+       "r": 0.0
+      }
+     },
+     "finds_in_papers_without_results": 2,
+     "finds_not_in_gold": {
+      "named": 3,
+      "r": 0,
+      "nameless": 0
+     }
+    },
+    "statcheck_r_passages": {
+     "recall": 0.176,
+     "recall_ci": [
+      0.042,
+      0.451
+     ],
+     "found": 22,
+     "recall_damaged": 0.263,
+     "damaged_n": 19,
+     "recall_by_test": {
+      "F": {
+       "k": 12,
+       "n": 43,
+       "r": 0.279
+      },
+      "Q": {
+       "k": 0,
+       "n": 12,
+       "r": 0.0
+      },
+      "chi2": {
+       "k": 2,
+       "n": 33,
+       "r": 0.061
+      },
+      "t": {
+       "k": 8,
+       "n": 33,
+       "r": 0.242
+      },
+      "z": {
+       "k": 0,
+       "n": 4,
+       "r": 0.0
+      }
+     },
+     "finds_in_papers_without_results": 2,
+     "finds_not_in_gold": {
+      "named": 3,
+      "r": 0,
+      "nameless": 0
+     }
+    },
+    "statcheck_r_pdf": {
+     "recall": 0.072,
+     "recall_ci": [
+      0.0,
+      0.281
+     ],
+     "found": 9,
+     "recall_damaged": 0.0,
+     "damaged_n": 19,
+     "recall_by_test": {
+      "F": {
+       "k": 4,
+       "n": 43,
+       "r": 0.093
+      },
+      "Q": {
+       "k": 0,
+       "n": 12,
+       "r": 0.0
+      },
+      "chi2": {
+       "k": 0,
+       "n": 33,
+       "r": 0.0
+      },
+      "t": {
+       "k": 5,
+       "n": 33,
+       "r": 0.152
+      },
+      "z": {
+       "k": 0,
+       "n": 4,
+       "r": 0.0
+      }
+     },
+     "finds_in_papers_without_results": 2,
+     "finds_not_in_gold": {
+      "named": 0,
+      "r": 0,
+      "nameless": 0
+     }
+    }
+   }
+  }
+ },
+ "gold_train": {
+  "papers": 240,
+  "papers_with_results": 136,
+  "gold_in_scope": 2007,
+  "prefilter_keeps": 0.939,
+  "regex": {
+   "recall": 0.514,
+   "recall_ci": [
+    0.438,
+    0.591
+   ],
+   "found": 1032,
+   "recall_damaged": 0.42,
+   "damaged_n": 386,
+   "recall_by_test": {
+    "F": {
+     "k": 662,
+     "n": 1036,
+     "r": 0.639
+    },
+    "Q": {
+     "k": 3,
+     "n": 37,
+     "r": 0.081
+    },
+    "chi2": {
+     "k": 44,
+     "n": 298,
+     "r": 0.148
+    },
+    "r": {
+     "k": 6,
+     "n": 17,
+     "r": 0.353
+    },
+    "t": {
+     "k": 281,
+     "n": 539,
+     "r": 0.521
+    },
+    "z": {
+     "k": 36,
+     "n": 80,
+     "r": 0.45
+    }
+   },
+   "finds_in_papers_without_results": 0,
+   "finds_not_in_gold": {
+    "named": 40,
+    "r": 1,
+    "nameless": 0
+   }
+  },
+  "model": {
+   "recall": 0.84,
+   "recall_ci": [
+    0.789,
+    0.883
+   ],
+   "found": 1686,
+   "recall_damaged": 0.684,
+   "damaged_n": 386,
+   "recall_by_test": {
+    "F": {
+     "k": 941,
+     "n": 1036,
+     "r": 0.908
+    },
+    "Q": {
+     "k": 29,
+     "n": 37,
+     "r": 0.784
+    },
+    "chi2": {
+     "k": 246,
+     "n": 298,
+     "r": 0.826
+    },
+    "r": {
+     "k": 11,
+     "n": 17,
+     "r": 0.647
+    },
+    "t": {
+     "k": 397,
+     "n": 539,
+     "r": 0.737
+    },
+    "z": {
+     "k": 62,
+     "n": 80,
+     "r": 0.775
+    }
+   },
+   "finds_in_papers_without_results": 149,
+   "finds_not_in_gold": {
+    "named": 259,
+    "r": 232,
+    "nameless": 134
+   }
+  },
+  "cascade": {
+   "recall": 0.843,
+   "recall_ci": [
+    0.793,
+    0.885
+   ],
+   "found": 1691,
+   "recall_damaged": 0.684,
+   "damaged_n": 386,
+   "recall_by_test": {
+    "F": {
+     "k": 943,
+     "n": 1036,
+     "r": 0.91
+    },
+    "Q": {
+     "k": 29,
+     "n": 37,
+     "r": 0.784
+    },
+    "chi2": {
+     "k": 246,
+     "n": 298,
+     "r": 0.826
+    },
+    "r": {
+     "k": 11,
+     "n": 17,
+     "r": 0.647
+    },
+    "t": {
+     "k": 400,
+     "n": 539,
+     "r": 0.742
+    },
+    "z": {
+     "k": 62,
+     "n": 80,
+     "r": 0.775
+    }
+   },
+   "finds_in_papers_without_results": 149,
+   "finds_not_in_gold": {
+    "named": 264,
+    "r": 232,
+    "nameless": 129
+   }
+  },
+  "model_passages": {
+   "recall": 0.859,
+   "recall_ci": [
+    0.808,
+    0.903
+   ],
+   "found": 1725,
+   "recall_damaged": 0.689,
+   "damaged_n": 386,
+   "recall_by_test": {
+    "F": {
+     "k": 958,
+     "n": 1036,
+     "r": 0.925
+    },
+    "Q": {
+     "k": 32,
+     "n": 37,
+     "r": 0.865
+    },
+    "chi2": {
+     "k": 256,
+     "n": 298,
+     "r": 0.859
+    },
+    "r": {
+     "k": 12,
+     "n": 17,
+     "r": 0.706
+    },
+    "t": {
+     "k": 404,
+     "n": 539,
+     "r": 0.75
+    },
+    "z": {
+     "k": 63,
+     "n": 80,
+     "r": 0.787
+    }
+   },
+   "finds_in_papers_without_results": 142,
+   "finds_not_in_gold": {
+    "named": 262,
+    "r": 256,
+    "nameless": 147
+   }
+  },
+  "statcheck_r_fulltext_raw": {
+   "recall": 0.285,
+   "recall_ci": [
+    0.196,
+    0.374
+   ],
+   "found": 572,
+   "recall_damaged": 0.034,
+   "damaged_n": 386,
+   "recall_by_test": {
+    "F": {
+     "k": 255,
+     "n": 1036,
+     "r": 0.246
+    },
+    "Q": {
+     "k": 12,
+     "n": 37,
+     "r": 0.324
+    },
+    "chi2": {
+     "k": 67,
+     "n": 298,
+     "r": 0.225
+    },
+    "r": {
+     "k": 6,
+     "n": 17,
+     "r": 0.353
+    },
+    "t": {
+     "k": 197,
+     "n": 539,
+     "r": 0.365
+    },
+    "z": {
+     "k": 35,
+     "n": 80,
+     "r": 0.438
+    }
+   },
+   "finds_in_papers_without_results": 0,
+   "finds_not_in_gold": {
+    "named": 51,
+    "r": 1,
+    "nameless": 0
+   }
+  },
+  "statcheck_r_fulltext_repaired": {
+   "recall": 0.506,
+   "recall_ci": [
+    0.419,
+    0.591
+   ],
+   "found": 1015,
+   "recall_damaged": 0.459,
+   "damaged_n": 386,
+   "recall_by_test": {
+    "F": {
+     "k": 593,
+     "n": 1036,
+     "r": 0.572
+    },
+    "Q": {
+     "k": 12,
+     "n": 37,
+     "r": 0.324
+    },
+    "chi2": {
+     "k": 70,
+     "n": 298,
+     "r": 0.235
+    },
+    "r": {
+     "k": 8,
+     "n": 17,
+     "r": 0.471
+    },
+    "t": {
+     "k": 296,
+     "n": 539,
+     "r": 0.549
+    },
+    "z": {
+     "k": 36,
+     "n": 80,
+     "r": 0.45
+    }
+   },
+   "finds_in_papers_without_results": 0,
+   "finds_not_in_gold": {
+    "named": 65,
+    "r": 1,
+    "nameless": 0
+   }
+  },
+  "statcheck_r_passages": {
+   "recall": 0.557,
+   "recall_ci": [
+    0.479,
+    0.634
+   ],
+   "found": 1118,
+   "recall_damaged": 0.459,
+   "damaged_n": 386,
+   "recall_by_test": {
+    "F": {
+     "k": 651,
+     "n": 1036,
+     "r": 0.628
+    },
+    "Q": {
+     "k": 12,
+     "n": 37,
+     "r": 0.324
+    },
+    "chi2": {
+     "k": 71,
+     "n": 298,
+     "r": 0.238
+    },
+    "r": {
+     "k": 8,
+     "n": 17,
+     "r": 0.471
+    },
+    "t": {
+     "k": 341,
+     "n": 539,
+     "r": 0.633
+    },
+    "z": {
+     "k": 35,
+     "n": 80,
+     "r": 0.438
+    }
+   },
+   "finds_in_papers_without_results": 0,
+   "finds_not_in_gold": {
+    "named": 58,
+    "r": 1,
+    "nameless": 0
+   }
+  },
+  "statcheck_r_pdf": {
+   "recall": 0.329,
+   "recall_ci": [
+    0.235,
+    0.424
+   ],
+   "found": 660,
+   "recall_damaged": 0.034,
+   "damaged_n": 386,
+   "recall_by_test": {
+    "F": {
+     "k": 326,
+     "n": 1036,
+     "r": 0.315
+    },
+    "Q": {
+     "k": 14,
+     "n": 37,
+     "r": 0.378
+    },
+    "chi2": {
+     "k": 71,
+     "n": 298,
+     "r": 0.238
+    },
+    "r": {
+     "k": 6,
+     "n": 17,
+     "r": 0.353
+    },
+    "t": {
+     "k": 204,
+     "n": 539,
+     "r": 0.378
+    },
+    "z": {
+     "k": 39,
+     "n": 80,
+     "r": 0.487
+    }
+   },
+   "finds_in_papers_without_results": 0,
+   "finds_not_in_gold": {
+    "named": 41,
+    "r": 1,
+    "nameless": 0
+   }
+  }
+ },
+ "all": {
+  "papers": 409,
+  "papers_with_results": 185,
+  "gold_in_scope": 2483,
+  "prefilter_keeps": 0.949,
+  "regex": {
+   "recall": 0.509,
+   "recall_ci": [
+    0.436,
+    0.577
+   ],
+   "found": 1265,
+   "recall_damaged": 0.455,
+   "damaged_n": 495,
+   "recall_by_test": {
+    "F": {
+     "k": 809,
+     "n": 1238,
+     "r": 0.653
+    },
+    "Q": {
+     "k": 3,
+     "n": 49,
+     "r": 0.061
+    },
+    "chi2": {
+     "k": 50,
+     "n": 379,
+     "r": 0.132
+    },
+    "r": {
+     "k": 6,
+     "n": 21,
+     "r": 0.286
+    },
+    "t": {
+     "k": 350,
+     "n": 680,
+     "r": 0.515
+    },
+    "z": {
+     "k": 47,
+     "n": 116,
+     "r": 0.405
+    }
+   },
+   "finds_in_papers_without_results": 2,
+   "finds_not_in_gold": {
+    "named": 50,
+    "r": 1,
+    "nameless": 0
+   }
+  },
+  "model": {
+   "recall": 0.839,
+   "recall_ci": [
+    0.798,
+    0.877
+   ],
+   "found": 2084,
+   "recall_damaged": 0.711,
+   "damaged_n": 495,
+   "recall_by_test": {
+    "F": {
+     "k": 1135,
+     "n": 1238,
+     "r": 0.917
+    },
+    "Q": {
+     "k": 36,
+     "n": 49,
+     "r": 0.735
+    },
+    "chi2": {
+     "k": 318,
+     "n": 379,
+     "r": 0.839
+    },
+    "r": {
+     "k": 15,
+     "n": 21,
+     "r": 0.714
+    },
+    "t": {
+     "k": 510,
+     "n": 680,
+     "r": 0.75
+    },
+    "z": {
+     "k": 70,
+     "n": 116,
+     "r": 0.603
+    }
+   },
+   "finds_in_papers_without_results": 304,
+   "finds_not_in_gold": {
+    "named": 294,
+    "r": 340,
+    "nameless": 184
+   }
+  },
+  "cascade": {
+   "recall": 0.844,
+   "recall_ci": [
+    0.804,
+    0.881
+   ],
+   "found": 2096,
+   "recall_damaged": 0.713,
+   "damaged_n": 495,
+   "recall_by_test": {
+    "F": {
+     "k": 1138,
+     "n": 1238,
+     "r": 0.919
+    },
+    "Q": {
+     "k": 36,
+     "n": 49,
+     "r": 0.735
+    },
+    "chi2": {
+     "k": 318,
+     "n": 379,
+     "r": 0.839
+    },
+    "r": {
+     "k": 15,
+     "n": 21,
+     "r": 0.714
+    },
+    "t": {
+     "k": 513,
+     "n": 680,
+     "r": 0.754
+    },
+    "z": {
+     "k": 76,
+     "n": 116,
+     "r": 0.655
+    }
+   },
+   "finds_in_papers_without_results": 304,
+   "finds_not_in_gold": {
+    "named": 299,
+    "r": 340,
+    "nameless": 179
+   }
+  },
+  "model_passages": {
+   "recall": 0.857,
+   "recall_ci": [
+    0.814,
+    0.895
+   ],
+   "found": 2129,
+   "recall_damaged": 0.715,
+   "damaged_n": 495,
+   "recall_by_test": {
+    "F": {
+     "k": 1154,
+     "n": 1238,
+     "r": 0.932
+    },
+    "Q": {
+     "k": 40,
+     "n": 49,
+     "r": 0.816
+    },
+    "chi2": {
+     "k": 329,
+     "n": 379,
+     "r": 0.868
+    },
+    "r": {
+     "k": 16,
+     "n": 21,
+     "r": 0.762
+    },
+    "t": {
+     "k": 519,
+     "n": 680,
+     "r": 0.763
+    },
+    "z": {
+     "k": 71,
+     "n": 116,
+     "r": 0.612
+    }
+   },
+   "finds_in_papers_without_results": 292,
+   "finds_not_in_gold": {
+    "named": 298,
+    "r": 383,
+    "nameless": 202
+   }
+  },
+  "statcheck_r_fulltext_raw": {
+   "recall": 0.252,
+   "recall_ci": [
+    0.175,
+    0.329
+   ],
+   "found": 626,
+   "recall_damaged": 0.026,
+   "damaged_n": 495,
+   "recall_by_test": {
+    "F": {
+     "k": 280,
+     "n": 1238,
+     "r": 0.226
+    },
+    "Q": {
+     "k": 12,
+     "n": 49,
+     "r": 0.245
+    },
+    "chi2": {
+     "k": 78,
+     "n": 379,
+     "r": 0.206
+    },
+    "r": {
+     "k": 6,
+     "n": 21,
+     "r": 0.286
+    },
+    "t": {
+     "k": 209,
+     "n": 680,
+     "r": 0.307
+    },
+    "z": {
+     "k": 41,
+     "n": 116,
+     "r": 0.353
+    }
+   },
+   "finds_in_papers_without_results": 2,
+   "finds_not_in_gold": {
+    "named": 51,
+    "r": 1,
+    "nameless": 0
+   }
+  },
+  "statcheck_r_fulltext_repaired": {
+   "recall": 0.494,
+   "recall_ci": [
+    0.415,
+    0.571
+   ],
+   "found": 1226,
+   "recall_damaged": 0.491,
+   "damaged_n": 495,
+   "recall_by_test": {
+    "F": {
+     "k": 742,
+     "n": 1238,
+     "r": 0.599
+    },
+    "Q": {
+     "k": 12,
+     "n": 49,
+     "r": 0.245
+    },
+    "chi2": {
+     "k": 86,
+     "n": 379,
+     "r": 0.227
+    },
+    "r": {
+     "k": 8,
+     "n": 21,
+     "r": 0.381
+    },
+    "t": {
+     "k": 336,
+     "n": 680,
+     "r": 0.494
+    },
+    "z": {
+     "k": 42,
+     "n": 116,
+     "r": 0.362
+    }
+   },
+   "finds_in_papers_without_results": 2,
+   "finds_not_in_gold": {
+    "named": 75,
+    "r": 1,
+    "nameless": 0
+   }
+  },
+  "statcheck_r_passages": {
+   "recall": 0.542,
+   "recall_ci": [
+    0.467,
+    0.612
+   ],
+   "found": 1346,
+   "recall_damaged": 0.491,
+   "damaged_n": 495,
+   "recall_by_test": {
+    "F": {
+     "k": 799,
+     "n": 1238,
+     "r": 0.645
+    },
+    "Q": {
+     "k": 12,
+     "n": 49,
+     "r": 0.245
+    },
+    "chi2": {
+     "k": 87,
+     "n": 379,
+     "r": 0.23
+    },
+    "r": {
+     "k": 8,
+     "n": 21,
+     "r": 0.381
+    },
+    "t": {
+     "k": 393,
+     "n": 680,
+     "r": 0.578
+    },
+    "z": {
+     "k": 47,
+     "n": 116,
+     "r": 0.405
+    }
+   },
+   "finds_in_papers_without_results": 2,
+   "finds_not_in_gold": {
+    "named": 72,
+    "r": 1,
+    "nameless": 0
+   }
+  },
+  "statcheck_r_pdf": {
+   "recall": 0.311,
+   "recall_ci": [
+    0.226,
+    0.399
+   ],
+   "found": 773,
+   "recall_damaged": 0.026,
+   "damaged_n": 495,
+   "recall_by_test": {
+    "F": {
+     "k": 353,
+     "n": 1238,
+     "r": 0.285
+    },
+    "Q": {
+     "k": 14,
+     "n": 49,
+     "r": 0.286
+    },
+    "chi2": {
+     "k": 82,
+     "n": 379,
+     "r": 0.216
+    },
+    "r": {
+     "k": 6,
+     "n": 21,
+     "r": 0.286
+    },
+    "t": {
+     "k": 267,
+     "n": 680,
+     "r": 0.393
+    },
+    "z": {
+     "k": 51,
+     "n": 116,
+     "r": 0.44
+    }
+   },
+   "finds_in_papers_without_results": 2,
+   "finds_not_in_gold": {
+    "named": 45,
+    "r": 1,
+    "nameless": 0
+   }
+  }
+ },
+ "bronze": {
+  "source": "results/eval.json",
+  "checkable": 202,
+  "damaged": 166,
+  "results": 323,
+  "windows": 576,
+  "systems": {
+   "cascade_gru-crf-s0": {
+    "checkable": {
+     "f1": 0.9560723514211887,
+     "fn": 17,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.9158415841584159,
+     "tp": 185
+    },
+    "damaged": {
+     "f1": 0.922077922077922,
+     "fn": 24,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8554216867469879,
+     "tp": 142
+    },
+    "overall": {
+     "f1": 0.9079159935379645,
+     "fn": 42,
+     "fp": 15,
+     "p": 0.9493243243243243,
+     "r": 0.8699690402476781,
+     "tp": 281
+    }
+   },
+   "cnn-crf-s0": {
+    "checkable": {
+     "f1": 0.9312169312169313,
+     "fn": 26,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8712871287128713,
+     "tp": 176
+    },
+    "damaged": {
+     "f1": 0.8896321070234113,
+     "fn": 33,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8012048192771084,
+     "tp": 133
+    },
+    "overall": {
+     "f1": 0.8398576512455516,
+     "fn": 87,
+     "fp": 3,
+     "p": 0.9874476987447699,
+     "r": 0.7306501547987616,
+     "tp": 236
+    }
+   },
+   "cnn-softmax-s0": {
+    "checkable": {
+     "f1": 0.9479166666666667,
+     "fn": 20,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.900990099009901,
+     "tp": 182
+    },
+    "damaged": {
+     "f1": 0.9290322580645161,
+     "fn": 22,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8674698795180723,
+     "tp": 144
+    },
+    "overall": {
+     "f1": 0.8468468468468469,
+     "fn": 41,
+     "fp": 61,
+     "p": 0.8221574344023324,
+     "r": 0.8730650154798761,
+     "tp": 282
+    }
+   },
+   "gru-crf-noaug-s0": {
+    "checkable": {
+     "f1": 0.9560723514211887,
+     "fn": 17,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.9158415841584159,
+     "tp": 185
+    },
+    "damaged": {
+     "f1": 0.9185667752442997,
+     "fn": 25,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8493975903614458,
+     "tp": 141
+    },
+    "overall": {
+     "f1": 0.9052969502407705,
+     "fn": 41,
+     "fp": 18,
+     "p": 0.94,
+     "r": 0.8730650154798761,
+     "tp": 282
+    }
+   },
+   "gru-crf-s0": {
+    "checkable": {
+     "f1": 0.9479166666666667,
+     "fn": 20,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.900990099009901,
+     "tp": 182
+    },
+    "damaged": {
+     "f1": 0.9150326797385622,
+     "fn": 26,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8433734939759037,
+     "tp": 140
+    },
+    "overall": {
+     "f1": 0.9040650406504065,
+     "fn": 45,
+     "fp": 14,
+     "p": 0.952054794520548,
+     "r": 0.8606811145510835,
+     "tp": 278
+    }
+   },
+   "gru-crf-s1": {
+    "checkable": {
+     "f1": 0.9479166666666667,
+     "fn": 20,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.900990099009901,
+     "tp": 182
+    },
+    "damaged": {
+     "f1": 0.9185667752442997,
+     "fn": 25,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8493975903614458,
+     "tp": 141
+    },
+    "overall": {
+     "f1": 0.9011345218800648,
+     "fn": 45,
+     "fp": 16,
+     "p": 0.9455782312925171,
+     "r": 0.8606811145510835,
+     "tp": 278
+    }
+   },
+   "gru-crf-s2": {
+    "checkable": {
+     "f1": 0.9340369393139842,
+     "fn": 25,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8762376237623762,
+     "tp": 177
+    },
+    "damaged": {
+     "f1": 0.9185667752442997,
+     "fn": 25,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8493975903614458,
+     "tp": 141
+    },
+    "overall": {
+     "f1": 0.8976897689768976,
+     "fn": 51,
+     "fp": 11,
+     "p": 0.9611307420494699,
+     "r": 0.8421052631578947,
+     "tp": 272
+    }
+   },
+   "gru-softmax-s0": {
+    "checkable": {
+     "f1": 0.9560723514211887,
+     "fn": 17,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.9158415841584159,
+     "tp": 185
+    },
+    "damaged": {
+     "f1": 0.9290322580645161,
+     "fn": 22,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8674698795180723,
+     "tp": 144
+    },
+    "overall": {
+     "f1": 0.9033280507131537,
+     "fn": 38,
+     "fp": 23,
+     "p": 0.9253246753246753,
+     "r": 0.8823529411764706,
+     "tp": 285
+    }
+   },
+   "gru-softmax-s1": {
+    "checkable": {
+     "f1": 0.9560723514211887,
+     "fn": 17,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.9158415841584159,
+     "tp": 185
+    },
+    "damaged": {
+     "f1": 0.9358974358974359,
+     "fn": 20,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8795180722891566,
+     "tp": 146
+    },
+    "overall": {
+     "f1": 0.8902821316614421,
+     "fn": 39,
+     "fp": 31,
+     "p": 0.9015873015873016,
+     "r": 0.8792569659442725,
+     "tp": 284
+    }
+   },
+   "gru-softmax-s2": {
+    "checkable": {
+     "f1": 0.9506493506493507,
+     "fn": 19,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.905940594059406,
+     "tp": 183
+    },
+    "damaged": {
+     "f1": 0.9290322580645161,
+     "fn": 22,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8674698795180723,
+     "tp": 144
+    },
+    "overall": {
+     "f1": 0.8982229402261711,
+     "fn": 45,
+     "fp": 18,
+     "p": 0.9391891891891891,
+     "r": 0.8606811145510835,
+     "tp": 278
+    }
+   },
+   "lstm-crf-s0": {
+    "checkable": {
+     "f1": 0.9533678756476685,
+     "fn": 18,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.9108910891089109,
+     "tp": 184
+    },
+    "damaged": {
+     "f1": 0.9185667752442997,
+     "fn": 25,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8493975903614458,
+     "tp": 141
+    },
+    "overall": {
+     "f1": 0.9161290322580645,
+     "fn": 39,
+     "fp": 13,
+     "p": 0.9562289562289562,
+     "r": 0.8792569659442725,
+     "tp": 284
+    }
+   },
+   "lstm-softmax-s0": {
+    "checkable": {
+     "f1": 0.9506493506493507,
+     "fn": 19,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.905940594059406,
+     "tp": 183
+    },
+    "damaged": {
+     "f1": 0.9255663430420712,
+     "fn": 23,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8614457831325302,
+     "tp": 143
+    },
+    "overall": {
+     "f1": 0.8944881889763779,
+     "fn": 39,
+     "fp": 28,
+     "p": 0.9102564102564102,
+     "r": 0.8792569659442725,
+     "tp": 284
+    }
+   },
+   "lstm-softmax-s1": {
+    "checkable": {
+     "f1": 0.9506493506493507,
+     "fn": 19,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.905940594059406,
+     "tp": 183
+    },
+    "damaged": {
+     "f1": 0.9255663430420712,
+     "fn": 23,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8614457831325302,
+     "tp": 143
+    },
+    "overall": {
+     "f1": 0.8857142857142857,
+     "fn": 44,
+     "fp": 28,
+     "p": 0.9087947882736156,
+     "r": 0.8637770897832817,
+     "tp": 279
+    }
+   },
+   "lstm-softmax-s2": {
+    "checkable": {
+     "f1": 0.9533678756476685,
+     "fn": 18,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.9108910891089109,
+     "tp": 184
+    },
+    "damaged": {
+     "f1": 0.932475884244373,
+     "fn": 21,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.8734939759036144,
+     "tp": 145
+    },
+    "overall": {
+     "f1": 0.8744038155802862,
+     "fn": 48,
+     "fp": 31,
+     "p": 0.8986928104575164,
+     "r": 0.8513931888544891,
+     "tp": 275
+    }
+   },
+   "statcheck_raw": {
+    "checkable": {
+     "f1": 0.4401544401544401,
+     "fn": 145,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.28217821782178215,
+     "tp": 57
+    },
+    "damaged": {
+     "f1": 0.02380952380952381,
+     "fn": 164,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.012048192771084338,
+     "tp": 2
+    },
+    "overall": {
+     "f1": 0.30809399477806787,
+     "fn": 264,
+     "fp": 1,
+     "p": 0.9833333333333333,
+     "r": 0.1826625386996904,
+     "tp": 59
+    }
+   },
+   "statcheck_repaired": {
+    "checkable": {
+     "f1": 0.8457142857142858,
+     "fn": 54,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.7326732673267327,
+     "tp": 148
+    },
+    "damaged": {
+     "f1": 0.7230769230769232,
+     "fn": 72,
+     "fp": 0,
+     "p": 1.0,
+     "r": 0.5662650602409639,
+     "tp": 94
+    },
+    "overall": {
+     "f1": 0.6357894736842106,
+     "fn": 172,
+     "fp": 1,
+     "p": 0.993421052631579,
+     "r": 0.4674922600619195,
+     "tp": 151
+    }
+   }
+  }
+ },
+ "provenance": {
+  "git_sha": "54fc781e84becb9f277cd09eaef811649373b121",
+  "date": "2026-10-04T17:08:09+00:00",
+  "command": "pipeline/14_gold_eval.py --resamples 2000 --seed 0",
+  "seed": 0,
+  "resamples": 2000,
+  "systems": [
+   "regex",
+   "model",
+   "cascade",
+   "model_passages",
+   "statcheck_r_fulltext_raw",
+   "statcheck_r_fulltext_repaired",
+   "statcheck_r_passages",
+   "statcheck_r_pdf"
+  ],
+  "model": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/src/statcheck_ml/zoo/gru-crf",
+  "inputs": {
+   "dataset/gold/gold.jsonl": "d8f6a4449c809826204883c1970a817df8820580329906118e233b34deda00d2",
+   "dataset/gold/split.json": "fbb0214f17e33aa1053015d1410a7a23f5fe269e551e9097463f3949c740c9d2",
+   "results/eval.json": "8dfc73d7a0aa8828bfadf922052efcbe1a36c04db1bc1670265d19acb230d5eb",
+   "dataset/baseline/gold/statcheck_fulltext_raw.csv": "54631ec77dad698319ae13f432087095610f567953adfe18a5149a386692d263",
+   "dataset/baseline/gold/statcheck_fulltext_repaired.csv": "49143f709f5de90c8e3c773ecb6ab722f7b7ba1c9f9e488d983818831a1a46eb",
+   "dataset/baseline/gold/statcheck_passages.csv": "35fb0bbd086ff7c695e87c99459fa98437fa390e31dcc4855f50891164329e0b",
+   "dataset/baseline/gold/statcheck_pdf.csv": "6467d2e731a969f9e37be61930ee55fc2b2e3d09a84a63e280af691f36ee6214",
+   "dataset/baseline/gold/versions.json": "9c493c2bf8e30c2490aace129421a240b4c8344b2b573745d65e817fd7564bdf",
+   "src/statcheck_ml/zoo/gru-crf/charmap.json": "6685fb09f642173eeba89db521a148a6b14d0feed93943f1a2ab469bf3c1dc98",
+   "src/statcheck_ml/zoo/gru-crf/decoder.json": "063e08078f37550bd67a04d65c00d28a0a33189f2a4421d5a577a5d7136891de",
+   "src/statcheck_ml/zoo/gru-crf/tagger.onnx": "a40aa114b41dc779a861bc243a8b250fd31f6dad6820e7c073e2371ec377951a"
+  }
+ }
+}

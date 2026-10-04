@@ -1,41 +1,42 @@
 {
  "parity_sections": {
-  "extract": 32,
-  "group": 32,
-  "model": 32,
+  "extract": 33,
+  "group": 33,
+  "model": 33,
   "model_logits": 3,
   "normalise": 20,
-  "pipeline": 4,
+  "pipeline": 7,
   "prefilter": 4,
   "pvalue": 73,
-  "repair": 32
+  "repair": 33,
+  "units": 4
  },
  "ports": {
   "python": {
    "engine": "pymupdf",
    "sample_results": 5,
-   "seconds_100_windows": 0.91,
-   "seconds_sample_pdf": 0.053,
+   "seconds_100_windows": 0.78,
+   "seconds_sample_pdf": 0.017,
    "tests_failed": 0,
-   "tests_passed": 235
+   "tests_passed": 246
   },
   "r": {
    "engine": "pdftools (poppler)",
-   "kit_mother_commit": "49f64536fb66a5952e59be2cefa35a2788f298f0",
+   "kit_mother_commit": "e51e0180abe8d034a082797cbbd859d074508bac",
    "sample_results": 5,
-   "seconds_100_windows": 7.64,
-   "seconds_sample_pdf": 0.66,
+   "seconds_100_windows": 7.272,
+   "seconds_sample_pdf": 0.201,
    "tests_failed": 0,
-   "tests_passed": 1085
+   "tests_passed": 1259
   },
   "web": {
    "engine": "pdf.js",
-   "kit_mother_commit": "49f64536fb66a5952e59be2cefa35a2788f298f0",
+   "kit_mother_commit": "e51e0180abe8d034a082797cbbd859d074508bac",
    "sample_results": 5,
-   "seconds_100_windows": 0.96,
-   "seconds_sample_pdf": 0.091,
+   "seconds_100_windows": 1.09,
+   "seconds_sample_pdf": 0.094,
    "tests_failed": 0,
-   "tests_passed": 354
+   "tests_passed": 381
   }
  },
  "sample_pdf": "sample_paper_damaged.pdf"

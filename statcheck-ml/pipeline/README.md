@@ -29,6 +29,7 @@ with a manifest of hashes.
 | 14 | `14_gold.py` | the owner's sheet, clean text | `dataset/gold/gold.jsonl` | corpus, the sheet |
 | 14 | `14_gold_split.py` | `gold.jsonl` | `dataset/gold/split.json` | — |
 | 14 | `14_gold_eval.py` | `gold.jsonl`, `split.json`, `eval.json`, `dataset/baseline/gold/*`, the zoo | `results/gold_eval.json`, `results/gold_eval_log.jsonl` | corpus |
+| 16 | `16_compare.py` | `results/v4/before/*.json`, current `eval.json` and `gold_eval.json`, the gold log | `results/v4/compare.json`, `results/v4/compare.md` | — |
 | 15 | `15_statcheck_gold.py` | gold papers, the clean text, the PDF archive | `dataset/baseline/gold/*.csv`, `versions.json` | R, statcheck, pdftools, corpus |
 
 Rules that every stage follows:
@@ -37,5 +38,6 @@ Rules that every stage follows:
   the same inputs gives the same bytes. `reproduce.sh` prints the hashes.
 - `14_gold.py` takes `--seed` for symmetry and ignores it. It does not sample, and a rerun gives the same bytes.
 - `14_gold_eval.py` appends one line to `results/gold_eval_log.jsonl` on every run. The log records each evaluation against the gold test.
+- The files under `results/v4/before/` are frozen copies of the M1 outputs. No stage rewrites them.
 - A stage reads the committed inputs only. No stage reads a scratch file.
 - `--help` on any script prints its arguments and defaults.

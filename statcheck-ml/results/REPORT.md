@@ -1,6 +1,6 @@
 # statcheck-ml — results report
 
-Generated from commit 54fc781 (2026-10-04T18:07:19+02:00). Every number in this
+Generated from commit e51e018 (2026-10-04T19:21:02+02:00). Every number in this
 report comes from a committed measurement file. `pipeline/11_report.py` fills this
 template. No number is typed by hand.
 
@@ -489,9 +489,9 @@ Spread 0.040 against a limit of 0.060, over 200 documents and 327 bronze results
 
 ## 11 Reproduction
 
-This report was generated from commit 54fc781 (2026-10-04T18:07:19+02:00). The
+This report was generated from commit e51e018 (2026-10-04T19:21:02+02:00). The
 evaluation numbers in it come from `results/eval.json`, itself run at commit
-54fc781e84becb9f277cd09eaef811649373b121, with R 4.6.1 and statcheck 1.5.0.
+e51e0180abe8d034a082797cbbd859d074508bac, with R 4.6.1 and statcheck 1.5.0.
 
 `reproduce.sh` runs the offline stages from committed files: agreement, dataset,
 evaluation, figures, and this report. `reproduce.sh --train` adds the training grid
@@ -510,7 +510,7 @@ repositories and read one kit that this repository writes: the five spec files, 
 shipped model, the parity cases, and a manifest with a hash per file that the port
 verifies when it loads. A port never restates a rule.
 
-Parity is one file, 236 cases in 9 sections,
+Parity is one file, 243 cases in 10 sections,
 one per stage: normalise, repair, prefilter, extract, model tags, model logits,
 grouping, p-value (73 rows), and the whole pipeline on four
 documents. The Python reference produces every expected value; each port reproduces
@@ -532,9 +532,9 @@ float 5.1 and the rounding interval was ten times too wide.
 
 | Port | PDF engine | Tests passed | Tests failed | Kit from commit | Sample PDF, s | Results | 100 windows, s |
 |---|---|---|---|---|---|---|---|
-| Python | pymupdf | 235 | 0 | - | 0.05 | 5 | 0.91 |
-| R | pdftools (poppler) | 1085 | 0 | 49f6453 | 0.66 | 5 | 7.64 |
-| Web | pdf.js | 354 | 0 | 49f6453 | 0.09 | 5 | 0.96 |
+| Python | pymupdf | 246 | 0 | - | 0.02 | 5 | 0.78 |
+| R | pdftools (poppler) | 1259 | 0 | e51e018 | 0.20 | 5 | 7.27 |
+| Web | pdf.js | 381 | 0 | e51e018 | 0.09 | 5 | 1.09 |
 
 Both timings are the second of two runs on one machine with the model loaded and
 one thread: the damaged sample PDF end to end, and one hundred windows of three

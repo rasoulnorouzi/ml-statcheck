@@ -403,10 +403,17 @@ def build_prefilter_section(docs: list) -> list:
     return rows
 
 
+def build_units_section(docs: list) -> list:
+    rows = [{"name": name, "text": text, "expected": pl.units_case(text)} for name, text in docs]
+    rows.sort(key=lambda r: r["name"])
+    return rows
+
+
 def build_pipeline_section(docs: list) -> list:
     rows = []
-    for name, text in docs:
-        rows.append({"name": name, "text": text, "expected": pl.pipeline_case(text)})
+    for name, text in list(docs) + pl.DEDUP_DOCS + pl.FRAGMENT_DOCS:
+        rows.append({"name": name, "text": text, "expected": pl.pipeline_case(text),
+                     "expected_fragments": pl.pipeline_fragments_case(text)})
     rows.sort(key=lambda r: r["name"])
     return rows
 
@@ -569,12 +576,13 @@ def main(out_path: str | None = None):
 
     docs = build_documents(holdout_rows)
     prefilter_rows = build_prefilter_section(docs)
+    units_rows = build_units_section(docs)
     pipeline_rows = build_pipeline_section(docs)
 
     pvalue_section_rows = build_pvalue_section()
 
     payload = {
-        "version": 2,
+        "version": 3,
         "generated_by": "tests/make_parity_cases.py",
         "model": "gru-crf",
         "model_input_note": (
@@ -589,10 +597,12 @@ def main(out_path: str | None = None):
         "logit_tolerance": pl.LOGIT_TOLERANCE,
         "logit_note": pl.LOGIT_NOTE,
         "pvalue_rounding_rule": pl.PVALUE_ROUNDING_RULE,
+        "dedup_rule": pl.DEDUP_RULE,
         "sections": {
             "normalise": normalise_rows,
             "repair": repair_rows,
             "prefilter": prefilter_rows,
+            "units": units_rows,
             "extract": extract_rows,
             "model": model_rows,
             "model_logits": model_logits_rows,

@@ -132,3 +132,130 @@ Suite 384 passed, 6 skipped.
 
 Commit on `v4-gold` at the close of M1 (see `git log`). The web port had no
 `node_modules`; the manager ran `npm ci` there so that M2.6 does not stall on it.
+
+## M2 — Fixes without training (tasks accepted 2026-10-04; close-out in M2b)
+
+The manager reran the suite after all seven tasks: 412 passed, 6 skipped, 18.3 s. The
+parity file, the R kit and the web kit hold the same `cases.json` (sha256 2be607f5…) and
+the same `prefilter.json` (02fc9953…, version 2, unit `passage`). Every number below
+was rechecked from the files. The brief's session notes name three items that must
+land before M2 closes (the `line` regression, the flaky test, `R CMD check`); they are
+the close-out milestone M2b, and M2 is not closed until M2b is accepted.
+
+### M2.1 — Measurement scaffold: the before snapshot, the labelled gold log, the compare stage — eval-engineer, sonnet
+
+What changed: `results/v4/before/{eval.json,gold_eval.json,README.md}` frozen from
+commit `e51e018` (sha256 8dfc73d7… and 63e0ad39…); `14_gold_eval.py` takes `--label`,
+writes no date and a relative model path into `gold_eval.json`, and writes per-system
+`recall`, `recall_ci`, `recall_damaged` and `finds_in_papers_without_results` to the log
+line; new `pipeline/16_compare.py` (gold tables, bronze table, steps table; `--seed`
+unused and documented) with `tests/test_compare.py`; `reproduce.sh` stage `compare`
+between `gold` and `figures`, `--label reproduce` on the gold stage, `compare.json` in
+the hash line; README row for stage 16 and the frozen-before rule.
+Evidence: a recursive comparison of the before file with the new `gold_eval.json`
+differs only in `provenance.command`, `.date` (gone), `.git_sha` (54fc781 → e51e018,
+the M1 file predates the M1 commit), `.label`, `.model`; no numeric path differs; two
+independent runs agree on every number including the 2000-resample intervals; two
+scratch runs of `16_compare.py` give the committed bytes (58d89392…, f2bae137…);
+`reproduce.sh --from compare` exit 0, manifest ok. Note: the stage 16 row sits above
+the stage 15 row in the pipeline README.
+
+### M2.2 — The duplicate-statistic fault in `Pipeline.run_text`: dedup by position — runtime-engineer, sonnet
+
+What changed: every find carries `statistic_span` (the character interval of the
+statistic value over the repaired document with reference lines blanked); a find is a
+duplicate when its interval overlaps one already emitted, visited in document order,
+pattern before model; the value key survives only as a fallback counted in
+`stages.find.value_key_fallback`; `Window.char_start`, `Extraction.stat_start/stat_end`;
+the rule is one paragraph in the docstring, equal to `dedup_rule` in the parity file (a
+test enforces it); two hand parity cases (`dedup-same-statistic`, `dedup-window-overlap`).
+Evidence: gold_test recall regex 0.489 → 0.498, model 0.836 → 0.849, cascade 0.851 →
+0.866 [0.802, 0.920]; finds in the 120 no-result papers model and cascade 155 → 157;
+`data.normalise` maps one character to one character, so the length assertion in
+`find_with_model` is sound; suite 394 passed. The fallback count on gold was not
+measured; it is unreachable by construction (every pattern has a `stat` group, and a
+model find without a STAT span is skipped before it is read).
+
+### M2.3 — Finds with no test name reported as fragments — runtime-engineer, sonnet
+
+What changed: `run_text` returns `{results, fragments, stages, seconds}`; a fragment has
+every result key except `verdict`, `computed_p`, `reason`, `missing` and never reaches
+`check_one`; dedup runs once over both lists; `stages.find.fragments`; `summarise` and
+the CLI print fragments apart ("Fragments: N with no test name; nothing can be
+checked"); `14_gold_eval.py` adds `recall_with_fragments` and
+`fragments_in_papers_without_results`; parity rows carry `expected_fragments`; hand
+case `fragment-bare-statistic` (the shipped model returns nothing for it).
+Evidence (gold_test): recall of named results model 0.849 → 0.689, cascade 0.866 →
+0.723; recall with fragments 0.849 and 0.866 (unchanged, so the drop is a
+reclassification); finds in no-result papers 157 → 73 plus 84 fragments; suite 403
+passed. Open: no parity case has a non-empty fragment list (M2b.1 adds one);
+`16_compare.py` does not print `recall_with_fragments` (M2b.5).
+
+### M2.4 — Merged passages as the processing unit: `prefilter.json` version 2 — regex-porter, sonnet
+
+What changed: the spec gains `version: 2`, `unit: "passage"` and `_why_unit` with the
+2026-10-04 measurement; `Prefilter.units()` yields one `Window` per merged run;
+`run_text` iterates units and reports `units_kept` and `characters_read`;
+`14_gold_eval.py` drops `model_passages` (passages are the unit now) and matches finds
+to units exactly instead of by `line // 5`; parity version 3 with a `units` section.
+Evidence: gold_test recall unchanged (model 0.689, cascade 0.723, regex 0.498; with
+fragments 0.849 and 0.866); finds in no-result papers 73 → 69; characters the model
+reads on the 169 gold_test papers 11,433,629 → 6,503,399 (0.569); the manager checked
+on the four parity texts that units cover the same lines as the windows without
+overlap; suite 412 passed. Deviations recorded: the worker edited
+`tests/test_parity_self.py` (hard-coded version and sections), reworded the docstring
+"window" → "unit" (tied to `dedup_rule`), and ran one shell `cp` into the scratchpad.
+Regression found by the owner's session and not by the review: `line` became the first
+line of the unit, not the line of the result (M2b).
+
+### M2.5 — The R port reads the new spec, the dedup rule and fragments; kit; testthat green — runtime-engineer, sonnet
+
+What changed (port `ports/statcheck-ml-r`): `sc_units()`, `char_start`, `stat_start`
+and `stat_end` on `sc_extract`, `stat_span` from `sc_group_spans`, interval dedup in
+`sc_check_text` (pattern before model per unit), fragments as `attr(out, "fragments")`,
+columns `statistic_start` and `statistic_end`, stages `units_kept` and `fragments`;
+roxygen, NEWS, README; tests for the `units` parity section and the pipeline cases.
+Evidence: testthat 268 tests, 1259 expectations, 0 failed (manager rerun); kit
+`cases.json` and `prefilter.json` equal the mother files; manifest `mother_commit`
+e51e018 with `mother_dirty: true` (exported from the uncommitted tree); sample PDF 5
+results, 4 consistent, 1 decision error, 0 fragments. Not done: `R CMD check`; the
+installed library is stale (M2b.2). The Python value-key fallback is not ported
+because both R finders always give an interval (documented in the roxygen).
+
+### M2.6 — The web port reads the new spec, the dedup rule and fragments; kit; vitest green — runtime-engineer, sonnet
+
+What changed (port `ports/statcheck-ml-web`): `units()` reads `spec.unit`; `d` flag
+and `statStart/statEnd` in `extract.js`; `groupSpans` returns the STAT span; interval
+dedup with the rounded-value fallback in `pipeline.js`; `fragments` array and
+`asFragment`; `FRAGMENT_NOTE`, Markdown lists fragments, CSV excludes them by design;
+demo lists fragments; tests for units, `expected_fragments`, `dedup_rule` and a stub
+model fragment; CHANGELOG entry.
+Evidence: before the code change 6 failed, 364 passed (the six pipeline cases); after
+381 passed, 9 skipped (the e2e file skips without a Chromium executable); kit files
+equal the mother files; manifest `mother_commit` e51e018, `mother_dirty: true`.
+
+### M2.7 — After numbers: bronze, gold, the compare table, `results/ports.json`, the report — eval-engineer, sonnet
+
+What changed: `results/eval.json` regenerated (only `provenance.git_sha` differs from
+the before file; the bronze scorer never calls `run_text`); gold run `m2-after`;
+`compare.json` and `compare.md`; `ports.json`; figures and report through
+`reproduce.sh --from compare`.
+Evidence: bronze delta 0.000 on every metric for 16 systems; gold_test (169 papers, 476
+results, 49 papers with results): regex 0.498, model 0.689 (with fragments 0.849),
+cascade 0.723 (with fragments 0.866); finds in the 120 no-result papers 69 plus 82
+fragments for model and cascade, 2 for regex and for each statcheck R form; gold_train
+model 0.714, cascade 0.743, no-result papers 54 finds plus 89 fragments; ports Python
+246, R 1259, web 381 checks, 0 failed; `reproduce.sh --from compare` manifest ok. The
+log holds five labelled gold_test evaluations under M1–M2 (m1-before, m2-dedup,
+m2-fragments, m2-passages, m2-after); gold_test is therefore no longer a clean held-out
+score for these rule changes, and every report says so. Template sentences made stale
+(lines 25, 352, 355, 362 of `docs/report_template.md`) go to M2b.4.
+
+### M2 interim close — manager, fable
+
+Removals in M2: none. Commit on `v4-gold` with the seven tasks; then the kits
+re-exported from the committed tree and each port committed, so the kit manifests name
+a commit and `mother_dirty` is false. `results/ports.json` still names the dirty export
+and is regenerated in M2b.5. The flaky-test cause is known (the unresolved
+`sys.path.insert` of `14_gold_eval.py` makes `statcheck_ml.__file__` differ when
+`test_gold` imports it first); its fix is M2b.1.

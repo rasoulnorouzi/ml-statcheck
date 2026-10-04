@@ -63,6 +63,9 @@ class Extraction:
     start: int
     end: int
     raw: str
+    #: Where the statistic value sits inside the text passed to `extract`.
+    stat_start: int = -1
+    stat_end: int = -1
 
     def as_dict(self) -> dict:
         return {
@@ -94,6 +97,8 @@ def extract(text: str) -> List[Extraction]:
                 start=m.start(),
                 end=m.end(),
                 raw=m.group(0),
+                stat_start=m.start("stat"),
+                stat_end=m.end("stat"),
             ))
     found.sort(key=lambda e: (e.start, e.end))
 

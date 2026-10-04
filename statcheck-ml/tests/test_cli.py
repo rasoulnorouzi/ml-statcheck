@@ -75,3 +75,27 @@ def test_cli_never_imports_torch_for_a_zoo_model(tmp_path):
                           capture_output=True, text=True, timeout=60)
     assert done.returncode == 0, done.stderr
     assert done.stdout.strip().splitlines()[-1] == "False"
+
+
+def test_check_prints_fragments_after_the_results(tmp_path, capsys, monkeypatch):
+    from statcheck_ml.pipeline import Found
+
+    txt = tmp_path / "paper.txt"
+    txt.write_text("We found t(34) = 2.45, p = .020 in the sample of students.\n"
+                   "Elsewhere the difference was 2.31 in the first sample of students.\n",
+                   encoding="utf-8")
+
+    def find(self, wtext, line):
+        if "2.31" not in wtext:
+            return []
+        i = wtext.index("2.31")
+        return [Found(test_type=None, statistic=2.31, source="model", line=line,
+                      quote="difference was 2.31", statistic_span=(i, i + 4))]
+
+    monkeypatch.setattr(Pipeline, "find_with_model", find)
+    assert main(["check", str(txt)]) == 0
+    lines = capsys.readouterr().out.splitlines()
+    assert lines[0].startswith("1 results found")
+    at = lines.index("Fragments: 1 with no test name; nothing can be checked")
+    assert at > 1
+    assert "difference was 2.31" in lines[at + 1] and "2.31" in lines[at + 1]

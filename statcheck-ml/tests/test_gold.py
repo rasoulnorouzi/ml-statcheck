@@ -75,8 +75,9 @@ def test_score_paper_regex_matches_a_synthetic_paper(tmp_path):
 
 def paper(has, *hits):
     return {"has_results": has, "bronze_set": "none",
-            "gold": [{"test_type": "t", "damaged": d, "kept": True, "regex": h} for h, d in hits],
-            "unmatched": {"regex": {"nameless": 0 if has else 2}}}
+            "gold": [{"test_type": "t", "damaged": d, "kept": True, "regex": h,
+                        "regex_with_fragments": h} for h, d in hits],
+            "unmatched": {"regex": {"named": 0 if has else 2, "nameless": 0 if has else 1}}}
 
 
 def test_summarise_recall_and_interval():
@@ -123,3 +124,35 @@ def test_statcheck_passage_must_cover_the_gold_line():
     assert hits == [False]
     hits, _ = gold_eval.match_statcheck(row, [[38, 42, 2.45, "t", False]])
     assert hits == [True]
+
+
+def test_recall_with_fragments_on_a_synthetic_paper(tmp_path, monkeypatch):
+    body = ("Introduction. We ran the study.\n\n"
+            "The difference was 2.31, p = .02, in the first sample.\n\nEnd.")
+    (tmp_path / "paper.txt").write_text(body, encoding="utf-8")
+    s = body.index("2.31")
+    paper = {"doc": "paper.txt", "bronze_set": "none", "has_results": True,
+             "results": [{"located": True, "span": [s - 4, s + 12], "anchor": [s, s + 4],
+                          "line": body[:s].count("\n"), "stat": 2.31,
+                          "test_type": "t", "damaged": False}]}
+    pipe = gold_eval.make_pipes(["regex"], None)["regex"]
+    pipe.model = object()
+    pipe.find_with_model = lambda text, line: [
+        gold_eval_found(text, line)] if "2.31" in text else []
+    monkeypatch.setattr(gold_eval, "make_pipes", lambda systems, model_path: {"regex": pipe})
+    out = gold_eval.score_paper((paper, str(tmp_path), ["regex"], None))
+    row = out["gold"][0]
+    assert row["regex"] is False
+    assert row["regex_with_fragments"] is True
+    assert out["unmatched"]["regex"].get("nameless", 0) == 0
+    summary = gold_eval.summarise([out], 50, 0, ["regex"])
+    assert summary["regex"]["recall"] == 0.0
+    assert summary["regex"]["recall_with_fragments"] == 1.0
+
+
+def gold_eval_found(text, line):
+    from statcheck_ml.pipeline import Found
+
+    i = text.index("2.31")
+    return Found(test_type=None, statistic=2.31, p_operator="=", p_value=0.02,
+                 source="model", line=line, statistic_span=(i, i + 4))

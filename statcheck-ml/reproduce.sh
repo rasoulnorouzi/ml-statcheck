@@ -31,7 +31,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Define stages
-stages=("agree" "dataset" "train" "export" "evaluate" "gold" "figures" "report")
+stages=("agree" "dataset" "train" "export" "evaluate" "gold" "compare" "figures" "report")
 
 # Determine starting index
 start_idx=0
@@ -93,22 +93,29 @@ if [ $start_idx -le 5 ]; then
   echo "$PY pipeline/14_gold_split.py --seed 0"
   $PY pipeline/14_gold_split.py --seed 0
   if [ -f data/clean/manifest.jsonl ]; then
-    echo "$PY pipeline/14_gold_eval.py --resamples 2000 --seed 0"
-    $PY pipeline/14_gold_eval.py --resamples 2000 --seed 0
+    echo "$PY pipeline/14_gold_eval.py --resamples 2000 --seed 0 --label reproduce"
+    $PY pipeline/14_gold_eval.py --resamples 2000 --seed 0 --label reproduce
   else
     echo "gold evaluation skipped: needs the corpus; the committed results/gold_eval.json stands"
   fi
 fi
 
-# figures stage
+# compare stage
 if [ $start_idx -le 6 ]; then
+  echo "Running: compare stage..."
+  echo "$PY pipeline/16_compare.py"
+  $PY pipeline/16_compare.py
+fi
+
+# figures stage
+if [ $start_idx -le 7 ]; then
   echo "Running: figures stage..."
   echo "$PY pipeline/10_figures.py --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --out results/figures"
   $PY pipeline/10_figures.py --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --out results/figures
 fi
 
 # report stage
-if [ $start_idx -le 7 ]; then
+if [ $start_idx -le 8 ]; then
   echo "Running: report stage..."
   echo "$PY pipeline/11_report.py --template docs/report_template.md --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --engines results/engines.json --out results/REPORT.md --readme-block results/readme_block.md"
   $PY pipeline/11_report.py --template docs/report_template.md --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --engines results/engines.json --out results/REPORT.md --readme-block results/readme_block.md
@@ -118,4 +125,4 @@ fi
 echo "Verifying the dataset manifest (regenerated files must match the committed hashes)..."
 $PY -c "import sys; sys.path.insert(0, 'src'); from statcheck_ml.provenance import verify_manifest; bad = verify_manifest('dataset/MANIFEST.json'); print('manifest: ok' if not bad else 'manifest: MISMATCH ' + ', '.join(bad)); sys.exit(1 if bad else 0)"
 echo "Verifying artifacts..."
-sha256sum results/eval.json results/gold_eval.json dataset/gold/split.json results/REPORT.md results/readme_block.md results/figures/*.png
+sha256sum results/eval.json results/gold_eval.json results/v4/compare.json dataset/gold/split.json results/REPORT.md results/readme_block.md results/figures/*.png

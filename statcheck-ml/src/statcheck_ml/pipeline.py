@@ -75,6 +75,9 @@ class Found:
     #: result was reported in full. A reader uses this to tell an incomplete
     #: paper apart from a tool that failed.
     missing: tuple = ()
+    #: [start, end) of the statistic value. The find_* methods give offsets in
+    #: the window text; `run_text` shifts them to document offsets.
+    statistic_span: Optional[tuple] = None
 
 
 def bundled_model_path() -> Path:
@@ -109,6 +112,24 @@ def _num(text):
         return float(s)
     except ValueError:
         return None
+
+
+#: A fragment is never checked, so it carries none of the verdict keys.
+_CHECK_KEYS = ("verdict", "computed_p", "reason", "missing")
+
+
+def _as_row(f: Found) -> dict:
+    row = asdict(f)
+    if row["statistic_span"] is not None:
+        row["statistic_span"] = list(row["statistic_span"])
+    return row
+
+
+def _as_fragment(f: Found) -> dict:
+    row = _as_row(f)
+    for key in _CHECK_KEYS:
+        del row[key]
+    return row
 
 
 class Pipeline:
@@ -249,7 +270,8 @@ class Pipeline:
                 df1=_num(e.df1), df2=_num(e.df2),
                 p_operator=e.p_operator, p_value=_num(e.p_value),
                 statistic_text=e.statistic, p_text=e.p_value,
-                quote=e.raw, source="pattern", line=line))
+                quote=e.raw, source="pattern", line=line,
+                statistic_span=(e.stat_start, e.stat_end)))
         return out
 
     # ---------------- stage 5b ----------------
@@ -260,6 +282,9 @@ class Pipeline:
         from .data import normalise
 
         text = normalise(window_text)
+        # The statistic offsets are taken in the normalised text and reused in
+        # the window text, so normalise must not change the length.
+        assert len(text) == len(window_text)
         if self.tagger is not None:
             tags = self.tagger.tag_text(text)
         else:
@@ -308,7 +333,8 @@ class Pipeline:
                 statistic_text=g.get("STAT", ("",))[0] or None,
                 p_text=g.get("PVAL", ("",))[0] or None,
                 quote=text[min(spans):max(ends)] if spans else "",
-                source="model", line=line))
+                source="model", line=line,
+                statistic_span=g["STAT"][1:3]))
         return out
 
     # ---------------- stage 6 ----------------
@@ -331,6 +357,29 @@ class Pipeline:
     # ---------------- the whole thing ----------------
 
     def run_text(self, text: str) -> dict:
+        """Run stages 2 to 6 on text and return the checked results.
+
+        Deduplication rule. Every find carries the interval [start, end) of its
+        statistic value, counted in characters over the repaired document with
+        reference lines blanked: the unit's first-character offset
+        plus the position of the value inside the unit (the stat group
+        of the pattern, the STAT span of the model). Visit units in
+        document order, the pattern before the model in each unit. A
+        find is a duplicate when its interval overlaps the interval of a
+        find already emitted, and the first find stays. Two results with
+        the same value at different places are both kept. A find with no
+        interval falls back to its value rounded to three decimals, once
+        per document.
+
+        Output. "results" holds the finds with a test name, checked, each
+        with a verdict. "fragments" holds the finds with no test name: a
+        statistic, maybe a p-value, nothing to recompute a p-value from. A
+        fragment has the keys of a result except verdict, computed_p, reason
+        and missing, and check_one never sees it. The deduplication above
+        runs over both lists together in emission order, so a named find
+        that comes first removes a nameless one at the same statistic.
+        stages["find"]["fragments"] is the count of the second list.
+        """
         started = time.time()
         stages = {}
 
@@ -344,34 +393,63 @@ class Pipeline:
         stages["repair"] = repair_info
 
         windows = list(self.prefilter.windows(fixed))
+        units = list(self.prefilter.units(fixed))
         stages["prefilter"] = {
             "lines": len(fixed.split("\n")),
             "windows_kept": len(windows),
+            "units_kept": len(units),
+            "characters_read": sum(len(u.text) for u in units),
         }
 
         found: List[Found] = []
-        seen = set()
-        n_pattern = n_model = 0
-        for w in windows:
+        taken: List[tuple] = []     # statistic intervals already emitted
+        seen_values = set()         # fallback key, used when no interval exists
+        n_pattern = n_model = n_fallback = 0
+
+        def is_duplicate(f: Found) -> bool:
+            if f.statistic_span is not None:
+                s, e = f.statistic_span
+                return any(s < te and ts < e for ts, te in taken)
+            return round(f.statistic, 3) in seen_values if f.statistic is not None \
+                else None in seen_values
+
+        def remember(f: Found):
+            nonlocal n_fallback
+            if f.statistic_span is not None:
+                taken.append(tuple(f.statistic_span))
+            else:
+                n_fallback += 1
+                seen_values.add(round(f.statistic, 3) if f.statistic is not None
+                                else None)
+
+        for w in units:
             hits = self.find_with_pattern(w.text, w.line) if self.use_pattern else []
             for f in hits:
-                key = round(f.statistic, 3) if f.statistic is not None else None
-                if key in seen:
+                if f.statistic_span is not None:
+                    f.statistic_span = (f.statistic_span[0] + w.char_start,
+                                        f.statistic_span[1] + w.char_start)
+                if is_duplicate(f):
                     continue
-                seen.add(key)
+                remember(f)
                 found.append(f)
                 n_pattern += 1
             for f in self.find_with_model(w.text, w.line):
-                key = round(f.statistic, 3) if f.statistic is not None else None
-                if key is None or key in seen:
+                if f.statistic_span is not None:
+                    f.statistic_span = (f.statistic_span[0] + w.char_start,
+                                        f.statistic_span[1] + w.char_start)
+                if is_duplicate(f):
                     continue
-                seen.add(key)
+                remember(f)
                 found.append(f)
                 n_model += 1
 
-        stages["find"] = {"by_pattern": n_pattern, "by_model": n_model}
+        named = [f for f in found if f.test_type]
+        nameless = [f for f in found if not f.test_type]
+        stages["find"] = {"by_pattern": n_pattern, "by_model": n_model,
+                          "value_key_fallback": n_fallback,
+                          "fragments": len(nameless)}
 
-        checked = [self.check_one(f) for f in found]
+        checked = [self.check_one(f) for f in named]
         verdicts: Dict[str, int] = {}
         incomplete: Dict[str, int] = {}
         for f in checked:
@@ -386,7 +464,8 @@ class Pipeline:
         stages["not_found"] = incomplete
 
         return {
-            "results": [asdict(f) for f in checked],
+            "results": [_as_row(f) for f in checked],
+            "fragments": [_as_fragment(f) for f in nameless],
             "stages": stages,
             "seconds": round(time.time() - started, 2),
         }
@@ -410,6 +489,7 @@ def summarise(report: dict) -> str:
         f"{s['prefilter']['lines']} lines",
         f"  found by pattern  : {s['find']['by_pattern']}",
         f"  found by model    : {s['find']['by_model']}",
+        f"  fragments         : {s['find'].get('fragments', 0)} (no test name)",
         f"  verdicts          : " + ", ".join(f"{k}={v}" for k, v in s["check"].items()),
         f"  parts not found   : " + (", ".join(f"{k}={v}" for k, v in
                                               s.get("not_found", {}).items())

@@ -34,6 +34,10 @@ class Window:
     line: int
     start_line: int
     end_line: int
+    #: Offset of the window's first character in the document, counted over
+    #: the lines after reference blanking. A blanked line keeps its newline, so
+    #: the offset differs from the repaired text only after a reference line.
+    char_start: int = 0
 
 
 class Prefilter:
@@ -105,6 +109,15 @@ class Prefilter:
             return False
         return self.density(line) >= self.min_density
 
+    def _prepare(self, text: str, drop_references: bool) -> tuple:
+        lines = text.split("\n")
+        if drop_references:
+            lines = self.strip_references(lines)
+        offsets = [0]
+        for ln in lines:
+            offsets.append(offsets[-1] + len(ln) + 1)
+        return lines, offsets
+
     def windows(self, text: str, drop_references: bool = True) -> Iterator[Window]:
         """Yield one window for each line that survives the filter.
 
@@ -112,14 +125,27 @@ class Prefilter:
         be split by a line break. On the clean corpus 18.4% of results are
         separated from their p-value by at least one line break.
         """
-        lines = text.split("\n")
-        if drop_references:
-            lines = self.strip_references(lines)
+        lines, offsets = self._prepare(text, drop_references)
         for i, line in enumerate(lines):
             if not self.keeps_line(line):
                 continue
             lo, hi = self._span(lines, i)
-            yield Window("\n".join(lines[lo:hi]), i, lo, hi - 1)
+            yield Window("\n".join(lines[lo:hi]), i, lo, hi - 1, offsets[lo])
+
+    def units(self, text: str, drop_references: bool = True) -> Iterator[Window]:
+        """Yield what the model reads, as the spec "unit" says.
+
+        A passage is a run of overlapping or touching windows, so every
+        character is read once. The windows stay the sampling unit of the
+        bronze set, which is why `windows` is not changed.
+        """
+        windows = list(self.windows(text, drop_references))
+        if self.spec.get("unit", "window") != "passage":
+            yield from windows
+            return
+        lines, offsets = self._prepare(text, drop_references)
+        for lo, hi in self.passages(windows):
+            yield Window("\n".join(lines[lo:hi + 1]), lo, lo, hi, offsets[lo])
 
     @staticmethod
     def passages(windows) -> List[List[int]]:

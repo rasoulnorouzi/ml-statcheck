@@ -10,6 +10,7 @@ Nothing here invents behaviour. Every function is a thin call into
 """
 from __future__ import annotations
 
+import hashlib
 import math
 import sys
 from pathlib import Path
@@ -118,6 +119,17 @@ def prefilter_case(text: str) -> List[dict]:
     for w in pf.windows(text):
         start, end = window_char_span(text, w)
         out.append({"start": start, "end": end, "line": w.line})
+    return out
+
+
+def units_case(text: str) -> List[dict]:
+    """The units the model reads. Offsets are `window_char_span` offsets."""
+    out = []
+    for u in Prefilter().units(text):
+        start, end = window_char_span(text, u)
+        out.append({"start_line": u.start_line, "end_line": u.end_line,
+                    "char_start": start, "char_end": end,
+                    "sha256": hashlib.sha256(u.text.encode("utf-8")).hexdigest()})
     return out
 
 
@@ -248,10 +260,57 @@ def pvalue_expected(outcome: Check) -> Optional[dict]:
 
 _PIPELINE: Optional[Pipeline] = None
 
+#: Equal to the paragraph in the `Pipeline.run_text` docstring; a unit test
+#: keeps the two in step.
+DEDUP_RULE = (
+    "Every find carries the interval [start, end) of its statistic value, "
+    "counted in characters over the repaired document with reference lines "
+    "blanked: the unit's first-character offset plus the position of the "
+    "value inside the unit (the stat group of the pattern, the STAT span of "
+    "the model). Visit units in document order, the pattern before the model "
+    "in each unit. A find is a duplicate when its interval overlaps the "
+    "interval of a find already emitted, and the first find stays. Two "
+    "results with the same value at different places are both kept. A find "
+    "with no interval falls back to its value rounded to three decimals, once "
+    "per document."
+)
+
+_FILL = ("The participants in the second study were recruited from the "
+         "university pool and received course credit.")
+
+#: Hand-made documents for the pipeline section. The first holds two results
+#: that share a statistic value; the second holds one result that two
+#: overlapping windows both see.
+DEDUP_DOCS = [
+    ("dedup-same-statistic", "\n".join([
+        _FILL,
+        "The groups differed on the first measure, t(28) = 2.10, p = .04,",
+        _FILL,
+        "and the interaction was weaker in the second study, F(1, 28) = 2.10, p = .15.",
+        _FILL])),
+    ("dedup-window-overlap", "\n".join(
+        [_FILL] * 4
+        + ["The groups differed reliably on the first measure, t(28) =",
+           "2.10, p = .04, in the expected direction."]
+        + [_FILL] * 4)),
+]
+
+#: A bare statistic and p-value with no test name: the model may return it as
+#: a fragment, and no port may turn it into a checked result.
+FRAGMENT_DOCS = [
+    ("fragment-bare-statistic", "\n".join(
+        [_FILL, "The difference was 2.31, p = .02.", _FILL])),
+]
+
 PIPELINE_RESULT_KEYS = (
     "source", "test_type", "statistic", "df1", "df2", "p_operator",
-    "p_value", "computed_p", "verdict", "line",
+    "p_value", "computed_p", "verdict", "line", "statistic_span",
 )
+
+
+#: A fragment has the keys of a result without the two the check fills in.
+PIPELINE_FRAGMENT_KEYS = tuple(k for k in PIPELINE_RESULT_KEYS
+                               if k not in ("computed_p", "verdict"))
 
 
 def get_pipeline() -> Pipeline:
@@ -264,3 +323,8 @@ def get_pipeline() -> Pipeline:
 def pipeline_case(text: str) -> List[dict]:
     report = get_pipeline().run_text(text)
     return [{k: r.get(k) for k in PIPELINE_RESULT_KEYS} for r in report["results"]]
+
+
+def pipeline_fragments_case(text: str) -> List[dict]:
+    report = get_pipeline().run_text(text)
+    return [{k: r.get(k) for k in PIPELINE_FRAGMENT_KEYS} for r in report["fragments"]]

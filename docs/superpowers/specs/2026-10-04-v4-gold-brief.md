@@ -124,6 +124,23 @@ control characters from 47.
     there on request, so a task may hand the owner exact commands instead.
 11. No push, no release, no publication.
 
+## Findings during the run (session notes for the manager)
+
+- M2.3 moved nameless finds to fragments. On the gold test the cascade recall of named
+  results fell from 0.866 to 0.723, while recall with fragments stayed 0.866. Every
+  gold report shows both recalls side by side, so neither number hides the other. The
+  recovery of the test name is a main target of the new training data, and M8 reports
+  how much of the 0.143 gap it closes.
+- During M2.3 one full test run had one failure that the worker did not capture; the
+  next two runs passed. Find the flaky test before M2 closes.
+
+- M2.5 showed a regression from passages as the unit: the `line` of a result is now the
+  first line of its passage, not the line of the result (the R sample went from 2, 2, 2,
+  2, 4 to 0 for all five rows). A reader uses `line` to find the result in the paper.
+  The `line` must come from the statistic position, which every find now carries, in
+  all three ports and in the parity cases. Fix it before M2 closes.
+- R CMD check did not run in M2.5. Run it before M2 closes.
+
 ## Limits for the team
 
 - Never delete a file that git does not track, unless the owner asks. Git cannot

@@ -43,6 +43,10 @@ def _fmt_result_line(r: dict) -> str:
             f"p {r.get('p_operator') or '='} {_fmt_num(r.get('p_value'))}  {computed}  "
             f"{r.get('verdict') or 'NA'}  [{r.get('source') or '?'}]")
 
+def _fmt_fragment_line(r: dict) -> str:
+    quote = " ".join((r.get("quote") or "").split())
+    return f"{r.get('line', -1):>5}  \"{quote}\"  statistic {_fmt_num(r.get('statistic'))}"
+
 def _header(report: dict) -> str:
     find = report.get("stages", {}).get("find", {})
     counts = ", ".join(f"{k}={v}" for k, v in
@@ -102,6 +106,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     print(_header(report))
     for r in report["results"]:
         print(_fmt_result_line(r))
+    fragments = report.get("fragments", [])
+    if fragments:
+        print(f"Fragments: {len(fragments)} with no test name; nothing can be checked")
+        for r in fragments:
+            print(_fmt_fragment_line(r))
     return 0
 
 if __name__ == "__main__":

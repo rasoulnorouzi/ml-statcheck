@@ -33,11 +33,11 @@ SECTIONS = DATA["sections"]
 
 
 def test_top_level_shape():
-    assert DATA["version"] == 2
+    assert DATA["version"] == 3
     assert DATA["generated_by"] == "tests/make_parity_cases.py"
     assert DATA["model"] == "gru-crf"
     assert set(SECTIONS) == {
-        "normalise", "repair", "prefilter", "extract", "model",
+        "normalise", "repair", "prefilter", "units", "extract", "model",
         "model_logits", "group", "pvalue", "pipeline",
     }
     for name, rows in SECTIONS.items():
@@ -65,6 +65,11 @@ def test_repair(case):
 @pytest.mark.parametrize("case", SECTIONS["prefilter"], ids=lambda c: c["name"])
 def test_prefilter(case):
     assert pl.prefilter_case(case["text"]) == case["expected"]
+
+
+@pytest.mark.parametrize("case", SECTIONS["units"], ids=lambda c: c["name"])
+def test_units(case):
+    assert pl.units_case(case["text"]) == case["expected"]
 
 
 # ----------------------------------------------------------------- extract
