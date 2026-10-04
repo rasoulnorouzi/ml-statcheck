@@ -40,8 +40,15 @@ Results are reported by split. gold_test is the frozen test part and the
 only part to quote as a result. gold_train may feed training in later
 versions, so its score is a development figure. "all" is the sum, for scale.
 
-Every run appends one line to results/gold_eval_log.jsonl. That log is the
-record of each evaluation against the gold test. A model scored there, tuned,
+--papers picks the papers that are scored and read. "dev" scores the 36 dev
+papers of dataset/gold/dev.json alone: no gold_test paper is opened, the
+bronze file is not read, and the log is not written, because the log records
+reads of the gold test only. "gold_train" is the same without the log. The
+default, "all", scores everything and logs.
+
+Every run that reads gold_test papers appends one line to
+results/gold_eval_log.jsonl. That log is the record of each evaluation against
+the gold test. A model scored there, tuned,
 and scored again is no longer a clean held-out score.
 
 Usage: python pipeline/14_gold_eval.py --gold dataset/gold/gold.jsonl --out results/gold_eval.json
@@ -67,6 +74,7 @@ STATCHECK = {"statcheck_r_fulltext_raw": "statcheck_fulltext_raw.csv",
              "statcheck_r_passages": "statcheck_passages.csv",
              "statcheck_r_pdf": "statcheck_pdf.csv"}
 SYSTEMS = LOCAL + list(STATCHECK)
+PAPER_SETS = ["gold_test", "gold_train", "dev", "all"]
 # statcheck writes Chi2 and Z; "Qw" and the like fall to other.
 TEST_NAMES = {"t": "t", "f": "F", "r": "r", "z": "z", "chi2": "chi2", "q": "Q"}
 
@@ -285,12 +293,38 @@ def git_sha():
         return None
 
 
+def write_dev(args, part, scored, model):
+    """Write the dev score alone. No bronze file is read and no log line is written."""
+    report = {
+        "note": "Development score on the dev papers of dataset/gold/dev.json, all in "
+                "gold_train. Selection figure only; never a held-out result.",
+        "papers": "dev",
+        "dev": part(scored),
+        "provenance": {
+            "git_sha": git_sha(), "label": args.label, "command": " ".join(sys.argv),
+            "seed": args.seed, "resamples": args.resamples, "systems": args.systems,
+            "model": os.path.relpath(model, REPO_ROOT),
+            "inputs": {os.path.relpath(f): sha256(f) for f in
+                       [args.gold, args.split, args.dev] + sorted(
+                           os.path.join(model, f) for f in os.listdir(model)
+                           if os.path.isfile(os.path.join(model, f)))},
+        },
+    }
+    os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
+    json.dump(report, open(args.out, "w"), indent=1)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--gold", default="dataset/gold/gold.jsonl")
     ap.add_argument("--split", default="dataset/gold/split.json")
     ap.add_argument("--model", default=None,
-                    help="model directory; default is the packaged zoo that Pipeline() loads")
+                    help="a zoo directory (tagger.onnx) or a training run directory "
+                         "(model.pt, exported to <run>/zoo on first use); default is the "
+                         "packaged zoo that Pipeline() loads")
+    ap.add_argument("--papers", choices=PAPER_SETS, default="all",
+                    help="which papers to score; dev and gold_train never open a gold_test paper")
+    ap.add_argument("--dev", default="dataset/gold/dev.json")
     ap.add_argument("--clean-dir", default="data/clean")
     ap.add_argument("--baseline-dir", default="dataset/baseline/gold",
                     help="the CSVs that 15_statcheck_gold.py wrote")
@@ -305,9 +339,10 @@ def main():
     ap.add_argument("--workers", type=int, default=os.cpu_count() or 4)
     args = ap.parse_args()
 
+    from statcheck_ml.export import ensure_zoo
     from statcheck_ml.pipeline import bundled_model_path
 
-    model = os.path.realpath(args.model) if args.model else os.path.realpath(bundled_model_path())
+    model = os.path.realpath(ensure_zoo(args.model) if args.model else bundled_model_path())
     model_files = sorted(os.path.join(model, f) for f in os.listdir(model)
                          if os.path.isfile(os.path.join(model, f)))
     gold = [json.loads(l) for l in open(args.gold, encoding="utf-8")]
@@ -318,6 +353,14 @@ def main():
     unknown = [p["doc"] for p in gold if p["doc"] not in test | train]
     if unknown:
         sys.exit(f"{len(unknown)} gold papers are in neither split, first: {unknown[0]}")
+
+    dev = set(json.load(open(args.dev))["dev"]) if args.papers == "dev" else set()
+    if dev - train:
+        sys.exit("dev.json names a paper outside gold_train")
+    # The filter comes before any text is read, so a held-out paper is never opened.
+    wanted = {"gold_test": test, "gold_train": train, "dev": dev, "all": test | train}[args.papers]
+    gold = [p for p in gold if p["doc"] in wanted]
+    reads_test = bool(test & wanted)
 
     baseline = {s: read_statcheck(os.path.join(args.baseline_dir, STATCHECK[s]))
                 for s in args.systems if s in STATCHECK}
@@ -331,9 +374,13 @@ def main():
 
     in_test = [p for p in scored if p["doc"] in test]
     in_train = [p for p in scored if p["doc"] in train]
-    gold_test = part(in_test)
-    gold_test["by_bronze_set"] = {
-        b: part([p for p in in_test if p["bronze_set"] == b]) for b in ("holdout", "none")}
+    if args.papers == "dev":
+        write_dev(args, part, scored, model)
+        return
+    gold_test = part(in_test) if in_test else None
+    if gold_test:
+        gold_test["by_bronze_set"] = {
+            b: part([p for p in in_test if p["bronze_set"] == b]) for b in ("holdout", "none")}
 
     bronze = json.load(open(args.bronze))
     baseline_files = [os.path.join(args.baseline_dir, STATCHECK[s])
@@ -345,8 +392,9 @@ def main():
         "note": "Gold is the owner's hand-coded sheet: whole papers, statcheck scope. "
                 "gold_test is the frozen test part. Bronze is the three-rater consensus on "
                 "sampled windows, a language-model annotation. They are never pooled.",
+        "papers": args.papers,
         "gold_test": gold_test,
-        "gold_train": part(in_train),
+        "gold_train": part(in_train) if in_train else None,
         "all": part(scored),
         "bronze": {"source": args.bronze, **bronze["bronze"],
                    "systems": {name: {k: v for k, v in s.items()
@@ -365,6 +413,9 @@ def main():
     }
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
     json.dump(report, open(args.out, "w"), indent=1)
+    if not reads_test:
+        print(json.dumps({"gold_train": report["gold_train"]}, indent=1)[:3000])
+        return
     # The date lives in the log only, so the result file is byte-stable.
     line = {"date": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "git_sha": report["provenance"]["git_sha"], "label": args.label,

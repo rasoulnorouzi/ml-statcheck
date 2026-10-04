@@ -62,3 +62,12 @@ For every one of the 23 runs and for the old `gru-crf-s0`: R_named, R_frag and F
 dev papers, then on the gold test, and precision, recall and F1 on the bronze holdout.
 The gold test numbers are read once, after the choice, and they are logged in
 `results/gold_eval_log.jsonl`.
+
+## Clarification, 2026-10-04, before any run finished
+
+The rules read the shipped system, the cascade (pattern first, then the model), as
+`Pipeline().run_text` returns it, because "the results list" above is that output.
+`pipeline/23_select_v4.py` runs with `--rule-system cascade`; the model alone is
+reported beside it. When two means or two recalls are compared, a tie is a gap below
+0.01 from the highest value, computed on exact fractions. At the time of this note no
+version 4 run had a `report.json` and no dev score of a version 4 run existed.

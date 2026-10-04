@@ -280,6 +280,28 @@ def export(model_path: str, out_path: str, quantize: bool = False,
     return report
 
 
+def ensure_zoo(path) -> Path:
+    """Return a directory that Pipeline loads, for a zoo directory or a run directory.
+
+    A run directory holds model.pt and no tagger.onnx. It is exported once into
+    <run>/zoo, with the run's own vocabulary as charmap.json, and the export is
+    reused afterwards. The checkpoint is read and never changed.
+    """
+    path = Path(path)
+    if (path / "tagger.onnx").exists():
+        return path
+    zoo = path / "zoo"
+    if (zoo / "tagger.onnx").exists():
+        return zoo
+    if not (path / "model.pt").exists():
+        raise SystemExit(f"{path} holds neither tagger.onnx nor model.pt")
+    from .data import save_vocab
+
+    export(str(path / "model.pt"), str(zoo / "tagger.onnx"))
+    save_vocab(load(str(path / "model.pt"))[1], zoo / "charmap.json")
+    return zoo
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--model", required=True)

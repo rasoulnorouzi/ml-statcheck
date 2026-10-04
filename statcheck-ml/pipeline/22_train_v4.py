@@ -6,8 +6,9 @@ after an interruption. It is written for the owner's GPU; --device cpu also work
 
 Usage: python pipeline/22_train_v4.py --device cuda [--parallel 4] [--epochs 30] [--only NAME,...]
 
-One epoch of one run takes 409 s on an 8-core CPU, so the plan needs a GPU. The
-models are small, so several runs share one GPU with --parallel.
+On a CPU, use one thread per run and run several at once: with eight threads one
+epoch on 600 rows took 771 s, with one thread 42 s, because the small recurrent
+model spends eight threads waiting on each other.
 """
 import argparse
 import os
@@ -54,6 +55,7 @@ def main():
     ap.add_argument("--models", default="models/v4")
     ap.add_argument("--only", default=None, help="comma-separated run names")
     ap.add_argument("--parallel", type=int, default=1, help="runs that train at the same time")
+    ap.add_argument("--threads", type=int, default=None, help="CPU threads per run (OMP_NUM_THREADS)")
     ap.add_argument("--list", action="store_true", help="print the run names and stop")
     args = ap.parse_args()
 
@@ -68,6 +70,8 @@ def main():
         sys.exit(f"unknown runs {unknown}; see --list")
 
     env = dict(os.environ, PYTHONPATH=str(ROOT / "src"))
+    if args.threads:
+        env.update(OMP_NUM_THREADS=str(args.threads), MKL_NUM_THREADS=str(args.threads))
     todo = []
     for name in names:
         out = ROOT / args.models / name
