@@ -75,35 +75,29 @@ def paper_pieces(text, max_chars):
         unit_text = unit.text
         unit_lines = unit_text.split("\n")
 
-        # Split the unit into pieces if it exceeds max_chars
         pieces_list = []
         current_piece_start = 0
         current_char_count = 0
 
         for line_idx, line in enumerate(unit_lines):
-            line_len = len(line) + 1  # +1 for newline
+            line_len = len(line) + 1
 
             if current_char_count > 0 and current_char_count + line_len > max_chars:
-                # Start a new piece
                 pieces_list.append((current_piece_start, line_idx - 1))
                 current_piece_start = line_idx
                 current_char_count = line_len
             else:
                 current_char_count += line_len
 
-        # Add the final piece
         pieces_list.append((current_piece_start, len(unit_lines) - 1))
 
-        # Create records for each piece
         for piece_idx, (piece_start_idx, piece_end_idx) in enumerate(pieces_list):
             piece_lines = unit_lines[piece_start_idx:piece_end_idx + 1]
             piece_text = "\n".join(piece_lines)
 
-            # Calculate positions in repaired text
             start_line = unit.start_line + piece_start_idx
             end_line = unit.start_line + piece_end_idx
 
-            # Calculate char_start: unit.char_start + offset within unit
             piece_char_offset = sum(len(unit_lines[i]) + 1 for i in range(piece_start_idx))
             piece_char_start = unit.char_start + piece_char_offset
 
@@ -123,7 +117,6 @@ def paper_pieces(text, max_chars):
 def build_passages(job):
     doc, paper, clean_dir, max_chars = job
 
-    # Read and process text
     text_path = os.path.join(clean_dir, doc)
     raw_text = open(text_path, encoding="utf-8").read()
 
@@ -131,10 +124,8 @@ def build_passages(job):
     text, _ = repair_validated(text)
     paper_text_sha256 = hashlib.sha256(text.encode("utf-8")).hexdigest()
 
-    # Get units from prefilter and build pieces
     pieces = paper_pieces(text, max_chars)
 
-    # Get units for line range checking
     prefilter = Prefilter()
     units = list(prefilter.units(text))
 
@@ -212,10 +203,8 @@ def build_passages(job):
         piece_idx = piece["piece"] - 1
         pieces_count = piece["pieces"]
 
-        # Build passage_id
         passage_id = f"gp{hashlib.sha1(doc.encode()).hexdigest()[:8]}:{start_line}:{end_line}"
 
-        # Calculate piece text hash
         text_sha256 = hashlib.sha256(piece_text.encode("utf-8")).hexdigest()
 
         # Collect coder results for this piece

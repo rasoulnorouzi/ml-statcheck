@@ -33,7 +33,7 @@ Gold is the owner's hand-coded set. The owner coded every reported result in 409
 
 `gold/split.json` divides the papers in two. No stage trains on a `gold_test` paper. `gold_train` papers may feed training in a later version. Gold labels are human labels. The bronze labels in the other files are not.
 
-`gold/dev.json` holds 36 gold-train dev papers; they exclude from training, rater samples, and gate the noise families. The inventory lists passage pieces from the 204 other gold-train papers with coordinates, piece hash, coder rows, and cascade counts. The inventory is the sampling frame for passage annotation, not the training file; the sample contains texts.
+`gold/dev.json` holds the 36 gold-train dev papers: 15 % by paper, seed 0, stratified by `has_results`. They never enter a rater sample or a training set, and they gate the noise families. `passages/inventory.jsonl` lists every passage piece of the other 204 gold-train papers with its coordinates, the piece hash, the coder rows and the cascade counts, and no text. The inventory is the sampling frame of the passage annotation, not a training file. The sample holds the texts.
 
 ## Row structure
 

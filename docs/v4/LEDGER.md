@@ -475,3 +475,29 @@ The working tree of M3.1, M3.2 and the verified part of M3.2b is committed so a
 stopped run cannot lose it again. The milestone is not closed: M3.2c, M3.3 and M3.4
 run next (`docs/v4/prompts/M3c.md`). The 117 batches, and so the M4 repeat counts,
 are confirmed at the M3c close.
+
+## M3c close, done by the session (2026-10-04, 22:45–23:00)
+
+The owner asked for speed. The session stopped the continuation run during the M3.3
+review and finished M3 itself, to the manager's written prompts in
+`docs/v4/prompts/M3-resume.md`.
+
+- **M3.3 passage sampler** (data-engineer, haiku; the retry wrote the round-robin fix
+  but returned no report). Verified by the session: 1165 passages (gold 585, hard 80,
+  damaged 200, clean 300); clean passages from all 59 journals, 5 or 6 each (before the
+  fix: 3 journals); 0 gold-test and 0 dev papers; 1165 of 1165 passage hashes equal the
+  inventory; a rerun into the scratchpad is byte-identical (`sample.json` ed0e41f9…,
+  `key.json` afb2a25e…); the sampler tests pass.
+- **M3.4 batches** (session): `02_chunk.py` gains `--unpadded`, `--manifest-out` and
+  `--seed`; 117 batches of ten (the last holds 5) in sample order, each record only
+  `window_id` and `text`; `tests/test_chunk.py` (2 tests); `reproduce.sh` runs stage 18
+  and the chunking; `pipeline/README.md` has the two rows; `dataset/MANIFEST.json`
+  regenerated, `verify_manifest` returns no error. Suite: 448 passed, 6 skipped.
+- **M4 rating started by the session** as three workflows in parallel, one per rater
+  model (haiku, sonnet, opus), six agents each, 18 at once. Each rater is a
+  general-purpose agent with the model set; it reads its instructions (guideline 3.0
+  and the output contract) from its agent file, then its one batch file, and writes
+  `data/annotation/passages/<rater>/batch_<i>.json`. The collect step records the
+  guideline sha256 (961f3145…). Script: `docs/v4/rate-workflow.js`.
+- **M4.6 four-vote consensus script** started at the same time (label-architect, opus),
+  because it does not depend on the ratings.

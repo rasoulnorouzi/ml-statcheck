@@ -97,9 +97,15 @@ if [ $start_idx -le 5 ]; then
   if [ -f data/clean/manifest.jsonl ]; then
     echo "$PY pipeline/17_passage_inventory.py data/clean/ --seed 0"
     $PY pipeline/17_passage_inventory.py data/clean/ --seed 0
+    echo "$PY pipeline/18_sample_passages.py data/clean/ --seed 0"
+    $PY pipeline/18_sample_passages.py data/clean/ --seed 0
     echo "$PY pipeline/14_gold_eval.py --resamples 2000 --seed 0 --label reproduce"
     $PY pipeline/14_gold_eval.py --resamples 2000 --seed 0 --label reproduce
-  else
+  fi
+  # The batches come from the committed sample, so they need no corpus.
+  echo "$PY pipeline/02_chunk.py --windows dataset/passages/sample.json --out dataset/passages/batches --size 10 --unpadded --manifest-out dataset/passages/batches/MANIFEST.json --seed 0"
+  $PY pipeline/02_chunk.py --windows dataset/passages/sample.json --out dataset/passages/batches --size 10 --unpadded --manifest-out dataset/passages/batches/MANIFEST.json --seed 0
+  if [ ! -f data/clean/manifest.jsonl ]; then
     echo "gold evaluation skipped: needs the corpus; the committed results/gold_eval.json stands"
     echo "passage inventory skipped: needs the corpus"
   fi
