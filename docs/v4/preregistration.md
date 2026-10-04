@@ -113,3 +113,16 @@ The 23 runs above are part of it under the same names and the same arguments; a 
 in the script enforces this. Rules 1 to 3 read only the 23 runs. The other 40 runs are
 exploratory: they are reported in their own table, marked as such, and never change the
 choice.
+
+## Batch size, 2026-10-05, before any run
+
+On the owner's A100 a two-epoch smoke run did not finish in four minutes: the CRF steps
+through every character in Python, so a GPU waits on launches. Two changes, both before
+any version 4 run:
+
+- `crf.py` scores the true path in one vectorised step and backtracks Viterbi on the CPU.
+  On five random batches the loss agrees within 1e-4 and the Viterbi paths are identical.
+- Every one of the 23 runs (and the 40 exploratory ones) trains with batch size 64, not
+  the version 2 default of 16. The learning rate, the epochs, the patience and the noise
+  stay as they are. The rules compare version 4 runs with each other and with the old
+  model on the dev papers, so one batch size for all runs keeps the comparison fair.

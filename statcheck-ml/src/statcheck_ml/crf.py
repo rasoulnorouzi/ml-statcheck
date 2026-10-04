@@ -65,10 +65,12 @@ class CRF(nn.Module):
         batch, time, _ = emissions.shape
         trans = self._transitions()
         score = self.start[tags[:, 0]] + emissions[:, 0].gather(1, tags[:, :1]).squeeze(1)
-        for t in range(1, time):
-            step = trans[tags[:, t - 1], tags[:, t]] + \
-                emissions[:, t].gather(1, tags[:, t:t + 1]).squeeze(1)
-            score = score + step * mask[:, t]
+        if time > 1:
+            # Each step of the true path depends only on its own two tags, so all steps
+            # are scored at once; a loop over time costs one GPU launch per character.
+            prev, cur = tags[:, :-1], tags[:, 1:]
+            steps = trans[prev, cur] + emissions[:, 1:].gather(2, cur.unsqueeze(2)).squeeze(2)
+            score = score + (steps * mask[:, 1:]).sum(1)
         last = mask.sum(1).long() - 1
         score = score + self.end[tags.gather(1, last.unsqueeze(1)).squeeze(1)]
         return score
@@ -106,15 +108,17 @@ class CRF(nn.Module):
             history.append(idx)
         score = score + self.end.unsqueeze(0)
 
-        lengths = mask.sum(1).long()
-        best_last = score.argmax(dim=1)
+        # The backtrack reads one pointer per character; on a GPU each read of a device
+        # tensor waits for the device, so the pointers move to the CPU once.
+        lengths = mask.sum(1).long().cpu().tolist()
+        best_last = score.argmax(dim=1).cpu().tolist()
+        pointers = torch.stack(history).cpu().numpy() if history else None
         paths = []
         for b in range(batch):
-            n_steps = int(lengths[b])
-            tag = int(best_last[b])
+            tag = best_last[b]
             path = [tag]
-            for t in range(n_steps - 2, -1, -1):
-                tag = int(history[t][b, tag])
+            for t in range(lengths[b] - 2, -1, -1):
+                tag = int(pointers[t, b, tag])
                 path.append(tag)
             paths.append(path[::-1])
         return paths

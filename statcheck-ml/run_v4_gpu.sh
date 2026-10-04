@@ -8,7 +8,7 @@
 #   bash run_v4_gpu.sh only NAME[,NAME] [PARALLEL]   train or retrain the named runs
 #   bash run_v4_gpu.sh pack                  pack models/v4 and the logs into v4_models.tar.gz
 #
-# PARALLEL is how many runs share the GPU at once (default 4). A run that already has
+# PARALLEL is how many runs share the GPU at once (default 12; an A100 holds more). A run that already has
 # report.json is skipped, so any scenario continues after an interruption. The 23 runs of
 # prereg are part of extended, so prereg first and extended later trains nothing twice.
 set -euo pipefail
@@ -34,23 +34,24 @@ EOF
 
 train() {  # train <log> <args...>
   local log="$1"; shift
-  $PY pipeline/22_train_v4.py --device cuda "$@" 2>&1 | tee -a "$log"
+  # One CPU thread per run: parallel runs otherwise fight over the cores for data work.
+  $PY pipeline/22_train_v4.py --device cuda --threads 1 "$@" 2>&1 | tee -a "$log"
 }
 
 case "$SCENARIO" in
   smoke)
     check_gpu
     started=$(date +%s)
-    train train_smoke.out --only gate-old+all --epochs 2 --models models/v4-smoke
+    train train_smoke.out --only gate-old+all --epochs 2 --models models/v4-smoke --progress-every 20
     echo "2 epochs took $(( $(date +%s) - started )) s. The smoke run is in models/v4-smoke, apart from models/v4."
     ;;
   prereg)
     check_gpu
-    train train_v4.out --plan prereg --parallel "${2:-4}"
+    train train_v4.out --plan prereg --parallel "${2:-12}"
     ;;
   extended)
     check_gpu
-    train train_v4_extended.out --plan extended --parallel "${2:-4}"
+    train train_v4_extended.out --plan extended --parallel "${2:-12}"
     ;;
   only)
     [ -n "${2:-}" ] || { echo "usage: bash run_v4_gpu.sh only NAME[,NAME] [PARALLEL]"; exit 2; }
