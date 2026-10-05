@@ -6,7 +6,7 @@ Branch `v4-gold`. Team run `wf_963324ab-ab1`. Plan:
 
 `[x]` done · `[~]` doing · `[ ]` to do
 
-Last update: 2026-10-05, gate-none shipped in Python; ports in progress.
+Last update: 2026-10-05, gate-none shipped in all three ports locally; push waits for the owner.
 
 ## Done
 
@@ -59,8 +59,9 @@ Last update: 2026-10-05, gate-none shipped in Python; ports in progress.
 
 ## Doing
 
-- [~] **P2 Ports** — session — opus. Kits with the new model; push the R and web ports.
-  The main repository is not pushed until the owner decides on the gold data.
+- [~] **P3 Push** — owner. This machine has no GitHub credentials (HTTPS asks for a user
+  name, SSH key refused). The owner pushes the web port (`878c6bc`) and the R port
+  (`32a3615`). The main repository waits for the owner's decision on the gold data.
 
 ## Done on the A100
 
@@ -112,6 +113,11 @@ Last update: 2026-10-05, gate-none shipped in Python; ports in progress.
   `models/zoo/gru-crf` and `spec/charmap.json` (180 characters). Bronze model F1 0.921,
   cascade 0.923. Parity cases rebuilt. 1035 tests pass. Recorded as a deviation in the
   pre-registration.
+
+- [x] **P2 Ports 0.2.0** — session — opus. Kits from `1dfd184` (clean); web 385 passed;
+  R CMD check OK, testthat 1285 passed; R library reinstalled. Mode notes, READMEs,
+  tutorial, vignette, CHANGELOG and NEWS give the new numbers. Commits web `878c6bc`,
+  R `32a3615`, not pushed.
 
 ## Done since the session took over (2026-10-04 22:45 – 2026-10-05 00:30)
 
