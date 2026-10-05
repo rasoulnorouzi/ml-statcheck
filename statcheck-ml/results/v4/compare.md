@@ -55,6 +55,8 @@ Only before: none. Only after: none.
 
 ## Steps (gold_test, one row per labelled evaluation in the log)
 
+Lines labelled `reproduce` (re-reads of the committed state) are left out; `results/gold_eval_log.jsonl` keeps them.
+
 | label | date | git_sha | system | recall | recall with fragments | finds without results |
 |---|---|---|---|---|---|---|
 | m1-before | 2026-10-04T17:33:19+00:00 | e51e018 | regex | 0.489 | — | 2 |
@@ -102,3 +104,87 @@ Only before: none. Only after: none.
 | m2-close | 2026-10-04T18:59:36+00:00 | 2042998 | statcheck_r_fulltext_repaired | 0.443 | — | 2 |
 | m2-close | 2026-10-04T18:59:36+00:00 | 2042998 | statcheck_r_passages | 0.479 | — | 2 |
 | m2-close | 2026-10-04T18:59:36+00:00 | 2042998 | statcheck_r_pdf | 0.237 | — | 2 |
+| v4-final:old-gru-crf-s0 | 2026-10-05T10:56:37+00:00 | 0e0069a | model | 0.689 | 0.849 | 69 |
+| v4-final:old-gru-crf-s0 | 2026-10-05T10:56:37+00:00 | 0e0069a | cascade | 0.723 | 0.866 | 69 |
+| v4-final:old-gru-crf-s0 | 2026-10-05T10:56:37+00:00 | 0e0069a | regex | 0.498 | 0.498 | 2 |
+| v4-final:old-gru-crf-s0 | 2026-10-05T10:56:37+00:00 | 0e0069a | statcheck_r_fulltext_raw | 0.113 | — | 2 |
+| v4-final:old-gru-crf-s0 | 2026-10-05T10:56:37+00:00 | 0e0069a | statcheck_r_fulltext_repaired | 0.443 | — | 2 |
+| v4-final:old-gru-crf-s0 | 2026-10-05T10:56:37+00:00 | 0e0069a | statcheck_r_passages | 0.479 | — | 2 |
+| v4-final:old-gru-crf-s0 | 2026-10-05T10:56:37+00:00 | 0e0069a | statcheck_r_pdf | 0.237 | — | 2 |
+| v4-final:gate-none | 2026-10-05T10:57:55+00:00 | 0e0069a | model | 0.731 | 0.889 | 69 |
+| v4-final:gate-none | 2026-10-05T10:57:55+00:00 | 0e0069a | cascade | 0.763 | 0.897 | 69 |
+| v4-final:gate-old | 2026-10-05T10:59:14+00:00 | 0e0069a | model | 0.718 | 0.880 | 66 |
+| v4-final:gate-old | 2026-10-05T10:59:14+00:00 | 0e0069a | cascade | 0.750 | 0.887 | 66 |
+| v4-final:gate-old+all | 2026-10-05T11:00:33+00:00 | 0e0069a | model | 0.712 | 0.893 | 66 |
+| v4-final:gate-old+all | 2026-10-05T11:00:33+00:00 | 0e0069a | cascade | 0.750 | 0.897 | 66 |
+| v4-final:gate-old+font_map | 2026-10-05T11:02:46+00:00 | 0e0069a | model | 0.706 | 0.855 | 66 |
+| v4-final:gate-old+font_map | 2026-10-05T11:02:46+00:00 | 0e0069a | cascade | 0.739 | 0.866 | 66 |
+| v4-final:gate-old+negative_damage | 2026-10-05T11:04:47+00:00 | 0e0069a | model | 0.697 | 0.851 | 68 |
+| v4-final:gate-old+negative_damage | 2026-10-05T11:04:47+00:00 | 0e0069a | cascade | 0.729 | 0.859 | 68 |
+| v4-final:gate-old+operator_drop | 2026-10-05T11:07:07+00:00 | 0e0069a | model | 0.750 | 0.905 | 75 |
+| v4-final:gate-old+operator_drop | 2026-10-05T11:07:07+00:00 | 0e0069a | cascade | 0.784 | 0.914 | 75 |
+| v4-final:gate-old+spaced_digits | 2026-10-05T11:08:53+00:00 | 0e0069a | model | 0.725 | 0.870 | 64 |
+| v4-final:gate-old+spaced_digits | 2026-10-05T11:08:53+00:00 | 0e0069a | cascade | 0.761 | 0.878 | 64 |
+| v4-final:gru-crf-all-s1 | 2026-10-05T11:10:55+00:00 | 0e0069a | model | 0.721 | 0.882 | 67 |
+| v4-final:gru-crf-all-s1 | 2026-10-05T11:10:55+00:00 | 0e0069a | cascade | 0.752 | 0.889 | 67 |
+| v4-final:gru-crf-all-s2 | 2026-10-05T11:13:48+00:00 | 0e0069a | model | 0.681 | 0.826 | 67 |
+| v4-final:gru-crf-all-s2 | 2026-10-05T11:13:48+00:00 | 0e0069a | cascade | 0.710 | 0.828 | 67 |
+| v4-final:gru-crf-all-s3 | 2026-10-05T11:16:18+00:00 | 0e0069a | model | 0.681 | 0.834 | 61 |
+| v4-final:gru-crf-all-s3 | 2026-10-05T11:16:18+00:00 | 0e0069a | cascade | 0.725 | 0.849 | 61 |
+| v4-final:gru-crf-all-s4 | 2026-10-05T11:18:03+00:00 | 0e0069a | model | 0.685 | 0.836 | 62 |
+| v4-final:gru-crf-all-s4 | 2026-10-05T11:18:03+00:00 | 0e0069a | cascade | 0.721 | 0.847 | 62 |
+| v4-final:gru-crf-none-s1 | 2026-10-05T11:19:49+00:00 | 0e0069a | model | 0.729 | 0.889 | 69 |
+| v4-final:gru-crf-none-s1 | 2026-10-05T11:19:49+00:00 | 0e0069a | cascade | 0.763 | 0.897 | 69 |
+| v4-final:gru-crf-none-s2 | 2026-10-05T11:22:09+00:00 | 0e0069a | model | 0.683 | 0.861 | 59 |
+| v4-final:gru-crf-none-s2 | 2026-10-05T11:22:09+00:00 | 0e0069a | cascade | 0.714 | 0.863 | 59 |
+| v4-final:gru-crf-none-s3 | 2026-10-05T11:24:14+00:00 | 0e0069a | model | 0.695 | 0.901 | 67 |
+| v4-final:gru-crf-none-s3 | 2026-10-05T11:24:14+00:00 | 0e0069a | cascade | 0.729 | 0.910 | 67 |
+| v4-final:gru-crf-none-s4 | 2026-10-05T11:26:30+00:00 | 0e0069a | model | 0.731 | 0.899 | 66 |
+| v4-final:gru-crf-none-s4 | 2026-10-05T11:26:30+00:00 | 0e0069a | cascade | 0.758 | 0.901 | 66 |
+| v4-final:gru-softmax-all-s0 | 2026-10-05T11:27:39+00:00 | 0e0069a | model | 0.710 | 0.880 | 75 |
+| v4-final:gru-softmax-all-s0 | 2026-10-05T11:27:39+00:00 | 0e0069a | cascade | 0.744 | 0.889 | 75 |
+| v4-final:gru-softmax-all-s1 | 2026-10-05T11:29:22+00:00 | 0e0069a | model | 0.718 | 0.899 | 82 |
+| v4-final:gru-softmax-all-s1 | 2026-10-05T11:29:22+00:00 | 0e0069a | cascade | 0.756 | 0.910 | 82 |
+| v4-verdicts | 2026-10-05T11:30:09+00:00 | 0e0069a | cascade | 0.723 | — | n/a |
+| v4-verdicts | 2026-10-05T11:30:09+00:00 | 0e0069a | cascade_v4 | 0.763 | — | n/a |
+| v4-verdicts | 2026-10-05T11:30:09+00:00 | 0e0069a | regex | 0.498 | — | n/a |
+| v4-verdicts | 2026-10-05T11:30:09+00:00 | 0e0069a | statcheck_r_fulltext_raw | 0.113 | — | n/a |
+| v4-verdicts | 2026-10-05T11:30:09+00:00 | 0e0069a | statcheck_r_fulltext_repaired | 0.443 | — | n/a |
+| v4-verdicts | 2026-10-05T11:30:09+00:00 | 0e0069a | statcheck_r_passages | 0.479 | — | n/a |
+| v4-verdicts | 2026-10-05T11:30:09+00:00 | 0e0069a | statcheck_r_pdf | 0.237 | — | n/a |
+| v4-final:gru-softmax-all-s2 | 2026-10-05T11:30:36+00:00 | 0e0069a | model | 0.735 | 0.905 | 80 |
+| v4-final:gru-softmax-all-s2 | 2026-10-05T11:30:36+00:00 | 0e0069a | cascade | 0.767 | 0.912 | 80 |
+| v4-final:gru-softmax-all-s3 | 2026-10-05T11:31:36+00:00 | 0e0069a | model | 0.723 | 0.897 | 77 |
+| v4-final:gru-softmax-all-s3 | 2026-10-05T11:31:36+00:00 | 0e0069a | cascade | 0.754 | 0.903 | 77 |
+| v4-final:gru-softmax-all-s4 | 2026-10-05T11:32:34+00:00 | 0e0069a | model | 0.718 | 0.876 | 72 |
+| v4-final:gru-softmax-all-s4 | 2026-10-05T11:32:34+00:00 | 0e0069a | cascade | 0.750 | 0.882 | 72 |
+| v4-final:gru-softmax-none-s0 | 2026-10-05T11:33:32+00:00 | 0e0069a | model | 0.721 | 0.884 | 70 |
+| v4-final:gru-softmax-none-s0 | 2026-10-05T11:33:32+00:00 | 0e0069a | cascade | 0.754 | 0.893 | 70 |
+| v4-final:gru-softmax-none-s1 | 2026-10-05T11:34:31+00:00 | 0e0069a | model | 0.727 | 0.893 | 75 |
+| v4-final:gru-softmax-none-s1 | 2026-10-05T11:34:31+00:00 | 0e0069a | cascade | 0.758 | 0.899 | 75 |
+| v4-final:gru-softmax-none-s2 | 2026-10-05T11:35:29+00:00 | 0e0069a | model | 0.742 | 0.916 | 76 |
+| v4-final:gru-softmax-none-s2 | 2026-10-05T11:35:29+00:00 | 0e0069a | cascade | 0.767 | 0.916 | 76 |
+| v4-final:gru-softmax-none-s3 | 2026-10-05T11:36:27+00:00 | 0e0069a | model | 0.733 | 0.901 | 70 |
+| v4-final:gru-softmax-none-s3 | 2026-10-05T11:36:27+00:00 | 0e0069a | cascade | 0.763 | 0.908 | 70 |
+| v4-final:gru-softmax-none-s4 | 2026-10-05T11:37:26+00:00 | 0e0069a | model | 0.744 | 0.914 | 73 |
+| v4-final:gru-softmax-none-s4 | 2026-10-05T11:37:26+00:00 | 0e0069a | cascade | 0.775 | 0.920 | 73 |
+| v4-final:lstm-softmax-all-s0 | 2026-10-05T11:38:39+00:00 | 0e0069a | model | 0.733 | 0.884 | 70 |
+| v4-final:lstm-softmax-all-s0 | 2026-10-05T11:38:39+00:00 | 0e0069a | cascade | 0.758 | 0.884 | 70 |
+| v4-final:lstm-softmax-all-s1 | 2026-10-05T11:39:52+00:00 | 0e0069a | model | 0.687 | 0.855 | 72 |
+| v4-final:lstm-softmax-all-s1 | 2026-10-05T11:39:52+00:00 | 0e0069a | cascade | 0.723 | 0.863 | 72 |
+| v4-final:lstm-softmax-all-s2 | 2026-10-05T11:41:03+00:00 | 0e0069a | model | 0.687 | 0.828 | 73 |
+| v4-final:lstm-softmax-all-s2 | 2026-10-05T11:41:03+00:00 | 0e0069a | cascade | 0.718 | 0.832 | 73 |
+| v4-final:lstm-softmax-all-s3 | 2026-10-05T11:42:16+00:00 | 0e0069a | model | 0.702 | 0.859 | 68 |
+| v4-final:lstm-softmax-all-s3 | 2026-10-05T11:42:16+00:00 | 0e0069a | cascade | 0.731 | 0.863 | 68 |
+| v4-final:lstm-softmax-all-s4 | 2026-10-05T11:43:29+00:00 | 0e0069a | model | 0.672 | 0.834 | 84 |
+| v4-final:lstm-softmax-all-s4 | 2026-10-05T11:43:29+00:00 | 0e0069a | cascade | 0.704 | 0.840 | 84 |
+| v4-final:lstm-softmax-none-s0 | 2026-10-05T11:44:42+00:00 | 0e0069a | model | 0.731 | 0.880 | 77 |
+| v4-final:lstm-softmax-none-s0 | 2026-10-05T11:44:42+00:00 | 0e0069a | cascade | 0.763 | 0.887 | 77 |
+| v4-final:lstm-softmax-none-s1 | 2026-10-05T11:45:54+00:00 | 0e0069a | model | 0.744 | 0.899 | 77 |
+| v4-final:lstm-softmax-none-s1 | 2026-10-05T11:45:54+00:00 | 0e0069a | cascade | 0.771 | 0.901 | 77 |
+| v4-final:lstm-softmax-none-s2 | 2026-10-05T11:47:07+00:00 | 0e0069a | model | 0.687 | 0.853 | 74 |
+| v4-final:lstm-softmax-none-s2 | 2026-10-05T11:47:07+00:00 | 0e0069a | cascade | 0.718 | 0.861 | 74 |
+| v4-final:lstm-softmax-none-s3 | 2026-10-05T11:48:20+00:00 | 0e0069a | model | 0.748 | 0.910 | 75 |
+| v4-final:lstm-softmax-none-s3 | 2026-10-05T11:48:20+00:00 | 0e0069a | cascade | 0.773 | 0.912 | 75 |
+| v4-final:lstm-softmax-none-s4 | 2026-10-05T11:49:33+00:00 | 0e0069a | model | 0.765 | 0.933 | 69 |
+| v4-final:lstm-softmax-none-s4 | 2026-10-05T11:49:33+00:00 | 0e0069a | cascade | 0.796 | 0.939 | 69 |

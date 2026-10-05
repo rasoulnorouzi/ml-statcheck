@@ -64,11 +64,16 @@ def test_deltas_and_missing_systems(tmp_path, monkeypatch):
     assert "old" in (tmp_path / "o.md").read_text()
 
 
-def test_reproduce_reads_are_counted_not_listed(tmp_path, monkeypatch):
-    run(setup(tmp_path), monkeypatch)
-    report = json.load(open(tmp_path / "o.json"))
-    assert "reproduce" not in [s["label"] for s in report["steps"]]
-    assert report["reproduce_reads"] == 1
+def test_reproduce_reads_leave_the_output_unchanged(tmp_path, monkeypatch):
+    args = setup(tmp_path)
+    run(args, monkeypatch)
+    first = (tmp_path / "o.json").read_bytes()
+    with open(tmp_path / "log.jsonl", "a") as fh:
+        fh.write(json.dumps({"date": "d5", "git_sha": "eee", "label": "reproduce",
+                             "systems": ["model"], "gold_test_recall": {"model": 0.85}}) + "\n")
+    run(args, monkeypatch)
+    assert (tmp_path / "o.json").read_bytes() == first
+    assert "reproduce" not in [s["label"] for s in json.load(open(tmp_path / "o.json"))["steps"]]
 
 
 def test_steps_keep_order_and_skip_unlabelled(tmp_path, monkeypatch):

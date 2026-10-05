@@ -4,8 +4,8 @@ Gold and bronze are reported apart and never pooled. The before files under
 results/v4/before are frozen copies of the M1 outputs. The steps table reads
 the gold evaluation log, so the path from the M1 state to the final state is
 visible, one row per labelled evaluation. A line labelled "reproduce" re-reads the
-committed state from reproduce.sh and changes nothing, so it is counted, not listed:
-otherwise every run of reproduce.sh would change this file.
+committed state from reproduce.sh and changes nothing, so it is left out: otherwise
+every run of reproduce.sh would change this file. The log itself keeps every line.
 
 Usage: python pipeline/16_compare.py
 """
@@ -62,11 +62,6 @@ def bronze_rows(before, after):
 
 
 REPRODUCE = "reproduce"
-
-
-def reproduce_reads(log_path):
-    with open(log_path, encoding="utf-8") as fh:
-        return sum(1 for t in fh if t.strip() and json.loads(t).get("label") == REPRODUCE)
 
 
 def steps(log_path):
@@ -131,8 +126,8 @@ def render(report):
     md += ["", f"Only before: {', '.join(b['only_before']) or 'none'}. "
                f"Only after: {', '.join(b['only_after']) or 'none'}.", "",
            "## Steps (gold_test, one row per labelled evaluation in the log)", "",
-           f"Lines labelled `reproduce` (re-reads of the committed state): "
-           f"{report['reproduce_reads']}. They are counted, not listed.", "",
+           "Lines labelled `reproduce` (re-reads of the committed state) are left out; "
+           "`results/gold_eval_log.jsonl` keeps them.", "",
            "| label | date | git_sha | system | recall | recall with fragments "
            "| finds without results |",
            "|---|---|---|---|---|---|---|"]
@@ -164,7 +159,6 @@ def main():
         "gold": {t: gold_rows(bg[t], ag[t]) for t in ("gold_test", "gold_train")},
         "bronze_holdout": bronze_rows(load(args.before_bronze), load(args.after_bronze)),
         "steps": steps(args.log),
-        "reproduce_reads": reproduce_reads(args.log),
     }
     for path in (args.out, args.md):
         os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)

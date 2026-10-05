@@ -769,6 +769,685 @@
      "finds_in_papers_without_results": 2
     }
    }
+  },
+  {
+   "label": "v4-final:old-gru-crf-s0",
+   "date": "2026-10-05T10:56:37+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.689,
+     "recall_with_fragments": 0.849,
+     "finds_in_papers_without_results": 69
+    },
+    "cascade": {
+     "recall": 0.723,
+     "recall_with_fragments": 0.866,
+     "finds_in_papers_without_results": 69
+    },
+    "regex": {
+     "recall": 0.498,
+     "recall_with_fragments": 0.498,
+     "finds_in_papers_without_results": 2
+    },
+    "statcheck_r_fulltext_raw": {
+     "recall": 0.113,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": 2
+    },
+    "statcheck_r_fulltext_repaired": {
+     "recall": 0.443,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": 2
+    },
+    "statcheck_r_passages": {
+     "recall": 0.479,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": 2
+    },
+    "statcheck_r_pdf": {
+     "recall": 0.237,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": 2
+    }
+   }
+  },
+  {
+   "label": "v4-final:gate-none",
+   "date": "2026-10-05T10:57:55+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.731,
+     "recall_with_fragments": 0.889,
+     "finds_in_papers_without_results": 69
+    },
+    "cascade": {
+     "recall": 0.763,
+     "recall_with_fragments": 0.897,
+     "finds_in_papers_without_results": 69
+    }
+   }
+  },
+  {
+   "label": "v4-final:gate-old",
+   "date": "2026-10-05T10:59:14+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.718,
+     "recall_with_fragments": 0.88,
+     "finds_in_papers_without_results": 66
+    },
+    "cascade": {
+     "recall": 0.75,
+     "recall_with_fragments": 0.887,
+     "finds_in_papers_without_results": 66
+    }
+   }
+  },
+  {
+   "label": "v4-final:gate-old+all",
+   "date": "2026-10-05T11:00:33+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.712,
+     "recall_with_fragments": 0.893,
+     "finds_in_papers_without_results": 66
+    },
+    "cascade": {
+     "recall": 0.75,
+     "recall_with_fragments": 0.897,
+     "finds_in_papers_without_results": 66
+    }
+   }
+  },
+  {
+   "label": "v4-final:gate-old+font_map",
+   "date": "2026-10-05T11:02:46+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.706,
+     "recall_with_fragments": 0.855,
+     "finds_in_papers_without_results": 66
+    },
+    "cascade": {
+     "recall": 0.739,
+     "recall_with_fragments": 0.866,
+     "finds_in_papers_without_results": 66
+    }
+   }
+  },
+  {
+   "label": "v4-final:gate-old+negative_damage",
+   "date": "2026-10-05T11:04:47+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.697,
+     "recall_with_fragments": 0.851,
+     "finds_in_papers_without_results": 68
+    },
+    "cascade": {
+     "recall": 0.729,
+     "recall_with_fragments": 0.859,
+     "finds_in_papers_without_results": 68
+    }
+   }
+  },
+  {
+   "label": "v4-final:gate-old+operator_drop",
+   "date": "2026-10-05T11:07:07+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.75,
+     "recall_with_fragments": 0.905,
+     "finds_in_papers_without_results": 75
+    },
+    "cascade": {
+     "recall": 0.784,
+     "recall_with_fragments": 0.914,
+     "finds_in_papers_without_results": 75
+    }
+   }
+  },
+  {
+   "label": "v4-final:gate-old+spaced_digits",
+   "date": "2026-10-05T11:08:53+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.725,
+     "recall_with_fragments": 0.87,
+     "finds_in_papers_without_results": 64
+    },
+    "cascade": {
+     "recall": 0.761,
+     "recall_with_fragments": 0.878,
+     "finds_in_papers_without_results": 64
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-crf-all-s1",
+   "date": "2026-10-05T11:10:55+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.721,
+     "recall_with_fragments": 0.882,
+     "finds_in_papers_without_results": 67
+    },
+    "cascade": {
+     "recall": 0.752,
+     "recall_with_fragments": 0.889,
+     "finds_in_papers_without_results": 67
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-crf-all-s2",
+   "date": "2026-10-05T11:13:48+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.681,
+     "recall_with_fragments": 0.826,
+     "finds_in_papers_without_results": 67
+    },
+    "cascade": {
+     "recall": 0.71,
+     "recall_with_fragments": 0.828,
+     "finds_in_papers_without_results": 67
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-crf-all-s3",
+   "date": "2026-10-05T11:16:18+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.681,
+     "recall_with_fragments": 0.834,
+     "finds_in_papers_without_results": 61
+    },
+    "cascade": {
+     "recall": 0.725,
+     "recall_with_fragments": 0.849,
+     "finds_in_papers_without_results": 61
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-crf-all-s4",
+   "date": "2026-10-05T11:18:03+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.685,
+     "recall_with_fragments": 0.836,
+     "finds_in_papers_without_results": 62
+    },
+    "cascade": {
+     "recall": 0.721,
+     "recall_with_fragments": 0.847,
+     "finds_in_papers_without_results": 62
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-crf-none-s1",
+   "date": "2026-10-05T11:19:49+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.729,
+     "recall_with_fragments": 0.889,
+     "finds_in_papers_without_results": 69
+    },
+    "cascade": {
+     "recall": 0.763,
+     "recall_with_fragments": 0.897,
+     "finds_in_papers_without_results": 69
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-crf-none-s2",
+   "date": "2026-10-05T11:22:09+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.683,
+     "recall_with_fragments": 0.861,
+     "finds_in_papers_without_results": 59
+    },
+    "cascade": {
+     "recall": 0.714,
+     "recall_with_fragments": 0.863,
+     "finds_in_papers_without_results": 59
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-crf-none-s3",
+   "date": "2026-10-05T11:24:14+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.695,
+     "recall_with_fragments": 0.901,
+     "finds_in_papers_without_results": 67
+    },
+    "cascade": {
+     "recall": 0.729,
+     "recall_with_fragments": 0.91,
+     "finds_in_papers_without_results": 67
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-crf-none-s4",
+   "date": "2026-10-05T11:26:30+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.731,
+     "recall_with_fragments": 0.899,
+     "finds_in_papers_without_results": 66
+    },
+    "cascade": {
+     "recall": 0.758,
+     "recall_with_fragments": 0.901,
+     "finds_in_papers_without_results": 66
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-softmax-all-s0",
+   "date": "2026-10-05T11:27:39+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.71,
+     "recall_with_fragments": 0.88,
+     "finds_in_papers_without_results": 75
+    },
+    "cascade": {
+     "recall": 0.744,
+     "recall_with_fragments": 0.889,
+     "finds_in_papers_without_results": 75
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-softmax-all-s1",
+   "date": "2026-10-05T11:29:22+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.718,
+     "recall_with_fragments": 0.899,
+     "finds_in_papers_without_results": 82
+    },
+    "cascade": {
+     "recall": 0.756,
+     "recall_with_fragments": 0.91,
+     "finds_in_papers_without_results": 82
+    }
+   }
+  },
+  {
+   "label": "v4-verdicts",
+   "date": "2026-10-05T11:30:09+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "cascade": {
+     "recall": 0.723,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": null
+    },
+    "cascade_v4": {
+     "recall": 0.763,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": null
+    },
+    "regex": {
+     "recall": 0.498,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": null
+    },
+    "statcheck_r_fulltext_raw": {
+     "recall": 0.113,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": null
+    },
+    "statcheck_r_fulltext_repaired": {
+     "recall": 0.443,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": null
+    },
+    "statcheck_r_passages": {
+     "recall": 0.479,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": null
+    },
+    "statcheck_r_pdf": {
+     "recall": 0.237,
+     "recall_with_fragments": null,
+     "finds_in_papers_without_results": null
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-softmax-all-s2",
+   "date": "2026-10-05T11:30:36+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.735,
+     "recall_with_fragments": 0.905,
+     "finds_in_papers_without_results": 80
+    },
+    "cascade": {
+     "recall": 0.767,
+     "recall_with_fragments": 0.912,
+     "finds_in_papers_without_results": 80
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-softmax-all-s3",
+   "date": "2026-10-05T11:31:36+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.723,
+     "recall_with_fragments": 0.897,
+     "finds_in_papers_without_results": 77
+    },
+    "cascade": {
+     "recall": 0.754,
+     "recall_with_fragments": 0.903,
+     "finds_in_papers_without_results": 77
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-softmax-all-s4",
+   "date": "2026-10-05T11:32:34+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.718,
+     "recall_with_fragments": 0.876,
+     "finds_in_papers_without_results": 72
+    },
+    "cascade": {
+     "recall": 0.75,
+     "recall_with_fragments": 0.882,
+     "finds_in_papers_without_results": 72
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-softmax-none-s0",
+   "date": "2026-10-05T11:33:32+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.721,
+     "recall_with_fragments": 0.884,
+     "finds_in_papers_without_results": 70
+    },
+    "cascade": {
+     "recall": 0.754,
+     "recall_with_fragments": 0.893,
+     "finds_in_papers_without_results": 70
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-softmax-none-s1",
+   "date": "2026-10-05T11:34:31+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.727,
+     "recall_with_fragments": 0.893,
+     "finds_in_papers_without_results": 75
+    },
+    "cascade": {
+     "recall": 0.758,
+     "recall_with_fragments": 0.899,
+     "finds_in_papers_without_results": 75
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-softmax-none-s2",
+   "date": "2026-10-05T11:35:29+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.742,
+     "recall_with_fragments": 0.916,
+     "finds_in_papers_without_results": 76
+    },
+    "cascade": {
+     "recall": 0.767,
+     "recall_with_fragments": 0.916,
+     "finds_in_papers_without_results": 76
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-softmax-none-s3",
+   "date": "2026-10-05T11:36:27+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.733,
+     "recall_with_fragments": 0.901,
+     "finds_in_papers_without_results": 70
+    },
+    "cascade": {
+     "recall": 0.763,
+     "recall_with_fragments": 0.908,
+     "finds_in_papers_without_results": 70
+    }
+   }
+  },
+  {
+   "label": "v4-final:gru-softmax-none-s4",
+   "date": "2026-10-05T11:37:26+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.744,
+     "recall_with_fragments": 0.914,
+     "finds_in_papers_without_results": 73
+    },
+    "cascade": {
+     "recall": 0.775,
+     "recall_with_fragments": 0.92,
+     "finds_in_papers_without_results": 73
+    }
+   }
+  },
+  {
+   "label": "v4-final:lstm-softmax-all-s0",
+   "date": "2026-10-05T11:38:39+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.733,
+     "recall_with_fragments": 0.884,
+     "finds_in_papers_without_results": 70
+    },
+    "cascade": {
+     "recall": 0.758,
+     "recall_with_fragments": 0.884,
+     "finds_in_papers_without_results": 70
+    }
+   }
+  },
+  {
+   "label": "v4-final:lstm-softmax-all-s1",
+   "date": "2026-10-05T11:39:52+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.687,
+     "recall_with_fragments": 0.855,
+     "finds_in_papers_without_results": 72
+    },
+    "cascade": {
+     "recall": 0.723,
+     "recall_with_fragments": 0.863,
+     "finds_in_papers_without_results": 72
+    }
+   }
+  },
+  {
+   "label": "v4-final:lstm-softmax-all-s2",
+   "date": "2026-10-05T11:41:03+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.687,
+     "recall_with_fragments": 0.828,
+     "finds_in_papers_without_results": 73
+    },
+    "cascade": {
+     "recall": 0.718,
+     "recall_with_fragments": 0.832,
+     "finds_in_papers_without_results": 73
+    }
+   }
+  },
+  {
+   "label": "v4-final:lstm-softmax-all-s3",
+   "date": "2026-10-05T11:42:16+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.702,
+     "recall_with_fragments": 0.859,
+     "finds_in_papers_without_results": 68
+    },
+    "cascade": {
+     "recall": 0.731,
+     "recall_with_fragments": 0.863,
+     "finds_in_papers_without_results": 68
+    }
+   }
+  },
+  {
+   "label": "v4-final:lstm-softmax-all-s4",
+   "date": "2026-10-05T11:43:29+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.672,
+     "recall_with_fragments": 0.834,
+     "finds_in_papers_without_results": 84
+    },
+    "cascade": {
+     "recall": 0.704,
+     "recall_with_fragments": 0.84,
+     "finds_in_papers_without_results": 84
+    }
+   }
+  },
+  {
+   "label": "v4-final:lstm-softmax-none-s0",
+   "date": "2026-10-05T11:44:42+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.731,
+     "recall_with_fragments": 0.88,
+     "finds_in_papers_without_results": 77
+    },
+    "cascade": {
+     "recall": 0.763,
+     "recall_with_fragments": 0.887,
+     "finds_in_papers_without_results": 77
+    }
+   }
+  },
+  {
+   "label": "v4-final:lstm-softmax-none-s1",
+   "date": "2026-10-05T11:45:54+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.744,
+     "recall_with_fragments": 0.899,
+     "finds_in_papers_without_results": 77
+    },
+    "cascade": {
+     "recall": 0.771,
+     "recall_with_fragments": 0.901,
+     "finds_in_papers_without_results": 77
+    }
+   }
+  },
+  {
+   "label": "v4-final:lstm-softmax-none-s2",
+   "date": "2026-10-05T11:47:07+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.687,
+     "recall_with_fragments": 0.853,
+     "finds_in_papers_without_results": 74
+    },
+    "cascade": {
+     "recall": 0.718,
+     "recall_with_fragments": 0.861,
+     "finds_in_papers_without_results": 74
+    }
+   }
+  },
+  {
+   "label": "v4-final:lstm-softmax-none-s3",
+   "date": "2026-10-05T11:48:20+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.748,
+     "recall_with_fragments": 0.91,
+     "finds_in_papers_without_results": 75
+    },
+    "cascade": {
+     "recall": 0.773,
+     "recall_with_fragments": 0.912,
+     "finds_in_papers_without_results": 75
+    }
+   }
+  },
+  {
+   "label": "v4-final:lstm-softmax-none-s4",
+   "date": "2026-10-05T11:49:33+00:00",
+   "git_sha": "0e0069aa2c6db4d520e52d615981b5ade9f7f638",
+   "systems": {
+    "model": {
+     "recall": 0.765,
+     "recall_with_fragments": 0.933,
+     "finds_in_papers_without_results": 69
+    },
+    "cascade": {
+     "recall": 0.796,
+     "recall_with_fragments": 0.939,
+     "finds_in_papers_without_results": 69
+    }
+   }
   }
  ]
 }

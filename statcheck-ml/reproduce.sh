@@ -129,6 +129,8 @@ if [ $start_idx -le 6 ]; then
   $PY pipeline/21_dataset_v4.py --bronze dataset/train.jsonl --final dataset/annotations/passages/final.json --key dataset/passages/key.json --batches dataset/passages/batches --out dataset/train_v4.jsonl --splits-out dataset/splits_v4.json
   echo "$PY pipeline/26_paired_v4.py --final results/v4/final --seed 0 --resamples 2000"
   $PY pipeline/26_paired_v4.py --final results/v4/final --seed 0 --resamples 2000
+  echo "$PY pipeline/27_prf_v4.py --final results/v4/final"
+  $PY pipeline/27_prf_v4.py --final results/v4/final
   echo "stages 23, 24 and 25 not rerun: they need the trained models or the corpus, and 24 and 25 read the gold test; the committed results in results/v4/final stand"
 fi
 
@@ -157,4 +159,4 @@ fi
 echo "Verifying the dataset manifest (regenerated files must match the committed hashes)..."
 $PY -c "import sys; sys.path.insert(0, 'src'); from statcheck_ml.provenance import verify_manifest; bad = verify_manifest('dataset/MANIFEST.json'); print('manifest: ok' if not bad else 'manifest: MISMATCH ' + ', '.join(bad)); sys.exit(1 if bad else 0)"
 echo "Verifying artifacts..."
-sha256sum results/eval.json results/gold_eval.json results/v4/compare.json dataset/passages/consensus.json dataset/annotations/passages/final.json dataset/train_v4.jsonl dataset/splits_v4.json results/v4/final/paired.json results/v4/final/paired.md dataset/gold/split.json dataset/gold/dev.json dataset/passages/inventory.jsonl dataset/passages/inventory_summary.json results/REPORT.md results/readme_block.md results/figures/*.png
+sha256sum results/eval.json results/gold_eval.json results/v4/compare.json dataset/passages/consensus.json dataset/annotations/passages/final.json dataset/train_v4.jsonl dataset/splits_v4.json results/v4/final/paired.json results/v4/final/paired.md results/v4/final/prf.json results/v4/final/prf.md dataset/gold/split.json dataset/gold/dev.json dataset/passages/inventory.jsonl dataset/passages/inventory_summary.json results/REPORT.md results/readme_block.md results/figures/*.png

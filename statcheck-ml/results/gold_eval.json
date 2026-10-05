@@ -1,5 +1,6 @@
 {
  "note": "Gold is the owner's hand-coded sheet: whole papers, statcheck scope. gold_test is the frozen test part. Bronze is the three-rater consensus on sampled windows, a language-model annotation. They are never pooled.",
+ "papers": "all",
  "gold_test": {
   "papers": 169,
   "papers_with_results": 49,
@@ -2118,9 +2119,9 @@
   }
  },
  "provenance": {
-  "git_sha": "204299899f164a29d9859be4cef3a3ef9d882a51",
-  "label": "m2-close",
-  "command": "pipeline/14_gold_eval.py --resamples 2000 --seed 0 --label m2-close",
+  "git_sha": "0722a13435937b23ae55f8221869af293eaf9713",
+  "label": "reproduce",
+  "command": "pipeline/14_gold_eval.py --resamples 2000 --seed 0 --label reproduce",
   "seed": 0,
   "resamples": 2000,
   "systems": [
@@ -2136,7 +2137,7 @@
   "inputs": {
    "dataset/gold/gold.jsonl": "d8f6a4449c809826204883c1970a817df8820580329906118e233b34deda00d2",
    "dataset/gold/split.json": "fbb0214f17e33aa1053015d1410a7a23f5fe269e551e9097463f3949c740c9d2",
-   "results/eval.json": "dceb18797a55dc66ad10a38a66b87c780807307ff291bc12f88eebe094440c22",
+   "results/eval.json": "950f76da22cedfaa5c1c1367eadf82a06447b5da685fa069d2ab51330f82bd2b",
    "dataset/baseline/gold/statcheck_fulltext_raw.csv": "54631ec77dad698319ae13f432087095610f567953adfe18a5149a386692d263",
    "dataset/baseline/gold/statcheck_fulltext_repaired.csv": "49143f709f5de90c8e3c773ecb6ab722f7b7ba1c9f9e488d983818831a1a46eb",
    "dataset/baseline/gold/statcheck_passages.csv": "35fb0bbd086ff7c695e87c99459fa98437fa390e31dcc4855f50891164329e0b",
