@@ -34,6 +34,8 @@ def setup(tmp_path):
         {"date": "d2", "git_sha": "bbb", "label": "", "systems": ["model"], "gold_test_recall": {"model": 0.1}},
         {"date": "d3", "git_sha": "ccc", "label": "m2", "systems": ["model"],
          "gold_test": {"model": dict(sysrow(0.85, 5), recall_with_fragments=0.9)}},
+        {"date": "d4", "git_sha": "ddd", "label": "reproduce", "systems": ["model"],
+         "gold_test_recall": {"model": 0.85}},
     ]) + "\n")
     return [
         "--before-gold", write(tmp_path / "bg.json", before), "--after-gold", write(tmp_path / "ag.json", after),
@@ -60,6 +62,13 @@ def test_deltas_and_missing_systems(tmp_path, monkeypatch):
     assert b["rows"][0]["p_delta"] == 0.05 and b["rows"][0]["r_delta"] == 0.0
     assert b["only_before"] == ["gone"]
     assert "old" in (tmp_path / "o.md").read_text()
+
+
+def test_reproduce_reads_are_counted_not_listed(tmp_path, monkeypatch):
+    run(setup(tmp_path), monkeypatch)
+    report = json.load(open(tmp_path / "o.json"))
+    assert "reproduce" not in [s["label"] for s in report["steps"]]
+    assert report["reproduce_reads"] == 1
 
 
 def test_steps_keep_order_and_skip_unlabelled(tmp_path, monkeypatch):

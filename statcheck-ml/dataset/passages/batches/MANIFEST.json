@@ -1,5 +1,4 @@
 {
- "generated_at": "2026-10-04T20:44:28.225804+00:00",
  "command": "python pipeline/02_chunk.py --windows dataset/passages/sample.json --out dataset/passages/batches --size 10 --unpadded --manifest-out dataset/passages/batches/MANIFEST.json --seed 0",
  "files": {
   "batch_0.json": "b78cd0985e0f87f49d60f9078ce4ab661f316348d2bbd075eb2907f09641cc85",

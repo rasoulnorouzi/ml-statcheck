@@ -1,7 +1,6 @@
 """Provenance tracking: SHA256 hashes, manifests, batch validation, provenance stamping."""
 import hashlib
 import json
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
@@ -45,7 +44,6 @@ def write_manifest(paths, out_path, command: str, seed=None) -> dict:
         the manifest dict that was written
 
     The manifest is written to out_path as JSON with:
-    - generated_at: UTC ISO timestamp
     - command: the command string
     - seed: the seed (if provided)
     - files: dict of {relative_path: sha256_hash} sorted by path
@@ -63,8 +61,8 @@ def write_manifest(paths, out_path, command: str, seed=None) -> dict:
             # If p is not relative to out_dir, use absolute path with POSIX style
             files[Path(p).as_posix()] = sha256_file(p)
 
+    # No timestamp: a rerun with the same inputs must give the same bytes.
     manifest = {
-        'generated_at': datetime.now(timezone.utc).isoformat(),
         'command': command,
         'files': files,
     }

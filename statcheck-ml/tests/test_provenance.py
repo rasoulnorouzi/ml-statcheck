@@ -216,3 +216,13 @@ def test_sha256_of_text_ignores_line_endings(tmp_path):
     x, y = tmp_path / "a.onnx", tmp_path / "b.onnx"
     x.write_bytes(b'\x00\n'); y.write_bytes(b'\x00\r\n')
     assert sha256_file(x) != sha256_file(y)
+
+
+def test_write_manifest_is_byte_stable(tmp_path):
+    f = tmp_path / "a.txt"
+    f.write_text("x")
+    out = tmp_path / "MANIFEST.json"
+    write_manifest([f], out, "cmd")
+    first = out.read_bytes()
+    write_manifest([f], out, "cmd")
+    assert out.read_bytes() == first
