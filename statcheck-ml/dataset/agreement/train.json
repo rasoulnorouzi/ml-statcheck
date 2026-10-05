@@ -198,10 +198,10 @@
   "resamples": 1000,
   "seed": 0,
   "inputs": {
-   "dataset\\annotations\\train\\haiku.json": "1fcf3f3749c4a5ee1719be4d2a504f6c874250d153780dd986f9f269d5efa40f",
-   "dataset\\annotations\\train\\sonnet.json": "6917ad40b25aab0f454537caf6a0b4ffe53c11e6170f5484e14f440b5af5e181",
-   "dataset\\annotations\\train\\opus.json": "2f322ee22ac613a9d918dd63990e49350cf312f795ceba782928ae57b567ecdb",
-   "dataset\\annotations\\train\\final.json": "c52e2f216267bde1c5464b1c0eac2cc36d85b4abe3de65af4032c361217071c1"
+   "dataset/annotations/train/haiku.json": "92d450f0bfaa403a31ef12eaa947db3a10f5e1c7514cd628c23a87acd9c4908a",
+   "dataset/annotations/train/sonnet.json": "582e513578597a675e84671bd6ee0b240f83530129c928af8e3dcf3213f86ed4",
+   "dataset/annotations/train/opus.json": "58dd90e6b848d4c63b7d1b351593d2e986ade2c9a899a91b063b0fc1e04b6a18",
+   "dataset/annotations/train/final.json": "0e34011f774dcad36ef49591158055a8b08ade97a076c7597eb95c17dda6e869"
   }
  }
 }

@@ -198,10 +198,10 @@
   "resamples": 1000,
   "seed": 0,
   "inputs": {
-   "dataset\\annotations\\holdout\\haiku.json": "650d58af31951cc49315e229b17412ecb01c31126f638911e70a71966ad9ae9a",
-   "dataset\\annotations\\holdout\\sonnet.json": "b752a2a631d4844d0823a1a887c71d584070be4ea7b374367b2dab2741d2cef4",
-   "dataset\\annotations\\holdout\\opus.json": "1f8d4e0c824d57a906ac355820a577891eb0aece4d5d827d674c4a2e1b47b0d2",
-   "dataset\\annotations\\holdout\\final.json": "5f05ae174d0fa558f9734091ce5cf019c92ae98459e6618b4950675219b65e88"
+   "dataset/annotations/holdout/haiku.json": "f6d6c6223d2862dde5ed5774aa3459f95620a5f3fd5b1ba739a4bcb163572592",
+   "dataset/annotations/holdout/sonnet.json": "ceaf6982062671fd3d8ea9826d52e0eacef323b3a0b5f58f9f167620712db1f0",
+   "dataset/annotations/holdout/opus.json": "427254f5fcf1cdcfa846af8f6928f7e924a060aac46d2d3db34f5343dc8c9ac0",
+   "dataset/annotations/holdout/final.json": "9aad0e850206ac512a6f41f7f47dff3046903a77b6129362a87d4be1db26f6d3"
   }
  }
 }

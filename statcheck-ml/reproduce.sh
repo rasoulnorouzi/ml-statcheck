@@ -31,7 +31,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Define stages
-stages=("agree" "dataset" "train" "export" "evaluate" "gold" "compare" "figures" "report")
+stages=("agree" "dataset" "train" "export" "evaluate" "gold" "v4" "compare" "figures" "report")
 
 # Determine starting index
 start_idx=0
@@ -111,22 +111,43 @@ if [ $start_idx -le 5 ]; then
   fi
 fi
 
-# compare stage
+# v4 stage
+# Reruns the version 4 stages that need no corpus and no trained model. The
+# rater and adjudicator files sit in data/annotation, which git ignores, so
+# stages 19 and 20 run only when that directory exists.
 if [ $start_idx -le 6 ]; then
+  echo "Running: v4 stage..."
+  if [ -d data/annotation/passages/adjudicator ]; then
+    echo "$PY pipeline/19_consensus.py --batches dataset/passages/batches --raters data/annotation/passages --inventory dataset/passages/inventory.jsonl --out dataset/passages/consensus.json --disputes-dir dataset/passages/disputes --seed 0"
+    $PY pipeline/19_consensus.py --batches dataset/passages/batches --raters data/annotation/passages --inventory dataset/passages/inventory.jsonl --out dataset/passages/consensus.json --disputes-dir dataset/passages/disputes --seed 0
+    echo "$PY pipeline/20_merge.py --consensus dataset/passages/consensus.json --disputes-dir dataset/passages/disputes --decisions-dir data/annotation/passages/adjudicator --out dataset/annotations/passages/final.json"
+    $PY pipeline/20_merge.py --consensus dataset/passages/consensus.json --disputes-dir dataset/passages/disputes --decisions-dir data/annotation/passages/adjudicator --out dataset/annotations/passages/final.json
+  else
+    echo "consensus and merge skipped: need the rater files in data/annotation; the committed consensus.json and final.json stand"
+  fi
+  echo "$PY pipeline/21_dataset_v4.py --bronze dataset/train.jsonl --final dataset/annotations/passages/final.json --key dataset/passages/key.json --batches dataset/passages/batches --out dataset/train_v4.jsonl --splits-out dataset/splits_v4.json"
+  $PY pipeline/21_dataset_v4.py --bronze dataset/train.jsonl --final dataset/annotations/passages/final.json --key dataset/passages/key.json --batches dataset/passages/batches --out dataset/train_v4.jsonl --splits-out dataset/splits_v4.json
+  echo "$PY pipeline/26_paired_v4.py --final results/v4/final --seed 0 --resamples 2000"
+  $PY pipeline/26_paired_v4.py --final results/v4/final --seed 0 --resamples 2000
+  echo "stages 23, 24 and 25 not rerun: they need the trained models or the corpus, and 24 and 25 read the gold test; the committed results in results/v4/final stand"
+fi
+
+# compare stage
+if [ $start_idx -le 7 ]; then
   echo "Running: compare stage..."
   echo "$PY pipeline/16_compare.py"
   $PY pipeline/16_compare.py
 fi
 
 # figures stage
-if [ $start_idx -le 7 ]; then
+if [ $start_idx -le 8 ]; then
   echo "Running: figures stage..."
   echo "$PY pipeline/10_figures.py --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --out results/figures"
   $PY pipeline/10_figures.py --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --out results/figures
 fi
 
 # report stage
-if [ $start_idx -le 8 ]; then
+if [ $start_idx -le 9 ]; then
   echo "Running: report stage..."
   echo "$PY pipeline/11_report.py --template docs/report_template.md --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --engines results/engines.json --out results/REPORT.md --readme-block results/readme_block.md"
   $PY pipeline/11_report.py --template docs/report_template.md --eval results/eval.json --agreement dataset/agreement --runs models/runs.json --export models/export.json --engines results/engines.json --out results/REPORT.md --readme-block results/readme_block.md
@@ -136,4 +157,4 @@ fi
 echo "Verifying the dataset manifest (regenerated files must match the committed hashes)..."
 $PY -c "import sys; sys.path.insert(0, 'src'); from statcheck_ml.provenance import verify_manifest; bad = verify_manifest('dataset/MANIFEST.json'); print('manifest: ok' if not bad else 'manifest: MISMATCH ' + ', '.join(bad)); sys.exit(1 if bad else 0)"
 echo "Verifying artifacts..."
-sha256sum results/eval.json results/gold_eval.json results/v4/compare.json dataset/gold/split.json dataset/gold/dev.json dataset/passages/inventory.jsonl dataset/passages/inventory_summary.json results/REPORT.md results/readme_block.md results/figures/*.png
+sha256sum results/eval.json results/gold_eval.json results/v4/compare.json dataset/passages/consensus.json dataset/annotations/passages/final.json dataset/train_v4.jsonl dataset/splits_v4.json results/v4/final/paired.json results/v4/final/paired.md dataset/gold/split.json dataset/gold/dev.json dataset/passages/inventory.jsonl dataset/passages/inventory_summary.json results/REPORT.md results/readme_block.md results/figures/*.png
