@@ -46,10 +46,26 @@ def kit_commit(manifest_path: Path) -> str:
     return json.loads(manifest_path.read_text(encoding="utf-8"))["mother_commit"]
 
 
+def pytest_counts(summary: str) -> tuple[int, int]:
+    """Passed and failed counts from the last line of `pytest -q`.
+
+    Errors count as failed: a collection error is a broken test too.
+    """
+    last = [line for line in summary.strip().splitlines() if line.strip()][-1]
+    def count(word):
+        found = re.search(rf"(\d+) {word}", last)
+        return int(found.group(1)) if found else 0
+    if not re.search(r"\d+ (passed|failed|error)", last):
+        raise SystemExit(f"cannot read the pytest summary line: {last!r}")
+    return count("passed"), count("failed") + count("error")
+
+
 def python_port() -> dict:
     from statcheck_ml.pipeline import Pipeline
-    out = run([sys.executable, "-m", "pytest", "tests/test_parity_self.py", "-q", "-p", "no:warnings"], REPO)
-    passed = int(re.search(r"(\d+) passed", out).group(1))
+    # Not run(): run() aborts on a nonzero exit, and a failing test must be counted, not hidden.
+    proc = subprocess.run([sys.executable, "-m", "pytest", "tests/test_parity_self.py", "-q", "-p", "no:warnings"],
+                          cwd=REPO, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    passed, failed = pytest_counts(proc.stdout)
     zoo = REPO / "src" / "statcheck_ml" / "zoo" / "gru-crf"
     pipe = Pipeline(model_path=str(zoo))
     pipe.run_pdf(str(SAMPLE))
@@ -62,7 +78,7 @@ def python_port() -> dict:
     started = time.perf_counter()
     for _ in range(N_WINDOWS):
         tagger.tag_text(WINDOW)
-    return {"tests_passed": passed, "tests_failed": 0, "engine": "pymupdf",
+    return {"tests_passed": passed, "tests_failed": failed, "engine": "pymupdf",
             "seconds_sample_pdf": round(seconds_pdf, 3),
             "seconds_100_windows": round(time.perf_counter() - started, 2),
             "sample_results": len(report["results"])}
