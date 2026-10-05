@@ -59,7 +59,12 @@ Last update: 2026-10-05, ports 0.2.0 pushed by the owner; main repository kept l
 
 ## Doing
 
-- [~] **P4 Web deployment** — GitHub Actions. `test` and `pages` for `878c6bc`.
+- [~] **P4 Web deployment** — owner pushes. The runs for `878c6bc` were cancelled by
+  GitHub before they started ("The job was not acquired by Runner of type hosted"); the
+  live site still serves the September kit. Web `67c7315` (0.2.1) waits for a push:
+  page placement in document order, ⍰ for unmapped characters and a `why:` line per
+  result, a day and night switch. 392 web tests pass; checked in Chrome on the paper of
+  the owner's screenshot.
 
 ## Waiting on the owner
 
