@@ -6,7 +6,7 @@ Branch `v4-gold`. Team run `wf_963324ab-ab1`. Plan:
 
 `[x]` done · `[~]` doing · `[ ]` to do
 
-Last update: 2026-10-05, gate-none shipped in all three ports locally; push waits for the owner.
+Last update: 2026-10-05, ports 0.2.0 pushed by the owner; main repository kept local.
 
 ## Done
 
@@ -59,9 +59,13 @@ Last update: 2026-10-05, gate-none shipped in all three ports locally; push wait
 
 ## Doing
 
-- [~] **P3 Push** — owner. This machine has no GitHub credentials (HTTPS asks for a user
-  name, SSH key refused). The owner pushes the web port (`878c6bc`) and the R port
-  (`32a3615`). The main repository waits for the owner's decision on the gold data.
+- [~] **P4 Web deployment** — GitHub Actions. `test` and `pages` for `878c6bc`.
+
+## Waiting on the owner
+
+- The main repository is not pushed. `v4-gold` holds `dataset/gold/gold.jsonl`, the
+  coders' rows; pushing makes them public. Options: push all, remove the gold files from
+  the history first, or keep it local (the session's recommendation, followed for now).
 
 ## Done on the A100
 
@@ -118,6 +122,8 @@ Last update: 2026-10-05, gate-none shipped in all three ports locally; push wait
   R CMD check OK, testthat 1285 passed; R library reinstalled. Mode notes, READMEs,
   tutorial, vignette, CHANGELOG and NEWS give the new numbers. Commits web `878c6bc`,
   R `32a3615`, not pushed.
+
+- [x] **P3 Push the ports** — owner. Web `878c6bc` and R `32a3615` are on GitHub.
 
 ## Done since the session took over (2026-10-04 22:45 – 2026-10-05 00:30)
 
