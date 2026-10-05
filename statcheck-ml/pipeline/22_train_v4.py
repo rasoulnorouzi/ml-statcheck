@@ -1,4 +1,4 @@
-"""Train the 23 runs of the version 4 pre-registration (docs/v4/preregistration.md).
+"""Train the 35 runs of the version 4 pre-registration (docs/v4/preregistration.md).
 
 The runs are listed here, not chosen at run time, so the set of runs is fixed before
 any of them is seen. A run whose report.json exists is skipped, so the script resumes
@@ -11,6 +11,7 @@ epoch on 600 rows took 771 s, with one thread 42 s, because the small recurrent
 model spends eight threads waiting on each other.
 """
 import argparse
+import json
 import re
 import os
 import subprocess
@@ -28,6 +29,9 @@ UNITS = {"gru-crf": ["--unit", "gru", "--crf"], "gru-softmax": ["--unit", "gru"]
          "lstm-softmax": ["--unit", "lstm"]}
 
 
+SEEDS = (0, 1, 2, 3, 4)
+
+
 def runs():
     out = {}
     # Noise gate: gru-crf seed 0, one family at a time on top of the old default.
@@ -36,9 +40,9 @@ def runs():
     for fam in NEW:
         out[f"gate-old+{fam}"] = UNITS["gru-crf"] + OLD + ["--families", fam, "--seed", "0"]
     out["gate-old+all"] = UNITS["gru-crf"] + OLD + ["--families", ",".join(NEW), "--seed", "0"]
-    # Grid: three configurations, three seeds, the two noise settings the rule compares.
+    # Grid: three configurations, five seeds, the two noise settings the rules compare.
     for cfg, unit in UNITS.items():
-        for seed in (0, 1, 2):
+        for seed in SEEDS:
             for noise, flags in (("none", NONE), ("all", OLD + ["--families", ",".join(NEW)])):
                 name = f"{cfg}-{noise}-s{seed}"
                 if cfg == "gru-crf" and seed == 0:
@@ -53,12 +57,12 @@ NOISE = {"none": NONE, "old": OLD,
 
 
 def extended_runs():
-    """Every configuration, seed and noise setting: 3 x 3 x 7 = 63 runs.
+    """Every noise setting on every configuration for seeds 0 to 2, plus the 35 runs.
 
     Exploratory. The pre-registered rules read only the runs of runs(), which this
     plan contains under the same names, so the extra runs can never pick the model.
     """
-    out = {}
+    out = dict(runs())
     for cfg, unit in UNITS.items():
         for seed in (0, 1, 2):
             for noise, flags in NOISE.items():
@@ -66,8 +70,8 @@ def extended_runs():
                     name = "gate-old+all" if noise == "all" else f"gate-{noise}"
                 else:
                     name = f"{cfg}-{noise}-s{seed}"
-                out[name] = unit + flags + ["--seed", str(seed)]
-    assert set(runs()) <= set(out) and all(out[n] == runs()[n] for n in runs())
+                out.setdefault(name, unit + flags + ["--seed", str(seed)])
+    assert all(out[n] == runs()[n] for n in runs())
     return out
 
 
@@ -87,7 +91,7 @@ def main():
     ap.add_argument("--list", action="store_true", help="print the run names and stop")
     ap.add_argument("--progress-every", type=int, default=60, help="seconds between progress tables")
     ap.add_argument("--plan", default="prereg", choices=["prereg", "extended"],
-                    help="prereg: the 23 runs the rules read; extended: 63 runs, exploratory")
+                    help="prereg: the 35 runs the rules read; extended: 75 runs, exploratory")
     args = ap.parse_args()
 
     plan = runs() if args.plan == "prereg" else extended_runs()
@@ -103,21 +107,37 @@ def main():
     env = dict(os.environ, PYTHONPATH=str(ROOT / "src"))
     if args.threads:
         env.update(OMP_NUM_THREADS=str(args.threads), MKL_NUM_THREADS=str(args.threads))
+    def command(name, out):
+        return [sys.executable, "-u", "-m", "statcheck_ml.train", "--device", args.device,
+                "--data", args.data, "--splits", args.splits, "--epochs", str(args.epochs),
+                "--batch-size", str(args.batch_size), "--out", str(out)] + plan[name]
+
+    def same_settings(name, out):
+        # A run finished under other settings (an older kit, another batch size) must
+        # train again; only the interpreter path may differ between machines.
+        try:
+            done = json.loads((out / "command.json").read_text())
+        except (OSError, ValueError):
+            return False
+        return done[3:] == command(name, out)[3:]
+
     todo = []
     for name in names:
         out = ROOT / args.models / name
-        if (out / "report.json").exists():
-            print(f"{name}: done before, skipped")
+        if (out / "report.json").exists() and same_settings(name, out):
+            print(f"{name}: done before with the same settings, skipped")
+        elif (out / "report.json").exists():
+            print(f"{name}: done before with other settings, trains again")
+            todo.append((name, out))
         else:
             todo.append((name, out))
     running, failed = [], []
 
     def start(name, out):
         out.mkdir(parents=True, exist_ok=True)
-        cmd = [sys.executable, "-u", "-m", "statcheck_ml.train", "--device", args.device,
-               "--data", args.data, "--splits", args.splits, "--epochs", str(args.epochs),
-               "--batch-size", str(args.batch_size),
-               "--out", str(out)] + plan[name]
+        (out / "report.json").unlink(missing_ok=True)
+        cmd = command(name, out)
+        (out / "command.json").write_text(json.dumps(cmd))
         print(f"start {name}: {' '.join(cmd[3:])}", flush=True)
         log = open(out / "train.log", "w")
         proc = subprocess.Popen(cmd, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT)

@@ -2,14 +2,15 @@
 # Version 4 training on a GPU. Run it inside the unpacked kit.
 #
 #   bash run_v4_gpu.sh smoke                 2 epochs of one run: checks the GPU and times an epoch
-#   bash run_v4_gpu.sh prereg   [PARALLEL]   the 23 pre-registered runs; the selection reads only these
-#   bash run_v4_gpu.sh extended [PARALLEL]   all 63 runs (the 23 included): every family on every
+#   bash run_v4_gpu.sh prereg   [PARALLEL]   the 35 pre-registered runs; the selection reads only these
+#   bash run_v4_gpu.sh extended [PARALLEL]   all 75 runs (the 35 included): every family on every
 #                                            configuration and seed; exploratory, reported only
 #   bash run_v4_gpu.sh only NAME[,NAME] [PARALLEL]   train or retrain the named runs
 #   bash run_v4_gpu.sh pack                  pack models/v4 and the logs into v4_models.tar.gz
 #
 # PARALLEL is how many runs share the GPU at once (default 12; an A100 holds more). A run that already has
-# report.json is skipped, so any scenario continues after an interruption. The 23 runs of
+# report.json and the same settings is skipped, so any scenario continues after an
+# interruption; a run trained with other settings trains again. The 35 runs of
 # prereg are part of extended, so prereg first and extended later trains nothing twice.
 set -euo pipefail
 cd "$(dirname "$0")"

@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 CONFIGS = ["gru-crf", "gru-softmax", "lstm-softmax"]
-SEEDS = (0, 1, 2)
+SEEDS = (0, 1, 2, 3, 4)
 TIE = 0.01          # R_named gap below which two candidates count as tied
 FP_SLACK = 2        # rule 1: extra FP a setting may have over "none"
 EPS = 1e-9          # float guard so that 0.01 exactly is not "below 0.01"
@@ -56,24 +56,28 @@ def dev_metrics(report, system):
 
 
 def rule1(m):
-    """Pick the noise setting from the gru-crf seed-0 runs; m maps run name to metrics."""
-    none, new = m[run_name("gru-crf", "none", 0)], m[run_name("gru-crf", "all", 0)]
-    eligible = {"none": True, "all": new["FP"] <= none["FP"] + FP_SLACK}
-    out = {"inputs": {"none": none, "all": new}, "fp_limit": none["FP"] + FP_SLACK, "eligible": eligible}
+    """Pick the noise setting from the gru-crf runs, by their means over SEEDS."""
+    def mean(noise, key):
+        return sum(m[run_name("gru-crf", noise, s)][key] for s in SEEDS) / len(SEEDS)
+    none = {"R_named": mean("none", "R_named"), "FP": mean("none", "FP")}
+    new = {"R_named": mean("all", "R_named"), "FP": mean("all", "FP")}
+    eligible = {"none": True, "all": new["FP"] <= none["FP"] + FP_SLACK + EPS}
+    out = {"seeds": list(SEEDS), "inputs": {"none": none, "all": new},
+           "fp_limit": none["FP"] + FP_SLACK, "eligible": eligible}
     if not eligible["all"]:
-        return {**out, "chosen": "none", "reason": "setting 'all' has FP above the FP of 'none' plus 2"}
+        return {**out, "chosen": "none", "reason": "setting 'all' has mean FP above the mean FP of 'none' plus 2"}
     gap = new["R_named"] - none["R_named"]
     if abs(gap) + EPS >= TIE:
         chosen = "all" if gap > 0 else "none"
-        return {**out, "chosen": chosen, "reason": "R_named differs by 0.01 or more; the higher wins"}
-    if new["FP"] != none["FP"]:
+        return {**out, "chosen": chosen, "reason": "mean R_named differs by 0.01 or more; the higher wins"}
+    if abs(new["FP"] - none["FP"]) > EPS:
         chosen = "all" if new["FP"] < none["FP"] else "none"
-        return {**out, "chosen": chosen, "reason": "R_named differs by less than 0.01; the lower FP wins"}
-    return {**out, "chosen": "none", "reason": "R_named and FP tie; the setting 'none' wins"}
+        return {**out, "chosen": chosen, "reason": "mean R_named differs by less than 0.01; the lower mean FP wins"}
+    return {**out, "chosen": "none", "reason": "mean R_named and mean FP tie; the setting 'none' wins"}
 
 
 def rule2(m, params, noise):
-    """Pick the configuration by its mean R_named over seeds 0 to 2.
+    """Pick the configuration by its mean R_named over SEEDS.
 
     The 0.01 tie is read against the best mean, so the rule is not circular when
     three means lie close together: every configuration within 0.01 of the top
@@ -105,34 +109,6 @@ def rule3(m, old, config, noise):
             "replaces_gru_crf_s0": replaces,
             "reason": "candidate R_named is at least the old R_named" if replaces
             else "candidate R_named is below the old R_named; the old model stays"}
-
-
-TOP3 = ["gate-old+all", "gru-softmax-all-s0", "lstm-softmax-all-s0", "gate-none"]
-
-
-def rule2_top3(m, params, gru_crf_run):
-    """The amended rule 2: three seed-0 candidates, one per top configuration."""
-    cands = [gru_crf_run, "gru-softmax-all-s0", "lstm-softmax-all-s0"]
-    table = {c: {"R_named": m[c]["R_named"], "FP": m[c]["FP"], "parameters": params[c]} for c in cands}
-    top = max(t["R_named"] for t in table.values())
-    tied = [c for c in cands if top - table[c]["R_named"] + EPS < TIE]
-    best = min(tied, key=lambda c: (table[c]["FP"], table[c]["parameters"]))
-    reason = ("highest R_named" if len(tied) == 1
-              else f"R_named within 0.01 of the top for {tied}; lowest FP, then fewest parameters")
-    return {"table": table, "tied": tied, "chosen": best, "reason": reason}
-
-
-def select_top3(m, params, old):
-    r1 = rule1(m)
-    r2 = rule2_top3(m, params, run_name("gru-crf", r1["chosen"], 0))
-    cand = m[r2["chosen"]]
-    replaces = cand["R_named"] + EPS >= old["R_named"]
-    r3 = {"candidate_run": r2["chosen"], "candidate_R_named": cand["R_named"], "old_R_named": old["R_named"],
-          "replaces_gru_crf_s0": replaces,
-          "reason": "candidate R_named is at least the old R_named" if replaces
-          else "candidate R_named is below the old R_named; the old model stays"}
-    return {"plan": "top3", "rule1": r1, "rule2": r2, "rule3": r3,
-            "chosen_run": r2["chosen"], "replaces_gru_crf_s0": replaces}
 
 
 def select(m, params, old):
@@ -233,8 +209,6 @@ def main():
     ap.add_argument("--out-dir", default="results/v4")
     ap.add_argument("--old-model", default=None, help="default: the packaged zoo model")
     ap.add_argument("--rule-system", default="cascade", choices=["model", "cascade"])
-    ap.add_argument("--plan", default="full", choices=["top3", "full"],
-                    help="top3: the four runs of the 2026-10-05 amendment; full: the 23 runs")
     ap.add_argument("--allow-partial", action="store_true",
                     help="testing only: skip missing runs and skip the rules that need them")
     ap.add_argument("--data", default="dataset/train_v4.jsonl")
@@ -256,7 +230,7 @@ def main():
     models, out_dir = path(args.models), path(args.out_dir)
     for a in ("data", "splits", "gold", "split", "dev", "clean_dir"):
         setattr(args, a, path(getattr(args, a)))
-    names = TOP3 if args.plan == "top3" else expected_runs()
+    names = expected_runs()
     present, missing = check_runs(models, names, args.allow_partial)
 
     from statcheck_ml.data import apply_splits, load_jsonl, load_splits, row_to_example
@@ -291,8 +265,7 @@ def main():
 
     selection = error = None
     try:
-        chooser = select_top3 if args.plan == "top3" else select
-        selection = chooser({n: runs[n] for n in runs}, {n: runs[n]["parameters"] for n in runs}, old)
+        selection = select({n: runs[n] for n in runs}, {n: runs[n]["parameters"] for n in runs}, old)
     except KeyError as exc:
         error = f"the rules need run {exc} and it is missing (partial run)"
     result = {"rule_system": args.rule_system, "partial": bool(missing), "missing": missing,

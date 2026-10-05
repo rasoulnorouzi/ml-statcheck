@@ -18,18 +18,21 @@ NONE, ALL = "gate-none", "gate-old+all"
 
 
 def table(none=(0.70, 3), new=(0.70, 3), grid=None):
-    """Metrics for the gate pair and, from grid, for the other grid runs."""
-    m = {NONE: {"R_named": none[0], "FP": none[1]}, ALL: {"R_named": new[0], "FP": new[1]}}
+    """Every gru-crf seed of each noise setting at the given metrics, then the grid runs."""
+    m = {}
+    for seed in sel.SEEDS:
+        m[sel.run_name("gru-crf", "none", seed)] = {"R_named": none[0], "FP": none[1]}
+        m[sel.run_name("gru-crf", "all", seed)] = {"R_named": new[0], "FP": new[1]}
     for (cfg, noise, seed), (r, fp) in (grid or {}).items():
         m[sel.run_name(cfg, noise, seed)] = {"R_named": r, "FP": fp}
     return m
 
 
 def grid(noise, means, fps=None, spread=0.0):
-    """Three seeds per configuration whose mean R_named is means[cfg]."""
+    """Five seeds per configuration whose mean R_named is means[cfg]."""
     out = {}
     for cfg, mean in means.items():
-        for seed, delta in zip(sel.SEEDS, (-spread, 0.0, spread)):
+        for seed, delta in zip(sel.SEEDS, (-spread, 0.0, spread, 0.0, 0.0)):
             out[(cfg, noise, seed)] = (mean + delta, (fps or {}).get(cfg, 3))
     return out
 
@@ -74,11 +77,11 @@ def params_for(noise):
 def test_rule2_highest_mean_wins_over_a_lucky_seed():
     # lstm has the best single seed (0.85) but the lower mean.
     g = grid("none", {"gru-crf": 0.70, "gru-softmax": 0.60}, spread=0.0)
-    for seed, r in zip(sel.SEEDS, (0.85, 0.55, 0.55)):
+    for seed, r in zip(sel.SEEDS, (0.85, 0.55, 0.55, 0.55, 0.55)):
         g[("lstm-softmax", "none", seed)] = (r, 3)
     r = sel.rule2(table(grid=g), params_for("none"), "none")
     assert r["chosen"] == "gru-crf"
-    assert r["table"]["lstm-softmax"]["mean_R_named"] == pytest.approx(0.65)
+    assert r["table"]["lstm-softmax"]["mean_R_named"] == pytest.approx(0.61)
 
 
 def test_rule2_tie_takes_lower_mean_fp_then_fewer_parameters():
@@ -129,19 +132,25 @@ def test_select_chains_the_rules_and_ships_the_seed_zero_run():
 def test_run_names_are_the_ones_the_trainer_lists():
     listed = set(sel.expected_runs())
     used = {sel.run_name(c, n, s) for c in sel.CONFIGS for n in ("none", "all") for s in sel.SEEDS}
-    assert used <= listed and len(listed) == 23  # the 5 other gate runs are reported only
+    assert used <= listed and len(listed) == 35  # the 5 other gate runs are reported only
 
 
 def test_missing_run_stops_with_a_message(tmp_path):
     r = subprocess.run([sys.executable, str(ROOT / "pipeline/23_select_v4.py"), "--models", str(tmp_path),
                         "--out-dir", str(tmp_path / "out")], capture_output=True, text=True)
     assert r.returncode != 0
-    assert "23 of 23 runs are missing" in r.stderr and "gate-none" in r.stderr
-    top3 = subprocess.run([sys.executable, str(ROOT / "pipeline/23_select_v4.py"), "--plan", "top3",
-                           "--models", str(tmp_path), "--out-dir", str(tmp_path / "out")],
-                          capture_output=True, text=True)
-    assert "4 of 4 runs are missing" in top3.stderr
+    assert "35 of 35 runs are missing" in r.stderr and "gate-none" in r.stderr
     assert not (tmp_path / "out" / "selection.json").exists()
+
+
+def test_rule1_reads_the_mean_over_five_seeds():
+    # One lucky seed of "all" must not win rule 1 when its five-seed mean is lower.
+    m = table(none=(0.80, 3), new=(0.78, 3))
+    m[sel.run_name("gru-crf", "all", 0)] = {"R_named": 0.95, "FP": 3}   # mean 0.814
+    assert sel.rule1(m)["chosen"] == "all"                               # gap 0.014
+    m[sel.run_name("gru-crf", "all", 0)] = {"R_named": 0.83, "FP": 3}   # mean 0.79
+    assert sel.rule1(m)["chosen"] == "none"
+    assert sel.rule1(m)["seeds"] == [0, 1, 2, 3, 4]
 
 
 # End to end on a one-epoch smoke run. Set STATCHECK_SMOKE_RUN to its directory.
@@ -199,28 +208,3 @@ def test_dev_papers_lie_inside_gold_train():
     split = json.loads((ROOT / "dataset/gold/split.json").read_text())
     assert dev <= set(split["gold_train"]) and not dev & set(split["gold_test"])
 
-
-def _m(r, fp=0):
-    return {"R_named": r, "FP": fp}
-
-
-def test_top3_rule2_picks_the_highest_and_breaks_a_tie_by_fp_then_size():
-
-    m = {"gate-none": _m(0.80), "gate-old+all": _m(0.84, 1),
-         "gru-softmax-all-s0": _m(0.835, 0), "lstm-softmax-all-s0": _m(0.79)}
-    params = {"gate-old+all": 467000, "gru-softmax-all-s0": 460000, "lstm-softmax-all-s0": 600000}
-    out = sel.select_top3(m, params, _m(0.809))
-    assert out["rule1"]["chosen"] == "all"
-    assert out["rule2"]["tied"] == ["gate-old+all", "gru-softmax-all-s0"]
-    assert out["chosen_run"] == "gru-softmax-all-s0"  # tied on R_named, lower FP
-    assert out["replaces_gru_crf_s0"] is True
-
-
-def test_top3_rule1_none_makes_gate_none_the_gru_crf_candidate():
-
-    m = {"gate-none": _m(0.85), "gate-old+all": _m(0.82),
-         "gru-softmax-all-s0": _m(0.80), "lstm-softmax-all-s0": _m(0.79)}
-    params = {"gate-none": 1, "gru-softmax-all-s0": 1, "lstm-softmax-all-s0": 1}
-    out = sel.select_top3(m, params, _m(0.86))
-    assert out["rule1"]["chosen"] == "none" and out["chosen_run"] == "gate-none"
-    assert out["replaces_gru_crf_s0"] is False

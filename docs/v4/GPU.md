@@ -1,8 +1,8 @@
 # Version 4 — training on a GPU
 
-The 23 pre-registered runs (`docs/v4/preregistration.md`) need a GPU. One epoch of one
-run takes 409 s on the 8-core development machine, so 23 runs of 30 epochs need about
-78 hours on its CPU.
+The 35 pre-registered runs (`docs/v4/preregistration.md`) need a GPU. One epoch of one
+run takes 409 s on the 8-core development machine, so 35 runs of 30 epochs need about
+120 hours on its CPU. On the A100, 12 runs at once train about one epoch a minute each.
 
 ## What to copy to the GPU machine
 
@@ -16,8 +16,8 @@ run takes 409 s on the 8-core development machine, so 23 runs of 30 epochs need 
 tar xzf v4_gpu_kit.tar.gz
 cd statcheck-ml
 bash run_v4_gpu.sh smoke          # 2 epochs of one run: checks the GPU, times an epoch
-bash run_v4_gpu.sh prereg 4       # the 23 pre-registered runs, 4 at a time
-bash run_v4_gpu.sh extended 8     # optional: all 63 runs, exploratory (the 23 are skipped)
+bash run_v4_gpu.sh prereg 12      # the 35 pre-registered runs, 12 at a time
+bash run_v4_gpu.sh extended 12    # optional: all 75 runs, exploratory (the 35 are skipped)
 bash run_v4_gpu.sh only gate-none,gru-softmax-all-s0 4   # retrain named runs
 bash run_v4_gpu.sh pack           # writes v4_models.tar.gz
 ```

@@ -126,3 +126,25 @@ any version 4 run:
   the version 2 default of 16. The learning rate, the epochs, the patience and the noise
   stay as they are. The rules compare version 4 runs with each other and with the old
   model on the dev papers, so one batch size for all runs keeps the comparison fair.
+
+## Five seeds, 2026-10-05, before any result was read
+
+The owner has an A100 to spare and asked for the most reliable plan. Two changes:
+
+- The grid trains seeds 0 to 4, not 0 to 2: 12 more runs (seeds 3 and 4 of the three
+  configurations, each with the noise settings none and all), 35 runs in all.
+- Rule 1 compares the mean over seeds 0 to 4 of the gru-crf runs with no noise against
+  the gru-crf runs with all noise: the mean R_named, and the mean FP for the limit and
+  the tie. Rule 2 takes the mean over seeds 0 to 4. Rule 3 is unchanged: the shipped
+  model is the seed-0 run of the choice, so no seed is chosen by its score.
+
+State at this note: the owner's first GPU start ran for seven minutes and was stopped.
+The owner pasted its progress table, which shows the training dev F1 (the bronze dev
+split that stops the training early) for the first epochs of 12 runs. No run had
+finished, no run was scored on the 36 gold-train dev papers that the rules read, and the
+session has seen no dev-paper score of a version 4 run.
+
+The runner now records the command of each run in `command.json` and skips a finished
+run only when its command matches. One run of the owner's earlier start
+(`gru-softmax-none-s0`, batch 16, from the kit before the batch-size note) therefore
+trains again.
