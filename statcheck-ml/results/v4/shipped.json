@@ -1,0 +1,132 @@
+{
+ "run": "gate-none",
+ "config": "gru-crf",
+ "seed": 0,
+ "decision": "owner, 2026-10-05, after the gold test was read; rule 3 had kept gru-crf-s0",
+ "dev_f1": 0.9368138570383021,
+ "dev_note": "F1 on the dev side of dataset/splits_v4.json (bronze and passages), the early-stopping set",
+ "bronze_holdout": {
+  "model": {
+   "precision": 0.9659863945578231,
+   "recall": 0.8792569659442725,
+   "f1": 0.9205834683954619,
+   "f1_ci": [
+    0.8913043478260869,
+    0.9457957420965619
+   ]
+  },
+  "cascade": {
+   "precision": 0.9629629629629629,
+   "recall": 0.8854489164086687,
+   "f1": 0.9225806451612903,
+   "f1_ci": [
+    0.893854270299227,
+    0.9470210518337454
+   ]
+  }
+ },
+ "gold_test": {
+  "model": {
+   "R_named": 0.731,
+   "R_named_ci": [
+    0.559,
+    0.844
+   ],
+   "R_frag": 0.889,
+   "FP": 69,
+   "R_damaged": 0.798,
+   "by_test": {
+    "F": {
+     "k": 197,
+     "n": 202,
+     "r": 0.975
+    },
+    "Q": {
+     "k": 8,
+     "n": 12,
+     "r": 0.667
+    },
+    "chi2": {
+     "k": 1,
+     "n": 81,
+     "r": 0.012
+    },
+    "r": {
+     "k": 4,
+     "n": 4,
+     "r": 1.0
+    },
+    "t": {
+     "k": 113,
+     "n": 141,
+     "r": 0.801
+    },
+    "z": {
+     "k": 25,
+     "n": 36,
+     "r": 0.694
+    }
+   },
+   "finds_not_in_gold": {
+    "named": 40,
+    "r": 129,
+    "nameless": 53
+   },
+   "n": 476
+  },
+  "cascade": {
+   "R_named": 0.763,
+   "R_named_ci": [
+    0.593,
+    0.871
+   ],
+   "R_frag": 0.897,
+   "FP": 69,
+   "R_damaged": 0.807,
+   "by_test": {
+    "F": {
+     "k": 198,
+     "n": 202,
+     "r": 0.98
+    },
+    "Q": {
+     "k": 8,
+     "n": 12,
+     "r": 0.667
+    },
+    "chi2": {
+     "k": 7,
+     "n": 81,
+     "r": 0.086
+    },
+    "r": {
+     "k": 4,
+     "n": 4,
+     "r": 1.0
+    },
+    "t": {
+     "k": 113,
+     "n": 141,
+     "r": 0.801
+    },
+    "z": {
+     "k": 33,
+     "n": 36,
+     "r": 0.917
+    }
+   },
+   "finds_not_in_gold": {
+    "named": 40,
+    "r": 129,
+    "nameless": 53
+   },
+   "n": 476
+  },
+  "note": "read before the decision; not a clean held-out score for this model"
+ },
+ "files": {
+  "zoo/gru-crf/tagger.onnx": "2a11650a8f122a94f505cb33fcc6cd554dfa9b5279a85784622919a05f253110",
+  "zoo/gru-crf/decoder.json": "71cc9a2f4693cd4d6e5559398b752ebe2a55d4ea0b7f3a5984e442d549bf1661",
+  "zoo/gru-crf/charmap.json": "49af3fb2d0edc3716ad22ac3325cfa423b08532b9f09fbca0b505ff3a251170e"
+ }
+}

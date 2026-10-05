@@ -44,6 +44,7 @@ with a manifest of hashes.
 | 25 | `25_verdicts_v4.py` | `gold.jsonl`, `split.json`, `dataset/baseline/gold/*`, the shipped zoo, `models/v4/lstm-softmax-none-s0/zoo` | `results/v4/final/verdicts.json`, `verdicts.md`, one line in `results/gold_eval_log.jsonl` | R, statcheck, corpus |
 | 26 | `26_paired_v4.py` | `results/v4/final/verdicts.json`, `summary.json`, `bronze.json` | `results/v4/final/paired.json`, `paired.md` | — |
 | 27 | `27_prf_v4.py` | `results/v4/final/gold/*.json`, `bronze.json` | `results/v4/final/prf.json`, `prf.md` | — |
+| 28 | `28_ship_v4.py` | `models/v4/<run>/`, `results/v4/final/summary.json`, the holdout | the packaged zoo, `models/zoo/gru-crf/`, `spec/charmap.json`, `results/v4/shipped.json`, `results/v4/final/shipped_bronze.json` | the trained models |
 
 Rules that every stage follows:
 

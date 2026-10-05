@@ -47,6 +47,7 @@ ZOO_DIR = REPO / "models" / "zoo"
 PARITY_CASES = REPO / "tests" / "parity_cases.json"
 RUNS_JSON = REPO / "models" / "runs.json"
 EXPORT_JSON = REPO / "models" / "export.json"
+SHIPPED_JSON = REPO / "results" / "v4" / "shipped.json"
 EVAL_JSON = REPO / "results" / "eval.json"
 INIT_PY = REPO / "src" / "statcheck_ml" / "__init__.py"
 
@@ -108,7 +109,17 @@ def check_parity_model_shipped(configs: list[str]) -> dict:
 
 
 def model_stats(configs: list[str]) -> list[dict]:
-    """Dev F1 (from the export report) and holdout F1 with its CI (from eval.json)."""
+    """Dev F1 (from the export report) and holdout F1 with its CI (from eval.json).
+
+    When results/v4/shipped.json exists, the packaged model is a version 4 run and
+    its scores come from there, because eval.json scores the version 2 runs.
+    """
+    if SHIPPED_JSON.exists():
+        shipped = json.loads(SHIPPED_JSON.read_text(encoding="utf-8"))
+        model = shipped["bronze_holdout"]["model"]
+        return [{"config": c, "run_name": shipped["run"], "dev_f1": shipped["dev_f1"],
+                 "holdout_f1": model["f1"], "holdout_ci": tuple(model["f1_ci"])}
+                for c in configs if c == shipped["config"]]
     runs = json.loads(RUNS_JSON.read_text(encoding="utf-8"))
     name_to_config = {r["name"]: r["config"] for r in runs}
     export_records = json.loads(EXPORT_JSON.read_text(encoding="utf-8"))

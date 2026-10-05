@@ -1,78 +1,78 @@
 {
- "model": "C:\\Users\\norouzin\\Downloads\\Projects\\practice_claude\\statcheck-ml\\models\\gru-crf-s0\\model.pt",
- "path": "C:\\Users\\norouzin\\Downloads\\Projects\\practice_claude\\statcheck-ml\\models\\gru-crf-s0\\tagger.onnx",
+ "model": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gate-none/model.pt",
+ "path": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gate-none/zoo/tagger.onnx",
  "opset": 17,
  "unit": "gru",
  "has_crf": true,
- "vocabulary": 183,
+ "vocabulary": 180,
  "tags": 37,
- "parameters": 468104,
- "size_mb": 1.87,
+ "parameters": 467912,
+ "size_mb": 1.869,
  "checks": [
   {
    "length": 16,
    "batch": 1,
-   "max_difference": 0.000152587890625,
+   "max_difference": 5.340576171875e-05,
    "same_tag_share": 1.0
   },
   {
    "length": 16,
    "batch": 3,
-   "max_difference": 0.0001373291015625,
+   "max_difference": 4.9591064453125e-05,
    "same_tag_share": 1.0
   },
   {
    "length": 64,
    "batch": 1,
-   "max_difference": 0.0001220703125,
+   "max_difference": 4.9591064453125e-05,
    "same_tag_share": 1.0
   },
   {
    "length": 64,
    "batch": 3,
-   "max_difference": 0.000152587890625,
+   "max_difference": 6.103515625e-05,
    "same_tag_share": 1.0
   },
   {
    "length": 283,
    "batch": 1,
-   "max_difference": 0.000152587890625,
+   "max_difference": 5.340576171875e-05,
    "same_tag_share": 1.0
   },
   {
    "length": 283,
    "batch": 3,
-   "max_difference": 0.000152587890625,
+   "max_difference": 5.7220458984375e-05,
    "same_tag_share": 1.0
   },
   {
    "length": 512,
    "batch": 1,
-   "max_difference": 0.000152587890625,
+   "max_difference": 5.7220458984375e-05,
    "same_tag_share": 1.0
   },
   {
    "length": 512,
    "batch": 3,
-   "max_difference": 0.000152587890625,
+   "max_difference": 6.103515625e-05,
    "same_tag_share": 1.0
   },
   {
    "length": 1024,
    "batch": 1,
-   "max_difference": 0.000152587890625,
+   "max_difference": 7.2479248046875e-05,
    "same_tag_share": 1.0
   },
   {
    "length": 1024,
    "batch": 3,
-   "max_difference": 0.00018310546875,
+   "max_difference": 5.7220458984375e-05,
    "same_tag_share": 1.0
   }
  ],
- "max_difference": 0.00018310546875,
+ "max_difference": 7.2479248046875e-05,
  "decoder": {
-  "path": "C:\\Users\\norouzin\\Downloads\\Projects\\practice_claude\\statcheck-ml\\models\\gru-crf-s0\\decoder.json",
+  "path": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gate-none/zoo/decoder.json",
   "has_crf": true,
   "tags": 37
  }

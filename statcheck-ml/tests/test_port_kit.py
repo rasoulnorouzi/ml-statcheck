@@ -4,6 +4,7 @@ A subprocess, not importlib, because the script's own argument parsing and
 its `--verify` mode are what a port actually calls.
 """
 import json
+import pytest
 import os
 import subprocess
 import sys
@@ -114,3 +115,16 @@ def test_kit_replaces_stale_contents(tmp_path):
     assert result.returncode == 0, result.stderr
     assert not stale.exists()
     assert files_in(kit) == EXPECTED_FILES_GRU_CRF
+
+
+def test_kit_readme_reports_the_shipped_version_4_model():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("port_kit", Path(__file__).parents[1] / "pipeline" / "08_port_kit.py")
+    kit = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(kit)
+    if not kit.SHIPPED_JSON.exists():
+        pytest.skip("no version 4 model is shipped")
+    shipped = json.loads(kit.SHIPPED_JSON.read_text(encoding="utf-8"))
+    [row] = kit.model_stats(["gru-crf"])
+    assert row["run_name"] == shipped["run"]
+    assert row["holdout_f1"] == shipped["bronze_holdout"]["model"]["f1"]

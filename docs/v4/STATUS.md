@@ -6,7 +6,7 @@ Branch `v4-gold`. Team run `wf_963324ab-ab1`. Plan:
 
 `[x]` done · `[~]` doing · `[ ]` to do
 
-Last update: 2026-10-05, version 4 complete; reproduce.sh twice gives identical hashes.
+Last update: 2026-10-05, gate-none shipped in Python; ports in progress.
 
 ## Done
 
@@ -59,8 +59,8 @@ Last update: 2026-10-05, version 4 complete; reproduce.sh twice gives identical 
 
 ## Doing
 
-Nothing. Version 4 is complete on the local branch `v4-gold`. Publishing is the owner's
-decision.
+- [~] **P2 Ports** — session — opus. Kits with the new model; push the R and web ports.
+  The main repository is not pushed until the owner decides on the gold data.
 
 ## Done on the A100
 
@@ -106,6 +106,12 @@ decision.
   `0722a13`, `df14660`.
 - [x] **Stage 27 P/R/F1** — session — opus. `results/v4/final/prf.md`: model alone on the gold
   test, the bronze holdout and the pooled mix. Commit `df14660`.
+
+- [x] **P1 Ship gate-none** — session — opus. The owner's decision after the report:
+  `28_ship_v4.py` puts `gate-none` (gru-crf, no noise, seed 0) in the packaged zoo,
+  `models/zoo/gru-crf` and `spec/charmap.json` (180 characters). Bronze model F1 0.921,
+  cascade 0.923. Parity cases rebuilt. 1035 tests pass. Recorded as a deviation in the
+  pre-registration.
 
 ## Done since the session took over (2026-10-04 22:45 – 2026-10-05 00:30)
 

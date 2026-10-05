@@ -576,6 +576,15 @@ after the previous number was seen. The before-and-after table in the report is 
 development figure for those changes, not a held-out score. Decide a later rule change
 on the gold-train part, then read the gold test once.
 
+### The shipped model changed after the report
+
+The owner then shipped `gate-none` (gru-crf, no noise, seed 0) in the three ports,
+against rule 3. It equals the rules' candidate in gold cascade recall (0.763), keeps the
+old model's 69 finds in no-result papers, and has the higher bronze F1 (0.921). The choice
+used the gold test, so the gold test is no longer clean for the shipped model. A clean
+score needs new human-coded papers. Record: `docs/v4/preregistration.md`, section
+"Deviation"; `statcheck-ml/pipeline/28_ship_v4.py`.
+
 ## Known problems
 
 1. A window can cut a result in half. One pool A window began in the middle of a

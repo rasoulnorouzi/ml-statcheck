@@ -166,3 +166,19 @@ the 120 no-result papers against 69. The owner kept the pre-registered outcome: 
 model ships, and the report gives the gold-test difference as a finding read after the
 choice. The dev set of 278 results was too small to separate the two models; a later
 version needs a larger one.
+
+## Deviation, 2026-10-05: the owner ships a version 4 model
+
+After the outcome above, the owner asked to publish the version 4 model and to replace
+the model in the three ports. The session recommended `gate-none` (gru-crf, no noise,
+seed 0) over the rules' candidate `lstm-softmax-none-s0`. Rule 1 had chosen no noise, and
+`gate-none` is the seed-0 gru-crf run of that setting. Its cascade recall on the gold test
+equals the candidate's (0.763). Its finds in the 120 no-result papers equal the old
+model's (69, against 77 for the candidate). Its bronze F1 is 0.921, against 0.904 for the
+old model and 0.876 for the candidate. It keeps the old architecture, so no port code
+changes.
+
+This choice overrides rule 3 and uses the gold test and the bronze holdout. The gold-test
+scores of the shipped model are therefore not a clean held-out score. A clean score for it
+needs papers that took no part in any choice. `pipeline/28_ship_v4.py` makes the swap and
+writes `results/v4/shipped.json`.

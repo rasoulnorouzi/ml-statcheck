@@ -3,6 +3,15 @@
 Date: 2026-10-05. Branch `v4-gold`, written at commit `b1c3747`. Nothing is pushed and
 nothing is published. The owner decides whether to publish this report.
 
+**Addendum, 2026-10-05.** After this report, the owner chose to ship a version 4 model
+in the three ports. The packaged model is now `gate-none` (gru-crf, no noise, seed 0),
+not `gru-crf-s0`. The choice overrides rule 3 and uses the gold test, so the shipped
+model's gold-test scores are not a clean held-out score. Bronze holdout: model F1 0.921,
+cascade F1 0.923. Gold test, read before the choice: cascade recall 0.763, 69 finds in
+the 120 no-result papers. Sources: `docs/v4/preregistration.md` (section "Deviation") and
+`statcheck-ml/results/v4/shipped.json`. The rest of this report describes the state
+before the swap.
+
 Every number below comes from a committed file. The source files are named at the
 head of each section. A number that was read from the gold test after the model choice
 is marked "read after the choice".
