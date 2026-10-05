@@ -6,7 +6,7 @@ Branch `v4-gold`. Team run `wf_963324ab-ab1`. Plan:
 
 `[x]` done · `[~]` doing · `[ ]` to do
 
-Last update: 2026-10-04, M3 interim commit; M3.2b verified but not accepted; M3c prompts written.
+Last update: 2026-10-05, training finished on the A100; models not yet on this machine.
 
 ## Done
 
@@ -59,10 +59,15 @@ Last update: 2026-10-04, M3 interim commit; M3.2b verified but not accepted; M3c
 
 ## Doing
 
-- [~] **M7 Training on the owner's A100** (Colab, `coab.ipynb`, kit 84c5feeb…, commit
-  `f259d6b`): the 35 pre-registered runs (5 seeds), 12 at a time, batch 64; models saved
-  to `My Drive/statcheck_v4/`. A finished run is skipped only when its command matches.
-  The owner sends `v4_models.tar.gz` when it ends.
+- [~] **Bring the models back** — session — opus. Waiting for the owner to download
+  `My Drive/statcheck_v4/v4_models.tar.gz` (66,490,411 bytes) into `data/`.
+
+## Done on the A100
+
+- [x] **M7 Training on the owner's A100** (Colab, `coab.ipynb`, kit 84c5feeb…, commit
+  `f259d6b`): 35 of 35 pre-registered runs exit 0 in 38 min, 12 at a time, batch 64.
+  Smoke: 2 epochs in 75 s. One run (`gru-softmax-none-s0`, batch 16 from the old kit)
+  trained again as the settings check requires. Mean run 12 min. Archive on Drive.
 
 ## Done since the session took over (2026-10-04 22:45 – 2026-10-05 00:30)
 
