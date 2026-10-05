@@ -5,7 +5,7 @@ stands. This file says why each decision was made, and what the corpus showed.
 
 A new session should read `CLAUDE.md`, then `PLAN.md`, then this file.
 
-Last updated: 2026-09-20.
+Last updated: 2026-10-05.
 
 ## The project in one paragraph
 
@@ -394,6 +394,188 @@ manifest names that commit. Re-export only when a spec file or the shipped model
 changes, then rerun the port's tests and commit the kit with the mother commit in
 the message.
 
+## Version 4 — the human gold set, and what it decided
+
+Decided 2026-10-04, run 2026-10-05, on the branch `v4-gold`. The brief is
+`docs/superpowers/specs/2026-10-04-v4-gold-brief.md`, the selection rule is
+`docs/v4/preregistration.md`, and the results are in `docs/v4/REPORT.md`. This section
+holds the decisions and what each one rests on. The report holds the numbers in full.
+
+### The human labels are a test, never a training label
+
+Three human coders coded 409 papers of the corpus by hand: 2704 results in 185 papers,
+and 224 papers with no result. This is the first human reading the project has. The
+annotator section above records the limit of machine labels: no measurement made with
+them finds a mistake the annotator makes every time. A human reading is the one
+measurement that can. So the project spends it on measurement, and the rule in
+`CLAUDE.md` stands: never train on the gold set.
+
+The split is by paper, seed 0, and frozen in `dataset/gold/split.json`. The gold test
+holds 169 papers with 476 located in-scope results. The gold train holds 240 papers
+with 2007. The 49 papers of the bronze holdout went to the gold test, so no holdout
+paper of either tier is in any training set. No training input reads the gold test. The
+gold-train papers enter training only through the passage annotation below, where the
+coder rows are one vote of four.
+
+### Passages are the unit, and the coders are the fourth vote
+
+The brief measured the unit before any training, on all gold papers with the shipped
+model. Overlapping 250-character windows found 0.862 of the results and read 28.1 M
+characters. The same windows merged into passages found 0.863 and read 15.8 M. Passages
+from 1000-character windows found 0.877, but made 530 finds in the no-result papers
+against 304. A model trained on short windows fires on tables.
+
+A merged passage reads each character once and costs nothing, so `prefilter.json`
+version 2 names `unit: "passage"`. On the gold test the characters the model reads on
+the 169 papers fell from 11,433,629 to 6,503,399 (0.569). The recall did not move: 0.723
+named, 0.866 with fragments. The finds in the 120 no-result papers fell from 73 to 69.
+
+A passage is the annotation unit too. It is about a paragraph, at most 1500 characters,
+up to five times a window, so a batch holds ten passages and not twenty. The three
+raters read every passage blind, with guideline 3.0 and nothing else, and they do not
+know that the coders exist.
+
+The coders are the fourth voter, with the same weight as each rater, by the owner's
+decision. A result stays with two votes of four, any two. The consensus kept 1945
+results, and a coder vote backed 0.8401 of them. The singletons, one voter alone, were
+haiku 9, sonnet 3, opus 54 and coders 10.
+
+The two label sources were close before the vote began. The bronze windows of version 2
+agreed with the coders on 191 of the 200 results they share. That is why the mixed
+training set keeps the 1962 bronze windows beside the 1165 passages, less the 35
+windows from the dev papers.
+
+### A coder row is a vote, not a training label
+
+A training label needs a span in the scope of the guideline. A coder row has neither.
+
+- Scope. The coders followed statcheck. They skip a correlation without degrees of
+  freedom, which the guideline marks, and they code CI, Wald and `b` rows, which it
+  does not. A coder row outside the six test types never votes; 13 of the 1662 rows in
+  the sampled passages were out of scope.
+- Spans. The coders copied a quote from the PDF and typed the values.
+  `pipeline/14_gold.py` located 2664 of the 2704 quotes in the converted text; the rest
+  have no position. A located row votes by span, an unlocated row by statistic value
+  only. A coder row never supplies the span or the quote of a kept result. Those come
+  from a rater.
+- Trust. The owner says the labels are not always right. 135 of 2704 rows hold a typed
+  value that is not in the quote; most correct broken PDF spacing, a few dozen are
+  typing errors.
+
+So the coders vote on the test type, the statistic, the degrees of freedom, the p
+operator, the p-value and the damage flag. They vote on nothing else. Every passage
+label is bronze. A coder vote does not promote a label, and no machine annotation is
+called gold.
+
+### Two dev sets, with two jobs
+
+Training stops early on the dev side of `dataset/splits_v4.json`. That is a split by
+document of the same bronze windows and passages, with the same bronze labels. The
+choice of the shipped model reads the 36 gold dev papers of `dataset/gold/dev.json`.
+They are 15 % of the gold-train papers, drawn by paper, seed 0, stratified by
+`has_results`. They hold 278 located in-scope results, 20 papers with results and 16
+without.
+
+The two jobs differ. Early stopping needs a score at every epoch, in the format the loss
+trains on, which is a span under guideline 3.0. The bronze dev split gives that at no
+cost. The choice needs the score the owner cares about: human rows, whole papers, and
+the full cascade as `Pipeline().run_text` returns it. The gold dev papers give that.
+
+The two sets share no paper. The passage inventory skips the dev papers, so no passage
+of a dev paper was rated. `21_dataset_v4.py` leaves out the 35 bronze windows that come
+from the dev papers. A model that trained on the text of a dev paper scores too high
+there.
+
+### Five seeds, and the rules read means
+
+The brief showed the problem with one seed. The shipped model, trained with noise, found
+0.857 of the gold results. The one model trained without noise found 0.863. One seed
+cannot say whether that gap is real.
+
+The pre-registration first held three seeds. When the owner offered an A100, the plan
+went to seeds 0 to 4 and 35 runs, before any result was read. Rule 1 and rule 2 compare
+means over the five seeds. Rule 3 ships the seed-0 run of the choice, so no seed is
+chosen by its score.
+
+The runs confirmed the need. On the dev papers the five `gru-crf` runs without noise
+range from 0.806 to 0.835. On the gold test the single runs of the grid range from
+0.704 to 0.796.
+
+### The outcome: rule 3 kept the old model by one result
+
+The rule was written on 2026-10-04, before any run started, and it did not change after
+a result was seen. `pipeline/23_select_v4.py` applied it on the 36 dev papers, with the
+gold test and the bronze holdout unread.
+
+Rule 1 chose no noise: the mean R_named of `gru-crf` is 0.819 without noise and 0.808
+with all four families. Rule 2 chose `lstm-softmax`. Its mean 0.825 lies within 0.01 of
+`gru-softmax` at 0.834, so the tie goes to the lower mean FP, 1.0 against 1.6. Rule 3
+compared `lstm-softmax-none-s0` with the shipped `gru-crf-s0` on the same papers: 0.824
+against 0.827, one result of 278. The rule replaces the old model only when the
+candidate is at least as high, so the old model stays.
+
+Read after the choice, the gold test reverses the order. The candidate cascade finds
+0.763 against 0.723, a difference of +0.040, with a paper-bootstrap interval of -0.013
+to +0.123. The row-level McNemar p is 3.11e-04, but the 476 rows sit in 49 papers and
+are not independent. The paper bootstrap is the figure to read, and it holds zero. The
+candidate also makes 77 finds in the 120 no-result papers against 69, and its bronze F1
+is 0.876 against 0.904.
+
+The owner kept the pre-registered outcome: the old model ships, and the report gives
+the gold-test difference as a finding read after the choice. A rule that changes after
+the result is read is not a rule.
+
+### The noise families lowered gold recall for every model type
+
+Read after the choice, the mean cascade R_named over seeds 0 to 4 on the gold test is
+lower with all four families for every configuration:
+
+| configuration | no noise | all four families |
+|---|---|---|
+| gru-crf | 0.745 | 0.732 |
+| gru-softmax | 0.763 | 0.754 |
+| lstm-softmax | 0.764 | 0.727 |
+
+This agrees with rule 1 on the dev papers. It also agrees with the brief's measurement
+before training. There the model trained with the old noise layer found less on every
+one of the six damage types the gold quotes show. It made 292 finds in the no-result
+papers against 216.
+
+The old families damage one character at random. Real damage is per paper, with one
+font map: the brief counted spaced digits from 10 papers and control characters from
+47. The four new families follow that shape. Together they still lowered the mean,
+0.732 against 0.745 for `gru-crf`.
+
+One family alone stands out. `operator_drop` gave the highest gate run on the dev
+papers (0.845) and on the gold test (0.784, with 75 finds in the no-result papers). It
+is one run of one seed, so a later grid should carry it with five seeds before it joins
+the default.
+
+### The next version needs a larger dev set
+
+278 results in 36 papers turned rule 3 on one result. The gold-train part holds 2007
+results in 240 papers; a dev set of several hundred results in more papers would make
+rule 3 readable.
+
+The next rule must also choose a side of the trade the gold test showed. The softmax
+heads find more: mean cascade R_named 0.763 and 0.764 against 0.745. They report more
+finds in the no-result papers, 72.8 and 74.4 against 66.0, with a lower bronze F1,
+0.881 and 0.870 against 0.917. The CRF head trades recall for fewer false finds. Decide
+which side matters before the rule is written.
+
+### What the gold test is still clean for
+
+It is clean for the trained models. No training input reads it, and the selection rule
+reads the 36 dev papers only. `pipeline/24_final_v4.py` read it once per model after
+the choice: 36 log lines `v4-final:*` in `results/gold_eval_log.jsonl`.
+
+It is not clean for the rule changes made without training: the dedup by statistic
+position, the fragments, and the passages. `results/gold_eval_log.jsonl` holds five
+labelled evaluations of the gold test under M1 and M2 and one more under M2b, each
+after the previous number was seen. The before-and-after table in the report is a
+development figure for those changes, not a held-out score. Decide a later rule change
+on the gold-train part, then read the gold test once.
+
 ## Known problems
 
 1. A window can cut a result in half. One pool A window began in the middle of a
@@ -431,6 +613,10 @@ the message.
 | `PLAN.md` | phases, agents, status |
 | `CONTEXT.md` | this file: decisions and findings |
 | `docs/superpowers/specs/2026-09-19-reproducible-pipeline-design.md` | the version 2 design |
+| `docs/superpowers/specs/2026-10-04-v4-gold-brief.md` | the version 4 brief: the owner's decisions and the findings during the run |
+| `docs/v4/preregistration.md` | the version 4 selection rules, their dated notes, the outcome |
+| `docs/v4/REPORT.md` | the version 4 report |
+| `docs/v4/STATUS.md`, `docs/v4/prompts/` | the version 4 task list, and every agent prompt as sent |
 | `statcheck-ml/docs/GUIDELINE.md` | the annotation guideline, version 2.0 |
 | `statcheck-ml/docs/PROTOCOL.md` | raters, batches, provenance, agreement, consensus |
 | `statcheck-ml/docs/SCHEMA.md` | the tag set and the dataset row |
