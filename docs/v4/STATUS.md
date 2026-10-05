@@ -59,10 +59,9 @@ Last update: 2026-10-05, gold test read once; owner decision on the shipped mode
 
 ## Doing
 
-- [~] **Owner decision**: the rules keep `gru-crf-s0`, while on the gold test the rules'
-  candidate `lstm-softmax-none-s0` finds 23 results the old model misses and misses 4 it
-  finds (exact McNemar p 0.0003, rows not independent), with 8 more finds in no-result
-  papers. Keep the pre-registered outcome, or ship the candidate as a reported deviation.
+- [~] **M9 Ports** — runtime-engineer — sonnet. Parity cases, kits, R and web tests, the
+  `13_ports.py` count.
+- [~] **M8.4 Report** — manager — fable. `docs/v4/REPORT.md` from the result files.
 
 ## Done on the A100
 
@@ -87,6 +86,14 @@ Last update: 2026-10-05, gold test read once; owner decision on the shipped mode
   R statcheck on the coders' values, 73 inconsistencies in 15 papers; `pvalue.py` agrees on
   465 of 465. Inconsistencies flagged: old cascade 32, candidate 34, regex 28, R passages
   26, R repaired 25, R PDF 10, R raw 6. 1020 tests pass. Commit `3cda298`.
+
+- [x] **Decision A** — owner. The old model ships; outcome in the pre-registration
+  (`c599c38`).
+- [x] **M8.3 Paired tests** — eval-engineer — sonnet. `26_paired_v4.py`, from stored rows.
+  Candidate against shipped: recall difference +0.040, paper-bootstrap 95% interval
+  -0.013 to +0.123, so not supported at paper level (the row McNemar p 0.0003 treats rows
+  as independent and is too small). Shipped against R passages +0.244 [+0.092, +0.394];
+  against R PDF +0.485 [+0.253, +0.684]. 1027 tests pass. Commit `dfe1ee4`.
 
 ## Done since the session took over (2026-10-04 22:45 – 2026-10-05 00:30)
 
