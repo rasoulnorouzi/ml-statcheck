@@ -59,9 +59,10 @@ Last update: 2026-10-04, M3 interim commit; M3.2b verified but not accepted; M3c
 
 ## Doing
 
-- [~] **M7 Training on the owner's A100** (Colab, `coab.ipynb`, kit 324bbced…, commit
-  `c201cee`): the 23 pre-registered runs, 12 at a time, batch 64; models saved to
-  `My Drive/statcheck_v4/`. The owner sends `v4_models.tar.gz` when it ends.
+- [~] **M7 Training on the owner's A100** (Colab, `coab.ipynb`, kit 84c5feeb…, commit
+  `f259d6b`): the 35 pre-registered runs (5 seeds), 12 at a time, batch 64; models saved
+  to `My Drive/statcheck_v4/`. A finished run is skipped only when its command matches.
+  The owner sends `v4_models.tar.gz` when it ends.
 
 ## Done since the session took over (2026-10-04 22:45 – 2026-10-05 00:30)
 
