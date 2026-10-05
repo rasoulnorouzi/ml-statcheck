@@ -284,6 +284,15 @@ SPLIT_NUMBER_RULE = (
     "joined text too. Other spans, and every pattern find, are read as before."
 )
 
+#: No-break spaces (U+00A0) around an operator, as a clinical psychology PDF sets
+#: them. Python's `\s` matches U+00A0, so the pattern finds both results; a port whose
+#: regular expressions follow ASCII rules misses them and leaves them to the model.
+NBSP_DOCS = [
+    ("nbsp-operators",
+     "a significant interaction between assessment time and type of scale, F(2, 422) = 5.23,\n"
+     "p\u00a0<\u00a0.01, and a main effect, t(215)\u00a0=\u00a02.35, p < .001.\n"),
+]
+
 #: A p-value the PDF conversion split, from a clinical psychology paper the owner checked
 #: in the web demo. The pattern cannot read '<. 05'; the model marks it.
 SPLIT_NUMBER_DOCS = [
