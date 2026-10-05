@@ -6,7 +6,7 @@ Branch `v4-gold`. Team run `wf_963324ab-ab1`. Plan:
 
 `[x]` done · `[~]` doing · `[ ]` to do
 
-Last update: 2026-10-05, selection done; the old model stays under rule 3.
+Last update: 2026-10-05, gold test read once; owner decision on the shipped model.
 
 ## Done
 
@@ -59,8 +59,10 @@ Last update: 2026-10-05, selection done; the old model stays under rule 3.
 
 ## Doing
 
-- [~] **Owner decision**: read the gold test now (M8), or change the plan first. The
-  session waits.
+- [~] **Owner decision**: the rules keep `gru-crf-s0`, while on the gold test the rules'
+  candidate `lstm-softmax-none-s0` finds 23 results the old model misses and misses 4 it
+  finds (exact McNemar p 0.0003, rows not independent), with 8 more finds in no-result
+  papers. Keep the pre-registered outcome, or ship the candidate as a reported deviation.
 
 ## Done on the A100
 
@@ -75,6 +77,16 @@ Last update: 2026-10-05, selection done; the old model stays under rule 3.
   Rule 2: `lstm-softmax` (0.825, mean FP 1.0), in a tie with `gru-softmax` (0.834, FP 1.6).
   Rule 3: `lstm-softmax-none-s0` R_named 0.824 against 0.827 for `gru-crf-s0`: the old
   model stays. `results/v4/selection.md`. Gold test and bronze holdout not read.
+
+- [x] **M8.1 Gold test and bronze holdout** — session — opus. `24_final_v4.py`: 36 models,
+  one gold read each (36 log lines `v4-final:*`). Old cascade 0.723 named, FP 69, bronze F1
+  0.904. Candidate cascade 0.763, FP 77, bronze F1 0.876. Means over 5 seeds (cascade,
+  named): gru-crf none 0.745, gru-softmax none 0.763, lstm-softmax none 0.764; noise `all`
+  lower for every type. `results/v4/final/summary.md`. Commit `3cda298`.
+- [x] **M8.2 Verdicts** — stats-core — opus. `25_verdicts_v4.py`: 465 reference verdicts from
+  R statcheck on the coders' values, 73 inconsistencies in 15 papers; `pvalue.py` agrees on
+  465 of 465. Inconsistencies flagged: old cascade 32, candidate 34, regex 28, R passages
+  26, R repaired 25, R PDF 10, R raw 6. 1020 tests pass. Commit `3cda298`.
 
 ## Done since the session took over (2026-10-04 22:45 – 2026-10-05 00:30)
 
