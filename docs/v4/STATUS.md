@@ -59,12 +59,9 @@ Last update: 2026-10-05, ports 0.2.0 pushed by the owner; main repository kept l
 
 ## Doing
 
-- [~] **P4 Web deployment** — owner pushes. The runs for `878c6bc` were cancelled by
-  GitHub before they started ("The job was not acquired by Runner of type hosted"); the
-  live site still serves the September kit. Web `67c7315` (0.2.1) waits for a push:
-  page placement in document order, ⍰ for unmapped characters and a `why:` line per
-  result, a day and night switch. 392 web tests pass; checked in Chrome on the paper of
-  the owner's screenshot.
+- [~] **P4 Publish the ports** — owner pushes. Web 0.2.1 (`35cf1a4`) and R 0.2.1
+  (`6fab765`) are committed and tested, not yet on GitHub. The `878c6bc` deploy had been
+  cancelled by GitHub (no runner).
 
 ## Waiting on the owner
 
@@ -129,6 +126,24 @@ Last update: 2026-10-05, ports 0.2.0 pushed by the owner; main repository kept l
   R `32a3615`, not pushed.
 
 - [x] **P3 Push the ports** — owner. Web `878c6bc` and R `32a3615` are on GitHub.
+
+- [x] **P5 Hands-on test of the three ports** — session — opus. Six PDFs from six
+  journals (none in the gold test), each through Python, R and the web, on each port's
+  own PDF reader and on the same text. Faults found and fixed:
+  - `p <. 05`: the model marked `. 05` and the number reader refused the space;
+    `split_number_rule` (mother `d366bec`) in all three ports.
+  - No-break spaces around operators: R's regexes ran with ASCII rules; every R regex
+    now runs under `(*UCP)`; parity case `nbsp-operators` (mother `9606a4f`).
+  - R read PDFs in poppler's layout mode, which joins the two columns; now
+    `raw = TRUE`: R finds the same 32 results as Python on the six papers (24 before).
+  - Web: a result placed on page 5 instead of 10 (first quote match anywhere); now in
+    document order.
+  On the same text Python, R and the web agree on all six papers. With their own
+  readers Python and the web differ on one result (pdf.js line breaks; undecidable either
+  way). The web demo gained: details that open on click, dashed column lines, � for
+  unmapped characters with a reason line, a day and night switch, the footer credit and
+  the author's website. Web 394 tests and the browser e2e test (9) pass; R CMD check OK,
+  1333 tests; Python 1037. R takes about 40 to 55 s per paper.
 
 ## Done since the session took over (2026-10-04 22:45 – 2026-10-05 00:30)
 
