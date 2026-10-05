@@ -35,6 +35,8 @@ with a manifest of hashes.
 | 02 | `02_chunk.py --unpadded --size 10` | `dataset/passages/sample.json` | `dataset/passages/batches/batch_<i>.json`, their `MANIFEST.json` | — |
 | 16 | `16_compare.py` | `results/v4/before/*.json`, current `eval.json` and `gold_eval.json`, the gold log | `results/v4/compare.json`, `results/v4/compare.md` | — |
 | 15 | `15_statcheck_gold.py` | gold papers, the clean text, the PDF archive | `dataset/baseline/gold/*.csv`, `versions.json` | R, statcheck, pdftools, corpus |
+| 24 | `24_final_v4.py` | `results/v4/selection.json`, `models/v4/*/zoo`, the shipped zoo, `gold.jsonl`, `split.json`, the holdout | `results/v4/final/gold/*.json`, `bronze.json`, `summary.json`, `summary.md`, one line per model in `results/gold_eval_log.jsonl` | corpus |
+| 25 | `25_verdicts_v4.py` | `gold.jsonl`, `split.json`, `dataset/baseline/gold/*`, the shipped zoo, `models/v4/lstm-softmax-none-s0/zoo` | `results/v4/final/verdicts.json`, `verdicts.md`, one line in `results/gold_eval_log.jsonl` | R, statcheck, corpus |
 
 Rules that every stage follows:
 
@@ -42,6 +44,7 @@ Rules that every stage follows:
   the same inputs gives the same bytes. `reproduce.sh` prints the hashes.
 - `14_gold.py` takes `--seed` for symmetry and ignores it. It does not sample, and a rerun gives the same bytes.
 - `14_gold_eval.py` appends one line to `results/gold_eval_log.jsonl` on every run. The log records each evaluation against the gold test.
+- `25_verdicts_v4.py --papers gold_test` appends one line to the same log. `--papers gold_train` is for development; it needs `--out` and writes no log line.
 - The files under `results/v4/before/` are frozen copies of the M1 outputs. No stage rewrites them.
 - A stage reads the committed inputs only. No stage reads a scratch file.
 - `--help` on any script prints its arguments and defaults.
