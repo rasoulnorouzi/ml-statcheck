@@ -1,0 +1,121 @@
+{
+ "note": "Development score on the dev papers of dataset/gold/dev.json, all in gold_train. Selection figure only; never a held-out result.",
+ "papers": "dev",
+ "dev": {
+  "papers": 36,
+  "papers_with_results": 20,
+  "gold_in_scope": 278,
+  "prefilter_keeps": 0.917,
+  "model": {
+   "recall": 0.781,
+   "recall_ci": [
+    0.678,
+    0.861
+   ],
+   "found": 217,
+   "recall_with_fragments": 0.842,
+   "recall_damaged": 0.826,
+   "damaged_n": 23,
+   "recall_by_test": {
+    "F": {
+     "k": 175,
+     "n": 200,
+     "r": 0.875
+    },
+    "chi2": {
+     "k": 1,
+     "n": 13,
+     "r": 0.077
+    },
+    "r": {
+     "k": 0,
+     "n": 1,
+     "r": 0.0
+    },
+    "t": {
+     "k": 18,
+     "n": 35,
+     "r": 0.514
+    },
+    "z": {
+     "k": 23,
+     "n": 29,
+     "r": 0.793
+    }
+   },
+   "finds_in_papers_without_results": 1,
+   "fragments_in_papers_without_results": 3,
+   "finds_not_in_gold": {
+    "named": 59,
+    "r": 18,
+    "nameless": 6
+   }
+  },
+  "cascade": {
+   "recall": 0.795,
+   "recall_ci": [
+    0.688,
+    0.861
+   ],
+   "found": 221,
+   "recall_with_fragments": 0.842,
+   "recall_damaged": 0.826,
+   "damaged_n": 23,
+   "recall_by_test": {
+    "F": {
+     "k": 175,
+     "n": 200,
+     "r": 0.875
+    },
+    "chi2": {
+     "k": 5,
+     "n": 13,
+     "r": 0.385
+    },
+    "r": {
+     "k": 0,
+     "n": 1,
+     "r": 0.0
+    },
+    "t": {
+     "k": 18,
+     "n": 35,
+     "r": 0.514
+    },
+    "z": {
+     "k": 23,
+     "n": 29,
+     "r": 0.793
+    }
+   },
+   "finds_in_papers_without_results": 1,
+   "fragments_in_papers_without_results": 3,
+   "finds_not_in_gold": {
+    "named": 59,
+    "r": 18,
+    "nameless": 6
+   }
+  }
+ },
+ "provenance": {
+  "git_sha": "f99fbb54951f9b2a4dc89ae1723b9fd1262a0866",
+  "label": "v4-dev-selection",
+  "command": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/pipeline/14_gold_eval.py --papers dev --model /home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-crf-all-s3/zoo --out /home/rass/Desktop/projects/ml-statcheck/statcheck-ml/results/v4/dev/gru-crf-all-s3.json --systems model cascade --resamples 20 --label v4-dev-selection --gold /home/rass/Desktop/projects/ml-statcheck/statcheck-ml/dataset/gold/gold.jsonl --split /home/rass/Desktop/projects/ml-statcheck/statcheck-ml/dataset/gold/split.json --dev /home/rass/Desktop/projects/ml-statcheck/statcheck-ml/dataset/gold/dev.json --clean-dir /home/rass/Desktop/projects/ml-statcheck/statcheck-ml/data/clean",
+  "seed": 0,
+  "resamples": 20,
+  "systems": [
+   "model",
+   "cascade"
+  ],
+  "model": "models/v4/gru-crf-all-s3/zoo",
+  "inputs": {
+   "dataset/gold/gold.jsonl": "d8f6a4449c809826204883c1970a817df8820580329906118e233b34deda00d2",
+   "dataset/gold/split.json": "fbb0214f17e33aa1053015d1410a7a23f5fe269e551e9097463f3949c740c9d2",
+   "dataset/gold/dev.json": "695928c6f6df7896632ef70e848849e0e961a94ba73e653748fb8cff509568f0",
+   "models/v4/gru-crf-all-s3/zoo/charmap.json": "538062240e8c9756bda31864a2c8b4eea79237ed6750b5227cf6c2ccf9beec12",
+   "models/v4/gru-crf-all-s3/zoo/decoder.json": "ee38885bd16186467343c470ee14c7bf4dc029c19ae0f6ac91f77b1e2d4d1460",
+   "models/v4/gru-crf-all-s3/zoo/export_report.json": "360a5e62b596d5441dd95c3d1a32a0bfbfd82c9540efc8ddb6f821633eb11be2",
+   "models/v4/gru-crf-all-s3/zoo/tagger.onnx": "0eb41ac8af16bf47b4e873d4af2f5b144ce94410b1aaf4d7942bcd96151f983c"
+  }
+ }
+}

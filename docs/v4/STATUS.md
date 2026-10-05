@@ -6,7 +6,7 @@ Branch `v4-gold`. Team run `wf_963324ab-ab1`. Plan:
 
 `[x]` done · `[~]` doing · `[ ]` to do
 
-Last update: 2026-10-05, training finished on the A100; models not yet on this machine.
+Last update: 2026-10-05, selection done; the old model stays under rule 3.
 
 ## Done
 
@@ -59,8 +59,8 @@ Last update: 2026-10-05, training finished on the A100; models not yet on this m
 
 ## Doing
 
-- [~] **Bring the models back** — session — opus. Waiting for the owner to download
-  `My Drive/statcheck_v4/v4_models.tar.gz` (66,490,411 bytes) into `data/`.
+- [~] **Owner decision**: read the gold test now (M8), or change the plan first. The
+  session waits.
 
 ## Done on the A100
 
@@ -68,6 +68,13 @@ Last update: 2026-10-05, training finished on the A100; models not yet on this m
   `f259d6b`): 35 of 35 pre-registered runs exit 0 in 38 min, 12 at a time, batch 64.
   Smoke: 2 epochs in 75 s. One run (`gru-softmax-none-s0`, batch 16 from the old kit)
   trained again as the settings check requires. Mean run 12 min. Archive on Drive.
+
+- [x] **Selection on the 36 dev papers** — session — opus. Archive sha256 d4f90143…,
+  35 runs, every command as pre-registered; 35 ONNX exports pass parity.
+  Rule 1: noise `none` (gru-crf mean R_named 0.819 against 0.808 with `all`).
+  Rule 2: `lstm-softmax` (0.825, mean FP 1.0), in a tie with `gru-softmax` (0.834, FP 1.6).
+  Rule 3: `lstm-softmax-none-s0` R_named 0.824 against 0.827 for `gru-crf-s0`: the old
+  model stays. `results/v4/selection.md`. Gold test and bronze holdout not read.
 
 ## Done since the session took over (2026-10-04 22:45 – 2026-10-05 00:30)
 

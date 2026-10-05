@@ -1,0 +1,847 @@
+{
+ "rule_system": "cascade",
+ "partial": false,
+ "missing": [],
+ "runs": {
+  "gate-none": {
+   "R_named": 0.8237410071942446,
+   "R_frag": 0.8525179856115108,
+   "FP": 1,
+   "found": 229,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8237410071942446,
+    "R_frag": 0.8525179856115108,
+    "FP": 1,
+    "found": 229,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 7.62939453125e-05,
+   "tag_agreement": 1.0,
+   "parameters": 467912,
+   "export_seconds": 8.198902606964111,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gate-none/zoo",
+   "seconds": 29.36197066307068
+  },
+  "gate-old": {
+   "R_named": 0.7985611510791367,
+   "R_frag": 0.8273381294964028,
+   "FP": 0,
+   "found": 222,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.7985611510791367,
+    "R_frag": 0.8273381294964028,
+    "FP": 0,
+    "found": 222,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 0.00014495849609375,
+   "tag_agreement": 1.0,
+   "parameters": 469000,
+   "export_seconds": 4.60410737991333,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gate-old/zoo",
+   "seconds": 23.93797779083252
+  },
+  "gate-old+font_map": {
+   "R_named": 0.8093525179856115,
+   "R_frag": 0.8345323741007195,
+   "FP": 0,
+   "found": 225,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8093525179856115,
+    "R_frag": 0.8345323741007195,
+    "FP": 0,
+    "found": 225,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 6.103515625e-05,
+   "tag_agreement": 1.0,
+   "parameters": 469000,
+   "export_seconds": 5.263093948364258,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gate-old+font_map/zoo",
+   "seconds": 25.181066751480103
+  },
+  "gate-old+negative_damage": {
+   "R_named": 0.8093525179856115,
+   "R_frag": 0.8453237410071942,
+   "FP": 0,
+   "found": 225,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8093525179856115,
+    "R_frag": 0.8453237410071942,
+    "FP": 0,
+    "found": 225,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 7.62939453125e-05,
+   "tag_agreement": 1.0,
+   "parameters": 469320,
+   "export_seconds": 4.585417985916138,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gate-old+negative_damage/zoo",
+   "seconds": 24.95169949531555
+  },
+  "gate-old+spaced_digits": {
+   "R_named": 0.8093525179856115,
+   "R_frag": 0.8525179856115108,
+   "FP": 0,
+   "found": 225,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8093525179856115,
+    "R_frag": 0.8525179856115108,
+    "FP": 0,
+    "found": 225,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 9.1552734375e-05,
+   "tag_agreement": 1.0,
+   "parameters": 469000,
+   "export_seconds": 4.715239763259888,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gate-old+spaced_digits/zoo",
+   "seconds": 24.323040008544922
+  },
+  "gate-old+operator_drop": {
+   "R_named": 0.8453237410071942,
+   "R_frag": 0.8776978417266187,
+   "FP": 2,
+   "found": 235,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8453237410071942,
+    "R_frag": 0.8776978417266187,
+    "FP": 2,
+    "found": 235,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 6.866455078125e-05,
+   "tag_agreement": 1.0,
+   "parameters": 469000,
+   "export_seconds": 4.170860052108765,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gate-old+operator_drop/zoo",
+   "seconds": 22.67545747756958
+  },
+  "gate-old+all": {
+   "R_named": 0.8057553956834532,
+   "R_frag": 0.8381294964028777,
+   "FP": 0,
+   "found": 224,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8057553956834532,
+    "R_frag": 0.8381294964028777,
+    "FP": 0,
+    "found": 224,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 2.09808349609375e-05,
+   "tag_agreement": 1.0,
+   "parameters": 469832,
+   "export_seconds": 3.6841351985931396,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gate-old+all/zoo",
+   "seconds": 21.253897190093994
+  },
+  "gru-crf-none-s1": {
+   "R_named": 0.8345323741007195,
+   "R_frag": 0.8669064748201439,
+   "FP": 2,
+   "found": 232,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8345323741007195,
+    "R_frag": 0.8669064748201439,
+    "FP": 2,
+    "found": 232,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 5.340576171875e-05,
+   "tag_agreement": 1.0,
+   "parameters": 467912,
+   "export_seconds": 3.8714168071746826,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-crf-none-s1/zoo",
+   "seconds": 22.071231842041016
+  },
+  "gru-crf-all-s1": {
+   "R_named": 0.8201438848920863,
+   "R_frag": 0.8561151079136691,
+   "FP": 1,
+   "found": 228,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8201438848920863,
+    "R_frag": 0.8561151079136691,
+    "FP": 1,
+    "found": 228,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 3.24249267578125e-05,
+   "tag_agreement": 1.0,
+   "parameters": 469832,
+   "export_seconds": 5.127395868301392,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-crf-all-s1/zoo",
+   "seconds": 22.716986656188965
+  },
+  "gru-crf-none-s2": {
+   "R_named": 0.8093525179856115,
+   "R_frag": 0.8489208633093526,
+   "FP": 0,
+   "found": 225,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8093525179856115,
+    "R_frag": 0.8489208633093526,
+    "FP": 0,
+    "found": 225,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 7.62939453125e-05,
+   "tag_agreement": 1.0,
+   "parameters": 467912,
+   "export_seconds": 3.8690223693847656,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-crf-none-s2/zoo",
+   "seconds": 21.324458599090576
+  },
+  "gru-crf-all-s2": {
+   "R_named": 0.7949640287769785,
+   "R_frag": 0.8345323741007195,
+   "FP": 1,
+   "found": 221,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.7949640287769785,
+    "R_frag": 0.8345323741007195,
+    "FP": 1,
+    "found": 221,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 0.00014495849609375,
+   "tag_agreement": 1.0,
+   "parameters": 469640,
+   "export_seconds": 3.5805914402008057,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-crf-all-s2/zoo",
+   "seconds": 21.224795818328857
+  },
+  "gru-crf-none-s3": {
+   "R_named": 0.8201438848920863,
+   "R_frag": 0.8597122302158273,
+   "FP": 1,
+   "found": 228,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8201438848920863,
+    "R_frag": 0.8597122302158273,
+    "FP": 1,
+    "found": 228,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 3.814697265625e-05,
+   "tag_agreement": 1.0,
+   "parameters": 467912,
+   "export_seconds": 3.475381374359131,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-crf-none-s3/zoo",
+   "seconds": 20.985292673110962
+  },
+  "gru-crf-all-s3": {
+   "R_named": 0.7949640287769785,
+   "R_frag": 0.841726618705036,
+   "FP": 1,
+   "found": 221,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.7949640287769785,
+    "R_frag": 0.841726618705036,
+    "FP": 1,
+    "found": 221,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 0.0001373291015625,
+   "tag_agreement": 1.0,
+   "parameters": 469896,
+   "export_seconds": 3.9277453422546387,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-crf-all-s3/zoo",
+   "seconds": 21.557305097579956
+  },
+  "gru-crf-none-s4": {
+   "R_named": 0.8057553956834532,
+   "R_frag": 0.8489208633093526,
+   "FP": 1,
+   "found": 224,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8057553956834532,
+    "R_frag": 0.8489208633093526,
+    "FP": 1,
+    "found": 224,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 4.9591064453125e-05,
+   "tag_agreement": 1.0,
+   "parameters": 467912,
+   "export_seconds": 3.8868408203125,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-crf-none-s4/zoo",
+   "seconds": 21.36030626296997
+  },
+  "gru-crf-all-s4": {
+   "R_named": 0.8237410071942446,
+   "R_frag": 0.8525179856115108,
+   "FP": 0,
+   "found": 229,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8237410071942446,
+    "R_frag": 0.8525179856115108,
+    "FP": 0,
+    "found": 229,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 6.4849853515625e-05,
+   "tag_agreement": 1.0,
+   "parameters": 469640,
+   "export_seconds": 4.249955892562866,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-crf-all-s4/zoo",
+   "seconds": 21.507797718048096
+  },
+  "gru-softmax-none-s0": {
+   "R_named": 0.8309352517985612,
+   "R_frag": 0.8669064748201439,
+   "FP": 1,
+   "found": 231,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8309352517985612,
+    "R_frag": 0.8669064748201439,
+    "FP": 1,
+    "found": 231,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 8.106231689453125e-06,
+   "tag_agreement": 1.0,
+   "parameters": 466469,
+   "export_seconds": 3.1729583740234375,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-softmax-none-s0/zoo",
+   "seconds": 16.439579486846924
+  },
+  "gru-softmax-all-s0": {
+   "R_named": 0.8237410071942446,
+   "R_frag": 0.8561151079136691,
+   "FP": 4,
+   "found": 229,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8237410071942446,
+    "R_frag": 0.8561151079136691,
+    "FP": 4,
+    "found": 229,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 1.049041748046875e-05,
+   "tag_agreement": 1.0,
+   "parameters": 468389,
+   "export_seconds": 3.4814062118530273,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-softmax-all-s0/zoo",
+   "seconds": 16.579493284225464
+  },
+  "gru-softmax-none-s1": {
+   "R_named": 0.8381294964028777,
+   "R_frag": 0.8741007194244604,
+   "FP": 2,
+   "found": 233,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8381294964028777,
+    "R_frag": 0.8741007194244604,
+    "FP": 2,
+    "found": 233,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 7.62939453125e-06,
+   "tag_agreement": 1.0,
+   "parameters": 466469,
+   "export_seconds": 3.1978657245635986,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-softmax-none-s1/zoo",
+   "seconds": 16.19401240348816
+  },
+  "gru-softmax-all-s1": {
+   "R_named": 0.7949640287769785,
+   "R_frag": 0.8237410071942446,
+   "FP": 8,
+   "found": 221,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.7949640287769785,
+    "R_frag": 0.8237410071942446,
+    "FP": 8,
+    "found": 221,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 9.5367431640625e-06,
+   "tag_agreement": 1.0,
+   "parameters": 468389,
+   "export_seconds": 3.107595920562744,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-softmax-all-s1/zoo",
+   "seconds": 16.113370895385742
+  },
+  "gru-softmax-none-s2": {
+   "R_named": 0.8489208633093526,
+   "R_frag": 0.8812949640287769,
+   "FP": 3,
+   "found": 236,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8489208633093526,
+    "R_frag": 0.8812949640287769,
+    "FP": 3,
+    "found": 236,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 1.049041748046875e-05,
+   "tag_agreement": 1.0,
+   "parameters": 466469,
+   "export_seconds": 3.0864808559417725,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-softmax-none-s2/zoo",
+   "seconds": 16.294793367385864
+  },
+  "gru-softmax-all-s2": {
+   "R_named": 0.8201438848920863,
+   "R_frag": 0.8489208633093526,
+   "FP": 3,
+   "found": 228,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8201438848920863,
+    "R_frag": 0.8489208633093526,
+    "FP": 3,
+    "found": 228,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 9.5367431640625e-06,
+   "tag_agreement": 1.0,
+   "parameters": 468197,
+   "export_seconds": 3.3636367321014404,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-softmax-all-s2/zoo",
+   "seconds": 16.362425565719604
+  },
+  "gru-softmax-none-s3": {
+   "R_named": 0.8237410071942446,
+   "R_frag": 0.8597122302158273,
+   "FP": 1,
+   "found": 229,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8237410071942446,
+    "R_frag": 0.8597122302158273,
+    "FP": 1,
+    "found": 229,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 7.62939453125e-06,
+   "tag_agreement": 1.0,
+   "parameters": 466469,
+   "export_seconds": 3.1892004013061523,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-softmax-none-s3/zoo",
+   "seconds": 16.43532109260559
+  },
+  "gru-softmax-all-s3": {
+   "R_named": 0.8201438848920863,
+   "R_frag": 0.8489208633093526,
+   "FP": 3,
+   "found": 228,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8201438848920863,
+    "R_frag": 0.8489208633093526,
+    "FP": 3,
+    "found": 228,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 1.049041748046875e-05,
+   "tag_agreement": 1.0,
+   "parameters": 468453,
+   "export_seconds": 3.331427574157715,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-softmax-all-s3/zoo",
+   "seconds": 16.429619789123535
+  },
+  "gru-softmax-none-s4": {
+   "R_named": 0.8273381294964028,
+   "R_frag": 0.8597122302158273,
+   "FP": 1,
+   "found": 230,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8273381294964028,
+    "R_frag": 0.8597122302158273,
+    "FP": 1,
+    "found": 230,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 8.58306884765625e-06,
+   "tag_agreement": 1.0,
+   "parameters": 466469,
+   "export_seconds": 3.144253969192505,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-softmax-none-s4/zoo",
+   "seconds": 16.292239665985107
+  },
+  "gru-softmax-all-s4": {
+   "R_named": 0.8057553956834532,
+   "R_frag": 0.8381294964028777,
+   "FP": 3,
+   "found": 224,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8057553956834532,
+    "R_frag": 0.8381294964028777,
+    "FP": 3,
+    "found": 224,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 8.106231689453125e-06,
+   "tag_agreement": 1.0,
+   "parameters": 468197,
+   "export_seconds": 2.9839038848876953,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/gru-softmax-all-s4/zoo",
+   "seconds": 16.133817672729492
+  },
+  "lstm-softmax-none-s0": {
+   "R_named": 0.8237410071942446,
+   "R_frag": 0.8597122302158273,
+   "FP": 0,
+   "found": 229,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8237410071942446,
+    "R_frag": 0.8597122302158273,
+    "FP": 0,
+    "found": 229,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 9.059906005859375e-06,
+   "tag_agreement": 1.0,
+   "parameters": 614949,
+   "export_seconds": 2.830195426940918,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/lstm-softmax-none-s0/zoo",
+   "seconds": 18.818360328674316
+  },
+  "lstm-softmax-all-s0": {
+   "R_named": 0.8165467625899281,
+   "R_frag": 0.8525179856115108,
+   "FP": 2,
+   "found": 227,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8165467625899281,
+    "R_frag": 0.8525179856115108,
+    "FP": 2,
+    "found": 227,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 4.9591064453125e-05,
+   "tag_agreement": 1.0,
+   "parameters": 616869,
+   "export_seconds": 2.5284342765808105,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/lstm-softmax-all-s0/zoo",
+   "seconds": 18.52997636795044
+  },
+  "lstm-softmax-none-s1": {
+   "R_named": 0.8165467625899281,
+   "R_frag": 0.841726618705036,
+   "FP": 1,
+   "found": 227,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8165467625899281,
+    "R_frag": 0.841726618705036,
+    "FP": 1,
+    "found": 227,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 8.58306884765625e-06,
+   "tag_agreement": 1.0,
+   "parameters": 614949,
+   "export_seconds": 2.6266746520996094,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/lstm-softmax-none-s1/zoo",
+   "seconds": 18.53576898574829
+  },
+  "lstm-softmax-all-s1": {
+   "R_named": 0.8345323741007195,
+   "R_frag": 0.8633093525179856,
+   "FP": 4,
+   "found": 232,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8345323741007195,
+    "R_frag": 0.8633093525179856,
+    "FP": 4,
+    "found": 232,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 2.7060508728027344e-05,
+   "tag_agreement": 1.0,
+   "parameters": 616869,
+   "export_seconds": 2.7667577266693115,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/lstm-softmax-all-s1/zoo",
+   "seconds": 18.71632194519043
+  },
+  "lstm-softmax-none-s2": {
+   "R_named": 0.8309352517985612,
+   "R_frag": 0.8597122302158273,
+   "FP": 2,
+   "found": 231,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8309352517985612,
+    "R_frag": 0.8597122302158273,
+    "FP": 2,
+    "found": 231,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 9.059906005859375e-06,
+   "tag_agreement": 1.0,
+   "parameters": 614949,
+   "export_seconds": 2.4385781288146973,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/lstm-softmax-none-s2/zoo",
+   "seconds": 18.352577924728394
+  },
+  "lstm-softmax-all-s2": {
+   "R_named": 0.8309352517985612,
+   "R_frag": 0.8597122302158273,
+   "FP": 3,
+   "found": 231,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8309352517985612,
+    "R_frag": 0.8597122302158273,
+    "FP": 3,
+    "found": 231,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 1.1444091796875e-05,
+   "tag_agreement": 1.0,
+   "parameters": 616677,
+   "export_seconds": 2.6719095706939697,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/lstm-softmax-all-s2/zoo",
+   "seconds": 18.603363275527954
+  },
+  "lstm-softmax-none-s3": {
+   "R_named": 0.8237410071942446,
+   "R_frag": 0.8597122302158273,
+   "FP": 0,
+   "found": 229,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8237410071942446,
+    "R_frag": 0.8597122302158273,
+    "FP": 0,
+    "found": 229,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 1.049041748046875e-05,
+   "tag_agreement": 1.0,
+   "parameters": 614949,
+   "export_seconds": 2.3638343811035156,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/lstm-softmax-none-s3/zoo",
+   "seconds": 18.609699249267578
+  },
+  "lstm-softmax-all-s3": {
+   "R_named": 0.8129496402877698,
+   "R_frag": 0.8489208633093526,
+   "FP": 3,
+   "found": 226,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8129496402877698,
+    "R_frag": 0.8489208633093526,
+    "FP": 3,
+    "found": 226,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 1.049041748046875e-05,
+   "tag_agreement": 1.0,
+   "parameters": 616933,
+   "export_seconds": 3.1119754314422607,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/lstm-softmax-all-s3/zoo",
+   "seconds": 18.984283208847046
+  },
+  "lstm-softmax-none-s4": {
+   "R_named": 0.8309352517985612,
+   "R_frag": 0.8633093525179856,
+   "FP": 2,
+   "found": 231,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8309352517985612,
+    "R_frag": 0.8633093525179856,
+    "FP": 2,
+    "found": 231,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 8.58306884765625e-06,
+   "tag_agreement": 1.0,
+   "parameters": 614949,
+   "export_seconds": 2.8284316062927246,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/lstm-softmax-none-s4/zoo",
+   "seconds": 18.356936931610107
+  },
+  "lstm-softmax-all-s4": {
+   "R_named": 0.8093525179856115,
+   "R_frag": 0.8381294964028777,
+   "FP": 1,
+   "found": 225,
+   "n": 278,
+   "cascade": {
+    "R_named": 0.8093525179856115,
+    "R_frag": 0.8381294964028777,
+    "FP": 1,
+    "found": 225,
+    "n": 278
+   },
+   "parity": true,
+   "max_abs_diff": 0.0001010894775390625,
+   "tag_agreement": 1.0,
+   "parameters": 616677,
+   "export_seconds": 2.5316059589385986,
+   "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/models/v4/lstm-softmax-all-s4/zoo",
+   "seconds": 18.53500247001648
+  }
+ },
+ "old": {
+  "R_named": 0.8273381294964028,
+  "R_frag": 0.8669064748201439,
+  "FP": 0,
+  "found": 230,
+  "n": 278,
+  "cascade": {
+   "R_named": 0.8273381294964028,
+   "R_frag": 0.8669064748201439,
+   "FP": 0,
+   "found": 230,
+   "n": 278
+  },
+  "parameters": 466661,
+  "zoo": "/home/rass/Desktop/projects/ml-statcheck/statcheck-ml/src/statcheck_ml/zoo/gru-crf",
+  "seconds": 17.698549032211304
+ },
+ "selection": {
+  "rule1": {
+   "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "inputs": {
+    "none": {
+     "R_named": 0.8187050359712231,
+     "FP": 1.0
+    },
+    "all": {
+     "R_named": 0.8079136690647483,
+     "FP": 0.6
+    }
+   },
+   "fp_limit": 3.0,
+   "eligible": {
+    "none": true,
+    "all": true
+   },
+   "chosen": "none",
+   "reason": "mean R_named differs by 0.01 or more; the higher wins"
+  },
+  "rule2": {
+   "noise": "none",
+   "table": {
+    "gru-crf": {
+     "mean_R_named": 0.8187050359712231,
+     "mean_FP": 1.0,
+     "parameters": 467912,
+     "R_named_by_seed": [
+      0.8237410071942446,
+      0.8345323741007195,
+      0.8093525179856115,
+      0.8201438848920863,
+      0.8057553956834532
+     ]
+    },
+    "gru-softmax": {
+     "mean_R_named": 0.8338129496402878,
+     "mean_FP": 1.6,
+     "parameters": 466469,
+     "R_named_by_seed": [
+      0.8309352517985612,
+      0.8381294964028777,
+      0.8489208633093526,
+      0.8237410071942446,
+      0.8273381294964028
+     ]
+    },
+    "lstm-softmax": {
+     "mean_R_named": 0.825179856115108,
+     "mean_FP": 1.0,
+     "parameters": 614949,
+     "R_named_by_seed": [
+      0.8237410071942446,
+      0.8165467625899281,
+      0.8309352517985612,
+      0.8237410071942446,
+      0.8309352517985612
+     ]
+    }
+   },
+   "tied": [
+    "gru-softmax",
+    "lstm-softmax"
+   ],
+   "chosen": "lstm-softmax",
+   "reason": "means within 0.01 of the top for ['gru-softmax', 'lstm-softmax']; lowest mean FP, then fewest parameters"
+  },
+  "rule3": {
+   "candidate_run": "lstm-softmax-none-s0",
+   "candidate_R_named": 0.8237410071942446,
+   "old_R_named": 0.8273381294964028,
+   "replaces_gru_crf_s0": false,
+   "reason": "candidate R_named is below the old R_named; the old model stays"
+  },
+  "chosen_run": "lstm-softmax-none-s0",
+  "replaces_gru_crf_s0": false
+ },
+ "selection_error": null,
+ "tie": 0.01,
+ "fp_slack": 2,
+ "scored_papers": "dev (36 gold-train papers); no gold_test paper, no bronze file"
+}
