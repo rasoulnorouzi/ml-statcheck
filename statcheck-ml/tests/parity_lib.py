@@ -277,6 +277,21 @@ DEDUP_RULE = (
 
 #: Equal to the line paragraph in the `Pipeline.run_text` docstring; a unit
 #: test keeps the two in step.
+SPLIT_NUMBER_RULE = (
+    "A value span the model marks (STAT, DF1, DF2, PVAL) that is digits and points with "
+    "whitespace between them, such as '. 05' or '2 .37', and optionally a leading minus, "
+    "is read with the whitespace removed: '. 05' is .05. Its p text for the decimals is the "
+    "joined text too. Other spans, and every pattern find, are read as before."
+)
+
+#: A p-value the PDF conversion split, from a clinical psychology paper the owner checked
+#: in the web demo. The pattern cannot read '<. 05'; the model marks it.
+SPLIT_NUMBER_DOCS = [
+    ("split-number-pvalue",
+     "who reported traumatic events, t(594) = 2.37, p <. 05, scored slightly higher on a "
+     "neuroticism scale, t(594) = 2.30, p <. 05, and scored lower on openness."),
+]
+
 LINE_RULE = (
     'The line of a find is the 0-based index of the line that holds the first character of its statistic value, counted over the line split of the repaired document (the split the prefilter uses; a blanked reference line keeps its newline, so the count is the same). It applies to results and to fragments. A find with no statistic interval keeps the first line of its unit.'
 )

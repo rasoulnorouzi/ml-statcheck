@@ -420,7 +420,7 @@ def build_pipeline_section(docs: list, holdout_rows: list) -> list:
     rows = []
     window = next(r for r in holdout_rows if r["window_id"] == FRAGMENT_WINDOW_ID)
     extra = [("fragment-model-nameless", window["text"])]
-    for name, text in list(docs) + pl.DEDUP_DOCS + pl.FRAGMENT_DOCS + extra:
+    for name, text in list(docs) + pl.DEDUP_DOCS + pl.FRAGMENT_DOCS + pl.SPLIT_NUMBER_DOCS + extra:
         rows.append({"name": name, "text": text, "expected": pl.pipeline_case(text),
                      "expected_fragments": pl.pipeline_fragments_case(text)})
     rows.sort(key=lambda r: r["name"])
@@ -608,6 +608,7 @@ def main(out_path: str | None = None):
         "pvalue_rounding_rule": pl.PVALUE_ROUNDING_RULE,
         "dedup_rule": pl.DEDUP_RULE,
         "line_rule": pl.LINE_RULE,
+        "split_number_rule": pl.SPLIT_NUMBER_RULE,
         "sections": {
             "normalise": normalise_rows,
             "repair": repair_rows,

@@ -37,6 +37,7 @@ no model at all, which is how the pattern-only baseline is measured.
 """
 from __future__ import annotations
 
+import re
 import json
 import time
 from dataclasses import dataclass, field, asdict
@@ -98,6 +99,18 @@ def bundled_model_path() -> Path:
 #: `model_path` was not given. The packaged model is then used. An explicit
 #: None still loads no model, so the pattern-only baseline stays reachable.
 _BUNDLED = "<bundled>"
+
+
+#: A number the PDF conversion split with spaces, such as ". 05" or "2 .37": digits
+#: and points only, with whitespace between them. The model marks such a span as one
+#: value, so it is read as one; the pattern never matches one, so its reading is the same.
+_SPLIT_NUMBER = re.compile(r"-?[0-9.]+(?:\s+[0-9.]+)+")
+
+
+def _joined(text):
+    if text and _SPLIT_NUMBER.fullmatch(text.strip()):
+        return re.sub(r"\s+", "", text.strip())
+    return text
 
 
 def _num(text):
@@ -310,7 +323,7 @@ class Pipeline:
                 current = {}
             if current is None:
                 current = {}
-            current.setdefault(label, (text[start:end], start, end))
+            current.setdefault(label, (_joined(text[start:end]), start, end))
         if current:
             groups.append(current)
 
