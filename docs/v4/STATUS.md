@@ -6,7 +6,7 @@ Branch `v4-gold`. Team run `wf_963324ab-ab1`. Plan:
 
 `[x]` done · `[~]` doing · `[ ]` to do
 
-Last update: 2026-10-05, gold test read once; owner decision on the shipped model.
+Last update: 2026-10-05, version 4 complete; reproduce.sh twice gives identical hashes.
 
 ## Done
 
@@ -59,9 +59,8 @@ Last update: 2026-10-05, gold test read once; owner decision on the shipped mode
 
 ## Doing
 
-- [~] **M9 Ports** — runtime-engineer — sonnet. Parity cases, kits, R and web tests, the
-  `13_ports.py` count.
-- [~] **M8.4 Report** — manager — fable. `docs/v4/REPORT.md` from the result files.
+Nothing. Version 4 is complete on the local branch `v4-gold`. Publishing is the owner's
+decision.
 
 ## Done on the A100
 
@@ -94,6 +93,19 @@ Last update: 2026-10-05, gold test read once; owner decision on the shipped mode
   -0.013 to +0.123, so not supported at paper level (the row McNemar p 0.0003 treats rows
   as independent and is too small). Shipped against R passages +0.244 [+0.092, +0.394];
   against R PDF +0.485 [+0.253, +0.684]. 1027 tests pass. Commit `dfe1ee4`.
+
+- [x] **M8.4 Report** — manager — fable. `docs/v4/REPORT.md`. Commit `ea2f40c`.
+- [x] **M9 Ports** — runtime-engineer — sonnet. Parity cases unchanged; kits changed in
+  provenance only (R `b8a6af8`, web `7dae850`); R 1280, web 385, Python 1032 passed;
+  R CMD check OK. Commit `b1c3747`.
+- [x] **M10.1 PLAN and pipeline README** — doc-writer — haiku. Commit `80344d9`.
+- [x] **M10.2 CONTEXT.md** — manager — fable. Commit `d5f2a0f`.
+- [x] **M10.3 Reproduce twice** — runtime-engineer — sonnet, finished by the session.
+  Fixed: Windows paths in the agreement files, the manifest timestamp, reproduce lines in
+  the compare table. Two runs on `df14660`: 23 of 23 hashes identical. Commits `612a99c`,
+  `0722a13`, `df14660`.
+- [x] **Stage 27 P/R/F1** — session — opus. `results/v4/final/prf.md`: model alone on the gold
+  test, the bronze holdout and the pooled mix. Commit `df14660`.
 
 ## Done since the session took over (2026-10-04 22:45 – 2026-10-05 00:30)
 

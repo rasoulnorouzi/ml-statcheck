@@ -50,7 +50,7 @@ Bronze figures for the two cascades are for the model alone, without the cascade
 
 ## Provenance
 
-Git sha: `0722a13435937b23ae55f8221869af293eaf9713`
+Git sha: `df146608539acea203af6634873d43bbecf9797e`
 
 - `results/v4/final/verdicts.json`: `e70d0cc34b35495738ccc196fd4627f234b1602884d1220ff7213a4c0c9fb338`
 - `results/v4/final/summary.json`: `75cda18e62aa6e0c1dab9f186ef16923433f6b37c2f1c3b5b10e6e4f49b34744`

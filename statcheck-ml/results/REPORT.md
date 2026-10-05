@@ -1,6 +1,6 @@
 # statcheck-ml — results report
 
-Generated from commit 0722a13 (2026-10-05T14:51:23+02:00). Every number in this
+Generated from commit df14660 (2026-10-05T15:08:35+02:00). Every number in this
 report comes from a committed measurement file. `pipeline/11_report.py` fills this
 template. No number is typed by hand.
 
@@ -491,9 +491,9 @@ Spread 0.040 against a limit of 0.060, over 200 documents and 327 bronze results
 
 ## 11 Reproduction
 
-This report was generated from commit 0722a13 (2026-10-05T14:51:23+02:00). The
+This report was generated from commit df14660 (2026-10-05T15:08:35+02:00). The
 evaluation numbers in it come from `results/eval.json`, itself run at commit
-0722a13435937b23ae55f8221869af293eaf9713, with R 4.6.1 and statcheck 1.5.0.
+df146608539acea203af6634873d43bbecf9797e, with R 4.6.1 and statcheck 1.5.0.
 
 `reproduce.sh` runs the offline stages from committed files: agreement, dataset,
 evaluation, figures, and this report. `reproduce.sh --train` adds the training grid
