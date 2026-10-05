@@ -148,3 +148,21 @@ The runner now records the command of each run in `command.json` and skips a fin
 run only when its command matches. One run of the owner's earlier start
 (`gru-softmax-none-s0`, batch 16, from the kit before the batch-size note) therefore
 trains again.
+
+## Outcome, 2026-10-05
+
+The 35 runs trained on the owner's A100 (archive sha256 d4f90143…), each with the command
+listed above. `pipeline/23_select_v4.py` applied the rules on the 36 dev papers:
+
+- Rule 1: `none`. Mean R_named of gru-crf 0.819 with no noise, 0.808 with `all`.
+- Rule 2: `lstm-softmax` (mean 0.825, mean FP 1.0), tied with `gru-softmax` (0.834, FP 1.6)
+  and chosen by the lower mean FP.
+- Rule 3: `lstm-softmax-none-s0` has R_named 0.824 against 0.827 for `gru-crf-s0`. The old
+  model stays.
+
+The gold test was then read once per model (`pipeline/24_final_v4.py`). There the
+candidate's cascade has R_named 0.763 against 0.723 for the old model, with 77 finds in
+the 120 no-result papers against 69. The owner kept the pre-registered outcome: the old
+model ships, and the report gives the gold-test difference as a finding read after the
+choice. The dev set of 278 results was too small to separate the two models; a later
+version needs a larger one.
