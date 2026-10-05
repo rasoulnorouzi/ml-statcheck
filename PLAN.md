@@ -210,17 +210,19 @@ are reported apart, and also combined, never pooled.
 | M2b | 13.3 | The web port: `line` rule, kit, vitest | runtime-engineer | sonnet | done |
 | M2b | 13.4 | Stale sentences in the report template, `SAMPLING.md` and `dataset/README.md` | doc-writer | haiku | done |
 | M2b | 13.5 | Close-out measurement: `recall_with_fragments` in the compare stage, the gold run `m2-close`, `ports.json`, the report | eval-engineer | sonnet | done |
-| M3 | 14 | Guideline 3.0 for passages, the four-vote rule, agents and protocol updated | label-architect | opus | active |
-| M3 | 15 | Passage sampler from gold-train papers, hard negatives, damaged papers; batches of ten | data-engineer | haiku | active |
-| M4 | 16 | Every batch rated three times, blind | annotator-haiku, -sonnet, -opus | haiku, sonnet, opus | ready |
-| M4 | 17 | Collect, agreement, four-vote consensus | data-engineer, eval-engineer, label-architect | haiku, sonnet, opus | ready |
-| M5 | 18 | Disputes adjudicated blind, final labels, the passage dataset, splits, alignment gate | adjudicator, data-engineer, eval-engineer | opus, haiku, sonnet | ready |
-| M6 | 19 | Noise layer rebuilt: per-paper font maps, damaged non-result text, spaced digits, missing operator; each family gated | adversarial-engineer, ml-trainer, eval-engineer | opus, sonnet, sonnet | ready |
-| M6 | 20 | Pre-registered selection rule written before training | manager | fable | ready |
-| M7 | 21 | Training: gru-crf, gru-softmax, lstm-softmax, seeds 0 to 2, the no-noise ablation; zoo export; the rule applied | ml-trainer, onnx-engineer, eval-engineer | sonnet | ready |
-| M8 | 22 | Evaluation: gold test, bronze holdout, both combined; paper bootstrap; paired tests against statcheck R and the old model; report | eval-engineer, manager | sonnet, fable | ready |
-| M9 | 23 | Ports: kits re-exported, R and web tests green, Python package tests green | runtime-engineer | sonnet | ready |
-| M10 | 24 | Documentation: PLAN, CONTEXT, README, PROTOCOL, pipeline README; `reproduce.sh` twice | doc-writer, manager | haiku, fable | ready |
+| M3 | 14 | Guideline 3.0 for passages, the four-vote rule, agents and protocol updated | label-architect | opus | done |
+| M3 | 15 | Passage sampler from gold-train papers, hard negatives, damaged papers; batches of ten | data-engineer | haiku | done |
+| M4 | 16 | Every batch rated three times, blind | annotator-haiku, -sonnet, -opus | haiku, sonnet, opus | done |
+| M4 | 17 | Collect, agreement, four-vote consensus | data-engineer, eval-engineer, label-architect | haiku, sonnet, opus | done |
+| M5 | 18 | Disputes adjudicated blind, final labels, the passage dataset, splits, alignment gate | adjudicator, data-engineer, eval-engineer | opus, haiku, sonnet | done |
+| M6 | 19 | Noise layer rebuilt: per-paper font maps, damaged non-result text, spaced digits, missing operator; each family gated | adversarial-engineer, ml-trainer, eval-engineer | opus, sonnet, sonnet | done |
+| M6 | 20 | Pre-registered selection rule written before training | manager | fable | done |
+| M7 | 21 | Training: gru-crf, gru-softmax, lstm-softmax, seeds 0 to 4, 35 runs on the owner's A100, the no-noise ablation; zoo export; the rule applied | ml-trainer, onnx-engineer, eval-engineer | sonnet | done |
+| M8 | 22 | Evaluation: gold test, bronze holdout, both combined; paper bootstrap; paired tests against statcheck R and the old model; report | eval-engineer, manager | sonnet, fable | done |
+| M9 | 23 | Ports: kits re-exported, R and web tests green, Python package tests green | runtime-engineer | sonnet | done |
+| M10 | 24 | Documentation: PLAN, CONTEXT, README, PROTOCOL, pipeline README; `reproduce.sh` twice | doc-writer, manager | haiku, fable | active |
+
+The outcome is in `docs/v4/preregistration.md` (section "Outcome") and the report is in `docs/v4/REPORT.md`. The shipped model is `gru-crf-s0`.
 
 ## Waiting on the owner
 

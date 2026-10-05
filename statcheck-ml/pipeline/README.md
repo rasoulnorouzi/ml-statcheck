@@ -32,6 +32,11 @@ with a manifest of hashes.
 | 14 | `14_gold_eval.py` | `gold.jsonl`, `split.json`, `eval.json`, `dataset/baseline/gold/*`, the zoo | `results/gold_eval.json`, `results/gold_eval_log.jsonl` | corpus |
 | 17 | `17_passage_inventory.py` | clean text, `gold.jsonl`, `split.json`, `dev.json` | `dataset/passages/inventory.jsonl`, `dataset/passages/inventory_summary.json` | corpus |
 | 18 | `18_sample_passages.py` | clean text, the inventory, `split.json`, `dev.json` | `dataset/passages/sample.json`, `key.json`, `sample_summary.json` | corpus |
+| 19 | `19_consensus.py` | rater outputs, the inventory, passage batches | `dataset/passages/consensus.json`, `dataset/passages/disputes` | — |
+| 20 | `20_merge.py` | the consensus, adjudicator decisions | `dataset/annotations/passages/final.json` | — |
+| 21 | `21_dataset_v4.py` | bronze training set, passage labels, the inventory, passage batches | `dataset/train_v4.jsonl`, `dataset/splits_v4.json` | — |
+| 22 | `22_train_v4.py` | `dataset/train_v4.jsonl`, `dataset/splits_v4.json` | `models/v4/<run>/` | GPU |
+| 23 | `23_select_v4.py` | `models/v4/<run>/`, the gold and dev sets | `results/v4/selection.json`, `selection.md`, `results/v4/dev/*.json` | the trained models |
 | 02 | `02_chunk.py --unpadded --size 10` | `dataset/passages/sample.json` | `dataset/passages/batches/batch_<i>.json`, their `MANIFEST.json` | — |
 | 16 | `16_compare.py` | `results/v4/before/*.json`, current `eval.json` and `gold_eval.json`, the gold log | `results/v4/compare.json`, `results/v4/compare.md` | — |
 | 15 | `15_statcheck_gold.py` | gold papers, the clean text, the PDF archive | `dataset/baseline/gold/*.csv`, `versions.json` | R, statcheck, pdftools, corpus |
